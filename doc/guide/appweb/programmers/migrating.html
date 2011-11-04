@@ -187,7 +187,7 @@ int mprSimpleModuleInit(void *handle)
 </pre>
             <p>In Appweb 3, the same module looks like this:</p>
             <pre>
-MprModule *mprSimpleModuleInit(MaHttp *http)
+MprModule *maSimpleModuleInit(MaHttp *http)
 {
     MprModule   *module;
     module = mprCreateModule(http, "simpleHandler", "1.0.0", 

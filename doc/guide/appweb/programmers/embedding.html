@@ -104,7 +104,7 @@ mpr<b>Name</b>ModuleInit(MaHttp *http)
             <p>Where <b>Name</b> is the name of your module.</p>
             <p>This initialization function must call the <b>mprCreateModule</b> API to register with Appweb.</p>
             <pre>
-MprModule *mprSimpleModuleInit(MaHttp *http)
+MprModule *maSimpleModuleInit(MaHttp *http)
 {
     MprModule   *module;
     <b>module = mprCreateModule(http, "testModule", "1.0.0", NULL, NULL, NULL);</b>

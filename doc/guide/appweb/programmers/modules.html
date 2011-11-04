@@ -82,7 +82,7 @@ mpr<b>Name</b>ModuleInit(MaHttp *http)
             version string and optional module data and start/stop functions. This call returns a module instance that
             is registered with Appweb.</p>
             <pre>
-MprModule *mprSimpleModuleInit(MaHttp *http)
+MprModule *maSimpleModuleInit(MaHttp *http)
 {
     MprModule   *module;
     module = mprCreateModule(http, "testModule", "1.0.0", NULL, NULL, NULL);
