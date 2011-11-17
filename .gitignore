@@ -128,3 +128,4 @@ projects/WIN/*/*.sdf
 test/web/huge.txt
 samples/c/simpleHandler/simpleHandler.def
 test/web/cookie.ejs
+releases/appweb*
