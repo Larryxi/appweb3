@@ -9,6 +9,8 @@ pidfile = session["appwebPidFile"]
 if (pidfile && exists(pidfile)) {
     path = Path(pidfile)
     pid = path.readString()
-    kill(pid)
+    try {
+        kill(pid)
+    } catch {}
     path.remove()
 }

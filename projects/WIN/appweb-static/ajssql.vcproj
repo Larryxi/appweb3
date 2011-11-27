@@ -3,7 +3,7 @@
     ProjectType="Visual C++"
     Version="8.00"
     Name="ajssql"
-    ProjectGUID="87e794f6-6b31-4ed7-a427-1c59d0a74bc2"
+    ProjectGUID="d9499046-81e7-48f9-b7d4-f05b9a07ab82"
     RootNamespace=""
     Keyword="Win32Proj"
     TargetFrameworkVersion="0"
@@ -53,7 +53,7 @@
                 CompileAs="0"
                 StringPooling="true"
                 MinimalRebuild="true"
-                AdditionalIncludeDirectories="../../../src/include/master;../../..;../../../src/include"
+                AdditionalIncludeDirectories="../../../src/include/master;C:/cygwin/home/mob/packages/openssl/openssl-1.0.0d/inc32;C:/cygwin/home/mob/packages/matrixssl/matrixssl-1-8-8-open;../../..;../../../src/include"
                 PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;;STATIC_OVERRIDE=1;_REENTRANT;_MT"
                 Optimization="1"
                 FavorSizeOrSpeed="1"
@@ -111,7 +111,7 @@
                 CompileAs="0"
                 StringPooling="true"
                 MinimalRebuild="true"
-                AdditionalIncludeDirectories="../../../src/include/master;../../..;../../../src/include"
+                AdditionalIncludeDirectories="../../../src/include/master;C:/cygwin/home/mob/packages/openssl/openssl-1.0.0d/inc32;C:/cygwin/home/mob/packages/matrixssl/matrixssl-1-8-8-open;../../..;../../../src/include"
                 PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;;STATIC_OVERRIDE=1;_REENTRANT;_MT"
                 Optimization="0"
                 FavorSizeOrSpeed="1"
@@ -136,7 +136,7 @@
         <Filter
             Name="Header Files"
             Filter="h;hpp;hxx;hm;inl;inc;xsd"
-            UniqueIdentifier="{1e88622c-33ce-4f83-9641-673b7a163181}"
+            UniqueIdentifier="{559bb244-b861-4497-a276-2aa94cf0c45b}"
             >
             <File
                 RelativePath="..\..\..\buildConfig.h"
@@ -154,7 +154,7 @@
         <Filter
             Name="Source Files"
             Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
-            UniqueIdentifier="{b6ab5d44-5c8c-4317-8e38-1ec160993477}"
+            UniqueIdentifier="{2359da57-d0be-4f00-8cbb-49b4a4e722c7}"
             >
             <File
                 RelativePath="..\..\..\src\mpr\mprLib.c"

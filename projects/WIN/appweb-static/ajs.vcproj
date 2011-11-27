@@ -3,7 +3,7 @@
     ProjectType="Visual C++"
     Version="8.00"
     Name="ajs"
-    ProjectGUID="de062726-a7bd-4ef2-8699-5dec728c1e1c"
+    ProjectGUID="171ff01b-eefd-41e9-9224-9e3fac247131"
     RootNamespace=""
     Keyword="Win32Proj"
     TargetFrameworkVersion="0"
@@ -53,7 +53,7 @@
                 CompileAs="0"
                 StringPooling="true"
                 MinimalRebuild="true"
-                AdditionalIncludeDirectories="../../../src/include/master;../../..;../../../src/include"
+                AdditionalIncludeDirectories="../../../src/include/master;C:/cygwin/home/mob/packages/openssl/openssl-1.0.0d/inc32;C:/cygwin/home/mob/packages/matrixssl/matrixssl-1-8-8-open;../../..;../../../src/include"
                 PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;;STATIC_OVERRIDE=1;_REENTRANT;_MT"
                 Optimization="1"
                 FavorSizeOrSpeed="1"
@@ -111,7 +111,7 @@
                 CompileAs="0"
                 StringPooling="true"
                 MinimalRebuild="true"
-                AdditionalIncludeDirectories="../../../src/include/master;../../..;../../../src/include"
+                AdditionalIncludeDirectories="../../../src/include/master;C:/cygwin/home/mob/packages/openssl/openssl-1.0.0d/inc32;C:/cygwin/home/mob/packages/matrixssl/matrixssl-1-8-8-open;../../..;../../../src/include"
                 PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;;STATIC_OVERRIDE=1;_REENTRANT;_MT"
                 Optimization="0"
                 FavorSizeOrSpeed="1"
@@ -136,7 +136,7 @@
         <Filter
             Name="Header Files"
             Filter="h;hpp;hxx;hm;inl;inc;xsd"
-            UniqueIdentifier="{1c3bf63c-33d8-41bc-8414-9e4b6f5f92b4}"
+            UniqueIdentifier="{2316eef1-7a98-42cd-bd49-6f4bbdc8e9b2}"
             >
             <File
                 RelativePath="..\..\..\buildConfig.h"
@@ -166,7 +166,7 @@
         <Filter
             Name="Source Files"
             Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
-            UniqueIdentifier="{c124cd29-18c0-410a-bf6d-fe8cbb3a1395}"
+            UniqueIdentifier="{dbd47bf5-b6e2-47a2-b8a0-8bf74abdefdf}"
             >
             <File
                 RelativePath="..\..\..\src\ejs\ecLib.c"

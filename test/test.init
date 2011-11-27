@@ -37,8 +37,11 @@ if (!App.getenv("NOSERVER")) {
         pid = path.readString()
         path.remove()
         try {
+print("BEFORE")
             kill(pid)
-        } catch {}
+        } catch {
+print("CATCH")
+        }
     }
 
     /*

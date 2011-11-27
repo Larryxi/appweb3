@@ -243,7 +243,6 @@
 #define ES_isDir_path                                                  0
 #define ES_kill_pid                                                    0
 #define ES_kill_signal                                                 1
-#define ES_kill__hoisted_2_kill                                        2
 #define ES_ls_path                                                     0
 #define ES_ls_enumDirs                                                 1
 #define ES_find_path                                                   0
@@ -3154,7 +3153,7 @@
 #define ES_ejs_sys_Worker_postMessage_ports                            1
 #define ES_ejs_sys_Worker_waitForMessage_timeout                       0
 
-#define _ES_CHECKSUM_ejs_sys 138795
+#define _ES_CHECKSUM_ejs_sys 138364
 
 #endif
 /*
@@ -3961,11 +3960,11 @@
 #define ES_ejs_web_View_ejs_web_getValue_fmt                           5
 #define ES_ejs_web_View_ejs_web_getValue__hoisted_6_part               6
 #define ES_ejs_web_View_ejs_web_date_fmt                               0
-#define ES_ejs_web_View_ejs_web_date___fun_26610__                     1
+#define ES_ejs_web_View_ejs_web_date___fun_26601__                     1
 #define ES_ejs_web_View_ejs_web_currency_fmt                           0
-#define ES_ejs_web_View_ejs_web_currency___fun_26644__                 1
+#define ES_ejs_web_View_ejs_web_currency___fun_26635__                 1
 #define ES_ejs_web_View_ejs_web_number_fmt                             0
-#define ES_ejs_web_View_ejs_web_number___fun_26674__                   1
+#define ES_ejs_web_View_ejs_web_number___fun_26665__                   1
 #define ES_ejs_web_View_ejs_web_getOptions_options                     0
 #define ES_ejs_web_View_ejs_web_getOptions_result                      1
 #define ES_ejs_web_View_ejs_web_getOptions__hoisted_2_option           2

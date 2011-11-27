@@ -10005,7 +10005,7 @@ module ejs.sys {
          */
         static function sh(cmdline: String, data: String = null): String
         {
-            let sh = Cmd.locate("sh")
+            let sh = Cmd.locate("bash.exe")
             return run((sh + " -c \"" + cmdline.replace(/\\/g, "\\\\") + "\"").trim('\n'), data)
         }
 
@@ -10947,7 +10947,7 @@ module ejs.sys {
             @hide
          */
         static function sh(args): String {
-            let sh = locate("sh") 
+            let sh = Cmd.locate("bash.exe") 
             return System.run(sh + " -c \"" + args.replace(/\\/g, "\\\\") + "\"").trim('\n')
         }
 
@@ -11106,7 +11106,7 @@ module ejs.sys {
      */
     function kill(pid: Number, signal: Number = 2): Void {
         if (Config.OS == "WIN" || Config.OS == "CYGWIN") {
-            Cmd.sh("kill -f -" + signal + " " + pid)
+            Cmd.sh("kill -" + signal + " " + pid)
         } else {
             Cmd.run("/bin/kill -" + signal + " " + pid)
         }

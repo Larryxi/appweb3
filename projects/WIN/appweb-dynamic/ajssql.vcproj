@@ -3,7 +3,7 @@
     ProjectType="Visual C++"
     Version="8.00"
     Name="ajssql"
-    ProjectGUID="aeadc6ec-167a-48b7-986c-8b987aa75db6"
+    ProjectGUID="81ad9218-f0d2-483c-a203-de4fe5faa9fa"
     RootNamespace=""
     Keyword="Win32Proj"
     TargetFrameworkVersion="0"
@@ -136,7 +136,7 @@
         <Filter
             Name="Header Files"
             Filter="h;hpp;hxx;hm;inl;inc;xsd"
-            UniqueIdentifier="{37d9258d-6c33-4722-9b65-7335f570d41e}"
+            UniqueIdentifier="{3e2ea7db-5ec0-437d-b460-a2afa95198f8}"
             >
             <File
                 RelativePath="..\..\..\buildConfig.h"
@@ -154,7 +154,7 @@
         <Filter
             Name="Source Files"
             Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
-            UniqueIdentifier="{535d8876-a257-4d1a-b532-5dd6556d0867}"
+            UniqueIdentifier="{bda9276f-0bdc-46b2-b67d-24d7458ab412}"
             >
             <File
                 RelativePath="..\..\..\src\mpr\mprLib.c"
