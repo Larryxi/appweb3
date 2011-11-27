@@ -1,13 +1,10 @@
 /*
- *  Terminate unit tests
- */
-
-/*
- *   Stop the web server
+    Terminate unit tests
+     Stop the web server
  */
 pidfile = session["appwebPidFile"]
 if (pidfile && exists(pidfile)) {
-    path = Path(pidfile)
+    let path = Path(pidfile)
     pid = path.readString()
     try {
         kill(pid)
