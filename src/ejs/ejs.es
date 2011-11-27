@@ -9971,6 +9971,32 @@ module ejs.sys {
         use default namespace public
 
         /**
+            Locate a command along the system search PATH
+            @param program Program to search for
+            @returns The first located occurence of the command on the PATH
+         */
+        static function locate(program: Path): Path {
+            let sep = (Config.OS == "WIN") ? ";" : ":"
+            for each (dir in App.getenv("PATH").split(sep)) {
+                let path = Path(dir).join(program)
+                if (path.exists && !path.isDir) {
+                    return path
+                }
+            }
+            if (Config.OS == "WIN" || Config.OS == "CYGWIN") {
+                if (program.extension == "") {
+                    for each (ext in ["exe", "bat", "cmd"]) {
+                        path = locate(program.joinExt(".exe"))
+                        if (path) {
+                            return path;
+                        }
+                    }
+                }
+            }
+            return null
+        }
+
+        /**
          *  Run a command using the system command shell and wait for completion. This supports pipelines.
          *  @param cmdline Command or program to execute
          *  @returns The command output from it's standard output.
@@ -9978,7 +10004,10 @@ module ejs.sys {
          *      standard error output. 
          */
         static function sh(cmdline: String, data: String = null): String
-            run(("/bin/sh -c \"" + cmdline.replace(/\\/g, "\\\\") + "\"").trim('\n'), data)
+        {
+            let sh = Cmd.locate("sh")
+            return run((sh + " -c \"" + cmdline.replace(/\\/g, "\\\\") + "\"").trim('\n'), data)
+        }
 
         /**
          *  Execute a command/program.
@@ -10918,7 +10947,8 @@ module ejs.sys {
             @hide
          */
         static function sh(args): String {
-            return System.run("/bin/sh -c \"" + args.replace(/\\/g, "\\\\") + "\"").trim('\n')
+            let sh = locate("sh") 
+            return System.run(sh + " -c \"" + args.replace(/\\/g, "\\\\") + "\"").trim('\n')
         }
 
         /**  TEMP deprecated @hide */
@@ -11076,7 +11106,8 @@ module ejs.sys {
      */
     function kill(pid: Number, signal: Number = 2): Void {
         if (Config.OS == "WIN" || Config.OS == "CYGWIN") {
-            Cmd.run("/bin/kill -f -" + signal + " " + pid)
+            let kill = Cmd.locate("kill")
+            Cmd.run(kill + " -f -" + signal + " " + pid)
         } else {
             Cmd.run("/bin/kill -" + signal + " " + pid)
         }

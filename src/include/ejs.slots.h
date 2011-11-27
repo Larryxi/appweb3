@@ -243,6 +243,7 @@
 #define ES_isDir_path                                                  0
 #define ES_kill_pid                                                    0
 #define ES_kill_signal                                                 1
+#define ES_kill__hoisted_2_kill                                        2
 #define ES_ls_path                                                     0
 #define ES_ls_enumDirs                                                 1
 #define ES_find_path                                                   0
@@ -2959,11 +2960,12 @@
  *   Class property slots for the "Cmd" class 
  */
 #define ES_ejs_sys_Cmd__origin                                         6
-#define ES_ejs_sys_Cmd_sh                                              6
-#define ES_ejs_sys_Cmd_run                                             7
-#define ES_ejs_sys_Cmd_daemon                                          8
-#define ES_ejs_sys_Cmd_runx                                            9
-#define ES_ejs_sys_Cmd_NUM_CLASS_PROP                                  10
+#define ES_ejs_sys_Cmd_locate                                          6
+#define ES_ejs_sys_Cmd_sh                                              7
+#define ES_ejs_sys_Cmd_run                                             8
+#define ES_ejs_sys_Cmd_daemon                                          9
+#define ES_ejs_sys_Cmd_runx                                            10
+#define ES_ejs_sys_Cmd_NUM_CLASS_PROP                                  11
 
 /**
  * Instance slots for "Cmd" type 
@@ -2974,8 +2976,14 @@
  * 
  *    Local slots for methods in type Cmd 
  */
+#define ES_ejs_sys_Cmd_locate_program                                  0
+#define ES_ejs_sys_Cmd_locate_sep                                      1
+#define ES_ejs_sys_Cmd_locate__hoisted_2_dir                           2
+#define ES_ejs_sys_Cmd_locate__hoisted_3_path                          3
+#define ES_ejs_sys_Cmd_locate__hoisted_4_ext                           4
 #define ES_ejs_sys_Cmd_sh_cmdline                                      0
 #define ES_ejs_sys_Cmd_sh_data                                         1
+#define ES_ejs_sys_Cmd_sh_sh                                           2
 #define ES_ejs_sys_Cmd_run_cmdline                                     0
 #define ES_ejs_sys_Cmd_run_data                                        1
 #define ES_ejs_sys_Cmd_daemon_cmdline                                  0
@@ -3098,6 +3106,7 @@
 #define ES_ejs_sys_System_runx_cmd                                     0
 #define ES_ejs_sys_System_daemon_cmd                                   0
 #define ES_ejs_sys_System_sh_args                                      0
+#define ES_ejs_sys_System_sh_sh                                        1
 #define ES_ejs_sys_System_cmd_args                                     0
 #define ES_ejs_sys_System_exec_args                                    0
 
@@ -3145,7 +3154,7 @@
 #define ES_ejs_sys_Worker_postMessage_ports                            1
 #define ES_ejs_sys_Worker_waitForMessage_timeout                       0
 
-#define _ES_CHECKSUM_ejs_sys 135088
+#define _ES_CHECKSUM_ejs_sys 138795
 
 #endif
 /*
@@ -3952,11 +3961,11 @@
 #define ES_ejs_web_View_ejs_web_getValue_fmt                           5
 #define ES_ejs_web_View_ejs_web_getValue__hoisted_6_part               6
 #define ES_ejs_web_View_ejs_web_date_fmt                               0
-#define ES_ejs_web_View_ejs_web_date___fun_26427__                     1
+#define ES_ejs_web_View_ejs_web_date___fun_26610__                     1
 #define ES_ejs_web_View_ejs_web_currency_fmt                           0
-#define ES_ejs_web_View_ejs_web_currency___fun_26461__                 1
+#define ES_ejs_web_View_ejs_web_currency___fun_26644__                 1
 #define ES_ejs_web_View_ejs_web_number_fmt                             0
-#define ES_ejs_web_View_ejs_web_number___fun_26491__                   1
+#define ES_ejs_web_View_ejs_web_number___fun_26674__                   1
 #define ES_ejs_web_View_ejs_web_getOptions_options                     0
 #define ES_ejs_web_View_ejs_web_getOptions_result                      1
 #define ES_ejs_web_View_ejs_web_getOptions__hoisted_2_option           2
