@@ -98,7 +98,7 @@ function sh(args): String {
 function testCmdNoCapture(args): Boolean {
     test.log(2, "[Test]", "Run test: " + args)
     try {
-        let sh = Cmd.locate("bash.exe")
+        let sh = Cmd.locate("bash")
         Cmd.runx((sh + " -c \"" + env() + args + "\"").trim('\n'), data)
         assert(true)
         return true
@@ -111,7 +111,7 @@ function testCmdNoCapture(args): Boolean {
 function testCmd(args): Boolean {
     test.log(2, "[Test]", "Run test: " + args)
     try {
-        let sh = Cmd.locate("bash.exe")
+        let sh = Cmd.locate("bash")
         Cmd.run((sh + " -c \"" + env() + args + "\"").trim('\n'), data)
         assert(true)
         return true
