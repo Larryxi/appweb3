@@ -10005,7 +10005,7 @@ module ejs.sys {
          */
         static function sh(cmdline: String, data: String = null): String
         {
-            let sh = Cmd.locate("bash")
+            let sh = Cmd.locate("sh")
             return run((sh + " -c \"" + cmdline.replace(/\\/g, "\\\\") + "\"").trim('\n'), data)
         }
 
@@ -10947,7 +10947,7 @@ module ejs.sys {
             @hide
          */
         static function sh(args): String {
-            let sh = Cmd.locate("bash") 
+            let sh = Cmd.locate("sh") 
             return System.run(sh + " -c \"" + args.replace(/\\/g, "\\\\") + "\"").trim('\n')
         }
 
