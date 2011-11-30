@@ -1064,9 +1064,10 @@ int maSetRequestUri(MaConn *conn, cchar *uri, cchar *query)
     req->url = mprValidateUrl(req, mprUrlDecode(req, req->parsedUri->url));
     req->alias = maGetAlias(host, req->url);
     resp->filename = maMakeFilename(conn, req->alias, req->url, 1);
-    req->dir = maLookupBestDir(req->host, resp->filename);
-    if (req->dir->auth) {
-        req->auth = req->dir->auth;
+    if ((req->dir = maLookupBestDir(req->host, resp->filename)) != 0) {
+        if (req->dir->auth) {
+            req->auth = req->dir->auth;
+        }
     }
     req->location = maLookupBestLocation(host, req->url);
     if (req->auth == 0) {

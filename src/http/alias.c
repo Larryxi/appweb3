@@ -22,7 +22,6 @@ MaAlias *maCreateAlias(MprCtx ctx, cchar *prefix, cchar *target, int code)
 
     mprAssert(ctx);
     mprAssert(prefix);
-    mprAssert(target && *target);
 
     ap = mprAllocObjZeroed(ctx, MaAlias);
     if (ap == 0) {
@@ -43,6 +42,7 @@ MaAlias *maCreateAlias(MprCtx ctx, cchar *prefix, cchar *target, int code)
         ap->redirectCode = code;
         ap->uri = mprStrdup(ctx, target);
     } else {
+        mprAssert(target && *target);
         ap->filename = mprGetAbsPath(ctx, target);
     }
     return ap;
