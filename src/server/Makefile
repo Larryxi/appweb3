@@ -46,9 +46,6 @@ endif
 ifeq	($(BUILD_CROSS_OR_COMPLETE_NATIVE),1)
 	TARGETS			+= $(BLD_BIN_DIR)/$(BLD_PRODUCT)$(BLD_EXE)
 endif
-ifeq	($(BUILD_NATIVE_OR_COMPLETE_CROSS),1)
-	EXTRA_TARGETS 	+= cgi-bin/cgiProgram$(BLD_EXE)
-endif
 
 #   ifeq ($(BLD_OS),VXWORKS)
 #   ifeq ($(BLD_FEATURE_STATIC),0)
@@ -89,10 +86,6 @@ appweb.conf: ../../buildConfig.make
 	BLD_CFG_PREFIX=. BLD_WEB_PREFIX=./web BLD_MOD_PREFIX=$(BLD_MOD_DIR) BLD_DOC_PREFIX=../../doc \
 	BLD_SERVER=`hostname` BLD_LOG_PREFIX=./logs BLD_HTTP_PORT=$(BLD_HTTP_PORT) BLD_SSL_PORT=$(BLD_SSL_PORT) \
 	patchAppwebConf appweb.conf conf/hosts/ssl-default.conf conf/log.conf conf/doc.conf
-
-cgi-bin/cgiProgram$(BLD_EXE): $(BLD_BIN_DIR)/cgiProgram$(BLD_EXE)
-	cp $(BLD_BIN_DIR)/cgiProgram$(BLD_EXE) cgi-bin
-	chmod +x cgi-bin/*
 
 run:
 	$(call setlibpath) ; $(BLD_BIN_DIR)/$(BLD_PRODUCT) --log stdout:2 --config appweb.conf

@@ -2,6 +2,6 @@
 <head>
 </head>
 <body>
-    <? echo "Hello PHP\r\n"; ?>
+    <?php echo "Hello PHP"; ?>
 </body>
 </html>
