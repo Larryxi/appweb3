@@ -19858,12 +19858,15 @@ static EjsVar *sys_kill(Ejs *ejs, EjsVar *unused, int argc, EjsVar **argv)
 {
     int     rc, pid, signal;
 
+#if BLD_UNIX_LIKE
     signal = SIGINT;
-
-    pid = ejsGetInt(argv[0]);
+#else
+    signal = 2;
+#endif
     if (argc >= 2) {
         signal = ejsGetInt(argv[1]);
     }
+    pid = ejsGetInt(argv[0]);
     if (pid == 0) {
         ejsThrowStateError(ejs, "No process to kill");
         return 0;
@@ -19876,6 +19879,7 @@ static EjsVar *sys_kill(Ejs *ejs, EjsVar *unused, int argc, EjsVar **argv)
         ejsThrowIOError(ejs, "Can't find process ID %d", pid);
         return 0;
     }
+    /* Use the signal as the exit status */
     rc = TerminateProcess(handle, signal) == 0;
 }
 #elif VXWORKS
