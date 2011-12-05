@@ -275,12 +275,10 @@ static int readFileData(MaQueue *q, MaPacket *packet, MprOff pos, int size)
 {
     MaConn      *conn;
     MaResponse  *resp;
-    MaRequest   *req;
     int         nbytes;
 
     conn = q->conn;
     resp = conn->response;
-    req = conn->request;
     
     if (packet->content == 0 && (packet->content = mprCreateBuf(packet, size, -1)) == 0) {
         return MPR_ERR_NO_MEMORY;
@@ -354,12 +352,10 @@ static void handlePutRequest(MaQueue *q)
  */
 static void handleDeleteRequest(MaQueue *q)
 {
-    MaConn          *conn;
-    MaRequest       *req;
-    char            *path;
+    MaConn      *conn;
+    char        *path;
 
     conn = q->conn;
-    req = conn->request;
     path = conn->response->filename;
 
     if (!conn->response->fileInfo.isReg) {
