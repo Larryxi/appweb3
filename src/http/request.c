@@ -602,11 +602,11 @@ static bool parseHeaders(MaConn *conn, MaPacket *packet)
         case 'X':
             if (strcmp(key, "X_APPWEB_CHUNK_SIZE") == 0) {
                 mprStrUpper(value);
-                resp->chunkSize = atoi(value);
-                if (resp->chunkSize <= 0) {
-                    resp->chunkSize = 0;
-                } else if (resp->chunkSize > conn->http->limits.maxChunkSize) {
-                    resp->chunkSize = conn->http->limits.maxChunkSize;
+                conn->response->chunkSize = atoi(value);
+                if (conn->response->chunkSize <= 0) {
+                    conn->response->chunkSize = 0;
+                } else if (conn->response->chunkSize > conn->http->limits.maxChunkSize) {
+                    conn->response->chunkSize = conn->http->limits.maxChunkSize;
                 }
             }
             break;
