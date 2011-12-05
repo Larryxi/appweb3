@@ -368,14 +368,12 @@ static int parseAuth(MaHttp *http, cchar *key, char *value, MaConfigState *state
     MaServer    *server;
     MaHost      *host;
     MaAuth      *auth;
-    MaDir       *dir;
     MaAcl       acl;
     char        *path, *names, *tok, *type, *aclSpec;
 
     server = state->server;
     host = state->host;
     auth = state->auth;
-    dir = state->dir;
 
     if (mprStrcmpAnyCase(key, "AuthGroupFile") == 0) {
         path = maMakePath(host, mprStrTrim(value, "\""));

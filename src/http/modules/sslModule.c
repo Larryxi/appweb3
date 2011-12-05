@@ -15,15 +15,13 @@
 static int parseSsl(MaHttp *http, cchar *key, char *value, MaConfigState *state)
 {
     MaLocation  *location;
-    MaServer    *server;
     MaHost      *host;
     char        *path, prefix[MPR_MAX_FNAME];
-    char        *tok, *word, *enable, *provider;
+    char        *tok, *word;
     int         protoMask, mask;
     static int  hasBeenWarned = 0;
 
     host = state->host;
-    server = state->server;
     location = state->location;
 
     mprStrcpy(prefix, sizeof(prefix), key);
@@ -46,8 +44,8 @@ static int parseSsl(MaHttp *http, cchar *key, char *value, MaConfigState *state)
     }
 
     if (mprStrcmpAnyCase(key, "SSLEngine") == 0) {
-        enable = mprStrTok(value, " \t", &tok);
-        provider = mprStrTok(0, " \t", &tok);
+        mprStrTok(value, " \t", &tok);
+        mprStrTok(0, " \t", &tok);
         if (mprStrcmpAnyCase(value, "on") == 0) {
             maSecureHost(host, location->ssl);
         }

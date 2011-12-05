@@ -508,7 +508,7 @@ MaDir *maLookupDir(MaHost *host, cchar *pathArg)
 {
     MaDir       *dir;
     char        *path, *tmpPath;
-    int         next, len;
+    int         next;
 
     if (!mprIsAbsPath(host, pathArg)) {
         path = tmpPath = mprGetAbsPath(host, pathArg);
@@ -516,8 +516,6 @@ MaDir *maLookupDir(MaHost *host, cchar *pathArg)
         path = (char*) pathArg;
         tmpPath = 0;
     }
-    len = (int) strlen(path);
-
     for (next = 0; (dir = mprGetNextItem(host->dirs, &next)) != 0; ) {
         if (dir->path != 0) {
             if (mprSamePath(host, dir->path, path)) {
@@ -540,9 +538,7 @@ MaDir *maLookupDir(MaHost *host, cchar *pathArg)
 MaDir *maLookupBestDir(MaHost *host, cchar *path)
 {
     MaDir   *dir;
-    int     next, len, dlen;
-
-    len = (int) strlen(path);
+    int     next, dlen;
 
     for (next = 0; (dir = mprGetNextItem(host->dirs, &next)) != 0; ) {
         dlen = dir->pathLen;

@@ -54,7 +54,6 @@ static void closeCgi(MaQueue *q)
 static void startCgi(MaQueue *q)
 {
     MaRequest       *req;
-    MaResponse      *resp;
     MaConn          *conn;
     MprCmd          *cmd;
     MprHash         *hp;
@@ -66,8 +65,6 @@ static void startCgi(MaQueue *q)
     argc = 0;
     conn = q->conn;
     req = conn->request;
-    resp = conn->response;
-
     if ((req->form || req->flags & MA_REQ_UPLOADING) && conn->state <= MPR_HTTP_STATE_CONTENT) {
         /*
             Delay starting the CGI process if uploading files or a form request. This enables env vars to be defined
@@ -150,12 +147,10 @@ static void startCgi(MaQueue *q)
  */
 static void runCgi(MaQueue *q)
 {
-    MaResponse  *resp;
     MaConn      *conn;
     MprCmd      *cmd;
 
     conn = q->conn;
-    resp = conn->response;
     cmd = (MprCmd*) q->queueData;
 
     if (cmd == 0) {
@@ -197,7 +192,6 @@ static void runCgi(MaQueue *q)
 static void incomingCgiData(MaQueue *q, MaPacket *packet)
 {
     MaConn      *conn;
-    MaResponse  *resp;
     MaRequest   *req;
     MprCmd      *cmd;
 
@@ -205,7 +199,6 @@ static void incomingCgiData(MaQueue *q, MaPacket *packet)
     mprAssert(packet);
     
     conn = q->conn;
-    resp = conn->response;
     req = conn->request;
     cmd = (MprCmd*) q->pair->queueData;
     if (cmd) {
@@ -454,11 +447,9 @@ static void cgiEvent(MaQueue *q, MprCmd *cmd, int channel)
  */
 static bool parseFirstCgiResponse(MaConn *conn, MprCmd *cmd)
 {
-    MaResponse      *resp;
     MprBuf          *buf;
     char            *protocol, *code, *message;
     
-    resp = conn->response;
     buf = mprGetCmdBuf(cmd, MPR_CMD_STDOUT);
     
     protocol = getCgiToken(buf, " ");
@@ -594,17 +585,15 @@ static void buildArgs(MaConn *conn, MprCmd *cmd, int *argcp, char ***argvp)
 {
     MaRequest   *req;
     MaResponse  *resp;
-    char        *fileName, **argv, *program, *cmdScript, status[8], *indexQuery, *cp, *tok;
+    char        *fileName, **argv, status[8], *indexQuery, *cp, *tok;
     cchar       *actionProgram;
     int         argc, argind, len;
 
     req = conn->request;
     resp = conn->response;
-
     fileName = resp->filename;
     mprAssert(fileName);
 
-    program = cmdScript = 0;
     actionProgram = 0;
     argind = 0;
     argc = *argcp;
@@ -639,7 +628,7 @@ static void buildArgs(MaConn *conn, MprCmd *cmd, int *argcp, char ***argvp)
 
 #if BLD_WIN_LIKE || VXWORKS
 {
-    char    *bangScript, *cmdBuf;
+    char    *bangScript, *cmdBuf, *program, *cmdScript;
 
     /*
         On windows we attempt to find an executable matching the fileName.
@@ -653,7 +642,7 @@ static void buildArgs(MaConn *conn, MprCmd *cmd, int *argcp, char ***argvp)
             Cmd/Batch script (.bat | .cmd)
             Convert the command to the form where there are 4 elements in argv
             that cmd.exe can interpret.
-         *
+
                 argv[0] = cmd.exe
                 argv[1] = /Q
                 argv[2] = /C
@@ -912,7 +901,7 @@ static int parseCgi(MaHttp *http, cchar *key, char *value, MaConfigState *state)
     MaServer    *server;
     MaHost      *host;
     MaAlias     *alias;
-    MaDir       *dir, *parent;
+    MaDir       *parent;
     char        *program, *mimeType, *prefix, *path;
 
     host = state->host;
@@ -936,10 +925,9 @@ static int parseCgi(MaHttp *http, cchar *key, char *value, MaConfigState *state)
          */
         path = maMakePath(host, path);
 
-        dir = maLookupDir(host, path);
         if (maLookupDir(host, path) == 0) {
             parent = mprGetFirstItem(host->dirs);
-            dir = maCreateDir(host, path, parent);
+            maCreateDir(host, path, parent);
         }
         alias = maCreateAlias(host, prefix, path, 0);
         mprLog(server, 4, "ScriptAlias \"%s\" for \"%s\"", prefix, path);

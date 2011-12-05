@@ -122,7 +122,7 @@ int maParseConfig(MaServer *server, cchar *configFile)
     MprDirEntry     *dp;
     char            buf[MPR_MAX_STRING];
     char            *cp, *tok, *key, *value, *path;
-    int             i, rc, top, next, nextAlias, len;
+    int             i, rc, top, next, nextAlias;
 
     mpr = mprGetMpr(server);
 
@@ -243,7 +243,6 @@ int maParseConfig(MaServer *server, cchar *configFile)
                  *  Process wild cards. This is very simple - only "*" is supported.
                  */
                 *cp = '\0';
-                len = (int) strlen(value);
                 cp = mprJoinPath(server, server->serverRoot, value);
                 includes = mprGetPathFiles(server, cp, 0);
                 if (includes == 0) {
@@ -602,7 +601,7 @@ static int processSetting(MaServer *server, char *key, char *value, MaConfigStat
     char            ipAddrPort[MPR_MAX_IP_ADDR_PORT];
     char            *name, *path, *prefix, *cp, *tok, *ext, *mimeType, *url, *newUrl, *extensions, *codeStr, *hostName;
     char            *items, *include, *exclude, *when, *mimeTypes;
-    int             port, rc, code, processed, num, flags, colonCount, len, mask, level;
+    int             port, rc, code, num, flags, colonCount, len, mask, level;
 
     mprAssert(state);
     mprAssert(key);
@@ -616,7 +615,6 @@ static int processSetting(MaServer *server, char *key, char *value, MaConfigStat
     mprAssert(host);
     mprAssert(dir);
     auth = state->auth;
-    processed = 0;
     limits = host->limits;
     flags = 0;
 

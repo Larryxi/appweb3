@@ -600,12 +600,10 @@ static bool matchFilter(MaConn *conn, MaFilter *filter)
 {
     MaRequest       *req;
     MaResponse      *resp;
-    MaLocation      *location;
     MaStage         *stage;
 
     req = conn->request;
     resp = conn->response;
-    location = req->location;
     stage = filter->stage;
 
     if (stage->match) {

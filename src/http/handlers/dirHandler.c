@@ -176,13 +176,11 @@ static void parseQuery(MaConn *conn)
 
 static void sortList(MaConn *conn, MprList *list)
 {
-    MaRequest       *req;
     MaResponse      *resp;
     MprDirEntry     *tmp, **items;
     Dir             *dir;
     int             count, i, j, rc;
 
-    req = conn->request;
     resp = conn->response;
     dir = resp->handler->stageData;
     
@@ -259,7 +257,7 @@ static void outputHeader(MaQueue *q, cchar *path, int nameSize)
 {
     Dir     *dir;
     char    *parent, *parentSuffix;
-    int     order, reverseOrder, fancy, isRootDir, sep;
+    int     reverseOrder, fancy, isRootDir, sep;
 
     dir = q->stage->stageData;
     
@@ -273,10 +271,8 @@ static void outputHeader(MaQueue *q, cchar *path, int nameSize)
     maWrite(q, "<h1>Index of %s</h1>\r\n", path);
 
     if (dir->sortOrder > 0) {
-        order = 'A';
         reverseOrder = 'D';
     } else {
-        order = 'D';
         reverseOrder = 'A';
     }
 
@@ -446,13 +442,11 @@ static void outputLine(MaQueue *q, MprDirEntry *ep, cchar *path, int nameSize)
 
 static void outputFooter(MaQueue *q)
 {
-    MaRequest   *req;
     MaConn      *conn;
     MprSocket   *sock;
     Dir         *dir;
     
     conn = q->conn;
-    req = conn->request;
     dir = q->stage->stageData;
     
     if (dir->fancyIndexing == 2) {
@@ -543,7 +537,7 @@ static int parseDir(MaHttp *http, cchar *key, char *value, MaConfigState *state)
     MaStage     *handler;
     Dir         *dir;
     
-    char    *name, *extensions, *option, *nextTok, *junk;
+    char    *extensions, *option, *nextTok, *junk;
 
     handler = maLookupStage(http, "dirHandler");
     dir = handler->stageData;
@@ -552,7 +546,7 @@ static int parseDir(MaHttp *http, cchar *key, char *value, MaConfigState *state)
     if (mprStrcmpAnyCase(key, "AddIcon") == 0) {
         /*  AddIcon file ext ext ext */
         /*  Not yet supported */
-        name = mprStrTok(value, " \t", &extensions);
+        mprStrTok(value, " \t", &extensions);
         parseWords(dir->extList, extensions);
         return 1;
 

@@ -116,7 +116,6 @@ static void openPhp(MaQueue *q)
     MaRequest       *req;
     MaResponse      *resp;
     MaConn          *conn;
-    MaAlias         *alias;
 
     conn = q->conn;
     if (!q->stage->stageData) {
@@ -127,7 +126,6 @@ static void openPhp(MaQueue *q)
     }
     resp = conn->response;
     req = conn->request;
-    alias = req->alias;
 
     switch (req->method) {
     case MA_REQ_GET:
@@ -371,12 +369,10 @@ static int writeHeader(sapi_header_struct *sapiHeader, sapi_headers_struct *sapi
 {
     MaConn      *conn;
     MaResponse  *resp;
-    bool        allowMultiple;
     char        *key, *value;
 
     conn = (MaConn*) SG(server_context);
     resp = conn->response;
-    allowMultiple = 1;
 
     key = mprStrdup(resp, sapiHeader->header);
     if ((value = strchr(key, ':')) == 0) {
@@ -406,9 +402,12 @@ static int writeHeader(sapi_header_struct *sapiHeader, sapi_headers_struct *sapi
             return 0;
     }
 #else
+{
+    bool        allowMultiple;
     allowMultiple = !sapiHeader->replace;
     maSetHeader(conn, allowMultiple, key, value);
     return SAPI_HEADER_ADD;
+}
 #endif
 }
 

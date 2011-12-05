@@ -86,10 +86,7 @@ static void incomingData(MaQueue *q, MaPacket *packet)
  */
 void maDefaultOutgoingServiceStage(MaQueue *q)
 {
-    MaConn      *conn;
     MaPacket    *packet;
-
-    conn = q->conn;
 
     for (packet = maGet(q); packet; packet = maGet(q)) {
         if (!maWillNextQueueAccept(q, packet)) {

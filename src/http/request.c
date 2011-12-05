@@ -337,7 +337,6 @@ static bool parseHeaders(MaConn *conn, MaPacket *packet)
 {
     MaHostAddress   *address;
     MaRequest       *req;
-    MaResponse      *resp;
     MaHost          *host, *hp;
     MaLimits        *limits;
     MprBuf          *content;
@@ -346,7 +345,6 @@ static bool parseHeaders(MaConn *conn, MaPacket *packet)
     int             count, keepAlive;
 
     req = conn->request;
-    resp = conn->response;
     host = req->host;
     content = packet->content;
     conn->request->headerPacket = packet;
@@ -810,15 +808,12 @@ static bool processContent(MaConn *conn, MaPacket *packet)
 bool maProcessCompletion(MaConn *conn)
 {
     MaRequest   *req;
-    MaResponse  *resp;
     MaPacket    *packet;
     bool        more;
 
     mprAssert(conn->state == MPR_HTTP_STATE_COMPLETE);
 
     req = conn->request;
-    resp = conn->response;
-
     maLogRequest(conn);
 
 #if BLD_DEBUG
@@ -1391,10 +1386,6 @@ void maSetRequestGroup(MaConn *conn, cchar *group)
 
 cchar *maGetQueryString(MaConn *conn)
 {
-    MaRequest   *req;
-
-    req = conn->request;
-
     return conn->request->parsedUri->query;
 }
 

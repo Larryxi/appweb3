@@ -198,10 +198,6 @@ static void outgoingChunkService(MaQueue *q)
 
 static void setChunkPrefix(MaQueue *q, MaPacket *packet)
 {
-    MaConn      *conn;
-
-    conn = q->conn;
-
     if (packet->prefix) {
         return;
     }

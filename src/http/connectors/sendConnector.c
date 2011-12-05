@@ -175,12 +175,10 @@ static void addPacketForSend(MaQueue *q, MaPacket *packet)
 {
     MaResponse  *resp;
     MaConn      *conn;
-    MprIOVec    *iovec;
     int         mask;
 
     conn = q->conn;
     resp = conn->response;
-    iovec = q->iovec;
     
     mprAssert(q->count >= 0);
     mprAssert(q->ioIndex < (MA_MAX_IOVEC - 2));
@@ -270,11 +268,9 @@ static void freeSentPackets(MaQueue *q, int64 bytes)
 static void adjustSendVec(MaQueue *q, int64 written)
 {
     MprIOVec    *iovec;
-    MaResponse  *resp;
     size_t      len;
     int         i, j;
 
-    resp = q->conn->response;
     iovec = q->iovec;
     for (i = 0; i < q->ioIndex; i++) {
         len = iovec[i].len;

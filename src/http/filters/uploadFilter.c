@@ -120,7 +120,6 @@ static void openUpload(MaQueue *q)
  */
 static void closeUpload(MaQueue *q)
 {
-    MaUploadFile    *file;
     MaRequest       *req;
     Upload          *up;
 
@@ -128,7 +127,6 @@ static void closeUpload(MaQueue *q)
     up = q->queueData;
     
     if (up->currentFile) {
-        file = up->currentFile;
         mprFree(up->file);
     }
     if (req->location->autoDelete) {
@@ -451,7 +449,6 @@ static int processContentData(MaQueue *q)
     MaConn          *conn;
     MaRequest       *req;
     MaUploadFile    *file;
-    MaLimits        *limits;
     MaPacket        *packet;
     MprBuf          *content;
     Upload          *up;
@@ -462,7 +459,6 @@ static int processContentData(MaQueue *q)
     req = conn->request;
     up = q->queueData;
     content = q->first->content;
-    limits = conn->host->limits;
     file = up->currentFile;
     packet = 0;
 

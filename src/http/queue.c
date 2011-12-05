@@ -403,13 +403,10 @@ void maPutBack(MaQueue *q, MaPacket *packet)
  */
 bool maWillNextQueueAccept(MaQueue *q, MaPacket *packet)
 {
-    MaConn      *conn;
     MaQueue     *next;
     int64       size;
 
-    conn = q->conn;
     next = q->nextQ;
-
     size = maGetPacketLength(packet);
     if (size <= next->packetSize && (size + next->count) <= next->max) {
         return 1;

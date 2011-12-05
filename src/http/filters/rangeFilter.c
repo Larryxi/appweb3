@@ -23,7 +23,6 @@ static bool fixRangeLength(MaConn *conn);
 static void outgoingRangeService(MaQueue *q)
 {
     MaPacket    *packet;
-    MaRange     *range;
     MaConn      *conn;
     MaRequest   *req;
     MaResponse  *resp;
@@ -31,7 +30,6 @@ static void outgoingRangeService(MaQueue *q)
     conn = q->conn;
     req = conn->request;
     resp = conn->response;
-    range = resp->currentRange;
 
     if (!(q->flags & MA_QUEUE_SERVICED)) {
         if (resp->code != MPR_HTTP_CODE_OK || !fixRangeLength(conn)) {
@@ -67,13 +65,11 @@ static void applyRange(MaQueue *q, MaPacket *packet)
 {
     MaRange     *range;
     MaConn      *conn;
-    MaRequest   *req;
     MaResponse  *resp;
     MprOff      endPacket, length, gap, span;
     int         count;
 
     conn = q->conn;
-    req = conn->request;
     resp = conn->response;
     range = resp->currentRange;
 

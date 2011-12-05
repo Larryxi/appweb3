@@ -141,13 +141,10 @@ static void addPacketForNet(MaQueue *q, MaPacket *packet)
 {
     MaResponse  *resp;
     MaConn      *conn;
-    MprIOVec    *iovec;
-    int         index, mask;
+    int         mask;
 
     conn = q->conn;
     resp = conn->response;
-    iovec = q->iovec;
-    index = q->ioIndex;
 
     mprAssert(q->count >= 0);
     mprAssert(q->ioIndex < (MA_MAX_IOVEC - 2));
@@ -217,10 +214,7 @@ static void freeNetPackets(MaQueue *q, int64 bytes)
 static void adjustNetVec(MaQueue *q, int written)
 {
     MprIOVec    *iovec;
-    MaResponse  *resp;
     int         len, i, j;
-
-    resp = q->conn->response;
 
     /*
      *  Cleanup the IO vector
