@@ -12,13 +12,17 @@ PACKS			:= binary dev source
 PKG_DIR			:= `pwd`/../staging
 INS_DIR 		:= c:/tmp/testInsAppweb
 
-install install-%:
+install: install-binary
+   
+install-%:
 	packs="binary dev"; \
 	[ "$$packs" = "binary dev" ] && BROWSER=--browser ; \
 	priv OPTIONS=$(OPTIONS) QUIET=$(QUIET) TRACE=$(TRACE) $(BLD_TOP)/build/bin/makeInstall \
 	$$BROWSER --root=$(ROOT_DIR) --install --with-conf="$(CONF)" --with-testweb pre $$packs post
 
-uninstall uninstall-%:
+uninstall: uninstall-binary
+   
+uninstall-%:
 	packs="binary dev" ; \
 	priv OPTIONS=$(OPTIONS) QUIET=$(QUIET) TRACE=$(TRACE) $(BLD_TOP)/build/bin/makeInstall \
 	--root=$(ROOT_DIR) --remove --with-testweb pre $$packs post
