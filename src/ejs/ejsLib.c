@@ -911,7 +911,7 @@ static EjsVar *insertArray(Ejs *ejs, EjsArray *ap, int argc, EjsVar **argv)
 {
     EjsArray    *args;
     EjsVar      **src, **dest;
-    int         i, pos, delta, oldLen, endInsert;
+    int         i, pos, delta, endInsert;
 
     mprAssert(argc == 2 && ejsIsArray(argv[1]));
 
@@ -929,7 +929,6 @@ static EjsVar *insertArray(Ejs *ejs, EjsArray *ap, int argc, EjsVar **argv)
     if (args->length <= 0) {
         return (EjsVar*) ap;
     }
-    oldLen = ap->length;
     if (growArray(ejs, ap, ap->length + args->length) < 0) {
         return 0;
     }
@@ -1482,7 +1481,7 @@ static EjsVar *unshiftArray(Ejs *ejs, EjsArray *ap, int argc, EjsVar **argv)
 {
     EjsArray    *args;
     EjsVar      **src, **dest;
-    int         i, delta, oldLen, endInsert;
+    int         i, delta, endInsert;
 
     mprAssert(argc == 1 && ejsIsArray(argv[0]));
 
@@ -1490,7 +1489,6 @@ static EjsVar *unshiftArray(Ejs *ejs, EjsArray *ap, int argc, EjsVar **argv)
     if (args->length <= 0) {
         return (EjsVar*) ap;
     }
-    oldLen = ap->length;
     if (growArray(ejs, ap, ap->length + args->length) < 0) {
         return 0;
     }
@@ -6437,7 +6435,7 @@ static EjsVar *error(Ejs *ejs, EjsVar *unused, int argc, EjsVar **argv)
 {
     EjsString   *s;
     EjsVar      *args, *vp;
-    int         i, count, junk;
+    int         i, count;
 
     mprAssert(argc == 1 && ejsIsArray(argv[0]));
 
@@ -6454,11 +6452,11 @@ static EjsVar *error(Ejs *ejs, EjsVar *unused, int argc, EjsVar **argv)
             }
             if (vp) {
                 s = (EjsString*) vp;
-                junk = (int) write(2, s->value, s->length);
+                if (write(2, s->value, s->length) != s->length) {}
             }
         }
     }
-    junk = (int) write(2, "\n", 1);
+    if (write(2, "\n", 1) != 1) {}
     return 0;
 }
 
@@ -6645,7 +6643,7 @@ static EjsVar *outputData(Ejs *ejs, EjsVar *unused, int argc, EjsVar **argv)
     EjsString   *s;
     EjsVar      *args, *vp;
     char        *cp, *tmp;
-    int         i, count, junk;
+    int         i, count;
 
     mprAssert(argc == 1 && ejsIsArray(argv[0]));
 
@@ -6666,15 +6664,15 @@ static EjsVar *outputData(Ejs *ejs, EjsVar *unused, int argc, EjsVar **argv)
                 if (ejsIsObject(vp) && s->length > 0 && s->value[0] == '"') {
                     tmp = mprStrdup(ejs, s->value);
                     cp = mprStrTrim(tmp, "\"");
-                    junk = (int) write(1, cp, strlen(cp));
+                    if (write(1, cp, strlen(cp)) != 0) {}
                     mprFree(tmp);
                 } else {
-                    junk = (int) write(1, s->value, s->length);
+                    if (write(1, s->value, s->length) != s->length) {}
                 }
             }
         }
     }
-    junk = (int) write(1, "\n", 1);
+    if (write(1, "\n", 1) != 1) {}
     return 0;
 }
 
@@ -6988,10 +6986,6 @@ void ejsCreateIteratorType(Ejs *ejs)
 
 void ejsConfigureIteratorType(Ejs *ejs)
 {
-    EjsType     *type;
-
-    type = ejs->iteratorType;
-
     /*
      *  Define the "next" method
      */
@@ -7403,14 +7397,10 @@ EjsVar *ejsSerialize(Ejs *ejs, EjsVar *vp, int maxDepth, bool showAll, bool show
  */
 static EjsVar *serialize(Ejs *ejs, EjsVar *unused, int argc, EjsVar **argv)
 {
-    EjsVar          *vp;
-    int             flags, maxDepth;
-    bool            showBase, showAll;
+    int     maxDepth;
+    bool    showBase, showAll;
 
-    flags = 0;
     maxDepth = MAXINT;
-
-    vp = argv[0];
 
     if (argc >= 2) {
         maxDepth = ejsGetInt(argv[1]);
@@ -7516,9 +7506,6 @@ static EjsVar *math_abs(Ejs *ejs, EjsVar *unused, int argc, EjsVar **argv)
  */
 static EjsVar *math_acos(Ejs *ejs, EjsVar *unused, int argc, EjsVar **argv)
 {
-    MprNumber   value;
-    
-    value = ejsGetNumber(argv[0]);
     return (EjsVar*) ejsCreateNumber(ejs, (MprNumber) acos(ejsGetNumber(argv[0])));
 }
 
@@ -9034,7 +9021,7 @@ EjsObject *ejsCreateObject(Ejs *ejs, EjsType *type, int numExtraSlots)
     EjsObject   *obj;
     EjsBlock    *instanceBlock;
     EjsType     *tp;
-    int         numSlots, roundSlots, size, hasNativeType;
+    int         numSlots, roundSlots, hasNativeType;
 
     mprAssert(type);
     mprAssert(numExtraSlots >= 0);
@@ -9074,9 +9061,10 @@ EjsObject *ejsCreateObject(Ejs *ejs, EjsType *type, int numExtraSlots)
             obj->slots = (EjsVar**) &(((char*) obj)[type->instanceSize]);
             obj->capacity = roundSlots;
         }
-
+#if UNUSED
     } else {
         size = type->instanceSize - (int) sizeof(EjsObject);
+#endif
     }
     obj->var.type = type;
     obj->var.isObject = 1;
@@ -9502,13 +9490,10 @@ int ejsLookupSingleProperty(Ejs *ejs, EjsObject *obj, EjsName *qname)
  */
 void ejsMarkObject(Ejs *ejs, EjsVar *parent, EjsObject *obj)
 {
-    EjsType     *type;
     EjsVar      *vp;
     int         i;
 
     mprAssert(ejsIsObject(obj) || ejsIsBlock(obj) || ejsIsFunction(obj) || ejsIsArray(obj) || ejsIsXML(obj));
-
-    type = obj->var.type;
 
     for (i = 0; i < obj->numProp; i++) {
         vp = obj->slots[i];
@@ -10072,19 +10057,16 @@ static int makeHash(EjsObject *obj)
 
 void ejsResetHash(Ejs *ejs, EjsObject *obj)
 {
-    EjsHashEntry    *entries;
     EjsNames        *names;
     EjsHashEntry    *he;
     int             i;
 
     names = obj->names;
-    entries = names->entries;
 
     /*
      *  Clear out hash linkage
      */
     memset(names->buckets, -1, names->sizeBuckets * sizeof(int));
-    entries = names->entries;
     for (i = 0; i < names->sizeEntries; i++) {
         he = &names->entries[i];
         he->nextSlot = -1;
@@ -10419,17 +10401,14 @@ static EjsVar *objectToJson(Ejs *ejs, EjsVar *vp, int argc, EjsVar **argv)
     EjsObject   *obj;
     EjsString   *sv;
     char        key[16], *cp;
-    int         c, isArray, i, count, slotNum, numInherited, maxDepth, flags, showAll, showBase;
+    int         c, isArray, i, count, slotNum, numInherited, maxDepth, flags;
 
     count = ejsGetPropertyCount(ejs, (EjsVar*) vp);
     if (count == 0 && vp->type != ejs->objectType && vp->type != ejs->arrayType) {
         return (EjsVar*) ejsToString(ejs, vp);
     }
-
     maxDepth = 99;
     flags = 0;
-    showAll = 0;
-    showBase = 0;
 
     isArray = ejsIsArray(vp);
     obj = (EjsObject*) vp;
@@ -11804,14 +11783,12 @@ static EjsVar *concatString(Ejs *ejs, EjsString *sp, int argc, EjsVar **argv)
 {
     EjsArray    *args;
     EjsString   *result;
-    int         i, count;
+    int         i;
 
     mprAssert(argc == 1 && ejsIsArray(argv[0]));
     args = (EjsArray*) argv[0];
-
     result = ejsDupString(ejs, sp);
 
-    count = ejsGetPropertyCount(ejs, (EjsVar*) args);
     for (i = 0; i < args->length; i++) {
         if (ejsStrcat(ejs, result, ejsGetProperty(ejs, (EjsVar*) args, i)) < 0) {
             ejsThrowMemoryError(ejs);
@@ -13048,13 +13025,10 @@ static EjsVar *trimString(Ejs *ejs, EjsString *sp, int argc,  EjsVar **argv)
  */
 static int catString(Ejs *ejs, EjsString *dest, char *str, int len)
 {
-    EjsString   *castSrc;
     char        *oldBuf, *buf;
     int         oldLen, newLen;
 
     mprAssert(dest);
-
-    castSrc = 0;
 
     oldBuf = dest->value;
     oldLen = dest->length;
@@ -16824,15 +16798,12 @@ static EjsVar *setUri(Ejs *ejs, EjsHttp *hp, int argc, EjsVar **argv)
  */
 static EjsVar *httpWait(Ejs *ejs, EjsHttp *hp, int argc, EjsVar **argv)
 {
-    MprTime     mark;
-    int         timeout;
+    int     timeout;
 
     timeout = (argc == 1) ? ejsGetInt(argv[0]) : MPR_TIMEOUT_HTTP;
     if (timeout < 0) {
         timeout = MAXINT;
     }
-    mark = mprGetTime(ejs);
-
     if (!hp->requestStarted && startRequest(ejs, hp, NULL, 0, NULL) < 0) {
         return 0;
     }
@@ -17560,7 +17531,6 @@ static EjsVar *copyPath(Ejs *ejs, EjsPath *fp, int argc, EjsVar **argv)
     MprFile     *from, *to;
     char        *buf, *toPath;
     uint        bytes;
-    int         rc;
 
     mprAssert(argc == 1);
     if ((toPath = getPath(ejs, argv[0])) == 0) {
@@ -17588,11 +17558,9 @@ static EjsVar *copyPath(Ejs *ejs, EjsPath *fp, int argc, EjsVar **argv)
         return 0;
     }
 
-    rc = 0;
     while ((bytes = mprRead(from, buf, MPR_BUFSIZE)) > 0) {
         if (mprWrite(to, buf, bytes) != bytes) {
             ejsThrowIOError(ejs, "Write error to %s", toPath);
-            rc = 0;
             break;
         }
     }
@@ -19324,9 +19292,6 @@ static EjsVar *setEnable(Ejs *ejs, EjsVar *thisObj, int argc, EjsVar **argv)
  */
 static EjsVar *runGC(Ejs *ejs, EjsVar *thisObj, int argc, EjsVar **argv)
 {
-    int     deep;
-
-    deep = ((argc == 1) && ejsIsBoolean(argv[1]));
     ejsCollectGarbage(ejs, EJS_GEN_NEW);
     return 0;
 }
@@ -20120,7 +20085,6 @@ static EjsVar *workerConstructor(Ejs *ejs, EjsWorker *worker, int argc, EjsVar *
     EjsVar          *options, *value;
     EjsName         qname;
     EjsWorker       *self;
-    EjsNamespace    *ns;
     cchar           *search, *name;
 
     worker->ejs = ejs;
@@ -20169,7 +20133,7 @@ static EjsVar *workerConstructor(Ejs *ejs, EjsWorker *worker, int argc, EjsVar *
     /*
      *  Workers have a dedicated namespace to enable viewing of the worker globals (self, onmessage, postMessage...)
      */
-    ns = ejsDefineReservedNamespace(wejs, wejs->globalBlock, 0, EJS_WORKER_NAMESPACE);
+    ejsDefineReservedNamespace(wejs, wejs->globalBlock, 0, EJS_WORKER_NAMESPACE);
 
     /*
      *  Make the inside worker permanent so we don't need to worry about whether worker->pair->ejs is valid
@@ -20301,9 +20265,7 @@ static int reapJoins(Ejs *ejs, EjsVar *workers)
 {
     EjsWorker   *worker;
     EjsArray    *set;
-    int         i, joined, completed;
-
-    joined = 0;
+    int         i, completed;
 
     lock(ejs);
     if (workers == 0 || workers == ejs->nullValue) {
@@ -20395,14 +20357,12 @@ static EjsVar *workerJoin(Ejs *ejs, EjsWorker *unused, int argc, EjsVar **argv)
 static void loadFile(EjsWorker *worker, cchar *path)
 {
     Ejs         *ejs;
-    EjsVar      *result;
     cchar       *cp;
 
     mprAssert(worker->inside);
     mprAssert(worker->pair && worker->pair->ejs);
 
     ejs = worker->ejs;
-    result = 0;
 
     if ((cp = strrchr(path, '.')) != NULL && strcmp(cp, EJS_MODULE_EXT) != 0) {
         if (ejs->service->loadScriptFile == 0) {
@@ -21180,7 +21140,7 @@ static EjsVar *invokeXmlOperator(Ejs *ejs, EjsXML *lhs, int opcode,  EjsXML *rhs
  */
 static int setXmlPropertyAttributeByName(Ejs *ejs, EjsXML *xml, EjsName *qname, EjsVar *value)
 {
-    EjsXML      *elt, *attribute, *rp, *xvalue, *lastElt;
+    EjsXML      *elt, *attribute, *xvalue, *lastElt;
     EjsString   *sv;
     EjsName     qn;
     char        *str;
@@ -21214,7 +21174,6 @@ static int setXmlPropertyAttributeByName(Ejs *ejs, EjsXML *xml, EjsName *qname, 
             mprAssert(qname->name[0] == '@');
             if (strcmp(elt->qname.name, &qname->name[1]) == 0) {
                 if (last >= 0) {
-                    rp = mprGetItem(xml->attributes, last);
                     mprRemoveItemAtPos(xml->attributes, last);
                 }
                 last = index;
@@ -24691,7 +24650,6 @@ static void VM(Ejs *ejs, EjsFunction *fun, EjsVar *thisObj, int argc, int stackA
     EjsEx           *ex;
     EjsFrame        *newFrame;
     char            *str;
-    uchar           *mark;
     int             i, offset, count, opcode;
 
 #if BLD_UNIX_LIKE || (VXWORKS && !BLD_CC_DIAB)
@@ -25357,7 +25315,9 @@ static void *opcodeJump[] = {
          *      Stack after         [value]
          */
         CASE (EJS_OP_GET_SCOPED_NAME):
+#if DYNAMIC_BINDING
             mark = FRAME->pc - 1;
+#endif
             qname = GET_NAME();
             vp = ejsGetVarByName(ejs, NULL, &qname, &lookup);
             if (unlikely(vp == 0)) {
@@ -25408,7 +25368,9 @@ static void *opcodeJump[] = {
          *      Stack after         [value]
          */
         CASE (EJS_OP_GET_SCOPED_NAME_EXPR):
+#if DYNAMIC_BINDING
             mark = FRAME->pc - 1;
+#endif
             qname.name = ejsToString(ejs, pop(ejs))->value;
             v1 = pop(ejs);
             if (ejsIsNamespace(v1)) {
@@ -27568,7 +27530,7 @@ static inline EjsEx *inHandler(Ejs *ejs, int kind)
 static inline uint findEndException(Ejs *ejs)
 {
     EjsFrame    *fp;
-    EjsEx       *best, *ex;
+    EjsEx       *ex;
     EjsCode     *code;
     uint        offset, pc;
     int         i;
@@ -27579,7 +27541,7 @@ static inline uint findEndException(Ejs *ejs)
     pc = (uint) (fp->pc - code->byteCode - 1);
     offset = 0;
 
-    for (best = 0, i = 0; i < code->numHandlers; i++) {
+    for (i = 0; i < code->numHandlers; i++) {
         ex = code->handlers[i];
         /*
          *  Comparison must include try and all catch handlers, incase there are multiple catch handlers
@@ -27676,12 +27638,10 @@ static void createExceptionBlock(Ejs *ejs, EjsEx *ex, int flags)
     EjsBlock        *block;
     EjsFrame        *fp;
     EjsState        *state;
-    EjsCode         *code;
     int             i, count;
 
     state = ejs->state;
     fp = state->fp;
-    code = &state->fp->function.body.code;
     mprAssert(ex);
 
     if (flags & EJS_EX_ITERATION) {
@@ -29853,7 +29813,6 @@ static int loadScriptModule(Ejs *ejs, MprFile *file, cchar *path, int flags)
 static int fixupTypes(Ejs *ejs, MprList *list)
 {
     EjsTypeFixup    *fixup;
-    EjsModule       *mp;
     EjsType         *type, *targetType;
     EjsBlock        *instanceBlock;
     EjsTrait        *trait;
@@ -29862,7 +29821,6 @@ static int fixupTypes(Ejs *ejs, MprList *list)
     int             next;
 
     for (next = 0; (fixup = (EjsTypeFixup*) mprGetNextItem(list, &next)) != 0; ) {
-        mp = 0;
         type = 0;
         if (fixup->typeSlotNum >= 0) {
             type = (EjsType*) ejsGetProperty(ejs, ejs->global, fixup->typeSlotNum);
@@ -31663,14 +31621,12 @@ static int cloneMaster(Ejs *ejs, Ejs *master)
  */
 static void allocNotifier(Ejs *ejs, uint size, uint total, bool granted)
 {
-    MprAlloc    *alloc;
     EjsVar      *argv[2], *thisObj;
 	va_list     dummy = VA_NULL;
     char        msg[MPR_MAX_STRING];
 
     if (!ejs->exception) {
         ejs->attention = 1;
-        alloc = mprGetAllocStats(ejs);
         if (granted) {
             if (ejs->memoryCallback) {
                 argv[0] = (EjsVar*) ejsCreateNumber(ejs, size);
@@ -34872,7 +34828,7 @@ static int build(EjsWeb *web, cchar *kind, cchar *name, cchar *module, cchar *so
 EjsVar *ejsCreateCookies(Ejs *ejs)
 {
     EjsWeb      *web;
-    cchar       *domain, *path, *version, *cookieName, *cookieValue;
+    cchar       *domain, *path, *cookieName, *cookieValue;
     char        *cookieString, *value, *tok, *key, *dp, *sp;
     int         seenSemi;
 
@@ -34954,9 +34910,11 @@ EjsVar *ejsCreateCookies(Ejs *ejs)
                 break;
 
             case 'v':
+#if UNUSED
                 if (mprStrcmpAnyCase(key, "version") == 0) {
                     version = value;
                 }
+#endif
                 break;
             default:
                 break;
