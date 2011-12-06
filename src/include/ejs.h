@@ -4586,7 +4586,6 @@ typedef struct EjsWebControl {
     MprEvent    *sessionTimer;              /* Session expiry timer */
     cchar       *serverRoot;                /* Web serverRoot path */
     cchar       *searchPath;                /* Module search path */
-    int         sessionTimeout;             /* Default session timeout */
     int         nextSession;                /* Session ID counter */
 
     void        (*defineParams)(void *handle);
@@ -4640,6 +4639,7 @@ typedef struct EjsWeb {
     EjsVar          *files;         /* Cached files object */
     EjsVar          *headers;       /* Cached headers object */
     struct EjsWebSession *session;  /* Current session */
+    int             sessionTimeout; /* Location session timeout */
 
     char            *error;         /* Error message */
     char            *cookie;        /* Cookie header */

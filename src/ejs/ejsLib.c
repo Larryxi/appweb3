@@ -33833,11 +33833,11 @@ static EjsVar *createSession(Ejs *ejs, EjsVar *unused, int argc, EjsVar **argv)
 
     mprAssert(argc == 0 || argc == 1);
 
-    timeout = (argc == 1) ? ejsGetInt(argv[0]): 0;
     web = ejsGetHandle(ejs);
     if (web->session) {
         return (EjsVar*) web->session;
     }
+    timeout = (argc == 1) ? ejsGetInt(argv[0]): web->sessionTimeout;
     session = (EjsVar*) ejsCreateSession(ejs, timeout, 0);
 
     /*
@@ -34327,7 +34327,6 @@ static int initInterp(Ejs *ejs, EjsWebControl *control)
     }
 #endif
 #endif
-    control->sessionTimeout = EJS_SESSION_TIMEOUT;
 #if ES_ejs_web_sessions
     sessions = ejsGetProperty(ejs, ejs->global, ES_ejs_web_sessions);
 #else
@@ -34518,9 +34517,8 @@ static int createController(EjsWeb *web)
     if ((web->cookie = (char*) ejsGetHeader(ejs, "HTTP_COOKIE")) != 0) {
         ejsParseWebSessionCookie(web);
     }
-
     if (web->flags & EJS_WEB_FLAG_SESSION && web->session == 0) {
-        web->session = ejsCreateSession(ejs, 0, 0);
+        web->session = ejsCreateSession(ejs, web->sessionTimeout, 0);
     }
 
     /*
@@ -36022,7 +36020,10 @@ EjsWebSession *ejsCreateSession(Ejs *ejs, int timeout, bool secure)
     control = web->control;
 
     if (timeout <= 0) {
-        timeout = control->sessionTimeout;
+        timeout = web->sessionTimeout;
+    }
+    if (timeout <= 0) {
+        timeout = EJS_SESSION_TIMEOUT;
     }
 
 #if ES_ejs_web_Session
