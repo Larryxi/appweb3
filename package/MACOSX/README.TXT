@@ -16,13 +16,13 @@ This software is copyrighted and distributed under license. Please read the LICE
 System Requirements
 
     * MAC OS X 10.4 or later
-    * 256MB RAM
-    * 10 MB free disk space
+    * 1GB RAM
+    * 50 MB free disk space
     * TCP/IP network stack
 
 To rebuild Appweb from source code, you will need at least:
 
-    * 30 MB disk space
+    * 80 MB disk space
 
 
 Development Environment Platform Support

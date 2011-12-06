@@ -38,13 +38,13 @@ Run-time System Requirements
 
 To install Embedthis Appweb on a development system, you will need at least the following:
 
-    * 256MB RAM
-    * 10 MB free disk space
+    * 1GB RAM
+    * 50 MB free disk space
     * TCP/IP network stack
 
 To rebuild Appweb from source code, you will need at least:
 
-    * 30 MB disk space
+    * 80 MB disk space
 
 
 Development Environment Platform Support

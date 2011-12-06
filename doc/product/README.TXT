@@ -38,20 +38,20 @@ Operating System Support
     * VxWorks (x86,arm,ppc,sparc,xscale,mips)
     * Solaris (sparc,x86,x86_64)
 
-To install Appweb, your system will need at least the following:
+To install Appweb, your development system will need at least the following:
 
-    * 40 MB Disk
-    * 32 MB RAM
+    * 50 MB Disk
+    * 1 GB RAM
+
+To rebuild Appweb from source code, you will need at least:
+
+    * 80 MB disk space
 
 To deploy Appweb in an embedded environment, you will need at least the 
 following:
 
-    * 800 KB Disk / ROM space
-    * 1MB RAM
-
-To rebuild Appweb from source code, you will need at least:
-
-    * 50 MB disk space
+    * 1MB KB Disk / ROM space
+    * 2MB RAM
 
 
 Installation Package Formats
