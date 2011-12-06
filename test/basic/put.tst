@@ -26,6 +26,5 @@ while (file.read(buf)) {
     http.write(buf)
     buf.flush()
 }
-http.write()
 http.wait()
-assert(http.code == 204)
+assert(http.code == 201 || http.code == 204)
