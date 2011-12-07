@@ -264,7 +264,7 @@ ask() {
 saveSetup() {
     local firstChar
 
-    mkdir -p "$BLD_CFG_PREFIX"
+    mkdir -p "$BLD_PRD_PREFIX"
     echo -e "FMT=$FMT\nbinDir=\"${BLD_PRD_PREFIX}\"\ninstallbin=$installbin\ninstalldev=$installdev\nrunDaemon=$runDaemon\nhttpPort=$HTTP_PORT\nsslPort=$SSL_PORT\nusername=$username\ngroupname=$groupname\nhostname=$HOSTNAME" \
         >"$BLD_PRD_PREFIX/install.conf"
 }
