@@ -252,6 +252,8 @@ preClean() {
 		removeIntermediateFiles access.log error.log '*.log.old' .dummy $BLD_PRODUCT.conf make.log
 		cd "$BLD_LIB_PREFIX"
 		removeIntermediateFiles access.log error.log '*.log.old' .dummy $BLD_PRODUCT.conf make.log
+		cd "$BLD_WEB_PREFIX"
+		removeIntermediateFiles *.mod *.tmp
 		cd "$cdir"
 	fi
 
