@@ -41,7 +41,7 @@ cpy -f "${docFilter}" -p doc "${DIR}"
 samplesFilter="\.mod$|\.so$|\.dylib$|\.js$|\.o"
 cpy -f "${samplesFilter}" -p samples "${DIR}"
 
-projectsFilter="/Debug|/Release|\.user|\.suo|\.ncb|*.mode1v3|*.pbxuser|/appweb.build/|iphone"
+projectsFilter="WIN|/Debug|/Release|\.user|\.suo|\.ncb|*.mode1v3|*.pbxuser|/appweb.build/|iphone"
 cpy -f "${projectsFilter}" -p projects "${DIR}"
 
 cat src/include/master/buildConfig.h | sed 's/-VERSION-/${BLD_VERSION}/;s/-NUMBER-/${BLD_NUMBER}/' \
