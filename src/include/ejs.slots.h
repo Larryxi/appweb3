@@ -18,169 +18,169 @@
 /**
  *   Class property slots for the "global" class 
  */
-#define ES_Array                                                       0
-#define ES_Block                                                       1
-#define ES_Boolean                                                     2
-#define ES_ByteArray                                                   3
-#define ES_Date                                                        4
-#define ES_ArgError                                                    5
-#define ES_ArithmeticError                                             6
-#define ES_AssertError                                                 7
-#define ES_InstructionError                                            8
-#define ES_Error                                                       9
-#define ES_IOError                                                     10
-#define ES_InternalError                                               11
-#define ES_MemoryError                                                 12
-#define ES_OutOfBoundsError                                            13
-#define ES_ReferenceError                                              14
-#define ES_ResourceError                                               15
-#define ES_StateError                                                  16
-#define ES_SyntaxError                                                 17
-#define ES_TypeError                                                   18
-#define ES_URIError                                                    19
-#define ES_Frame                                                       20
-#define ES_Function                                                    21
-#define ES_makeGetter                                                  22
-#define ES_clearBoundThis                                              23
-#define ES_ECMA                                                        24
-#define ES_public                                                      25
-#define ES_internal                                                    26
-#define ES_intrinsic                                                   27
-#define ES_iterator                                                    28
-#define ES_CONFIG                                                      29
-#define ES_TODO                                                        30
-#define ES_FUTURE                                                      31
-#define ES_ASC                                                         32
-#define ES_DOC_ONLY                                                    33
-#define ES_DEPRECATED                                                  34
-#define ES_REGEXP                                                      35
-#define ES_boolean                                                     36
-#define ES_double                                                      37
-#define ES_num                                                         38
-#define ES_string                                                      39
-#define ES_false                                                       40
-#define ES_global                                                      41
-#define ES_null                                                        42
-#define ES_Infinity                                                    43
-#define ES_NegativeInfinity                                            44
-#define ES_NaN                                                         45
-#define ES_StopIteration                                               46
-#define ES_true                                                        47
-#define ES_undefined                                                   48
-#define ES_void                                                        49
-#define ES_assert                                                      50
-#define ES_breakpoint                                                  51
-#define ES_cloneBase                                                   52
-#define ES_deserialize                                                 53
-#define ES_decodeURI                                                   54
-#define ES_dump                                                        55
-#define ES_error                                                       56
-#define ES_escape                                                      57
-#define ES_encodeURI                                                   58
-#define ES_md5                                                         59
-#define ES_eval                                                        60
-#define ES_formatStack                                                 61
-#define ES_hashcode                                                    62
-#define ES_input                                                       63
-#define ES_load                                                        64
-#define ES_output                                                      65
-#define ES_print                                                       66
-#define ES_printv                                                      67
-#define ES_parse                                                       68
-#define ES_serialize                                                   69
-#define ES_printHash                                                   70
-#define ES_instanceOf                                                  71
-#define ES_Iterable                                                    72
-#define ES_Iterator                                                    73
-#define ES_JSON                                                        74
-#define ES_Math                                                        75
-#define ES_Namespace                                                   76
-#define ES_Null                                                        77
-#define ES_Number                                                      78
-#define ES_Object                                                      79
-#define ES_Reflect                                                     80
-#define ES_typeOf                                                      81
-#define ES_RegExp                                                      82
-#define ES_Stream                                                      83
-#define ES_String                                                      84
+#define ES_Date                                                        0
+#define ES_Number                                                      1
+#define ES_ECMA                                                        2
+#define ES_public                                                      3
+#define ES_internal                                                    4
+#define ES_intrinsic                                                   5
+#define ES_iterator                                                    6
+#define ES_CONFIG                                                      7
+#define ES_TODO                                                        8
+#define ES_FUTURE                                                      9
+#define ES_ASC                                                         10
+#define ES_DOC_ONLY                                                    11
+#define ES_DEPRECATED                                                  12
+#define ES_REGEXP                                                      13
+#define ES_boolean                                                     14
+#define ES_double                                                      15
+#define ES_num                                                         16
+#define ES_string                                                      17
+#define ES_false                                                       18
+#define ES_global                                                      19
+#define ES_null                                                        20
+#define ES_Infinity                                                    21
+#define ES_NegativeInfinity                                            22
+#define ES_NaN                                                         23
+#define ES_StopIteration                                               24
+#define ES_true                                                        25
+#define ES_undefined                                                   26
+#define ES_void                                                        27
+#define ES_assert                                                      28
+#define ES_breakpoint                                                  29
+#define ES_cloneBase                                                   30
+#define ES_deserialize                                                 31
+#define ES_decodeURI                                                   32
+#define ES_dump                                                        33
+#define ES_error                                                       34
+#define ES_escape                                                      35
+#define ES_encodeURI                                                   36
+#define ES_md5                                                         37
+#define ES_eval                                                        38
+#define ES_formatStack                                                 39
+#define ES_hashcode                                                    40
+#define ES_input                                                       41
+#define ES_load                                                        42
+#define ES_output                                                      43
+#define ES_print                                                       44
+#define ES_printv                                                      45
+#define ES_parse                                                       46
+#define ES_serialize                                                   47
+#define ES_printHash                                                   48
+#define ES_instanceOf                                                  49
+#define ES_Array                                                       50
+#define ES_Stream                                                      51
+#define ES_Math                                                        52
+#define ES_RegExp                                                      53
+#define ES_Iterable                                                    54
+#define ES_Iterator                                                    55
+#define ES_Void                                                        56
+#define ES_ByteArray                                                   57
+#define ES_Reflect                                                     58
+#define ES_typeOf                                                      59
+#define ES_Boolean                                                     60
+#define ES_String                                                      61
+#define ES_Namespace                                                   62
+#define ES_Function                                                    63
+#define ES_makeGetter                                                  64
+#define ES_clearBoundThis                                              65
+#define ES_JSON                                                        66
+#define ES_Null                                                        67
+#define ES_ArgError                                                    68
+#define ES_ArithmeticError                                             69
+#define ES_AssertError                                                 70
+#define ES_InstructionError                                            71
+#define ES_Error                                                       72
+#define ES_IOError                                                     73
+#define ES_InternalError                                               74
+#define ES_MemoryError                                                 75
+#define ES_OutOfBoundsError                                            76
+#define ES_ReferenceError                                              77
+#define ES_ResourceError                                               78
+#define ES_StateError                                                  79
+#define ES_SyntaxError                                                 80
+#define ES_TypeError                                                   81
+#define ES_URIError                                                    82
+#define ES_Frame                                                       83
+#define ES_Block                                                       84
 #define ES_Type                                                        85
-#define ES_Void                                                        86
-#define ES_ejs_db_Database                                             87
-#define ES_ejs_db_DatabaseConnector                                    88
-#define ES_ejs_db_Record                                               89
-#define ES_ejs_db_Column                                               90
-#define ES_ejs_db_plural                                               91
-#define ES_ejs_db_singular                                             92
-#define ES_ejs_db_mapType                                              93
-#define ES_ejs_db_Sqlite                                               94
-#define ES_ejs_events_Dispatcher                                       95
-#define ES_Endpoint                                                    96
-#define ES_ejs_events_Event                                            97
-#define ES_ejs_events_ErrorEvent                                       98
-#define ES_ejs_events_Timer                                            99
-#define ES_ejs_events_TimerEvent                                       100
-#define ES_ejs_io_BinaryStream                                         101
-#define ES_ejs_io_File                                                 102
-#define ES_ejs_io_FileSystem                                           103
-#define ES_ejs_io_Http                                                 104
-#define ES_ejs_io_HttpDataEvent                                        105
-#define ES_ejs_io_HttpErrorEvent                                       106
-#define ES_ejs_io_Path                                                 107
-#define ES_ejs_io_TextStream                                           108
-#define ES_ejs_io_XMLHttp                                              109
-#define ES_ejs_sys_App                                                 110
+#define ES_Object                                                      86
+#define ES_ejs_db_Record                                               87
+#define ES_ejs_db_Column                                               88
+#define ES_ejs_db_plural                                               89
+#define ES_ejs_db_singular                                             90
+#define ES_ejs_db_mapType                                              91
+#define ES_ejs_db_Sqlite                                               92
+#define ES_ejs_db_Database                                             93
+#define ES_ejs_db_DatabaseConnector                                    94
+#define ES_ejs_events_Timer                                            95
+#define ES_ejs_events_TimerEvent                                       96
+#define ES_ejs_events_Dispatcher                                       97
+#define ES_Endpoint                                                    98
+#define ES_ejs_events_Event                                            99
+#define ES_ejs_events_ErrorEvent                                       100
+#define ES_ejs_io_XMLHttp                                              101
+#define ES_ejs_io_Http                                                 102
+#define ES_ejs_io_HttpDataEvent                                        103
+#define ES_ejs_io_HttpErrorEvent                                       104
+#define ES_ejs_io_Path                                                 105
+#define ES_ejs_io_TextStream                                           106
+#define ES_ejs_io_BinaryStream                                         107
+#define ES_ejs_io_FileSystem                                           108
+#define ES_ejs_io_File                                                 109
+#define ES_ejs_sys_GC                                                  110
 #define ES_ejs_sys_Cmd                                                 111
-#define ES_gc                                                          112
-#define ES_readFile                                                    113
-#define ES_ejs_sys_Config                                              114
-#define ES_ejs_sys_GC                                                  115
-#define ES_ejs_sys_Memory                                              116
-#define ES_ejs_sys_System                                              117
-#define ES_basename                                                    118
-#define ES_chdir                                                       119
-#define ES_chmod                                                       120
-#define ES_close                                                       121
-#define ES_cp                                                          122
-#define ES_dirname                                                     123
-#define ES_exists                                                      124
-#define ES_extension                                                   125
-#define ES_isDir                                                       126
-#define ES_kill                                                        127
-#define ES_ls                                                          128
-#define ES_find                                                        129
-#define ES_mkdir                                                       130
-#define ES_mv                                                          131
-#define ES_open                                                        132
-#define ES_pwd                                                         133
-#define ES_read                                                        134
-#define ES_rm                                                          135
-#define ES_rmdir                                                       136
-#define ES_tempname                                                    137
-#define ES_write                                                       138
-#define ES_ejs_sys_Worker                                              139
-#define ES_ejs_sys_worker_self                                         140
-#define ES_ejs_sys_worker_exit                                         141
-#define ES_ejs_sys_worker_postMessage                                  142
-#define ES_ejs_sys_worker_onerror                                      143
-#define ES_ejs_sys_worker_set_onerror                                  144
-#define ES_ejs_sys_worker_onmessage                                    145
-#define ES_ejs_sys_worker_set_onmessage                                146
+#define ES_basename                                                    112
+#define ES_chdir                                                       113
+#define ES_chmod                                                       114
+#define ES_close                                                       115
+#define ES_cp                                                          116
+#define ES_dirname                                                     117
+#define ES_exists                                                      118
+#define ES_extension                                                   119
+#define ES_isDir                                                       120
+#define ES_kill                                                        121
+#define ES_ls                                                          122
+#define ES_find                                                        123
+#define ES_mkdir                                                       124
+#define ES_mv                                                          125
+#define ES_open                                                        126
+#define ES_pwd                                                         127
+#define ES_read                                                        128
+#define ES_rm                                                          129
+#define ES_rmdir                                                       130
+#define ES_tempname                                                    131
+#define ES_write                                                       132
+#define ES_ejs_sys_App                                                 133
+#define ES_ejs_sys_System                                              134
+#define ES_ejs_sys_Config                                              135
+#define ES_ejs_sys_Memory                                              136
+#define ES_ejs_sys_Worker                                              137
+#define ES_ejs_sys_worker_self                                         138
+#define ES_ejs_sys_worker_exit                                         139
+#define ES_ejs_sys_worker_postMessage                                  140
+#define ES_ejs_sys_worker_onerror                                      141
+#define ES_ejs_sys_worker_set_onerror                                  142
+#define ES_ejs_sys_worker_onmessage                                    143
+#define ES_ejs_sys_worker_set_onmessage                                144
+#define ES_gc                                                          145
+#define ES_readFile                                                    146
 #define ES_ejs_web_Cache                                               147
-#define ES_ejs_web_GoogleConnector                                     148
-#define ES_ejs_web_HtmlConnector                                       149
-#define ES_ejs_web_action                                              150
-#define ES_ejs_web_view                                                151
-#define ES_ejs_web_Controller                                          152
-#define ES_ejs_web__SoloController                                     153
-#define ES_ejs_web_Cookie                                              154
-#define ES_ejs_web_Host                                                155
-#define ES_ejs_web_Request                                             156
-#define ES_ejs_web_Response                                            157
-#define ES_ejs_web_sessions                                            158
-#define ES_ejs_web_Session                                             159
-#define ES_ejs_web_UploadFile                                          160
-#define ES_ejs_web_View                                                161
-#define ES_LocalModel                                                  162
+#define ES_ejs_web_UploadFile                                          148
+#define ES_ejs_web_View                                                149
+#define ES_LocalModel                                                  150
+#define ES_ejs_web_GoogleConnector                                     151
+#define ES_ejs_web_HtmlConnector                                       152
+#define ES_ejs_web_Response                                            153
+#define ES_ejs_web_Request                                             154
+#define ES_ejs_web_Cookie                                              155
+#define ES_ejs_web_Host                                                156
+#define ES_ejs_web_action                                              157
+#define ES_ejs_web_view                                                158
+#define ES_ejs_web_Controller                                          159
+#define ES_ejs_web__SoloController                                     160
+#define ES_ejs_web_sessions                                            161
+#define ES_ejs_web_Session                                             162
 #define ES_XML                                                         163
 #define ES_XMLList                                                     164
 #define ES_global_NUM_CLASS_PROP                                       165
@@ -194,8 +194,6 @@
  * 
  *    Local slots for methods in type global 
  */
-#define ES_makeGetter_fn                                               0
-#define ES_clearBoundThis_fn                                           0
 #define ES_assert_condition                                            0
 #define ES_cloneBase_klass                                             0
 #define ES_deserialize_obj                                             0
@@ -223,12 +221,12 @@
 #define ES_instanceOf_obj                                              0
 #define ES_instanceOf_target                                           1
 #define ES_typeOf_o                                                    0
+#define ES_makeGetter_fn                                               0
+#define ES_clearBoundThis_fn                                           0
 #define ES_ejs_db_plural_name                                          0
 #define ES_ejs_db_singular_name                                        0
 #define ES_ejs_db_singular_s                                           1
 #define ES_ejs_db_mapType_value                                        0
-#define ES_readFile_path                                               0
-#define ES_readFile_encoding                                           1
 #define ES_basename_path                                               0
 #define ES_chdir_dir                                                   0
 #define ES_chmod_path                                                  0
@@ -269,209 +267,8 @@
 #define ES_ejs_sys_worker_postMessage_data                             0
 #define ES_ejs_sys_worker_set_onerror_fun                              0
 #define ES_ejs_sys_worker_set_onmessage_fun                            0
-
-
-/**
- *   Class property slots for the "Array" class 
- */
-#define ES_Array__origin                                               6
-#define ES_Array_Array                                                 6
-#define ES_Array_append                                                7
-#define ES_Array_clear                                                 8
-#define ES_Array_compact                                               9
-#define ES_Array_concat                                                10
-#define ES_Array_contains                                              11
-#define ES_Array_every                                                 12
-#define ES_Array_filter                                                13
-#define ES_Array_find                                                  14
-#define ES_Array_findAll                                               15
-#define ES_Array_forEach                                               16
-#define ES_Array_indexOf                                               17
-#define ES_Array_insert                                                18
-#define ES_Array_join                                                  19
-#define ES_Array_lastIndexOf                                           20
-#define ES_Array_set_length                                            21
-#define ES_Array_map                                                   22
-#define ES_Array_pop                                                   23
-#define ES_Array_push                                                  24
-#define ES_Array_reject                                                25
-#define ES_Array_remove                                                26
-#define ES_Array_reverse                                               27
-#define ES_Array_shift                                                 28
-#define ES_Array_slice                                                 29
-#define ES_Array_some                                                  30
-#define ES_Array_sort                                                  31
-#define ES_Array_splice                                                32
-#define ES_Array_transform                                             33
-#define ES_Array_unique                                                34
-#define ES_Array_unshift                                               35
-#define ES_Array_NUM_CLASS_PROP                                        36
-
-/**
- * Instance slots for "Array" type 
- */
-#define ES_Array_NUM_INSTANCE_PROP                                     0
-
-/**
- * 
- *    Local slots for methods in type Array 
- */
-#define ES_Array_Array_values                                          0
-#define ES_Array_append_obj                                            0
-#define ES_Array_concat_args                                           0
-#define ES_Array_contains_element                                      0
-#define ES_Array_every_match                                           0
-#define ES_Array_every__hoisted_1_i                                    1
-#define ES_Array_filter_match                                          0
-#define ES_Array_find_match                                            0
-#define ES_Array_find__hoisted_1_i                                     1
-#define ES_Array_findAll_match                                         0
-#define ES_Array_findAll_result                                        1
-#define ES_Array_findAll__hoisted_2_i                                  2
-#define ES_Array_forEach_modifier                                      0
-#define ES_Array_indexOf_element                                       0
-#define ES_Array_indexOf_startIndex                                    1
-#define ES_Array_insert_pos                                            0
-#define ES_Array_insert_args                                           1
-#define ES_Array_join_sep                                              0
-#define ES_Array_lastIndexOf_element                                   0
-#define ES_Array_lastIndexOf_startIndex                                1
-#define ES_Array_set_length_value                                      0
-#define ES_Array_map_mapper                                            0
-#define ES_Array_map_result                                            1
-#define ES_Array_push_items                                            0
-#define ES_Array_reject_match                                          0
-#define ES_Array_reject_result                                         1
-#define ES_Array_reject__hoisted_2_i                                   2
-#define ES_Array_remove_start                                          0
-#define ES_Array_remove_end                                            1
-#define ES_Array_slice_start                                           0
-#define ES_Array_slice_end                                             1
-#define ES_Array_slice_step                                            2
-#define ES_Array_some_match                                            0
-#define ES_Array_some_result                                           1
-#define ES_Array_some__hoisted_2_i                                     2
-#define ES_Array_sort_compare                                          0
-#define ES_Array_sort_order                                            1
-#define ES_Array_splice_start                                          0
-#define ES_Array_splice_deleteCount                                    1
-#define ES_Array_splice_values                                         2
-#define ES_Array_transform_mapper                                      0
-#define ES_Array_transform__hoisted_1_i                                1
-#define ES_Array_unshift_items                                         0
-
-
-/**
- *   Class property slots for the "Block" class 
- */
-#define ES_Block__origin                                               6
-#define ES_Block_NUM_CLASS_PROP                                        6
-
-/**
- * Instance slots for "Block" type 
- */
-#define ES_Block_NUM_INSTANCE_PROP                                     0
-
-
-/**
- *   Class property slots for the "Boolean" class 
- */
-#define ES_Boolean__origin                                             6
-#define ES_Boolean_Boolean                                             6
-#define ES_Boolean_NUM_CLASS_PROP                                      7
-
-/**
- * Instance slots for "Boolean" type 
- */
-#define ES_Boolean_NUM_INSTANCE_PROP                                   0
-
-/**
- * 
- *    Local slots for methods in type Boolean 
- */
-#define ES_Boolean_Boolean_value                                       0
-
-
-/**
- *   Class property slots for the "ByteArray" class 
- */
-#define ES_ByteArray__origin                                           6
-#define ES_ByteArray_ByteArray                                         6
-#define ES_ByteArray__initializer__ByteArray_initializer               7
-#define ES_ByteArray_LittleEndian                                      8
-#define ES_ByteArray_BigEndian                                         9
-#define ES_ByteArray_available                                         10
-#define ES_ByteArray_close                                             11
-#define ES_ByteArray_compact                                           12
-#define ES_ByteArray_copyIn                                            13
-#define ES_ByteArray_copyOut                                           14
-#define ES_ByteArray_endian                                            15
-#define ES_ByteArray_set_endian                                        16
-#define ES_ByteArray_flush                                             17
-#define ES_ByteArray_set_input                                         18
-#define ES_ByteArray_input                                             19
-#define ES_ByteArray_output                                            20
-#define ES_ByteArray_set_output                                        21
-#define ES_ByteArray_read                                              22
-#define ES_ByteArray_readBoolean                                       23
-#define ES_ByteArray_readByte                                          24
-#define ES_ByteArray_readDate                                          25
-#define ES_ByteArray_readDouble                                        26
-#define ES_ByteArray_readInteger                                       27
-#define ES_ByteArray_readLong                                          28
-#define ES_ByteArray_readPosition                                      29
-#define ES_ByteArray_set_readPosition                                  30
-#define ES_ByteArray_readShort                                         31
-#define ES_ByteArray_readString                                        32
-#define ES_ByteArray_readXML                                           33
-#define ES_ByteArray_reset                                             34
-#define ES_ByteArray_room                                              35
-#define ES_ByteArray_write                                             36
-#define ES_ByteArray_writeByte                                         37
-#define ES_ByteArray_writeShort                                        38
-#define ES_ByteArray_writeDouble                                       39
-#define ES_ByteArray_writeInteger                                      40
-#define ES_ByteArray_writeLong                                         41
-#define ES_ByteArray_writePosition                                     42
-#define ES_ByteArray_set_writePosition                                 43
-#define ES_ByteArray_NUM_CLASS_PROP                                    44
-
-/**
- * Instance slots for "ByteArray" type 
- */
-#define ES_ByteArray_NUM_INSTANCE_PROP                                 0
-
-/**
- * 
- *    Local slots for methods in type ByteArray 
- */
-#define ES_ByteArray_ByteArray_size                                    0
-#define ES_ByteArray_ByteArray_growable                                1
-#define ES_ByteArray_close_graceful                                    0
-#define ES_ByteArray_copyIn_destOffset                                 0
-#define ES_ByteArray_copyIn_src                                        1
-#define ES_ByteArray_copyIn_srcOffset                                  2
-#define ES_ByteArray_copyIn_count                                      3
-#define ES_ByteArray_copyOut_srcOffset                                 0
-#define ES_ByteArray_copyOut_dest                                      1
-#define ES_ByteArray_copyOut_destOffset                                2
-#define ES_ByteArray_copyOut_count                                     3
-#define ES_ByteArray_set_endian_value                                  0
-#define ES_ByteArray_flush_graceful                                    0
-#define ES_ByteArray_set_input_callback                                0
-#define ES_ByteArray_set_output_callback                               0
-#define ES_ByteArray_read_buffer                                       0
-#define ES_ByteArray_read_offset                                       1
-#define ES_ByteArray_read_count                                        2
-#define ES_ByteArray_set_readPosition_position                         0
-#define ES_ByteArray_readString_count                                  0
-#define ES_ByteArray_write_data                                        0
-#define ES_ByteArray_writeByte_data                                    0
-#define ES_ByteArray_writeShort_data                                   0
-#define ES_ByteArray_writeDouble_data                                  0
-#define ES_ByteArray_writeInteger_data                                 0
-#define ES_ByteArray_writeLong_data                                    0
-#define ES_ByteArray_set_writePosition_position                        0
+#define ES_readFile_path                                               0
+#define ES_readFile_encoding                                           1
 
 
 /**
@@ -607,6 +404,618 @@
 #define ES_Date_UTC_seconds                                            5
 #define ES_Date_UTC_milliseconds                                       6
 #define ES_Date_set_year_year                                          0
+
+
+/**
+ *   Class property slots for the "Number" class 
+ */
+#define ES_Number__origin                                              6
+#define ES_Number_Number                                               6
+#define ES_Number__initializer__Number_initializer                     7
+#define ES_Number_MAX_VALUE                                            8
+#define ES_Number_MIN_VALUE                                            9
+#define ES_Number_NaN                                                  10
+#define ES_Number_NEGATIVE_INFINITY                                    11
+#define ES_Number_POSITIVE_INFINITY                                    12
+#define ES_Number_MaxValue                                             13
+#define ES_Number_MinValue                                             14
+#define ES_Number_abs                                                  15
+#define ES_Number_ceil                                                 16
+#define ES_Number_floor                                                17
+#define ES_Number_isFinite                                             18
+#define ES_Number_isNaN                                                19
+#define ES_Number_round                                                20
+#define ES_Number_toExponential                                        21
+#define ES_Number_toFixed                                              22
+#define ES_Number_toPrecision                                          23
+#define ES_Number_byte                                                 24
+#define ES_Number_integral                                             25
+#define ES_Number_max                                                  26
+#define ES_Number_min                                                  27
+#define ES_Number_power                                                28
+#define ES_Number_NUM_CLASS_PROP                                       29
+
+/**
+ * Instance slots for "Number" type 
+ */
+#define ES_Number_NUM_INSTANCE_PROP                                    0
+
+/**
+ * 
+ *    Local slots for methods in type Number 
+ */
+#define ES_Number_Number_value                                         0
+#define ES_Number_toExponential_fractionDigits                         0
+#define ES_Number_toFixed_fractionDigits                               0
+#define ES_Number_toPrecision_numDigits                                0
+#define ES_Number_integral_size                                        0
+#define ES_Number_max_other                                            0
+#define ES_Number_max_result                                           1
+#define ES_Number_max__hoisted_2_n                                     2
+#define ES_Number_min_other                                            0
+#define ES_Number_min_result                                           1
+#define ES_Number_min__hoisted_2_n                                     2
+#define ES_Number_power_nth                                            0
+
+
+/**
+ *   Class property slots for the "StopIteration" class 
+ */
+#define ES_StopIteration__origin                                       6
+#define ES_StopIteration_NUM_CLASS_PROP                                6
+
+/**
+ * Instance slots for "StopIteration" type 
+ */
+#define ES_StopIteration_NUM_INSTANCE_PROP                             0
+
+
+/**
+ *   Class property slots for the "Array" class 
+ */
+#define ES_Array__origin                                               6
+#define ES_Array_Array                                                 6
+#define ES_Array_append                                                7
+#define ES_Array_clear                                                 8
+#define ES_Array_compact                                               9
+#define ES_Array_concat                                                10
+#define ES_Array_contains                                              11
+#define ES_Array_every                                                 12
+#define ES_Array_filter                                                13
+#define ES_Array_find                                                  14
+#define ES_Array_findAll                                               15
+#define ES_Array_forEach                                               16
+#define ES_Array_indexOf                                               17
+#define ES_Array_insert                                                18
+#define ES_Array_join                                                  19
+#define ES_Array_lastIndexOf                                           20
+#define ES_Array_set_length                                            21
+#define ES_Array_map                                                   22
+#define ES_Array_pop                                                   23
+#define ES_Array_push                                                  24
+#define ES_Array_reject                                                25
+#define ES_Array_remove                                                26
+#define ES_Array_reverse                                               27
+#define ES_Array_shift                                                 28
+#define ES_Array_slice                                                 29
+#define ES_Array_some                                                  30
+#define ES_Array_sort                                                  31
+#define ES_Array_splice                                                32
+#define ES_Array_transform                                             33
+#define ES_Array_unique                                                34
+#define ES_Array_unshift                                               35
+#define ES_Array_NUM_CLASS_PROP                                        36
+
+/**
+ * Instance slots for "Array" type 
+ */
+#define ES_Array_NUM_INSTANCE_PROP                                     0
+
+/**
+ * 
+ *    Local slots for methods in type Array 
+ */
+#define ES_Array_Array_values                                          0
+#define ES_Array_append_obj                                            0
+#define ES_Array_concat_args                                           0
+#define ES_Array_contains_element                                      0
+#define ES_Array_every_match                                           0
+#define ES_Array_every__hoisted_1_i                                    1
+#define ES_Array_filter_match                                          0
+#define ES_Array_find_match                                            0
+#define ES_Array_find__hoisted_1_i                                     1
+#define ES_Array_findAll_match                                         0
+#define ES_Array_findAll_result                                        1
+#define ES_Array_findAll__hoisted_2_i                                  2
+#define ES_Array_forEach_modifier                                      0
+#define ES_Array_indexOf_element                                       0
+#define ES_Array_indexOf_startIndex                                    1
+#define ES_Array_insert_pos                                            0
+#define ES_Array_insert_args                                           1
+#define ES_Array_join_sep                                              0
+#define ES_Array_lastIndexOf_element                                   0
+#define ES_Array_lastIndexOf_startIndex                                1
+#define ES_Array_set_length_value                                      0
+#define ES_Array_map_mapper                                            0
+#define ES_Array_map_result                                            1
+#define ES_Array_push_items                                            0
+#define ES_Array_reject_match                                          0
+#define ES_Array_reject_result                                         1
+#define ES_Array_reject__hoisted_2_i                                   2
+#define ES_Array_remove_start                                          0
+#define ES_Array_remove_end                                            1
+#define ES_Array_slice_start                                           0
+#define ES_Array_slice_end                                             1
+#define ES_Array_slice_step                                            2
+#define ES_Array_some_match                                            0
+#define ES_Array_some_result                                           1
+#define ES_Array_some__hoisted_2_i                                     2
+#define ES_Array_sort_compare                                          0
+#define ES_Array_sort_order                                            1
+#define ES_Array_splice_start                                          0
+#define ES_Array_splice_deleteCount                                    1
+#define ES_Array_splice_values                                         2
+#define ES_Array_transform_mapper                                      0
+#define ES_Array_transform__hoisted_1_i                                1
+#define ES_Array_unshift_items                                         0
+
+
+/**
+ *   Class property slots for the "Stream" class 
+ */
+#define ES_Stream__origin                                              0
+#define ES_Stream_close                                                0
+#define ES_Stream_flush                                                1
+#define ES_Stream_read                                                 2
+#define ES_Stream_write                                                3
+#define ES_Stream_NUM_CLASS_PROP                                       4
+
+/**
+ * Instance slots for "Stream" type 
+ */
+#define ES_Stream_NUM_INSTANCE_PROP                                    0
+
+/**
+ * 
+ *    Local slots for methods in type Stream 
+ */
+#define ES_Stream_close_graceful                                       0
+#define ES_Stream_flush_graceful                                       0
+#define ES_Stream_read_buffer                                          0
+#define ES_Stream_read_offset                                          1
+#define ES_Stream_read_count                                           2
+#define ES_Stream_write_data                                           0
+
+
+/**
+ *   Class property slots for the "Math" class 
+ */
+#define ES_Math__origin                                                6
+#define ES_Math__initializer__Math_initializer                         6
+#define ES_Math_E                                                      7
+#define ES_Math_LN2                                                    8
+#define ES_Math_LN10                                                   9
+#define ES_Math_LOG2E                                                  10
+#define ES_Math_LOG10E                                                 11
+#define ES_Math_PI                                                     12
+#define ES_Math_SQRT1_2                                                13
+#define ES_Math_SQRT2                                                  14
+#define ES_Math_abs                                                    15
+#define ES_Math_acos                                                   16
+#define ES_Math_asin                                                   17
+#define ES_Math_atan                                                   18
+#define ES_Math_atan2                                                  19
+#define ES_Math_ceil                                                   20
+#define ES_Math_cos                                                    21
+#define ES_Math_exp                                                    22
+#define ES_Math_floor                                                  23
+#define ES_Math_log10                                                  24
+#define ES_Math_log                                                    25
+#define ES_Math_max                                                    26
+#define ES_Math_min                                                    27
+#define ES_Math_pow                                                    28
+#define ES_Math_random                                                 29
+#define ES_Math_round                                                  30
+#define ES_Math_sin                                                    31
+#define ES_Math_sqrt                                                   32
+#define ES_Math_tan                                                    33
+#define ES_Math_NUM_CLASS_PROP                                         34
+
+/**
+ * Instance slots for "Math" type 
+ */
+#define ES_Math_NUM_INSTANCE_PROP                                      0
+
+/**
+ * 
+ *    Local slots for methods in type Math 
+ */
+#define ES_Math_abs_value                                              0
+#define ES_Math_acos_angle                                             0
+#define ES_Math_asin_oper                                              0
+#define ES_Math_atan_oper                                              0
+#define ES_Math_atan2_y                                                0
+#define ES_Math_atan2_x                                                1
+#define ES_Math_ceil_oper                                              0
+#define ES_Math_cos_angle                                              0
+#define ES_Math_exp_power                                              0
+#define ES_Math_floor_oper                                             0
+#define ES_Math_log10_oper                                             0
+#define ES_Math_log_oper                                               0
+#define ES_Math_max_x                                                  0
+#define ES_Math_max_y                                                  1
+#define ES_Math_min_x                                                  0
+#define ES_Math_min_y                                                  1
+#define ES_Math_pow_num                                                0
+#define ES_Math_pow_pow                                                1
+#define ES_Math_round_num                                              0
+#define ES_Math_sin_angle                                              0
+#define ES_Math_sqrt_oper                                              0
+#define ES_Math_tan_angle                                              0
+
+
+/**
+ *   Class property slots for the "RegExp" class 
+ */
+#define ES_RegExp__origin                                              6
+#define ES_RegExp_RegExp                                               6
+#define ES_RegExp_lastIndex                                            7
+#define ES_RegExp_set_lastIndex                                        8
+#define ES_RegExp_exec                                                 9
+#define ES_RegExp_global                                               10
+#define ES_RegExp_ignoreCase                                           11
+#define ES_RegExp_multiline                                            12
+#define ES_RegExp_source                                               13
+#define ES_RegExp_matched                                              14
+#define ES_RegExp_replace                                              15
+#define ES_RegExp_split                                                16
+#define ES_RegExp_start                                                17
+#define ES_RegExp_sticky                                               18
+#define ES_RegExp_test                                                 19
+#define ES_RegExp_NUM_CLASS_PROP                                       20
+
+/**
+ * Instance slots for "RegExp" type 
+ */
+#define ES_RegExp_NUM_INSTANCE_PROP                                    0
+
+/**
+ * 
+ *    Local slots for methods in type RegExp 
+ */
+#define ES_RegExp_RegExp_pattern                                       0
+#define ES_RegExp_RegExp_flags                                         1
+#define ES_RegExp_set_lastIndex_value                                  0
+#define ES_RegExp_exec_str                                             0
+#define ES_RegExp_exec_start                                           1
+#define ES_RegExp_replace_str                                          0
+#define ES_RegExp_replace_replacement                                  1
+#define ES_RegExp_split_target                                         0
+#define ES_RegExp_test_str                                             0
+
+
+/**
+ *   Class property slots for the "Iterable" class 
+ */
+#define ES_Iterable__origin                                            0
+#define ES_Iterable_get                                                0
+#define ES_Iterable_getValues                                          1
+#define ES_Iterable_NUM_CLASS_PROP                                     2
+
+/**
+ * Instance slots for "Iterable" type 
+ */
+#define ES_Iterable_NUM_INSTANCE_PROP                                  0
+
+
+/**
+ *   Class property slots for the "Iterator" class 
+ */
+#define ES_Iterator__origin                                            6
+#define ES_Iterator_next                                               6
+#define ES_Iterator_NUM_CLASS_PROP                                     7
+
+/**
+ * Instance slots for "Iterator" type 
+ */
+#define ES_Iterator_NUM_INSTANCE_PROP                                  0
+
+
+/**
+ *   Class property slots for the "Void" class 
+ */
+#define ES_Void__origin                                                6
+#define ES_Void_NUM_CLASS_PROP                                         6
+
+/**
+ * Instance slots for "Void" type 
+ */
+#define ES_Void_NUM_INSTANCE_PROP                                      0
+
+
+/**
+ *   Class property slots for the "ByteArray" class 
+ */
+#define ES_ByteArray__origin                                           6
+#define ES_ByteArray_ByteArray                                         6
+#define ES_ByteArray__initializer__ByteArray_initializer               7
+#define ES_ByteArray_LittleEndian                                      8
+#define ES_ByteArray_BigEndian                                         9
+#define ES_ByteArray_available                                         10
+#define ES_ByteArray_close                                             11
+#define ES_ByteArray_compact                                           12
+#define ES_ByteArray_copyIn                                            13
+#define ES_ByteArray_copyOut                                           14
+#define ES_ByteArray_endian                                            15
+#define ES_ByteArray_set_endian                                        16
+#define ES_ByteArray_flush                                             17
+#define ES_ByteArray_set_input                                         18
+#define ES_ByteArray_input                                             19
+#define ES_ByteArray_output                                            20
+#define ES_ByteArray_set_output                                        21
+#define ES_ByteArray_read                                              22
+#define ES_ByteArray_readBoolean                                       23
+#define ES_ByteArray_readByte                                          24
+#define ES_ByteArray_readDate                                          25
+#define ES_ByteArray_readDouble                                        26
+#define ES_ByteArray_readInteger                                       27
+#define ES_ByteArray_readLong                                          28
+#define ES_ByteArray_readPosition                                      29
+#define ES_ByteArray_set_readPosition                                  30
+#define ES_ByteArray_readShort                                         31
+#define ES_ByteArray_readString                                        32
+#define ES_ByteArray_readXML                                           33
+#define ES_ByteArray_reset                                             34
+#define ES_ByteArray_room                                              35
+#define ES_ByteArray_write                                             36
+#define ES_ByteArray_writeByte                                         37
+#define ES_ByteArray_writeShort                                        38
+#define ES_ByteArray_writeDouble                                       39
+#define ES_ByteArray_writeInteger                                      40
+#define ES_ByteArray_writeLong                                         41
+#define ES_ByteArray_writePosition                                     42
+#define ES_ByteArray_set_writePosition                                 43
+#define ES_ByteArray_NUM_CLASS_PROP                                    44
+
+/**
+ * Instance slots for "ByteArray" type 
+ */
+#define ES_ByteArray_NUM_INSTANCE_PROP                                 0
+
+/**
+ * 
+ *    Local slots for methods in type ByteArray 
+ */
+#define ES_ByteArray_ByteArray_size                                    0
+#define ES_ByteArray_ByteArray_growable                                1
+#define ES_ByteArray_close_graceful                                    0
+#define ES_ByteArray_copyIn_destOffset                                 0
+#define ES_ByteArray_copyIn_src                                        1
+#define ES_ByteArray_copyIn_srcOffset                                  2
+#define ES_ByteArray_copyIn_count                                      3
+#define ES_ByteArray_copyOut_srcOffset                                 0
+#define ES_ByteArray_copyOut_dest                                      1
+#define ES_ByteArray_copyOut_destOffset                                2
+#define ES_ByteArray_copyOut_count                                     3
+#define ES_ByteArray_set_endian_value                                  0
+#define ES_ByteArray_flush_graceful                                    0
+#define ES_ByteArray_set_input_callback                                0
+#define ES_ByteArray_set_output_callback                               0
+#define ES_ByteArray_read_buffer                                       0
+#define ES_ByteArray_read_offset                                       1
+#define ES_ByteArray_read_count                                        2
+#define ES_ByteArray_set_readPosition_position                         0
+#define ES_ByteArray_readString_count                                  0
+#define ES_ByteArray_write_data                                        0
+#define ES_ByteArray_writeByte_data                                    0
+#define ES_ByteArray_writeShort_data                                   0
+#define ES_ByteArray_writeDouble_data                                  0
+#define ES_ByteArray_writeInteger_data                                 0
+#define ES_ByteArray_writeLong_data                                    0
+#define ES_ByteArray_set_writePosition_position                        0
+
+
+/**
+ *   Class property slots for the "Reflect" class 
+ */
+#define ES_Reflect__origin                                             6
+#define ES_Reflect_Reflect                                             6
+#define ES_Reflect_name                                                7
+#define ES_Reflect_type                                                8
+#define ES_Reflect_typeName                                            9
+#define ES_Reflect_NUM_CLASS_PROP                                      10
+
+/**
+ * Instance slots for "Reflect" type 
+ */
+#define ES_Reflect_obj                                                 0
+#define ES_Reflect_NUM_INSTANCE_PROP                                   1
+
+/**
+ * 
+ *    Local slots for methods in type Reflect 
+ */
+#define ES_Reflect_Reflect_obj                                         0
+
+
+/**
+ *   Class property slots for the "Boolean" class 
+ */
+#define ES_Boolean__origin                                             6
+#define ES_Boolean_Boolean                                             6
+#define ES_Boolean_NUM_CLASS_PROP                                      7
+
+/**
+ * Instance slots for "Boolean" type 
+ */
+#define ES_Boolean_NUM_INSTANCE_PROP                                   0
+
+/**
+ * 
+ *    Local slots for methods in type Boolean 
+ */
+#define ES_Boolean_Boolean_value                                       0
+
+
+/**
+ *   Class property slots for the "String" class 
+ */
+#define ES_String__origin                                              6
+#define ES_String_String                                               6
+#define ES_String_caseCompare                                          7
+#define ES_String_charAt                                               8
+#define ES_String_charCodeAt                                           9
+#define ES_String_concat                                               10
+#define ES_String_contains                                             11
+#define ES_String_endsWith                                             12
+#define ES_String_format                                               13
+#define ES_String_fromCharCode                                         14
+#define ES_String_indexOf                                              15
+#define ES_String_isDigit                                              16
+#define ES_String_isAlpha                                              17
+#define ES_String_isLower                                              18
+#define ES_String_isSpace                                              19
+#define ES_String_isUpper                                              20
+#define ES_String_lastIndexOf                                          21
+#define ES_String_match                                                22
+#define ES_String_parseJSON                                            23
+#define ES_String_toCamel                                              24
+#define ES_String_toPascal                                             25
+#define ES_String_printable                                            26
+#define ES_String_quote                                                27
+#define ES_String_remove                                               28
+#define ES_String_replace                                              29
+#define ES_String_reverse                                              30
+#define ES_String_search                                               31
+#define ES_String_slice                                                32
+#define ES_String_split                                                33
+#define ES_String_startsWith                                           34
+#define ES_String_substring                                            35
+#define ES_String_times                                                36
+#define ES_String_tokenize                                             37
+#define ES_String_toLower                                              38
+#define ES_String_toUpper                                              39
+#define ES_String_trim                                                 40
+#define ES_String_MINUS                                                41
+#define ES_String_MOD                                                  42
+#define ES_String_NUM_CLASS_PROP                                       43
+
+/**
+ * Instance slots for "String" type 
+ */
+#define ES_String_NUM_INSTANCE_PROP                                    0
+
+/**
+ * 
+ *    Local slots for methods in type String 
+ */
+#define ES_String_String_str                                           0
+#define ES_String_caseCompare_compare                                  0
+#define ES_String_charAt_index                                         0
+#define ES_String_charCodeAt_index                                     0
+#define ES_String_concat_args                                          0
+#define ES_String_contains_pattern                                     0
+#define ES_String_endsWith_test                                        0
+#define ES_String_format_args                                          0
+#define ES_String_fromCharCode_codes                                   0
+#define ES_String_indexOf_pattern                                      0
+#define ES_String_indexOf_startIndex                                   1
+#define ES_String_lastIndexOf_pattern                                  0
+#define ES_String_lastIndexOf_location                                 1
+#define ES_String_match_pattern                                        0
+#define ES_String_parseJSON_filter                                     0
+#define ES_String_remove_start                                         0
+#define ES_String_remove_end                                           1
+#define ES_String_replace_pattern                                      0
+#define ES_String_replace_replacement                                  1
+#define ES_String_search_pattern                                       0
+#define ES_String_slice_start                                          0
+#define ES_String_slice_end                                            1
+#define ES_String_slice_step                                           2
+#define ES_String_split_delimiter                                      0
+#define ES_String_split_limit                                          1
+#define ES_String_startsWith_test                                      0
+#define ES_String_substring_startIndex                                 0
+#define ES_String_substring_end                                        1
+#define ES_String_times_times                                          0
+#define ES_String_times_s                                              1
+#define ES_String_times__hoisted_2_i                                   2
+#define ES_String_tokenize_format                                      0
+#define ES_String_trim_str                                             0
+#define ES_String_MINUS_str                                            0
+#define ES_String_MINUS_i                                              1
+#define ES_String_MOD_arg                                              0
+
+
+/**
+ *   Class property slots for the "Namespace" class 
+ */
+#define ES_Namespace__origin                                           6
+#define ES_Namespace_NUM_CLASS_PROP                                    6
+
+/**
+ * Instance slots for "Namespace" type 
+ */
+#define ES_Namespace_NUM_INSTANCE_PROP                                 0
+
+
+/**
+ *   Class property slots for the "Function" class 
+ */
+#define ES_Function__origin                                            6
+#define ES_Function_apply                                              6
+#define ES_Function_call                                               7
+#define ES_Function_NUM_CLASS_PROP                                     8
+
+/**
+ * Instance slots for "Function" type 
+ */
+#define ES_Function_NUM_INSTANCE_PROP                                  0
+
+/**
+ * 
+ *    Local slots for methods in type Function 
+ */
+#define ES_Function_apply_thisObject                                   0
+#define ES_Function_apply_args                                         1
+#define ES_Function_call_thisObject                                    0
+#define ES_Function_call_args                                          1
+
+
+/**
+ *   Class property slots for the "JSON" class 
+ */
+#define ES_JSON__origin                                                6
+#define ES_JSON_parse                                                  6
+#define ES_JSON_stringify                                              7
+#define ES_JSON_NUM_CLASS_PROP                                         8
+
+/**
+ * Instance slots for "JSON" type 
+ */
+#define ES_JSON_NUM_INSTANCE_PROP                                      0
+
+/**
+ * 
+ *    Local slots for methods in type JSON 
+ */
+#define ES_JSON_parse_data                                             0
+#define ES_JSON_parse_filter                                           1
+#define ES_JSON_stringify_obj                                          0
+#define ES_JSON_stringify_replacer                                     1
+#define ES_JSON_stringify_indent                                       2
+
+
+/**
+ *   Class property slots for the "Null" class 
+ */
+#define ES_Null__origin                                                6
+#define ES_Null_NUM_CLASS_PROP                                         6
+
+/**
+ * Instance slots for "Null" type 
+ */
+#define ES_Null_NUM_INSTANCE_PROP                                      0
 
 
 /**
@@ -900,232 +1309,27 @@
 
 
 /**
- *   Class property slots for the "Function" class 
+ *   Class property slots for the "Block" class 
  */
-#define ES_Function__origin                                            6
-#define ES_Function_apply                                              6
-#define ES_Function_call                                               7
-#define ES_Function_NUM_CLASS_PROP                                     8
+#define ES_Block__origin                                               6
+#define ES_Block_NUM_CLASS_PROP                                        6
 
 /**
- * Instance slots for "Function" type 
+ * Instance slots for "Block" type 
  */
-#define ES_Function_NUM_INSTANCE_PROP                                  0
-
-/**
- * 
- *    Local slots for methods in type Function 
- */
-#define ES_Function_apply_thisObject                                   0
-#define ES_Function_apply_args                                         1
-#define ES_Function_call_thisObject                                    0
-#define ES_Function_call_args                                          1
+#define ES_Block_NUM_INSTANCE_PROP                                     0
 
 
 /**
- *   Class property slots for the "StopIteration" class 
+ *   Class property slots for the "Type" class 
  */
-#define ES_StopIteration__origin                                       6
-#define ES_StopIteration_NUM_CLASS_PROP                                6
+#define ES_Type__origin                                                6
+#define ES_Type_NUM_CLASS_PROP                                         6
 
 /**
- * Instance slots for "StopIteration" type 
+ * Instance slots for "Type" type 
  */
-#define ES_StopIteration_NUM_INSTANCE_PROP                             0
-
-
-/**
- *   Class property slots for the "Iterable" class 
- */
-#define ES_Iterable__origin                                            0
-#define ES_Iterable_get                                                0
-#define ES_Iterable_getValues                                          1
-#define ES_Iterable_NUM_CLASS_PROP                                     2
-
-/**
- * Instance slots for "Iterable" type 
- */
-#define ES_Iterable_NUM_INSTANCE_PROP                                  0
-
-
-/**
- *   Class property slots for the "Iterator" class 
- */
-#define ES_Iterator__origin                                            6
-#define ES_Iterator_next                                               6
-#define ES_Iterator_NUM_CLASS_PROP                                     7
-
-/**
- * Instance slots for "Iterator" type 
- */
-#define ES_Iterator_NUM_INSTANCE_PROP                                  0
-
-
-/**
- *   Class property slots for the "JSON" class 
- */
-#define ES_JSON__origin                                                6
-#define ES_JSON_parse                                                  6
-#define ES_JSON_stringify                                              7
-#define ES_JSON_NUM_CLASS_PROP                                         8
-
-/**
- * Instance slots for "JSON" type 
- */
-#define ES_JSON_NUM_INSTANCE_PROP                                      0
-
-/**
- * 
- *    Local slots for methods in type JSON 
- */
-#define ES_JSON_parse_data                                             0
-#define ES_JSON_parse_filter                                           1
-#define ES_JSON_stringify_obj                                          0
-#define ES_JSON_stringify_replacer                                     1
-#define ES_JSON_stringify_indent                                       2
-
-
-/**
- *   Class property slots for the "Math" class 
- */
-#define ES_Math__origin                                                6
-#define ES_Math__initializer__Math_initializer                         6
-#define ES_Math_E                                                      7
-#define ES_Math_LN2                                                    8
-#define ES_Math_LN10                                                   9
-#define ES_Math_LOG2E                                                  10
-#define ES_Math_LOG10E                                                 11
-#define ES_Math_PI                                                     12
-#define ES_Math_SQRT1_2                                                13
-#define ES_Math_SQRT2                                                  14
-#define ES_Math_abs                                                    15
-#define ES_Math_acos                                                   16
-#define ES_Math_asin                                                   17
-#define ES_Math_atan                                                   18
-#define ES_Math_atan2                                                  19
-#define ES_Math_ceil                                                   20
-#define ES_Math_cos                                                    21
-#define ES_Math_exp                                                    22
-#define ES_Math_floor                                                  23
-#define ES_Math_log10                                                  24
-#define ES_Math_log                                                    25
-#define ES_Math_max                                                    26
-#define ES_Math_min                                                    27
-#define ES_Math_pow                                                    28
-#define ES_Math_random                                                 29
-#define ES_Math_round                                                  30
-#define ES_Math_sin                                                    31
-#define ES_Math_sqrt                                                   32
-#define ES_Math_tan                                                    33
-#define ES_Math_NUM_CLASS_PROP                                         34
-
-/**
- * Instance slots for "Math" type 
- */
-#define ES_Math_NUM_INSTANCE_PROP                                      0
-
-/**
- * 
- *    Local slots for methods in type Math 
- */
-#define ES_Math_abs_value                                              0
-#define ES_Math_acos_angle                                             0
-#define ES_Math_asin_oper                                              0
-#define ES_Math_atan_oper                                              0
-#define ES_Math_atan2_y                                                0
-#define ES_Math_atan2_x                                                1
-#define ES_Math_ceil_oper                                              0
-#define ES_Math_cos_angle                                              0
-#define ES_Math_exp_power                                              0
-#define ES_Math_floor_oper                                             0
-#define ES_Math_log10_oper                                             0
-#define ES_Math_log_oper                                               0
-#define ES_Math_max_x                                                  0
-#define ES_Math_max_y                                                  1
-#define ES_Math_min_x                                                  0
-#define ES_Math_min_y                                                  1
-#define ES_Math_pow_num                                                0
-#define ES_Math_pow_pow                                                1
-#define ES_Math_round_num                                              0
-#define ES_Math_sin_angle                                              0
-#define ES_Math_sqrt_oper                                              0
-#define ES_Math_tan_angle                                              0
-
-
-/**
- *   Class property slots for the "Namespace" class 
- */
-#define ES_Namespace__origin                                           6
-#define ES_Namespace_NUM_CLASS_PROP                                    6
-
-/**
- * Instance slots for "Namespace" type 
- */
-#define ES_Namespace_NUM_INSTANCE_PROP                                 0
-
-
-/**
- *   Class property slots for the "Null" class 
- */
-#define ES_Null__origin                                                6
-#define ES_Null_NUM_CLASS_PROP                                         6
-
-/**
- * Instance slots for "Null" type 
- */
-#define ES_Null_NUM_INSTANCE_PROP                                      0
-
-
-/**
- *   Class property slots for the "Number" class 
- */
-#define ES_Number__origin                                              6
-#define ES_Number_Number                                               6
-#define ES_Number__initializer__Number_initializer                     7
-#define ES_Number_MAX_VALUE                                            8
-#define ES_Number_MIN_VALUE                                            9
-#define ES_Number_NaN                                                  10
-#define ES_Number_NEGATIVE_INFINITY                                    11
-#define ES_Number_POSITIVE_INFINITY                                    12
-#define ES_Number_MaxValue                                             13
-#define ES_Number_MinValue                                             14
-#define ES_Number_abs                                                  15
-#define ES_Number_ceil                                                 16
-#define ES_Number_floor                                                17
-#define ES_Number_isFinite                                             18
-#define ES_Number_isNaN                                                19
-#define ES_Number_round                                                20
-#define ES_Number_toExponential                                        21
-#define ES_Number_toFixed                                              22
-#define ES_Number_toPrecision                                          23
-#define ES_Number_byte                                                 24
-#define ES_Number_integral                                             25
-#define ES_Number_max                                                  26
-#define ES_Number_min                                                  27
-#define ES_Number_power                                                28
-#define ES_Number_NUM_CLASS_PROP                                       29
-
-/**
- * Instance slots for "Number" type 
- */
-#define ES_Number_NUM_INSTANCE_PROP                                    0
-
-/**
- * 
- *    Local slots for methods in type Number 
- */
-#define ES_Number_Number_value                                         0
-#define ES_Number_toExponential_fractionDigits                         0
-#define ES_Number_toFixed_fractionDigits                               0
-#define ES_Number_toPrecision_numDigits                                0
-#define ES_Number_integral_size                                        0
-#define ES_Number_max_other                                            0
-#define ES_Number_max_result                                           1
-#define ES_Number_max__hoisted_2_n                                     2
-#define ES_Number_min_other                                            0
-#define ES_Number_min_result                                           1
-#define ES_Number_min__hoisted_2_n                                     2
-#define ES_Number_power_nth                                            0
+#define ES_Type_NUM_INSTANCE_PROP                                      0
 
 
 /**
@@ -1150,210 +1354,6 @@
  *    Local slots for methods in type Object 
  */
 #define ES_Object_clone_deep                                           0
-
-
-/**
- *   Class property slots for the "Reflect" class 
- */
-#define ES_Reflect__origin                                             6
-#define ES_Reflect_Reflect                                             6
-#define ES_Reflect_name                                                7
-#define ES_Reflect_type                                                8
-#define ES_Reflect_typeName                                            9
-#define ES_Reflect_NUM_CLASS_PROP                                      10
-
-/**
- * Instance slots for "Reflect" type 
- */
-#define ES_Reflect_obj                                                 0
-#define ES_Reflect_NUM_INSTANCE_PROP                                   1
-
-/**
- * 
- *    Local slots for methods in type Reflect 
- */
-#define ES_Reflect_Reflect_obj                                         0
-
-
-/**
- *   Class property slots for the "RegExp" class 
- */
-#define ES_RegExp__origin                                              6
-#define ES_RegExp_RegExp                                               6
-#define ES_RegExp_lastIndex                                            7
-#define ES_RegExp_set_lastIndex                                        8
-#define ES_RegExp_exec                                                 9
-#define ES_RegExp_global                                               10
-#define ES_RegExp_ignoreCase                                           11
-#define ES_RegExp_multiline                                            12
-#define ES_RegExp_source                                               13
-#define ES_RegExp_matched                                              14
-#define ES_RegExp_replace                                              15
-#define ES_RegExp_split                                                16
-#define ES_RegExp_start                                                17
-#define ES_RegExp_sticky                                               18
-#define ES_RegExp_test                                                 19
-#define ES_RegExp_NUM_CLASS_PROP                                       20
-
-/**
- * Instance slots for "RegExp" type 
- */
-#define ES_RegExp_NUM_INSTANCE_PROP                                    0
-
-/**
- * 
- *    Local slots for methods in type RegExp 
- */
-#define ES_RegExp_RegExp_pattern                                       0
-#define ES_RegExp_RegExp_flags                                         1
-#define ES_RegExp_set_lastIndex_value                                  0
-#define ES_RegExp_exec_str                                             0
-#define ES_RegExp_exec_start                                           1
-#define ES_RegExp_replace_str                                          0
-#define ES_RegExp_replace_replacement                                  1
-#define ES_RegExp_split_target                                         0
-#define ES_RegExp_test_str                                             0
-
-
-/**
- *   Class property slots for the "Stream" class 
- */
-#define ES_Stream__origin                                              0
-#define ES_Stream_close                                                0
-#define ES_Stream_flush                                                1
-#define ES_Stream_read                                                 2
-#define ES_Stream_write                                                3
-#define ES_Stream_NUM_CLASS_PROP                                       4
-
-/**
- * Instance slots for "Stream" type 
- */
-#define ES_Stream_NUM_INSTANCE_PROP                                    0
-
-/**
- * 
- *    Local slots for methods in type Stream 
- */
-#define ES_Stream_close_graceful                                       0
-#define ES_Stream_flush_graceful                                       0
-#define ES_Stream_read_buffer                                          0
-#define ES_Stream_read_offset                                          1
-#define ES_Stream_read_count                                           2
-#define ES_Stream_write_data                                           0
-
-
-/**
- *   Class property slots for the "String" class 
- */
-#define ES_String__origin                                              6
-#define ES_String_String                                               6
-#define ES_String_caseCompare                                          7
-#define ES_String_charAt                                               8
-#define ES_String_charCodeAt                                           9
-#define ES_String_concat                                               10
-#define ES_String_contains                                             11
-#define ES_String_endsWith                                             12
-#define ES_String_format                                               13
-#define ES_String_fromCharCode                                         14
-#define ES_String_indexOf                                              15
-#define ES_String_isDigit                                              16
-#define ES_String_isAlpha                                              17
-#define ES_String_isLower                                              18
-#define ES_String_isSpace                                              19
-#define ES_String_isUpper                                              20
-#define ES_String_lastIndexOf                                          21
-#define ES_String_match                                                22
-#define ES_String_parseJSON                                            23
-#define ES_String_toCamel                                              24
-#define ES_String_toPascal                                             25
-#define ES_String_printable                                            26
-#define ES_String_quote                                                27
-#define ES_String_remove                                               28
-#define ES_String_replace                                              29
-#define ES_String_reverse                                              30
-#define ES_String_search                                               31
-#define ES_String_slice                                                32
-#define ES_String_split                                                33
-#define ES_String_startsWith                                           34
-#define ES_String_substring                                            35
-#define ES_String_times                                                36
-#define ES_String_tokenize                                             37
-#define ES_String_toLower                                              38
-#define ES_String_toUpper                                              39
-#define ES_String_trim                                                 40
-#define ES_String_MINUS                                                41
-#define ES_String_MOD                                                  42
-#define ES_String_NUM_CLASS_PROP                                       43
-
-/**
- * Instance slots for "String" type 
- */
-#define ES_String_NUM_INSTANCE_PROP                                    0
-
-/**
- * 
- *    Local slots for methods in type String 
- */
-#define ES_String_String_str                                           0
-#define ES_String_caseCompare_compare                                  0
-#define ES_String_charAt_index                                         0
-#define ES_String_charCodeAt_index                                     0
-#define ES_String_concat_args                                          0
-#define ES_String_contains_pattern                                     0
-#define ES_String_endsWith_test                                        0
-#define ES_String_format_args                                          0
-#define ES_String_fromCharCode_codes                                   0
-#define ES_String_indexOf_pattern                                      0
-#define ES_String_indexOf_startIndex                                   1
-#define ES_String_lastIndexOf_pattern                                  0
-#define ES_String_lastIndexOf_location                                 1
-#define ES_String_match_pattern                                        0
-#define ES_String_parseJSON_filter                                     0
-#define ES_String_remove_start                                         0
-#define ES_String_remove_end                                           1
-#define ES_String_replace_pattern                                      0
-#define ES_String_replace_replacement                                  1
-#define ES_String_search_pattern                                       0
-#define ES_String_slice_start                                          0
-#define ES_String_slice_end                                            1
-#define ES_String_slice_step                                           2
-#define ES_String_split_delimiter                                      0
-#define ES_String_split_limit                                          1
-#define ES_String_startsWith_test                                      0
-#define ES_String_substring_startIndex                                 0
-#define ES_String_substring_end                                        1
-#define ES_String_times_times                                          0
-#define ES_String_times_s                                              1
-#define ES_String_times__hoisted_2_i                                   2
-#define ES_String_tokenize_format                                      0
-#define ES_String_trim_str                                             0
-#define ES_String_MINUS_str                                            0
-#define ES_String_MINUS_i                                              1
-#define ES_String_MOD_arg                                              0
-
-
-/**
- *   Class property slots for the "Type" class 
- */
-#define ES_Type__origin                                                6
-#define ES_Type_NUM_CLASS_PROP                                         6
-
-/**
- * Instance slots for "Type" type 
- */
-#define ES_Type_NUM_INSTANCE_PROP                                      0
-
-
-/**
- *   Class property slots for the "Void" class 
- */
-#define ES_Void__origin                                                6
-#define ES_Void_NUM_CLASS_PROP                                         6
-
-/**
- * Instance slots for "Void" type 
- */
-#define ES_Void_NUM_INSTANCE_PROP                                      0
 
 
 /**
@@ -1411,7 +1411,7 @@
 #define ES_XMLList_attribute_name                                      0
 #define ES_XMLList_elements_name                                       0
 
-#define _ES_CHECKSUM_ejs 484862
+#define _ES_CHECKSUM_ejs 483885
 
 #endif
 /*
@@ -1476,175 +1476,6 @@
  * 
  *    Local slots for methods in type global 
  */
-
-
-/**
- *   Class property slots for the "Database" class 
- */
-#define ES_ejs_db_Database__origin                                     6
-#define ES_ejs_db_Database_Database                                    6
-#define ES_ejs_db_Database_addColumn                                   7
-#define ES_ejs_db_Database_addIndex                                    8
-#define ES_ejs_db_Database_changeColumn                                9
-#define ES_ejs_db_Database_close                                       10
-#define ES_ejs_db_Database_commit                                      11
-#define ES_ejs_db_Database_connect                                     12
-#define ES_ejs_db_Database_connection                                  13
-#define ES_ejs_db_Database_createDatabase                              14
-#define ES_ejs_db_Database_createTable                                 15
-#define ES_ejs_db_Database_dataTypeToSqlType                           16
-#define ES_ejs_db_Database_defaultDatabase                             17
-#define ES_ejs_db_Database_set_defaultDatabase                         18
-#define ES_ejs_db_Database_destroyDatabase                             19
-#define ES_ejs_db_Database_destroyTable                                20
-#define ES_ejs_db_Database_endTransaction                              21
-#define ES_ejs_db_Database_getColumns                                  22
-#define ES_ejs_db_Database_getTables                                   23
-#define ES_ejs_db_Database_getNumRows                                  24
-#define ES_ejs_db_Database_name                                        25
-#define ES_ejs_db_Database_query                                       26
-#define ES_ejs_db_Database_removeColumns                               27
-#define ES_ejs_db_Database_removeIndex                                 28
-#define ES_ejs_db_Database_renameColumn                                29
-#define ES_ejs_db_Database_renameTable                                 30
-#define ES_ejs_db_Database_rollback                                    31
-#define ES_ejs_db_Database_sql                                         32
-#define ES_ejs_db_Database_sqlTypeToDataType                           33
-#define ES_ejs_db_Database_sqlTypeToEjsType                            34
-#define ES_ejs_db_Database_startTransaction                            35
-#define ES_ejs_db_Database_trace                                       36
-#define ES_ejs_db_Database_transaction                                 37
-#define ES_ejs_db_Database_quote                                       38
-#define ES_ejs_db_Database_NUM_CLASS_PROP                              39
-
-/**
- * Instance slots for "Database" type 
- */
-#define ES_ejs_db_Database__adapter                                    0
-#define ES_ejs_db_Database__connection                                 1
-#define ES_ejs_db_Database__name                                       2
-#define ES_ejs_db_Database__traceAll                                   3
-#define ES_ejs_db_Database_NUM_INSTANCE_PROP                           4
-
-/**
- * 
- *    Local slots for methods in type Database 
- */
-#define ES_ejs_db_Database_Database_adapter                            0
-#define ES_ejs_db_Database_Database_connectionString                   1
-#define ES_ejs_db_Database_Database_adapterClass                       2
-#define ES_ejs_db_Database_addColumn_table                             0
-#define ES_ejs_db_Database_addColumn_column                            1
-#define ES_ejs_db_Database_addColumn_datatype                          2
-#define ES_ejs_db_Database_addColumn_options                           3
-#define ES_ejs_db_Database_addIndex_table                              0
-#define ES_ejs_db_Database_addIndex_column                             1
-#define ES_ejs_db_Database_addIndex_index                              2
-#define ES_ejs_db_Database_changeColumn_table                          0
-#define ES_ejs_db_Database_changeColumn_column                         1
-#define ES_ejs_db_Database_changeColumn_datatype                       2
-#define ES_ejs_db_Database_changeColumn_options                        3
-#define ES_ejs_db_Database_connect_connectionString                    0
-#define ES_ejs_db_Database_createDatabase_name                         0
-#define ES_ejs_db_Database_createDatabase_options                      1
-#define ES_ejs_db_Database_createTable_table                           0
-#define ES_ejs_db_Database_createTable_columns                         1
-#define ES_ejs_db_Database_dataTypeToSqlType_dataType                  0
-#define ES_ejs_db_Database_set_defaultDatabase_db                      0
-#define ES_ejs_db_Database_destroyDatabase_name                        0
-#define ES_ejs_db_Database_destroyTable_table                          0
-#define ES_ejs_db_Database_getColumns_table                            0
-#define ES_ejs_db_Database_getNumRows_table                            0
-#define ES_ejs_db_Database_query_cmd                                   0
-#define ES_ejs_db_Database_query_tag                                   1
-#define ES_ejs_db_Database_query_trace                                 2
-#define ES_ejs_db_Database_removeColumns_table                         0
-#define ES_ejs_db_Database_removeColumns_columns                       1
-#define ES_ejs_db_Database_removeIndex_table                           0
-#define ES_ejs_db_Database_removeIndex_index                           1
-#define ES_ejs_db_Database_renameColumn_table                          0
-#define ES_ejs_db_Database_renameColumn_oldColumn                      1
-#define ES_ejs_db_Database_renameColumn_newColumn                      2
-#define ES_ejs_db_Database_renameTable_oldTable                        0
-#define ES_ejs_db_Database_renameTable_newTable                        1
-#define ES_ejs_db_Database_sql_cmd                                     0
-#define ES_ejs_db_Database_sqlTypeToDataType_sqlType                   0
-#define ES_ejs_db_Database_sqlTypeToEjsType_sqlType                    0
-#define ES_ejs_db_Database_trace_on                                    0
-#define ES_ejs_db_Database_transaction_code                            0
-#define ES_ejs_db_Database_transaction__hoisted_1_e                    1
-#define ES_ejs_db_Database_quote_str                                   0
-
-
-/**
- *   Class property slots for the "DatabaseConnector" class 
- */
-#define ES_ejs_db_DatabaseConnector__origin                            0
-#define ES_ejs_db_DatabaseConnector_addColumn                          0
-#define ES_ejs_db_DatabaseConnector_addIndex                           1
-#define ES_ejs_db_DatabaseConnector_changeColumn                       2
-#define ES_ejs_db_DatabaseConnector_close                              3
-#define ES_ejs_db_DatabaseConnector_commit                             4
-#define ES_ejs_db_DatabaseConnector_connect                            5
-#define ES_ejs_db_DatabaseConnector_createDatabase                     6
-#define ES_ejs_db_DatabaseConnector_createTable                        7
-#define ES_ejs_db_DatabaseConnector_dataTypeToSqlType                  8
-#define ES_ejs_db_DatabaseConnector_destroyDatabase                    9
-#define ES_ejs_db_DatabaseConnector_destroyTable                       10
-#define ES_ejs_db_DatabaseConnector_getColumns                         11
-#define ES_ejs_db_DatabaseConnector_getTables                          12
-#define ES_ejs_db_DatabaseConnector_removeColumns                      13
-#define ES_ejs_db_DatabaseConnector_removeIndex                        14
-#define ES_ejs_db_DatabaseConnector_renameColumn                       15
-#define ES_ejs_db_DatabaseConnector_renameTable                        16
-#define ES_ejs_db_DatabaseConnector_rollback                           17
-#define ES_ejs_db_DatabaseConnector_sql                                18
-#define ES_ejs_db_DatabaseConnector_sqlTypeToDataType                  19
-#define ES_ejs_db_DatabaseConnector_sqlTypeToEjsType                   20
-#define ES_ejs_db_DatabaseConnector_startTransaction                   21
-#define ES_ejs_db_DatabaseConnector_NUM_CLASS_PROP                     22
-
-/**
- * Instance slots for "DatabaseConnector" type 
- */
-#define ES_ejs_db_DatabaseConnector_NUM_INSTANCE_PROP                  0
-
-/**
- * 
- *    Local slots for methods in type DatabaseConnector 
- */
-#define ES_ejs_db_DatabaseConnector_addColumn_table                    0
-#define ES_ejs_db_DatabaseConnector_addColumn_column                   1
-#define ES_ejs_db_DatabaseConnector_addColumn_datatype                 2
-#define ES_ejs_db_DatabaseConnector_addColumn_options                  3
-#define ES_ejs_db_DatabaseConnector_addIndex_table                     0
-#define ES_ejs_db_DatabaseConnector_addIndex_column                    1
-#define ES_ejs_db_DatabaseConnector_addIndex_index                     2
-#define ES_ejs_db_DatabaseConnector_changeColumn_table                 0
-#define ES_ejs_db_DatabaseConnector_changeColumn_column                1
-#define ES_ejs_db_DatabaseConnector_changeColumn_datatype              2
-#define ES_ejs_db_DatabaseConnector_changeColumn_options               3
-#define ES_ejs_db_DatabaseConnector_connect_connectionString           0
-#define ES_ejs_db_DatabaseConnector_createDatabase_name                0
-#define ES_ejs_db_DatabaseConnector_createDatabase_options             1
-#define ES_ejs_db_DatabaseConnector_createTable_table                  0
-#define ES_ejs_db_DatabaseConnector_createTable_columns                1
-#define ES_ejs_db_DatabaseConnector_dataTypeToSqlType_dataType         0
-#define ES_ejs_db_DatabaseConnector_destroyDatabase_name               0
-#define ES_ejs_db_DatabaseConnector_destroyTable_table                 0
-#define ES_ejs_db_DatabaseConnector_getColumns_table                   0
-#define ES_ejs_db_DatabaseConnector_removeColumns_table                0
-#define ES_ejs_db_DatabaseConnector_removeColumns_columns              1
-#define ES_ejs_db_DatabaseConnector_removeIndex_table                  0
-#define ES_ejs_db_DatabaseConnector_removeIndex_index                  1
-#define ES_ejs_db_DatabaseConnector_renameColumn_table                 0
-#define ES_ejs_db_DatabaseConnector_renameColumn_oldColumn             1
-#define ES_ejs_db_DatabaseConnector_renameColumn_newColumn             2
-#define ES_ejs_db_DatabaseConnector_renameTable_oldTable               0
-#define ES_ejs_db_DatabaseConnector_renameTable_newTable               1
-#define ES_ejs_db_DatabaseConnector_sql_cmd                            0
-#define ES_ejs_db_DatabaseConnector_sqlTypeToDataType_sqlType          0
-#define ES_ejs_db_DatabaseConnector_sqlTypeToEjsType_sqlType           0
 
 
 /**
@@ -1850,7 +1681,7 @@
 #define ES_ejs_db_Record_makeLazyReader_model                          2
 #define ES_ejs_db_Record_makeLazyReader_key                            3
 #define ES_ejs_db_Record_makeLazyReader_options                        4
-#define ES_ejs_db_Record_makeLazyReader___fun_8169__                   5
+#define ES_ejs_db_Record_makeLazyReader___fun_7244__                   5
 #define ES_ejs_db_Record_makeLazyReader_lazyReader                     6
 #define ES_ejs_db_Record_mapSqlTypeToEjs_sqlType                       0
 #define ES_ejs_db_Record_mapSqlTypeToEjs_ejsType                       1
@@ -1925,7 +1756,176 @@
 #define ES_ejs_db_Column_Column_ejsType                                2
 #define ES_ejs_db_Column_Column_sqlType                                3
 
-#define _ES_CHECKSUM_ejs_db 306963
+
+/**
+ *   Class property slots for the "Database" class 
+ */
+#define ES_ejs_db_Database__origin                                     6
+#define ES_ejs_db_Database_Database                                    6
+#define ES_ejs_db_Database_addColumn                                   7
+#define ES_ejs_db_Database_addIndex                                    8
+#define ES_ejs_db_Database_changeColumn                                9
+#define ES_ejs_db_Database_close                                       10
+#define ES_ejs_db_Database_commit                                      11
+#define ES_ejs_db_Database_connect                                     12
+#define ES_ejs_db_Database_connection                                  13
+#define ES_ejs_db_Database_createDatabase                              14
+#define ES_ejs_db_Database_createTable                                 15
+#define ES_ejs_db_Database_dataTypeToSqlType                           16
+#define ES_ejs_db_Database_defaultDatabase                             17
+#define ES_ejs_db_Database_set_defaultDatabase                         18
+#define ES_ejs_db_Database_destroyDatabase                             19
+#define ES_ejs_db_Database_destroyTable                                20
+#define ES_ejs_db_Database_endTransaction                              21
+#define ES_ejs_db_Database_getColumns                                  22
+#define ES_ejs_db_Database_getTables                                   23
+#define ES_ejs_db_Database_getNumRows                                  24
+#define ES_ejs_db_Database_name                                        25
+#define ES_ejs_db_Database_query                                       26
+#define ES_ejs_db_Database_removeColumns                               27
+#define ES_ejs_db_Database_removeIndex                                 28
+#define ES_ejs_db_Database_renameColumn                                29
+#define ES_ejs_db_Database_renameTable                                 30
+#define ES_ejs_db_Database_rollback                                    31
+#define ES_ejs_db_Database_sql                                         32
+#define ES_ejs_db_Database_sqlTypeToDataType                           33
+#define ES_ejs_db_Database_sqlTypeToEjsType                            34
+#define ES_ejs_db_Database_startTransaction                            35
+#define ES_ejs_db_Database_trace                                       36
+#define ES_ejs_db_Database_transaction                                 37
+#define ES_ejs_db_Database_quote                                       38
+#define ES_ejs_db_Database_NUM_CLASS_PROP                              39
+
+/**
+ * Instance slots for "Database" type 
+ */
+#define ES_ejs_db_Database__adapter                                    0
+#define ES_ejs_db_Database__connection                                 1
+#define ES_ejs_db_Database__name                                       2
+#define ES_ejs_db_Database__traceAll                                   3
+#define ES_ejs_db_Database_NUM_INSTANCE_PROP                           4
+
+/**
+ * 
+ *    Local slots for methods in type Database 
+ */
+#define ES_ejs_db_Database_Database_adapter                            0
+#define ES_ejs_db_Database_Database_connectionString                   1
+#define ES_ejs_db_Database_Database_adapterClass                       2
+#define ES_ejs_db_Database_addColumn_table                             0
+#define ES_ejs_db_Database_addColumn_column                            1
+#define ES_ejs_db_Database_addColumn_datatype                          2
+#define ES_ejs_db_Database_addColumn_options                           3
+#define ES_ejs_db_Database_addIndex_table                              0
+#define ES_ejs_db_Database_addIndex_column                             1
+#define ES_ejs_db_Database_addIndex_index                              2
+#define ES_ejs_db_Database_changeColumn_table                          0
+#define ES_ejs_db_Database_changeColumn_column                         1
+#define ES_ejs_db_Database_changeColumn_datatype                       2
+#define ES_ejs_db_Database_changeColumn_options                        3
+#define ES_ejs_db_Database_connect_connectionString                    0
+#define ES_ejs_db_Database_createDatabase_name                         0
+#define ES_ejs_db_Database_createDatabase_options                      1
+#define ES_ejs_db_Database_createTable_table                           0
+#define ES_ejs_db_Database_createTable_columns                         1
+#define ES_ejs_db_Database_dataTypeToSqlType_dataType                  0
+#define ES_ejs_db_Database_set_defaultDatabase_db                      0
+#define ES_ejs_db_Database_destroyDatabase_name                        0
+#define ES_ejs_db_Database_destroyTable_table                          0
+#define ES_ejs_db_Database_getColumns_table                            0
+#define ES_ejs_db_Database_getNumRows_table                            0
+#define ES_ejs_db_Database_query_cmd                                   0
+#define ES_ejs_db_Database_query_tag                                   1
+#define ES_ejs_db_Database_query_trace                                 2
+#define ES_ejs_db_Database_removeColumns_table                         0
+#define ES_ejs_db_Database_removeColumns_columns                       1
+#define ES_ejs_db_Database_removeIndex_table                           0
+#define ES_ejs_db_Database_removeIndex_index                           1
+#define ES_ejs_db_Database_renameColumn_table                          0
+#define ES_ejs_db_Database_renameColumn_oldColumn                      1
+#define ES_ejs_db_Database_renameColumn_newColumn                      2
+#define ES_ejs_db_Database_renameTable_oldTable                        0
+#define ES_ejs_db_Database_renameTable_newTable                        1
+#define ES_ejs_db_Database_sql_cmd                                     0
+#define ES_ejs_db_Database_sqlTypeToDataType_sqlType                   0
+#define ES_ejs_db_Database_sqlTypeToEjsType_sqlType                    0
+#define ES_ejs_db_Database_trace_on                                    0
+#define ES_ejs_db_Database_transaction_code                            0
+#define ES_ejs_db_Database_transaction__hoisted_1_e                    1
+#define ES_ejs_db_Database_quote_str                                   0
+
+
+/**
+ *   Class property slots for the "DatabaseConnector" class 
+ */
+#define ES_ejs_db_DatabaseConnector__origin                            0
+#define ES_ejs_db_DatabaseConnector_addColumn                          0
+#define ES_ejs_db_DatabaseConnector_addIndex                           1
+#define ES_ejs_db_DatabaseConnector_changeColumn                       2
+#define ES_ejs_db_DatabaseConnector_close                              3
+#define ES_ejs_db_DatabaseConnector_commit                             4
+#define ES_ejs_db_DatabaseConnector_connect                            5
+#define ES_ejs_db_DatabaseConnector_createDatabase                     6
+#define ES_ejs_db_DatabaseConnector_createTable                        7
+#define ES_ejs_db_DatabaseConnector_dataTypeToSqlType                  8
+#define ES_ejs_db_DatabaseConnector_destroyDatabase                    9
+#define ES_ejs_db_DatabaseConnector_destroyTable                       10
+#define ES_ejs_db_DatabaseConnector_getColumns                         11
+#define ES_ejs_db_DatabaseConnector_getTables                          12
+#define ES_ejs_db_DatabaseConnector_removeColumns                      13
+#define ES_ejs_db_DatabaseConnector_removeIndex                        14
+#define ES_ejs_db_DatabaseConnector_renameColumn                       15
+#define ES_ejs_db_DatabaseConnector_renameTable                        16
+#define ES_ejs_db_DatabaseConnector_rollback                           17
+#define ES_ejs_db_DatabaseConnector_sql                                18
+#define ES_ejs_db_DatabaseConnector_sqlTypeToDataType                  19
+#define ES_ejs_db_DatabaseConnector_sqlTypeToEjsType                   20
+#define ES_ejs_db_DatabaseConnector_startTransaction                   21
+#define ES_ejs_db_DatabaseConnector_NUM_CLASS_PROP                     22
+
+/**
+ * Instance slots for "DatabaseConnector" type 
+ */
+#define ES_ejs_db_DatabaseConnector_NUM_INSTANCE_PROP                  0
+
+/**
+ * 
+ *    Local slots for methods in type DatabaseConnector 
+ */
+#define ES_ejs_db_DatabaseConnector_addColumn_table                    0
+#define ES_ejs_db_DatabaseConnector_addColumn_column                   1
+#define ES_ejs_db_DatabaseConnector_addColumn_datatype                 2
+#define ES_ejs_db_DatabaseConnector_addColumn_options                  3
+#define ES_ejs_db_DatabaseConnector_addIndex_table                     0
+#define ES_ejs_db_DatabaseConnector_addIndex_column                    1
+#define ES_ejs_db_DatabaseConnector_addIndex_index                     2
+#define ES_ejs_db_DatabaseConnector_changeColumn_table                 0
+#define ES_ejs_db_DatabaseConnector_changeColumn_column                1
+#define ES_ejs_db_DatabaseConnector_changeColumn_datatype              2
+#define ES_ejs_db_DatabaseConnector_changeColumn_options               3
+#define ES_ejs_db_DatabaseConnector_connect_connectionString           0
+#define ES_ejs_db_DatabaseConnector_createDatabase_name                0
+#define ES_ejs_db_DatabaseConnector_createDatabase_options             1
+#define ES_ejs_db_DatabaseConnector_createTable_table                  0
+#define ES_ejs_db_DatabaseConnector_createTable_columns                1
+#define ES_ejs_db_DatabaseConnector_dataTypeToSqlType_dataType         0
+#define ES_ejs_db_DatabaseConnector_destroyDatabase_name               0
+#define ES_ejs_db_DatabaseConnector_destroyTable_table                 0
+#define ES_ejs_db_DatabaseConnector_getColumns_table                   0
+#define ES_ejs_db_DatabaseConnector_removeColumns_table                0
+#define ES_ejs_db_DatabaseConnector_removeColumns_columns              1
+#define ES_ejs_db_DatabaseConnector_removeIndex_table                  0
+#define ES_ejs_db_DatabaseConnector_removeIndex_index                  1
+#define ES_ejs_db_DatabaseConnector_renameColumn_table                 0
+#define ES_ejs_db_DatabaseConnector_renameColumn_oldColumn             1
+#define ES_ejs_db_DatabaseConnector_renameColumn_newColumn             2
+#define ES_ejs_db_DatabaseConnector_renameTable_oldTable               0
+#define ES_ejs_db_DatabaseConnector_renameTable_newTable               1
+#define ES_ejs_db_DatabaseConnector_sql_cmd                            0
+#define ES_ejs_db_DatabaseConnector_sqlTypeToDataType_sqlType          0
+#define ES_ejs_db_DatabaseConnector_sqlTypeToEjsType_sqlType           0
+
+#define _ES_CHECKSUM_ejs_db 306956
 
 #endif
 /*
@@ -2094,7 +2094,7 @@
 #define ES_ejs_db_Sqlite_sqlTypeToDataType_sqlType                     0
 #define ES_ejs_db_Sqlite_sqlTypeToEjsType_sqlType                      0
 
-#define _ES_CHECKSUM_ejs_db_sqlite 74253
+#define _ES_CHECKSUM_ejs_db_sqlite 74251
 
 #endif
 /*
@@ -2126,6 +2126,49 @@
  * 
  *    Local slots for methods in type global 
  */
+
+
+/**
+ *   Class property slots for the "Timer" class 
+ */
+#define ES_ejs_events_Timer__origin                                    6
+#define ES_ejs_events_Timer_Timer                                      6
+#define ES_ejs_events_Timer_drift                                      7
+#define ES_ejs_events_Timer_set_drift                                  8
+#define ES_ejs_events_Timer_period                                     9
+#define ES_ejs_events_Timer_set_period                                 10
+#define ES_ejs_events_Timer_restart                                    11
+#define ES_ejs_events_Timer_stop                                       12
+#define ES_ejs_events_Timer_NUM_CLASS_PROP                             13
+
+/**
+ * Instance slots for "Timer" type 
+ */
+#define ES_ejs_events_Timer_NUM_INSTANCE_PROP                          0
+
+/**
+ * 
+ *    Local slots for methods in type Timer 
+ */
+#define ES_ejs_events_Timer_Timer_period                               0
+#define ES_ejs_events_Timer_Timer_callback                             1
+#define ES_ejs_events_Timer_Timer_drift                                2
+#define ES_ejs_events_Timer_set_drift_enable                           0
+#define ES_ejs_events_Timer_set_period_period                          0
+
+
+/**
+ *   Class property slots for the "TimerEvent" class 
+ */
+#define ES_ejs_events_TimerEvent__origin                               11
+#define ES_ejs_events_TimerEvent_TimerEvent                            11
+#define ES_ejs_events_TimerEvent__initializer__TimerEvent_initializer  12
+#define ES_ejs_events_TimerEvent_NUM_CLASS_PROP                        13
+
+/**
+ * Instance slots for "TimerEvent" type 
+ */
+#define ES_ejs_events_TimerEvent_NUM_INSTANCE_PROP                     4
 
 
 /**
@@ -2233,50 +2276,7 @@
 #define ES_ejs_events_ErrorEvent_stack                                 7
 #define ES_ejs_events_ErrorEvent_NUM_INSTANCE_PROP                     8
 
-
-/**
- *   Class property slots for the "Timer" class 
- */
-#define ES_ejs_events_Timer__origin                                    6
-#define ES_ejs_events_Timer_Timer                                      6
-#define ES_ejs_events_Timer_drift                                      7
-#define ES_ejs_events_Timer_set_drift                                  8
-#define ES_ejs_events_Timer_period                                     9
-#define ES_ejs_events_Timer_set_period                                 10
-#define ES_ejs_events_Timer_restart                                    11
-#define ES_ejs_events_Timer_stop                                       12
-#define ES_ejs_events_Timer_NUM_CLASS_PROP                             13
-
-/**
- * Instance slots for "Timer" type 
- */
-#define ES_ejs_events_Timer_NUM_INSTANCE_PROP                          0
-
-/**
- * 
- *    Local slots for methods in type Timer 
- */
-#define ES_ejs_events_Timer_Timer_period                               0
-#define ES_ejs_events_Timer_Timer_callback                             1
-#define ES_ejs_events_Timer_Timer_drift                                2
-#define ES_ejs_events_Timer_set_drift_enable                           0
-#define ES_ejs_events_Timer_set_period_period                          0
-
-
-/**
- *   Class property slots for the "TimerEvent" class 
- */
-#define ES_ejs_events_TimerEvent__origin                               11
-#define ES_ejs_events_TimerEvent_TimerEvent                            11
-#define ES_ejs_events_TimerEvent__initializer__TimerEvent_initializer  12
-#define ES_ejs_events_TimerEvent_NUM_CLASS_PROP                        13
-
-/**
- * Instance slots for "TimerEvent" type 
- */
-#define ES_ejs_events_TimerEvent_NUM_INSTANCE_PROP                     4
-
-#define _ES_CHECKSUM_ejs_events 54241
+#define _ES_CHECKSUM_ejs_events 54237
 
 #endif
 /*
@@ -2311,142 +2311,62 @@
 
 
 /**
- *   Class property slots for the "BinaryStream" class 
+ *   Class property slots for the "XMLHttp" class 
  */
-#define ES_ejs_io_BinaryStream__origin                                 6
-#define ES_ejs_io_BinaryStream_BinaryStream                            6
-#define ES_ejs_io_BinaryStream__initializer__BinaryStream_initializer  7
-#define ES_ejs_io_BinaryStream_BigEndian                               8
-#define ES_ejs_io_BinaryStream_LittleEndian                            9
-#define ES_ejs_io_BinaryStream_available                               10
-#define ES_ejs_io_BinaryStream_close                                   11
-#define ES_ejs_io_BinaryStream_endian                                  12
-#define ES_ejs_io_BinaryStream_set_endian                              13
-#define ES_ejs_io_BinaryStream_flush                                   14
-#define ES_ejs_io_BinaryStream_read                                    15
-#define ES_ejs_io_BinaryStream_readBoolean                             16
-#define ES_ejs_io_BinaryStream_readByte                                17
-#define ES_ejs_io_BinaryStream_readDate                                18
-#define ES_ejs_io_BinaryStream_readDouble                              19
-#define ES_ejs_io_BinaryStream_readInteger                             20
-#define ES_ejs_io_BinaryStream_readLong                                21
-#define ES_ejs_io_BinaryStream_readString                              22
-#define ES_ejs_io_BinaryStream_readXML                                 23
-#define ES_ejs_io_BinaryStream_write                                   24
-#define ES_ejs_io_BinaryStream_writeByte                               25
-#define ES_ejs_io_BinaryStream_writeShort                              26
-#define ES_ejs_io_BinaryStream_writeDouble                             27
-#define ES_ejs_io_BinaryStream_writeInteger                            28
-#define ES_ejs_io_BinaryStream_writeLong                               29
-#define ES_ejs_io_BinaryStream_NUM_CLASS_PROP                          30
+#define ES_ejs_io_XMLHttp__origin                                      6
+#define ES_ejs_io_XMLHttp_XMLHttp                                      6
+#define ES_ejs_io_XMLHttp__initializer__XMLHttp_initializer            7
+#define ES_ejs_io_XMLHttp_Uninitialized                                8
+#define ES_ejs_io_XMLHttp_Open                                         9
+#define ES_ejs_io_XMLHttp_Sent                                         10
+#define ES_ejs_io_XMLHttp_Receiving                                    11
+#define ES_ejs_io_XMLHttp_Loaded                                       12
+#define ES_ejs_io_XMLHttp_abort                                        13
+#define ES_ejs_io_XMLHttp_http                                         14
+#define ES_ejs_io_XMLHttp_readyState                                   15
+#define ES_ejs_io_XMLHttp_responseText                                 16
+#define ES_ejs_io_XMLHttp_responseXML                                  17
+#define ES_ejs_io_XMLHttp_responseBody                                 18
+#define ES_ejs_io_XMLHttp_status                                       19
+#define ES_ejs_io_XMLHttp_statusText                                   20
+#define ES_ejs_io_XMLHttp_getAllResponseHeaders                        21
+#define ES_ejs_io_XMLHttp_getResponseHeader                            22
+#define ES_ejs_io_XMLHttp_open                                         23
+#define ES_ejs_io_XMLHttp_send                                         24
+#define ES_ejs_io_XMLHttp_setRequestHeader                             25
+#define ES_ejs_io_XMLHttp_callback                                     26
+#define ES_ejs_io_XMLHttp_notify                                       27
+#define ES_ejs_io_XMLHttp_NUM_CLASS_PROP                               28
 
 /**
- * Instance slots for "BinaryStream" type 
+ * Instance slots for "XMLHttp" type 
  */
-#define ES_ejs_io_BinaryStream_inbuf                                   0
-#define ES_ejs_io_BinaryStream_outbuf                                  1
-#define ES_ejs_io_BinaryStream_nextStream                              2
-#define ES_ejs_io_BinaryStream_NUM_INSTANCE_PROP                       3
-
-/**
- * 
- *    Local slots for methods in type BinaryStream 
- */
-#define ES_ejs_io_BinaryStream_BinaryStream_stream                     0
-#define ES_ejs_io_BinaryStream_BinaryStream___fun_11417__              1
-#define ES_ejs_io_BinaryStream_BinaryStream___fun_11438__              2
-#define ES_ejs_io_BinaryStream_close_graceful                          0
-#define ES_ejs_io_BinaryStream_set_endian_value                        0
-#define ES_ejs_io_BinaryStream_flush_graceful                          0
-#define ES_ejs_io_BinaryStream_read_buffer                             0
-#define ES_ejs_io_BinaryStream_read_offset                             1
-#define ES_ejs_io_BinaryStream_read_count                              2
-#define ES_ejs_io_BinaryStream_readString_count                        0
-#define ES_ejs_io_BinaryStream_readXML_data                            0
-#define ES_ejs_io_BinaryStream_readXML_s                               1
-#define ES_ejs_io_BinaryStream_write_data                              0
-#define ES_ejs_io_BinaryStream_write_count                             1
-#define ES_ejs_io_BinaryStream_write__hoisted_2_i                      2
-#define ES_ejs_io_BinaryStream_writeByte_data                          0
-#define ES_ejs_io_BinaryStream_writeShort_data                         0
-#define ES_ejs_io_BinaryStream_writeDouble_data                        0
-#define ES_ejs_io_BinaryStream_writeInteger_data                       0
-#define ES_ejs_io_BinaryStream_writeLong_data                          0
-
-
-/**
- *   Class property slots for the "File" class 
- */
-#define ES_ejs_io_File__origin                                         6
-#define ES_ejs_io_File_File                                            6
-#define ES_ejs_io_File_canRead                                         7
-#define ES_ejs_io_File_canWrite                                        8
-#define ES_ejs_io_File_close                                           9
-#define ES_ejs_io_File_flush                                           10
-#define ES_ejs_io_File_isOpen                                          11
-#define ES_ejs_io_File_open                                            12
-#define ES_ejs_io_File_options                                         13
-#define ES_ejs_io_File_path                                            14
-#define ES_ejs_io_File_position                                        15
-#define ES_ejs_io_File_set_position                                    16
-#define ES_ejs_io_File_read                                            17
-#define ES_ejs_io_File_readBytes                                       18
-#define ES_ejs_io_File_readString                                      19
-#define ES_ejs_io_File_remove                                          20
-#define ES_ejs_io_File_size                                            21
-#define ES_ejs_io_File_truncate                                        22
-#define ES_ejs_io_File_write                                           23
-#define ES_ejs_io_File_NUM_CLASS_PROP                                  24
-
-/**
- * Instance slots for "File" type 
- */
-#define ES_ejs_io_File_NUM_INSTANCE_PROP                               0
+#define ES_ejs_io_XMLHttp_hp                                           0
+#define ES_ejs_io_XMLHttp_state                                        1
+#define ES_ejs_io_XMLHttp_response                                     2
+#define ES_ejs_io_XMLHttp_onreadystatechange                           3
+#define ES_ejs_io_XMLHttp_NUM_INSTANCE_PROP                            4
 
 /**
  * 
- *    Local slots for methods in type File 
+ *    Local slots for methods in type XMLHttp 
  */
-#define ES_ejs_io_File_File_path                                       0
-#define ES_ejs_io_File_File_options                                    1
-#define ES_ejs_io_File_close_graceful                                  0
-#define ES_ejs_io_File_flush_graceful                                  0
-#define ES_ejs_io_File_open_options                                    0
-#define ES_ejs_io_File_set_position_loc                                0
-#define ES_ejs_io_File_read_buffer                                     0
-#define ES_ejs_io_File_read_offset                                     1
-#define ES_ejs_io_File_read_count                                      2
-#define ES_ejs_io_File_readBytes_count                                 0
-#define ES_ejs_io_File_readString_count                                0
-#define ES_ejs_io_File_truncate_value                                  0
-#define ES_ejs_io_File_write_items                                     0
-
-
-/**
- *   Class property slots for the "FileSystem" class 
- */
-#define ES_ejs_io_FileSystem__origin                                   6
-#define ES_ejs_io_FileSystem_FileSystem                                6
-#define ES_ejs_io_FileSystem_hasDrives                                 7
-#define ES_ejs_io_FileSystem_newline                                   8
-#define ES_ejs_io_FileSystem_set_newline                               9
-#define ES_ejs_io_FileSystem_root                                      10
-#define ES_ejs_io_FileSystem_separators                                11
-#define ES_ejs_io_FileSystem_set_separators                            12
-#define ES_ejs_io_FileSystem_NUM_CLASS_PROP                            13
-
-/**
- * Instance slots for "FileSystem" type 
- */
-#define ES_ejs_io_FileSystem_NUM_INSTANCE_PROP                         0
-
-/**
- * 
- *    Local slots for methods in type FileSystem 
- */
-#define ES_ejs_io_FileSystem_FileSystem_path                           0
-#define ES_ejs_io_FileSystem_set_newline_terminator                    0
-#define ES_ejs_io_FileSystem_set_separators_sep                        0
+#define ES_ejs_io_XMLHttp_getAllResponseHeaders_result                 0
+#define ES_ejs_io_XMLHttp_getAllResponseHeaders__hoisted_1_key         1
+#define ES_ejs_io_XMLHttp_getResponseHeader_key                        0
+#define ES_ejs_io_XMLHttp_open_method                                  0
+#define ES_ejs_io_XMLHttp_open_url                                     1
+#define ES_ejs_io_XMLHttp_open_async                                   2
+#define ES_ejs_io_XMLHttp_open_user                                    3
+#define ES_ejs_io_XMLHttp_open_password                                4
+#define ES_ejs_io_XMLHttp_open__hoisted_5_timeout                      5
+#define ES_ejs_io_XMLHttp_open__hoisted_6_when                         6
+#define ES_ejs_io_XMLHttp_send_content                                 0
+#define ES_ejs_io_XMLHttp_setRequestHeader_key                         0
+#define ES_ejs_io_XMLHttp_setRequestHeader_value                       1
+#define ES_ejs_io_XMLHttp_callback_e                                   0
+#define ES_ejs_io_XMLHttp_callback_hp                                  1
+#define ES_ejs_io_XMLHttp_callback_count                               2
 
 
 /**
@@ -2607,7 +2527,7 @@
 #define ES_ejs_io_Http_upload_boundary                                 3
 #define ES_ejs_io_Http_upload_buf                                      4
 #define ES_ejs_io_Http_upload_http                                     5
-#define ES_ejs_io_Http_upload___fun_12894__                            6
+#define ES_ejs_io_Http_upload___fun_12486__                            6
 #define ES_ejs_io_Http_upload__hoisted_7_key                           7
 #define ES_ejs_io_Http_upload__hoisted_8_key                           8
 #define ES_ejs_io_Http_set_uri_newUri                                  0
@@ -2818,64 +2738,144 @@
 
 
 /**
- *   Class property slots for the "XMLHttp" class 
+ *   Class property slots for the "BinaryStream" class 
  */
-#define ES_ejs_io_XMLHttp__origin                                      6
-#define ES_ejs_io_XMLHttp_XMLHttp                                      6
-#define ES_ejs_io_XMLHttp__initializer__XMLHttp_initializer            7
-#define ES_ejs_io_XMLHttp_Uninitialized                                8
-#define ES_ejs_io_XMLHttp_Open                                         9
-#define ES_ejs_io_XMLHttp_Sent                                         10
-#define ES_ejs_io_XMLHttp_Receiving                                    11
-#define ES_ejs_io_XMLHttp_Loaded                                       12
-#define ES_ejs_io_XMLHttp_abort                                        13
-#define ES_ejs_io_XMLHttp_http                                         14
-#define ES_ejs_io_XMLHttp_readyState                                   15
-#define ES_ejs_io_XMLHttp_responseText                                 16
-#define ES_ejs_io_XMLHttp_responseXML                                  17
-#define ES_ejs_io_XMLHttp_responseBody                                 18
-#define ES_ejs_io_XMLHttp_status                                       19
-#define ES_ejs_io_XMLHttp_statusText                                   20
-#define ES_ejs_io_XMLHttp_getAllResponseHeaders                        21
-#define ES_ejs_io_XMLHttp_getResponseHeader                            22
-#define ES_ejs_io_XMLHttp_open                                         23
-#define ES_ejs_io_XMLHttp_send                                         24
-#define ES_ejs_io_XMLHttp_setRequestHeader                             25
-#define ES_ejs_io_XMLHttp_callback                                     26
-#define ES_ejs_io_XMLHttp_notify                                       27
-#define ES_ejs_io_XMLHttp_NUM_CLASS_PROP                               28
+#define ES_ejs_io_BinaryStream__origin                                 6
+#define ES_ejs_io_BinaryStream_BinaryStream                            6
+#define ES_ejs_io_BinaryStream__initializer__BinaryStream_initializer  7
+#define ES_ejs_io_BinaryStream_BigEndian                               8
+#define ES_ejs_io_BinaryStream_LittleEndian                            9
+#define ES_ejs_io_BinaryStream_available                               10
+#define ES_ejs_io_BinaryStream_close                                   11
+#define ES_ejs_io_BinaryStream_endian                                  12
+#define ES_ejs_io_BinaryStream_set_endian                              13
+#define ES_ejs_io_BinaryStream_flush                                   14
+#define ES_ejs_io_BinaryStream_read                                    15
+#define ES_ejs_io_BinaryStream_readBoolean                             16
+#define ES_ejs_io_BinaryStream_readByte                                17
+#define ES_ejs_io_BinaryStream_readDate                                18
+#define ES_ejs_io_BinaryStream_readDouble                              19
+#define ES_ejs_io_BinaryStream_readInteger                             20
+#define ES_ejs_io_BinaryStream_readLong                                21
+#define ES_ejs_io_BinaryStream_readString                              22
+#define ES_ejs_io_BinaryStream_readXML                                 23
+#define ES_ejs_io_BinaryStream_write                                   24
+#define ES_ejs_io_BinaryStream_writeByte                               25
+#define ES_ejs_io_BinaryStream_writeShort                              26
+#define ES_ejs_io_BinaryStream_writeDouble                             27
+#define ES_ejs_io_BinaryStream_writeInteger                            28
+#define ES_ejs_io_BinaryStream_writeLong                               29
+#define ES_ejs_io_BinaryStream_NUM_CLASS_PROP                          30
 
 /**
- * Instance slots for "XMLHttp" type 
+ * Instance slots for "BinaryStream" type 
  */
-#define ES_ejs_io_XMLHttp_hp                                           0
-#define ES_ejs_io_XMLHttp_state                                        1
-#define ES_ejs_io_XMLHttp_response                                     2
-#define ES_ejs_io_XMLHttp_onreadystatechange                           3
-#define ES_ejs_io_XMLHttp_NUM_INSTANCE_PROP                            4
+#define ES_ejs_io_BinaryStream_inbuf                                   0
+#define ES_ejs_io_BinaryStream_outbuf                                  1
+#define ES_ejs_io_BinaryStream_nextStream                              2
+#define ES_ejs_io_BinaryStream_NUM_INSTANCE_PROP                       3
 
 /**
  * 
- *    Local slots for methods in type XMLHttp 
+ *    Local slots for methods in type BinaryStream 
  */
-#define ES_ejs_io_XMLHttp_getAllResponseHeaders_result                 0
-#define ES_ejs_io_XMLHttp_getAllResponseHeaders__hoisted_1_key         1
-#define ES_ejs_io_XMLHttp_getResponseHeader_key                        0
-#define ES_ejs_io_XMLHttp_open_method                                  0
-#define ES_ejs_io_XMLHttp_open_url                                     1
-#define ES_ejs_io_XMLHttp_open_async                                   2
-#define ES_ejs_io_XMLHttp_open_user                                    3
-#define ES_ejs_io_XMLHttp_open_password                                4
-#define ES_ejs_io_XMLHttp_open__hoisted_5_timeout                      5
-#define ES_ejs_io_XMLHttp_open__hoisted_6_when                         6
-#define ES_ejs_io_XMLHttp_send_content                                 0
-#define ES_ejs_io_XMLHttp_setRequestHeader_key                         0
-#define ES_ejs_io_XMLHttp_setRequestHeader_value                       1
-#define ES_ejs_io_XMLHttp_callback_e                                   0
-#define ES_ejs_io_XMLHttp_callback_hp                                  1
-#define ES_ejs_io_XMLHttp_callback_count                               2
+#define ES_ejs_io_BinaryStream_BinaryStream_stream                     0
+#define ES_ejs_io_BinaryStream_BinaryStream___fun_14671__              1
+#define ES_ejs_io_BinaryStream_BinaryStream___fun_14692__              2
+#define ES_ejs_io_BinaryStream_close_graceful                          0
+#define ES_ejs_io_BinaryStream_set_endian_value                        0
+#define ES_ejs_io_BinaryStream_flush_graceful                          0
+#define ES_ejs_io_BinaryStream_read_buffer                             0
+#define ES_ejs_io_BinaryStream_read_offset                             1
+#define ES_ejs_io_BinaryStream_read_count                              2
+#define ES_ejs_io_BinaryStream_readString_count                        0
+#define ES_ejs_io_BinaryStream_readXML_data                            0
+#define ES_ejs_io_BinaryStream_readXML_s                               1
+#define ES_ejs_io_BinaryStream_write_data                              0
+#define ES_ejs_io_BinaryStream_write_count                             1
+#define ES_ejs_io_BinaryStream_write__hoisted_2_i                      2
+#define ES_ejs_io_BinaryStream_writeByte_data                          0
+#define ES_ejs_io_BinaryStream_writeShort_data                         0
+#define ES_ejs_io_BinaryStream_writeDouble_data                        0
+#define ES_ejs_io_BinaryStream_writeInteger_data                       0
+#define ES_ejs_io_BinaryStream_writeLong_data                          0
 
-#define _ES_CHECKSUM_ejs_io 354747
+
+/**
+ *   Class property slots for the "FileSystem" class 
+ */
+#define ES_ejs_io_FileSystem__origin                                   6
+#define ES_ejs_io_FileSystem_FileSystem                                6
+#define ES_ejs_io_FileSystem_hasDrives                                 7
+#define ES_ejs_io_FileSystem_newline                                   8
+#define ES_ejs_io_FileSystem_set_newline                               9
+#define ES_ejs_io_FileSystem_root                                      10
+#define ES_ejs_io_FileSystem_separators                                11
+#define ES_ejs_io_FileSystem_set_separators                            12
+#define ES_ejs_io_FileSystem_NUM_CLASS_PROP                            13
+
+/**
+ * Instance slots for "FileSystem" type 
+ */
+#define ES_ejs_io_FileSystem_NUM_INSTANCE_PROP                         0
+
+/**
+ * 
+ *    Local slots for methods in type FileSystem 
+ */
+#define ES_ejs_io_FileSystem_FileSystem_path                           0
+#define ES_ejs_io_FileSystem_set_newline_terminator                    0
+#define ES_ejs_io_FileSystem_set_separators_sep                        0
+
+
+/**
+ *   Class property slots for the "File" class 
+ */
+#define ES_ejs_io_File__origin                                         6
+#define ES_ejs_io_File_File                                            6
+#define ES_ejs_io_File_canRead                                         7
+#define ES_ejs_io_File_canWrite                                        8
+#define ES_ejs_io_File_close                                           9
+#define ES_ejs_io_File_flush                                           10
+#define ES_ejs_io_File_isOpen                                          11
+#define ES_ejs_io_File_open                                            12
+#define ES_ejs_io_File_options                                         13
+#define ES_ejs_io_File_path                                            14
+#define ES_ejs_io_File_position                                        15
+#define ES_ejs_io_File_set_position                                    16
+#define ES_ejs_io_File_read                                            17
+#define ES_ejs_io_File_readBytes                                       18
+#define ES_ejs_io_File_readString                                      19
+#define ES_ejs_io_File_remove                                          20
+#define ES_ejs_io_File_size                                            21
+#define ES_ejs_io_File_truncate                                        22
+#define ES_ejs_io_File_write                                           23
+#define ES_ejs_io_File_NUM_CLASS_PROP                                  24
+
+/**
+ * Instance slots for "File" type 
+ */
+#define ES_ejs_io_File_NUM_INSTANCE_PROP                               0
+
+/**
+ * 
+ *    Local slots for methods in type File 
+ */
+#define ES_ejs_io_File_File_path                                       0
+#define ES_ejs_io_File_File_options                                    1
+#define ES_ejs_io_File_close_graceful                                  0
+#define ES_ejs_io_File_flush_graceful                                  0
+#define ES_ejs_io_File_open_options                                    0
+#define ES_ejs_io_File_set_position_loc                                0
+#define ES_ejs_io_File_read_buffer                                     0
+#define ES_ejs_io_File_read_offset                                     1
+#define ES_ejs_io_File_read_count                                      2
+#define ES_ejs_io_File_readBytes_count                                 0
+#define ES_ejs_io_File_readString_count                                0
+#define ES_ejs_io_File_truncate_value                                  0
+#define ES_ejs_io_File_write_items                                     0
+
+#define _ES_CHECKSUM_ejs_io 354757
 
 #endif
 /*
@@ -2907,6 +2907,66 @@
  * 
  *    Local slots for methods in type global 
  */
+
+
+/**
+ *   Class property slots for the "GC" class 
+ */
+#define ES_ejs_sys_GC__origin                                          6
+#define ES_ejs_sys_GC_enabled                                          6
+#define ES_ejs_sys_GC_set_enabled                                      7
+#define ES_ejs_sys_GC_workQuota                                        8
+#define ES_ejs_sys_GC_set_workQuota                                    9
+#define ES_ejs_sys_GC_run                                              10
+#define ES_ejs_sys_GC_NUM_CLASS_PROP                                   11
+
+/**
+ * Instance slots for "GC" type 
+ */
+#define ES_ejs_sys_GC_NUM_INSTANCE_PROP                                0
+
+/**
+ * 
+ *    Local slots for methods in type GC 
+ */
+#define ES_ejs_sys_GC_set_enabled_on                                   0
+#define ES_ejs_sys_GC_set_workQuota_quota                              0
+#define ES_ejs_sys_GC_run_deep                                         0
+
+
+/**
+ *   Class property slots for the "Cmd" class 
+ */
+#define ES_ejs_sys_Cmd__origin                                         6
+#define ES_ejs_sys_Cmd_locate                                          6
+#define ES_ejs_sys_Cmd_sh                                              7
+#define ES_ejs_sys_Cmd_run                                             8
+#define ES_ejs_sys_Cmd_daemon                                          9
+#define ES_ejs_sys_Cmd_runx                                            10
+#define ES_ejs_sys_Cmd_NUM_CLASS_PROP                                  11
+
+/**
+ * Instance slots for "Cmd" type 
+ */
+#define ES_ejs_sys_Cmd_NUM_INSTANCE_PROP                               0
+
+/**
+ * 
+ *    Local slots for methods in type Cmd 
+ */
+#define ES_ejs_sys_Cmd_locate_program                                  0
+#define ES_ejs_sys_Cmd_locate_sep                                      1
+#define ES_ejs_sys_Cmd_locate__hoisted_2_dir                           2
+#define ES_ejs_sys_Cmd_locate__hoisted_3_path                          3
+#define ES_ejs_sys_Cmd_locate__hoisted_4_ext                           4
+#define ES_ejs_sys_Cmd_locate__hoisted_5_path                          5
+#define ES_ejs_sys_Cmd_sh_cmdline                                      0
+#define ES_ejs_sys_Cmd_sh_data                                         1
+#define ES_ejs_sys_Cmd_sh_sh                                           2
+#define ES_ejs_sys_Cmd_run_cmdline                                     0
+#define ES_ejs_sys_Cmd_run_data                                        1
+#define ES_ejs_sys_Cmd_daemon_cmdline                                  0
+#define ES_ejs_sys_Cmd_runx_cmdline                                    0
 
 
 /**
@@ -2956,38 +3016,39 @@
 
 
 /**
- *   Class property slots for the "Cmd" class 
+ *   Class property slots for the "System" class 
  */
-#define ES_ejs_sys_Cmd__origin                                         6
-#define ES_ejs_sys_Cmd_locate                                          6
-#define ES_ejs_sys_Cmd_sh                                              7
-#define ES_ejs_sys_Cmd_run                                             8
-#define ES_ejs_sys_Cmd_daemon                                          9
-#define ES_ejs_sys_Cmd_runx                                            10
-#define ES_ejs_sys_Cmd_NUM_CLASS_PROP                                  11
+#define ES_ejs_sys_System__origin                                      6
+#define ES_ejs_sys_System__initializer__System_initializer             6
+#define ES_ejs_sys_System_Bufsize                                      7
+#define ES_ejs_sys_System_hostname                                     8
+#define ES_ejs_sys_System_kill                                         9
+#define ES_ejs_sys_System_run                                          10
+#define ES_ejs_sys_System_runx                                         11
+#define ES_ejs_sys_System_daemon                                       12
+#define ES_ejs_sys_System_sh                                           13
+#define ES_ejs_sys_System_cmd                                          14
+#define ES_ejs_sys_System_exec                                         15
+#define ES_ejs_sys_System_NUM_CLASS_PROP                               16
 
 /**
- * Instance slots for "Cmd" type 
+ * Instance slots for "System" type 
  */
-#define ES_ejs_sys_Cmd_NUM_INSTANCE_PROP                               0
+#define ES_ejs_sys_System_NUM_INSTANCE_PROP                            0
 
 /**
  * 
- *    Local slots for methods in type Cmd 
+ *    Local slots for methods in type System 
  */
-#define ES_ejs_sys_Cmd_locate_program                                  0
-#define ES_ejs_sys_Cmd_locate_sep                                      1
-#define ES_ejs_sys_Cmd_locate__hoisted_2_dir                           2
-#define ES_ejs_sys_Cmd_locate__hoisted_3_path                          3
-#define ES_ejs_sys_Cmd_locate__hoisted_4_ext                           4
-#define ES_ejs_sys_Cmd_locate__hoisted_5_path                          5
-#define ES_ejs_sys_Cmd_sh_cmdline                                      0
-#define ES_ejs_sys_Cmd_sh_data                                         1
-#define ES_ejs_sys_Cmd_sh_sh                                           2
-#define ES_ejs_sys_Cmd_run_cmdline                                     0
-#define ES_ejs_sys_Cmd_run_data                                        1
-#define ES_ejs_sys_Cmd_daemon_cmdline                                  0
-#define ES_ejs_sys_Cmd_runx_cmdline                                    0
+#define ES_ejs_sys_System_kill_pid                                     0
+#define ES_ejs_sys_System_kill_signal                                  1
+#define ES_ejs_sys_System_run_cmd                                      0
+#define ES_ejs_sys_System_runx_cmd                                     0
+#define ES_ejs_sys_System_daemon_cmd                                   0
+#define ES_ejs_sys_System_sh_args                                      0
+#define ES_ejs_sys_System_sh_sh                                        1
+#define ES_ejs_sys_System_cmd_args                                     0
+#define ES_ejs_sys_System_exec_args                                    0
 
 
 /**
@@ -3022,31 +3083,6 @@
 
 
 /**
- *   Class property slots for the "GC" class 
- */
-#define ES_ejs_sys_GC__origin                                          6
-#define ES_ejs_sys_GC_enabled                                          6
-#define ES_ejs_sys_GC_set_enabled                                      7
-#define ES_ejs_sys_GC_workQuota                                        8
-#define ES_ejs_sys_GC_set_workQuota                                    9
-#define ES_ejs_sys_GC_run                                              10
-#define ES_ejs_sys_GC_NUM_CLASS_PROP                                   11
-
-/**
- * Instance slots for "GC" type 
- */
-#define ES_ejs_sys_GC_NUM_INSTANCE_PROP                                0
-
-/**
- * 
- *    Local slots for methods in type GC 
- */
-#define ES_ejs_sys_GC_set_enabled_on                                   0
-#define ES_ejs_sys_GC_set_workQuota_quota                              0
-#define ES_ejs_sys_GC_run_deep                                         0
-
-
-/**
  *   Class property slots for the "Memory" class 
  */
 #define ES_ejs_sys_Memory__origin                                      6
@@ -3076,42 +3112,6 @@
 #define ES_ejs_sys_Memory_set_callback_fn                              0
 #define ES_ejs_sys_Memory_set_maximum_value                            0
 #define ES_ejs_sys_Memory_set_redline_value                            0
-
-
-/**
- *   Class property slots for the "System" class 
- */
-#define ES_ejs_sys_System__origin                                      6
-#define ES_ejs_sys_System__initializer__System_initializer             6
-#define ES_ejs_sys_System_Bufsize                                      7
-#define ES_ejs_sys_System_hostname                                     8
-#define ES_ejs_sys_System_kill                                         9
-#define ES_ejs_sys_System_run                                          10
-#define ES_ejs_sys_System_runx                                         11
-#define ES_ejs_sys_System_daemon                                       12
-#define ES_ejs_sys_System_sh                                           13
-#define ES_ejs_sys_System_cmd                                          14
-#define ES_ejs_sys_System_exec                                         15
-#define ES_ejs_sys_System_NUM_CLASS_PROP                               16
-
-/**
- * Instance slots for "System" type 
- */
-#define ES_ejs_sys_System_NUM_INSTANCE_PROP                            0
-
-/**
- * 
- *    Local slots for methods in type System 
- */
-#define ES_ejs_sys_System_kill_pid                                     0
-#define ES_ejs_sys_System_kill_signal                                  1
-#define ES_ejs_sys_System_run_cmd                                      0
-#define ES_ejs_sys_System_runx_cmd                                     0
-#define ES_ejs_sys_System_daemon_cmd                                   0
-#define ES_ejs_sys_System_sh_args                                      0
-#define ES_ejs_sys_System_sh_sh                                        1
-#define ES_ejs_sys_System_cmd_args                                     0
-#define ES_ejs_sys_System_exec_args                                    0
 
 
 /**
@@ -3157,7 +3157,7 @@
 #define ES_ejs_sys_Worker_postMessage_ports                            1
 #define ES_ejs_sys_Worker_waitForMessage_timeout                       0
 
-#define _ES_CHECKSUM_ejs_sys 140201
+#define _ES_CHECKSUM_ejs_sys 140203
 
 #endif
 /*
@@ -3221,503 +3221,6 @@
 #define ES_ejs_web_Cache_write_options                                 3
 #define ES_ejs_web_Cache_remove_domain                                 0
 #define ES_ejs_web_Cache_remove_key                                    1
-
-
-/**
- *   Class property slots for the "GoogleConnector" class 
- */
-#define ES_ejs_web_GoogleConnector__origin                             6
-#define ES_ejs_web_GoogleConnector_GoogleConnector                     6
-#define ES_ejs_web_GoogleConnector_scriptHeader                        7
-#define ES_ejs_web_GoogleConnector_ejs_web_table                       8
-#define ES_ejs_web_GoogleConnector_ejs_web_chart                       9
-#define ES_ejs_web_GoogleConnector_getOptions                          10
-#define ES_ejs_web_GoogleConnector_write                               11
-#define ES_ejs_web_GoogleConnector_NUM_CLASS_PROP                      12
-
-/**
- * Instance slots for "GoogleConnector" type 
- */
-#define ES_ejs_web_GoogleConnector_nextId                              0
-#define ES_ejs_web_GoogleConnector_NUM_INSTANCE_PROP                   1
-
-/**
- * 
- *    Local slots for methods in type GoogleConnector 
- */
-#define ES_ejs_web_GoogleConnector_GoogleConnector_controller          0
-#define ES_ejs_web_GoogleConnector_scriptHeader_kind                   0
-#define ES_ejs_web_GoogleConnector_scriptHeader_id                     1
-#define ES_ejs_web_GoogleConnector_ejs_web_table_data                  0
-#define ES_ejs_web_GoogleConnector_ejs_web_table_options               1
-#define ES_ejs_web_GoogleConnector_ejs_web_table_id                    2
-#define ES_ejs_web_GoogleConnector_ejs_web_table_columns               3
-#define ES_ejs_web_GoogleConnector_ejs_web_table_firstLine             4
-#define ES_ejs_web_GoogleConnector_ejs_web_table_goptions              5
-#define ES_ejs_web_GoogleConnector_ejs_web_table__hoisted_6_i          6
-#define ES_ejs_web_GoogleConnector_ejs_web_table__hoisted_7_name       7
-#define ES_ejs_web_GoogleConnector_ejs_web_table__hoisted_8_name       8
-#define ES_ejs_web_GoogleConnector_ejs_web_table__hoisted_9_row        9
-#define ES_ejs_web_GoogleConnector_ejs_web_table__hoisted_10_col       10
-#define ES_ejs_web_GoogleConnector_ejs_web_table__hoisted_11_name      11
-#define ES_ejs_web_GoogleConnector_ejs_web_chart_grid                  0
-#define ES_ejs_web_GoogleConnector_ejs_web_chart_options               1
-#define ES_ejs_web_GoogleConnector_ejs_web_chart_id                    2
-#define ES_ejs_web_GoogleConnector_ejs_web_chart_columns               3
-#define ES_ejs_web_GoogleConnector_ejs_web_chart_firstLine             4
-#define ES_ejs_web_GoogleConnector_ejs_web_chart_col                   5
-#define ES_ejs_web_GoogleConnector_ejs_web_chart_dataType              6
-#define ES_ejs_web_GoogleConnector_ejs_web_chart_goptions              7
-#define ES_ejs_web_GoogleConnector_ejs_web_chart__hoisted_8_name       8
-#define ES_ejs_web_GoogleConnector_ejs_web_chart__hoisted_9_row        9
-#define ES_ejs_web_GoogleConnector_ejs_web_chart__hoisted_10_col2      10
-#define ES_ejs_web_GoogleConnector_ejs_web_chart__hoisted_11_name2     11
-#define ES_ejs_web_GoogleConnector_getOptions_options                  0
-#define ES_ejs_web_GoogleConnector_getOptions_defaults                 1
-#define ES_ejs_web_GoogleConnector_getOptions_result                   2
-#define ES_ejs_web_GoogleConnector_getOptions__hoisted_3_word          3
-#define ES_ejs_web_GoogleConnector_write_str                           0
-
-
-/**
- *   Class property slots for the "HtmlConnector" class 
- */
-#define ES_ejs_web_HtmlConnector__origin                               6
-#define ES_ejs_web_HtmlConnector_HtmlConnector                         6
-#define ES_ejs_web_HtmlConnector_ejs_web_aform                         7
-#define ES_ejs_web_HtmlConnector_ejs_web_alink                         8
-#define ES_ejs_web_HtmlConnector_ejs_web_button                        9
-#define ES_ejs_web_HtmlConnector_ejs_web_buttonLink                    10
-#define ES_ejs_web_HtmlConnector_ejs_web_chart                         11
-#define ES_ejs_web_HtmlConnector_ejs_web_checkbox                      12
-#define ES_ejs_web_HtmlConnector_ejs_web_endform                       13
-#define ES_ejs_web_HtmlConnector_ejs_web_flash                         14
-#define ES_ejs_web_HtmlConnector_ejs_web_form                          15
-#define ES_ejs_web_HtmlConnector_ejs_web_image                         16
-#define ES_ejs_web_HtmlConnector_ejs_web_label                         17
-#define ES_ejs_web_HtmlConnector_ejs_web_link                          18
-#define ES_ejs_web_HtmlConnector_ejs_web_extlink                       19
-#define ES_ejs_web_HtmlConnector_ejs_web_list                          20
-#define ES_ejs_web_HtmlConnector_ejs_web_mail                          21
-#define ES_ejs_web_HtmlConnector_ejs_web_progress                      22
-#define ES_ejs_web_HtmlConnector_ejs_web_radio                         23
-#define ES_ejs_web_HtmlConnector_ejs_web_script                        24
-#define ES_ejs_web_HtmlConnector_ejs_web_status                        25
-#define ES_ejs_web_HtmlConnector_ejs_web_stylesheet                    26
-#define ES_ejs_web_HtmlConnector_ejs_web_tabs                          27
-#define ES_ejs_web_HtmlConnector_getColumns                            28
-#define ES_ejs_web_HtmlConnector_ejs_web_table                         29
-#define ES_ejs_web_HtmlConnector_ejs_web_text                          30
-#define ES_ejs_web_HtmlConnector_ejs_web_textarea                      31
-#define ES_ejs_web_HtmlConnector_ejs_web_tree                          32
-#define ES_ejs_web_HtmlConnector_getTextKind                           33
-#define ES_ejs_web_HtmlConnector_getOptions                            34
-#define ES_ejs_web_HtmlConnector_write                                 35
-#define ES_ejs_web_HtmlConnector_getDataAttributes                     36
-#define ES_ejs_web_HtmlConnector_NUM_CLASS_PROP                        37
-
-/**
- * Instance slots for "HtmlConnector" type 
- */
-#define ES_ejs_web_HtmlConnector_nextId                                0
-#define ES_ejs_web_HtmlConnector_controller                            1
-#define ES_ejs_web_HtmlConnector_NUM_INSTANCE_PROP                     2
-
-/**
- * 
- *    Local slots for methods in type HtmlConnector 
- */
-#define ES_ejs_web_HtmlConnector_HtmlConnector_controller              0
-#define ES_ejs_web_HtmlConnector_ejs_web_aform_record                  0
-#define ES_ejs_web_HtmlConnector_ejs_web_aform_url                     1
-#define ES_ejs_web_HtmlConnector_ejs_web_aform_options                 2
-#define ES_ejs_web_HtmlConnector_ejs_web_alink_text                    0
-#define ES_ejs_web_HtmlConnector_ejs_web_alink_url                     1
-#define ES_ejs_web_HtmlConnector_ejs_web_alink_options                 2
-#define ES_ejs_web_HtmlConnector_ejs_web_button_value                  0
-#define ES_ejs_web_HtmlConnector_ejs_web_button_buttonName             1
-#define ES_ejs_web_HtmlConnector_ejs_web_button_options                2
-#define ES_ejs_web_HtmlConnector_ejs_web_buttonLink_text               0
-#define ES_ejs_web_HtmlConnector_ejs_web_buttonLink_url                1
-#define ES_ejs_web_HtmlConnector_ejs_web_buttonLink_options            2
-#define ES_ejs_web_HtmlConnector_ejs_web_buttonLink__hoisted_3_attributes 3
-#define ES_ejs_web_HtmlConnector_ejs_web_chart_data                    0
-#define ES_ejs_web_HtmlConnector_ejs_web_chart_options                 1
-#define ES_ejs_web_HtmlConnector_ejs_web_checkbox_name                 0
-#define ES_ejs_web_HtmlConnector_ejs_web_checkbox_value                1
-#define ES_ejs_web_HtmlConnector_ejs_web_checkbox_submitValue          2
-#define ES_ejs_web_HtmlConnector_ejs_web_checkbox_options              3
-#define ES_ejs_web_HtmlConnector_ejs_web_checkbox_checked              4
-#define ES_ejs_web_HtmlConnector_ejs_web_flash_kind                    0
-#define ES_ejs_web_HtmlConnector_ejs_web_flash_msg                     1
-#define ES_ejs_web_HtmlConnector_ejs_web_flash_options                 2
-#define ES_ejs_web_HtmlConnector_ejs_web_form_record                   0
-#define ES_ejs_web_HtmlConnector_ejs_web_form_url                      1
-#define ES_ejs_web_HtmlConnector_ejs_web_form_options                  2
-#define ES_ejs_web_HtmlConnector_ejs_web_image_src                     0
-#define ES_ejs_web_HtmlConnector_ejs_web_image_options                 1
-#define ES_ejs_web_HtmlConnector_ejs_web_label_text                    0
-#define ES_ejs_web_HtmlConnector_ejs_web_label_options                 1
-#define ES_ejs_web_HtmlConnector_ejs_web_link_text                     0
-#define ES_ejs_web_HtmlConnector_ejs_web_link_action                   1
-#define ES_ejs_web_HtmlConnector_ejs_web_link_options                  2
-#define ES_ejs_web_HtmlConnector_ejs_web_extlink_text                  0
-#define ES_ejs_web_HtmlConnector_ejs_web_extlink_url                   1
-#define ES_ejs_web_HtmlConnector_ejs_web_extlink_options               2
-#define ES_ejs_web_HtmlConnector_ejs_web_list_field                    0
-#define ES_ejs_web_HtmlConnector_ejs_web_list_choices                  1
-#define ES_ejs_web_HtmlConnector_ejs_web_list_defaultValue             2
-#define ES_ejs_web_HtmlConnector_ejs_web_list_options                  3
-#define ES_ejs_web_HtmlConnector_ejs_web_list_isSelected               4
-#define ES_ejs_web_HtmlConnector_ejs_web_list_i                        5
-#define ES_ejs_web_HtmlConnector_ejs_web_list__hoisted_6_choice        6
-#define ES_ejs_web_HtmlConnector_ejs_web_list__hoisted_7_field         7
-#define ES_ejs_web_HtmlConnector_ejs_web_mail_nameText                 0
-#define ES_ejs_web_HtmlConnector_ejs_web_mail_address                  1
-#define ES_ejs_web_HtmlConnector_ejs_web_mail_options                  2
-#define ES_ejs_web_HtmlConnector_ejs_web_progress_initialData          0
-#define ES_ejs_web_HtmlConnector_ejs_web_progress_options              1
-#define ES_ejs_web_HtmlConnector_ejs_web_radio_name                    0
-#define ES_ejs_web_HtmlConnector_ejs_web_radio_selected                1
-#define ES_ejs_web_HtmlConnector_ejs_web_radio_choices                 2
-#define ES_ejs_web_HtmlConnector_ejs_web_radio_options                 3
-#define ES_ejs_web_HtmlConnector_ejs_web_radio_checked                 4
-#define ES_ejs_web_HtmlConnector_ejs_web_radio__hoisted_5_v            5
-#define ES_ejs_web_HtmlConnector_ejs_web_radio__hoisted_6_item         6
-#define ES_ejs_web_HtmlConnector_ejs_web_script_url                    0
-#define ES_ejs_web_HtmlConnector_ejs_web_script_options                1
-#define ES_ejs_web_HtmlConnector_ejs_web_status_data                   0
-#define ES_ejs_web_HtmlConnector_ejs_web_status_options                1
-#define ES_ejs_web_HtmlConnector_ejs_web_stylesheet_url                0
-#define ES_ejs_web_HtmlConnector_ejs_web_stylesheet_options            1
-#define ES_ejs_web_HtmlConnector_ejs_web_tabs_initialData              0
-#define ES_ejs_web_HtmlConnector_ejs_web_tabs_options                  1
-#define ES_ejs_web_HtmlConnector_ejs_web_tabs__hoisted_2_t             2
-#define ES_ejs_web_HtmlConnector_ejs_web_tabs__hoisted_3_name          3
-#define ES_ejs_web_HtmlConnector_ejs_web_tabs__hoisted_4_url           4
-#define ES_ejs_web_HtmlConnector_getColumns_data                       0
-#define ES_ejs_web_HtmlConnector_getColumns_options                    1
-#define ES_ejs_web_HtmlConnector_getColumns_columns                    2
-#define ES_ejs_web_HtmlConnector_getColumns__hoisted_3_name            3
-#define ES_ejs_web_HtmlConnector_getColumns__hoisted_4_name            4
-#define ES_ejs_web_HtmlConnector_ejs_web_table_data                    0
-#define ES_ejs_web_HtmlConnector_ejs_web_table_options                 1
-#define ES_ejs_web_HtmlConnector_ejs_web_table_originalOptions         2
-#define ES_ejs_web_HtmlConnector_ejs_web_table_tableId                 3
-#define ES_ejs_web_HtmlConnector_ejs_web_table_columns                 4
-#define ES_ejs_web_HtmlConnector_ejs_web_table_refresh                 5
-#define ES_ejs_web_HtmlConnector_ejs_web_table_sortOrder               6
-#define ES_ejs_web_HtmlConnector_ejs_web_table_sort                    7
-#define ES_ejs_web_HtmlConnector_ejs_web_table_attributes              8
-#define ES_ejs_web_HtmlConnector_ejs_web_table_styleBody               9
-#define ES_ejs_web_HtmlConnector_ejs_web_table_row                     10
-#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_11_url         11
-#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_12_name        12
-#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_13_header      13
-#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_14_width       14
-#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_15_r           15
-#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_16_url         16
-#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_17_urlOptions  17
-#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_18_odd         18
-#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_19_even        19
-#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_20_dataId      20
-#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_21_col         21
-#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_22_name        22
-#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_23_column      23
-#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_24_styleCell   24
-#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_25_align       25
-#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_26_cellUrl     26
-#define ES_ejs_web_HtmlConnector_ejs_web_text_name                     0
-#define ES_ejs_web_HtmlConnector_ejs_web_text_value                    1
-#define ES_ejs_web_HtmlConnector_ejs_web_text_options                  2
-#define ES_ejs_web_HtmlConnector_ejs_web_textarea_name                 0
-#define ES_ejs_web_HtmlConnector_ejs_web_textarea_value                1
-#define ES_ejs_web_HtmlConnector_ejs_web_textarea_options              2
-#define ES_ejs_web_HtmlConnector_ejs_web_tree_initialData              0
-#define ES_ejs_web_HtmlConnector_ejs_web_tree_options                  1
-#define ES_ejs_web_HtmlConnector_getTextKind_options                   0
-#define ES_ejs_web_HtmlConnector_getTextKind_kind                      1
-#define ES_ejs_web_HtmlConnector_getOptions_options                    0
-#define ES_ejs_web_HtmlConnector_write_str                             0
-#define ES_ejs_web_HtmlConnector_getDataAttributes_options             0
-#define ES_ejs_web_HtmlConnector_getDataAttributes_attributes          1
-
-
-/**
- *   Class property slots for the "Controller" class 
- */
-#define ES_ejs_web_Controller__origin                                  6
-#define ES_ejs_web_Controller_Controller                               6
-#define ES_ejs_web_Controller_ejs_web_initialize                       7
-#define ES_ejs_web_Controller_ejs_web_cache                            8
-#define ES_ejs_web_Controller_ejs_web_createSession                    9
-#define ES_ejs_web_Controller_ejs_web_destroySession                   10
-#define ES_ejs_web_Controller_ejs_web_discardOutput                    11
-#define ES_ejs_web_Controller_ejs_web_resetFilters                     12
-#define ES_ejs_web_Controller_ejs_web_beforeFilter                     13
-#define ES_ejs_web_Controller_ejs_web_afterFilter                      14
-#define ES_ejs_web_Controller_ejs_web_wrapFilter                       15
-#define ES_ejs_web_Controller_runFilters                               16
-#define ES_ejs_web_Controller_ejs_web_doAction                         17
-#define ES_ejs_web_Controller_ejs_web_sendError                        18
-#define ES_ejs_web_Controller_ejs_web_renderError                      19
-#define ES_ejs_web_Controller_ejs_web_escapeHtml                       20
-#define ES_ejs_web_Controller_ejs_web_html                             21
-#define ES_ejs_web_Controller_ejs_web_inform                           22
-#define ES_ejs_web_Controller_ejs_web_error                            23
-#define ES_ejs_web_Controller_ejs_web_keepAlive                        24
-#define ES_ejs_web_Controller_ejs_web_loadView                         25
-#define ES_ejs_web_Controller_ejs_web_makeUrl                          26
-#define ES_ejs_web_Controller_ejs_web_redirectUrl                      27
-#define ES_ejs_web_Controller_ejs_web_redirect                         28
-#define ES_ejs_web_Controller_ejs_web_render                           29
-#define ES_ejs_web_Controller_ejs_web_renderFile                       30
-#define ES_ejs_web_Controller_ejs_web_renderRaw                        31
-#define ES_ejs_web_Controller_ejs_web_renderView                       32
-#define ES_ejs_web_Controller_reportError                              33
-#define ES_ejs_web_Controller_ejs_web_setCookie                        34
-#define ES_ejs_web_Controller_ejs_web_setHeader                        35
-#define ES_ejs_web_Controller_ejs_web_setHttpCode                      36
-#define ES_ejs_web_Controller_ejs_web_setMimeType                      37
-#define ES_ejs_web_Controller_ejs_web_unescapeHtml                     38
-#define ES_ejs_web_Controller_ejs_web_warn                             39
-#define ES_ejs_web_Controller_ejs_web_write                            40
-#define ES_ejs_web_Controller_ejs_web_writeHtml                        41
-#define ES_ejs_web_Controller_ejs_web_writeRaw                         42
-#define ES_ejs_web_Controller_action_missing                           43
-#define ES_ejs_web_Controller_NUM_CLASS_PROP                           44
-
-/**
- * Instance slots for "Controller" type 
- */
-#define ES_ejs_web_Controller_actionName                               0
-#define ES_ejs_web_Controller_originalActionName                       1
-#define ES_ejs_web_Controller_absUrl                                   2
-#define ES_ejs_web_Controller_appUrl                                   3
-#define ES_ejs_web_Controller_controllerName                           4
-#define ES_ejs_web_Controller_config                                   5
-#define ES_ejs_web_Controller_flash                                    6
-#define ES_ejs_web_Controller_home                                     7
-#define ES_ejs_web_Controller_host                                     8
-#define ES_ejs_web_Controller_params                                   9
-#define ES_ejs_web_Controller_request                                  10
-#define ES_ejs_web_Controller_response                                 11
-#define ES_ejs_web_Controller_session                                  12
-#define ES_ejs_web_Controller_isApp                                    13
-#define ES_ejs_web_Controller_rendered                                 14
-#define ES_ejs_web_Controller_redirected                               15
-#define ES_ejs_web_Controller_events                                   16
-#define ES_ejs_web_Controller__afterFilters                            17
-#define ES_ejs_web_Controller__beforeFilters                           18
-#define ES_ejs_web_Controller__wrapFilters                             19
-#define ES_ejs_web_Controller_NUM_INSTANCE_PROP                        20
-
-/**
- * 
- *    Local slots for methods in type Controller 
- */
-#define ES_ejs_web_Controller_ejs_web_initialize_isApp                 0
-#define ES_ejs_web_Controller_ejs_web_initialize_appDir                1
-#define ES_ejs_web_Controller_ejs_web_initialize_appUrl                2
-#define ES_ejs_web_Controller_ejs_web_initialize_session               3
-#define ES_ejs_web_Controller_ejs_web_initialize_host                  4
-#define ES_ejs_web_Controller_ejs_web_initialize_request               5
-#define ES_ejs_web_Controller_ejs_web_initialize_response              6
-#define ES_ejs_web_Controller_ejs_web_initialize_url                   7
-#define ES_ejs_web_Controller_ejs_web_initialize_parts                 8
-#define ES_ejs_web_Controller_ejs_web_initialize_name                  9
-#define ES_ejs_web_Controller_ejs_web_initialize__hoisted_10_adapter   10
-#define ES_ejs_web_Controller_ejs_web_initialize__hoisted_11_dbname    11
-#define ES_ejs_web_Controller_ejs_web_cache_enable                     0
-#define ES_ejs_web_Controller_ejs_web_createSession_timeout            0
-#define ES_ejs_web_Controller_ejs_web_beforeFilter_fn                  0
-#define ES_ejs_web_Controller_ejs_web_beforeFilter_options             1
-#define ES_ejs_web_Controller_ejs_web_afterFilter_fn                   0
-#define ES_ejs_web_Controller_ejs_web_afterFilter_options              1
-#define ES_ejs_web_Controller_ejs_web_wrapFilter_fn                    0
-#define ES_ejs_web_Controller_ejs_web_wrapFilter_options               1
-#define ES_ejs_web_Controller_runFilters_filters                       0
-#define ES_ejs_web_Controller_runFilters__hoisted_1_filter             1
-#define ES_ejs_web_Controller_runFilters__hoisted_2_fn                 2
-#define ES_ejs_web_Controller_runFilters__hoisted_3_options            3
-#define ES_ejs_web_Controller_ejs_web_doAction_act                     0
-#define ES_ejs_web_Controller_ejs_web_doAction_lastFlash               1
-#define ES_ejs_web_Controller_ejs_web_doAction__hoisted_2_e            2
-#define ES_ejs_web_Controller_ejs_web_doAction__hoisted_3_item         3
-#define ES_ejs_web_Controller_ejs_web_doAction__hoisted_4_old          4
-#define ES_ejs_web_Controller_ejs_web_sendError_code                   0
-#define ES_ejs_web_Controller_ejs_web_sendError_msg                    1
-#define ES_ejs_web_Controller_ejs_web_renderError_code                 0
-#define ES_ejs_web_Controller_ejs_web_renderError_msg                  1
-#define ES_ejs_web_Controller_ejs_web_escapeHtml_s                     0
-#define ES_ejs_web_Controller_ejs_web_html_args                        0
-#define ES_ejs_web_Controller_ejs_web_html__hoisted_1_s                1
-#define ES_ejs_web_Controller_ejs_web_inform_msg                       0
-#define ES_ejs_web_Controller_ejs_web_error_msg                        0
-#define ES_ejs_web_Controller_ejs_web_keepAlive_on                     0
-#define ES_ejs_web_Controller_ejs_web_loadView_path                    0
-#define ES_ejs_web_Controller_ejs_web_makeUrl_action                   0
-#define ES_ejs_web_Controller_ejs_web_makeUrl_id                       1
-#define ES_ejs_web_Controller_ejs_web_makeUrl_options                  2
-#define ES_ejs_web_Controller_ejs_web_makeUrl_query                    3
-#define ES_ejs_web_Controller_ejs_web_makeUrl_url                      4
-#define ES_ejs_web_Controller_ejs_web_makeUrl__hoisted_5_cname         5
-#define ES_ejs_web_Controller_ejs_web_redirectUrl_url                  0
-#define ES_ejs_web_Controller_ejs_web_redirectUrl_code                 1
-#define ES_ejs_web_Controller_ejs_web_redirect_action                  0
-#define ES_ejs_web_Controller_ejs_web_redirect_id                      1
-#define ES_ejs_web_Controller_ejs_web_redirect_options                 2
-#define ES_ejs_web_Controller_ejs_web_render_args                      0
-#define ES_ejs_web_Controller_ejs_web_renderFile_filename              0
-#define ES_ejs_web_Controller_ejs_web_renderFile_file                  1
-#define ES_ejs_web_Controller_ejs_web_renderFile__hoisted_2_e          2
-#define ES_ejs_web_Controller_ejs_web_renderRaw_args                   0
-#define ES_ejs_web_Controller_ejs_web_renderView_viewName              0
-#define ES_ejs_web_Controller_ejs_web_renderView_viewClass             1
-#define ES_ejs_web_Controller_ejs_web_renderView__hoisted_2_name       2
-#define ES_ejs_web_Controller_ejs_web_renderView__hoisted_3_e          3
-#define ES_ejs_web_Controller_ejs_web_renderView__hoisted_4_n          4
-#define ES_ejs_web_Controller_ejs_web_renderView__hoisted_5_e          5
-#define ES_ejs_web_Controller_ejs_web_renderView__hoisted_6_msg        6
-#define ES_ejs_web_Controller_reportError_code                         0
-#define ES_ejs_web_Controller_reportError_msg                          1
-#define ES_ejs_web_Controller_reportError_e                            2
-#define ES_ejs_web_Controller_ejs_web_setCookie_name                   0
-#define ES_ejs_web_Controller_ejs_web_setCookie_value                  1
-#define ES_ejs_web_Controller_ejs_web_setCookie_path                   2
-#define ES_ejs_web_Controller_ejs_web_setCookie_domain                 3
-#define ES_ejs_web_Controller_ejs_web_setCookie_lifetime               4
-#define ES_ejs_web_Controller_ejs_web_setCookie_secure                 5
-#define ES_ejs_web_Controller_ejs_web_setHeader_key                    0
-#define ES_ejs_web_Controller_ejs_web_setHeader_value                  1
-#define ES_ejs_web_Controller_ejs_web_setHeader_allowMultiple          2
-#define ES_ejs_web_Controller_ejs_web_setHttpCode_code                 0
-#define ES_ejs_web_Controller_ejs_web_setMimeType_format               0
-#define ES_ejs_web_Controller_ejs_web_unescapeHtml_s                   0
-#define ES_ejs_web_Controller_ejs_web_warn_msg                         0
-#define ES_ejs_web_Controller_ejs_web_write_args                       0
-#define ES_ejs_web_Controller_ejs_web_writeHtml_args                   0
-#define ES_ejs_web_Controller_ejs_web_writeRaw_args                    0
-
-
-/**
- *   Class property slots for the "_SoloController" class 
- */
-#define ES_ejs_web__SoloController__origin                             44
-#define ES_ejs_web__SoloController__SoloController                     44
-#define ES_ejs_web__SoloController_NUM_CLASS_PROP                      45
-
-/**
- * Instance slots for "_SoloController" type 
- */
-#define ES_ejs_web__SoloController_NUM_INSTANCE_PROP                   20
-
-
-/**
- *   Class property slots for the "Cookie" class 
- */
-#define ES_ejs_web_Cookie__origin                                      6
-#define ES_ejs_web_Cookie_Cookie                                       6
-#define ES_ejs_web_Cookie_NUM_CLASS_PROP                               7
-
-/**
- * Instance slots for "Cookie" type 
- */
-#define ES_ejs_web_Cookie_name                                         0
-#define ES_ejs_web_Cookie_value                                        1
-#define ES_ejs_web_Cookie_domain                                       2
-#define ES_ejs_web_Cookie_path                                         3
-#define ES_ejs_web_Cookie_NUM_INSTANCE_PROP                            4
-
-
-/**
- *   Class property slots for the "Host" class 
- */
-#define ES_ejs_web_Host__origin                                        6
-#define ES_ejs_web_Host_Host                                           6
-#define ES_ejs_web_Host_NUM_CLASS_PROP                                 7
-
-/**
- * Instance slots for "Host" type 
- */
-#define ES_ejs_web_Host_documentRoot                                   0
-#define ES_ejs_web_Host_name                                           1
-#define ES_ejs_web_Host_protocol                                       2
-#define ES_ejs_web_Host_isVirtualHost                                  3
-#define ES_ejs_web_Host_isNamedVirtualHost                             4
-#define ES_ejs_web_Host_software                                       5
-#define ES_ejs_web_Host_logErrors                                      6
-#define ES_ejs_web_Host_NUM_INSTANCE_PROP                              7
-
-
-/**
- *   Class property slots for the "Request" class 
- */
-#define ES_ejs_web_Request__origin                                     6
-#define ES_ejs_web_Request_Request                                     6
-#define ES_ejs_web_Request_NUM_CLASS_PROP                              7
-
-/**
- * Instance slots for "Request" type 
- */
-#define ES_ejs_web_Request_accept                                      0
-#define ES_ejs_web_Request_acceptCharset                               1
-#define ES_ejs_web_Request_acceptEncoding                              2
-#define ES_ejs_web_Request_authAcl                                     3
-#define ES_ejs_web_Request_authGroup                                   4
-#define ES_ejs_web_Request_authType                                    5
-#define ES_ejs_web_Request_authUser                                    6
-#define ES_ejs_web_Request_body                                        7
-#define ES_ejs_web_Request_connection                                  8
-#define ES_ejs_web_Request_contentLength                               9
-#define ES_ejs_web_Request_cookies                                     10
-#define ES_ejs_web_Request_extension                                   11
-#define ES_ejs_web_Request_files                                       12
-#define ES_ejs_web_Request_headers                                     13
-#define ES_ejs_web_Request_hostName                                    14
-#define ES_ejs_web_Request_method                                      15
-#define ES_ejs_web_Request_mimeType                                    16
-#define ES_ejs_web_Request_pathInfo                                    17
-#define ES_ejs_web_Request_pathTranslated                              18
-#define ES_ejs_web_Request_pragma                                      19
-#define ES_ejs_web_Request_query                                       20
-#define ES_ejs_web_Request_originalUri                                 21
-#define ES_ejs_web_Request_referrer                                    22
-#define ES_ejs_web_Request_remoteAddress                               23
-#define ES_ejs_web_Request_remoteHost                                  24
-#define ES_ejs_web_Request_sessionID                                   25
-#define ES_ejs_web_Request_url                                         26
-#define ES_ejs_web_Request_userAgent                                   27
-#define ES_ejs_web_Request_NUM_INSTANCE_PROP                           28
-
-
-/**
- *   Class property slots for the "Response" class 
- */
-#define ES_ejs_web_Response__origin                                    6
-#define ES_ejs_web_Response_Response                                   6
-#define ES_ejs_web_Response_NUM_CLASS_PROP                             7
-
-/**
- * Instance slots for "Response" type 
- */
-#define ES_ejs_web_Response_code                                       0
-#define ES_ejs_web_Response_filename                                   1
-#define ES_ejs_web_Response_headers                                    2
-#define ES_ejs_web_Response_mimeType                                   3
-#define ES_ejs_web_Response_NUM_INSTANCE_PROP                          4
-
-
-/**
- *   Class property slots for the "Session" class 
- */
-#define ES_ejs_web_Session__origin                                     6
-#define ES_ejs_web_Session_NUM_CLASS_PROP                              6
-
-/**
- * Instance slots for "Session" type 
- */
-#define ES_ejs_web_Session_NUM_INSTANCE_PROP                           0
 
 
 /**
@@ -3964,11 +3467,11 @@
 #define ES_ejs_web_View_ejs_web_getValue_fmt                           5
 #define ES_ejs_web_View_ejs_web_getValue__hoisted_6_part               6
 #define ES_ejs_web_View_ejs_web_date_fmt                               0
-#define ES_ejs_web_View_ejs_web_date___fun_26615__                     1
+#define ES_ejs_web_View_ejs_web_date___fun_20391__                     1
 #define ES_ejs_web_View_ejs_web_currency_fmt                           0
-#define ES_ejs_web_View_ejs_web_currency___fun_26649__                 1
+#define ES_ejs_web_View_ejs_web_currency___fun_20425__                 1
 #define ES_ejs_web_View_ejs_web_number_fmt                             0
-#define ES_ejs_web_View_ejs_web_number___fun_26679__                   1
+#define ES_ejs_web_View_ejs_web_number___fun_20455__                   1
 #define ES_ejs_web_View_ejs_web_getOptions_options                     0
 #define ES_ejs_web_View_ejs_web_getOptions_result                      1
 #define ES_ejs_web_View_ejs_web_getOptions__hoisted_2_option           2
@@ -4193,7 +3696,7 @@
 #define ES_LocalModel_makeLazyReader_model                             2
 #define ES_LocalModel_makeLazyReader_key                               3
 #define ES_LocalModel_makeLazyReader_options                           4
-#define ES_LocalModel_makeLazyReader___fun_8169__                      5
+#define ES_LocalModel_makeLazyReader___fun_7244__                      5
 #define ES_LocalModel_makeLazyReader_lazyReader                        6
 #define ES_LocalModel_mapSqlTypeToEjs_sqlType                          0
 #define ES_LocalModel_mapSqlTypeToEjs_ejsType                          1
@@ -4245,6 +3748,503 @@
 #define ES_LocalModel_ejs_db_constructor_fields                        0
 #define ES_LocalModel_LocalModel_fields                                0
 
-#define _ES_CHECKSUM_ejs_web 459076
+
+/**
+ *   Class property slots for the "GoogleConnector" class 
+ */
+#define ES_ejs_web_GoogleConnector__origin                             6
+#define ES_ejs_web_GoogleConnector_GoogleConnector                     6
+#define ES_ejs_web_GoogleConnector_scriptHeader                        7
+#define ES_ejs_web_GoogleConnector_ejs_web_table                       8
+#define ES_ejs_web_GoogleConnector_ejs_web_chart                       9
+#define ES_ejs_web_GoogleConnector_getOptions                          10
+#define ES_ejs_web_GoogleConnector_write                               11
+#define ES_ejs_web_GoogleConnector_NUM_CLASS_PROP                      12
+
+/**
+ * Instance slots for "GoogleConnector" type 
+ */
+#define ES_ejs_web_GoogleConnector_nextId                              0
+#define ES_ejs_web_GoogleConnector_NUM_INSTANCE_PROP                   1
+
+/**
+ * 
+ *    Local slots for methods in type GoogleConnector 
+ */
+#define ES_ejs_web_GoogleConnector_GoogleConnector_controller          0
+#define ES_ejs_web_GoogleConnector_scriptHeader_kind                   0
+#define ES_ejs_web_GoogleConnector_scriptHeader_id                     1
+#define ES_ejs_web_GoogleConnector_ejs_web_table_data                  0
+#define ES_ejs_web_GoogleConnector_ejs_web_table_options               1
+#define ES_ejs_web_GoogleConnector_ejs_web_table_id                    2
+#define ES_ejs_web_GoogleConnector_ejs_web_table_columns               3
+#define ES_ejs_web_GoogleConnector_ejs_web_table_firstLine             4
+#define ES_ejs_web_GoogleConnector_ejs_web_table_goptions              5
+#define ES_ejs_web_GoogleConnector_ejs_web_table__hoisted_6_i          6
+#define ES_ejs_web_GoogleConnector_ejs_web_table__hoisted_7_name       7
+#define ES_ejs_web_GoogleConnector_ejs_web_table__hoisted_8_name       8
+#define ES_ejs_web_GoogleConnector_ejs_web_table__hoisted_9_row        9
+#define ES_ejs_web_GoogleConnector_ejs_web_table__hoisted_10_col       10
+#define ES_ejs_web_GoogleConnector_ejs_web_table__hoisted_11_name      11
+#define ES_ejs_web_GoogleConnector_ejs_web_chart_grid                  0
+#define ES_ejs_web_GoogleConnector_ejs_web_chart_options               1
+#define ES_ejs_web_GoogleConnector_ejs_web_chart_id                    2
+#define ES_ejs_web_GoogleConnector_ejs_web_chart_columns               3
+#define ES_ejs_web_GoogleConnector_ejs_web_chart_firstLine             4
+#define ES_ejs_web_GoogleConnector_ejs_web_chart_col                   5
+#define ES_ejs_web_GoogleConnector_ejs_web_chart_dataType              6
+#define ES_ejs_web_GoogleConnector_ejs_web_chart_goptions              7
+#define ES_ejs_web_GoogleConnector_ejs_web_chart__hoisted_8_name       8
+#define ES_ejs_web_GoogleConnector_ejs_web_chart__hoisted_9_row        9
+#define ES_ejs_web_GoogleConnector_ejs_web_chart__hoisted_10_col2      10
+#define ES_ejs_web_GoogleConnector_ejs_web_chart__hoisted_11_name2     11
+#define ES_ejs_web_GoogleConnector_getOptions_options                  0
+#define ES_ejs_web_GoogleConnector_getOptions_defaults                 1
+#define ES_ejs_web_GoogleConnector_getOptions_result                   2
+#define ES_ejs_web_GoogleConnector_getOptions__hoisted_3_word          3
+#define ES_ejs_web_GoogleConnector_write_str                           0
+
+
+/**
+ *   Class property slots for the "HtmlConnector" class 
+ */
+#define ES_ejs_web_HtmlConnector__origin                               6
+#define ES_ejs_web_HtmlConnector_HtmlConnector                         6
+#define ES_ejs_web_HtmlConnector_ejs_web_aform                         7
+#define ES_ejs_web_HtmlConnector_ejs_web_alink                         8
+#define ES_ejs_web_HtmlConnector_ejs_web_button                        9
+#define ES_ejs_web_HtmlConnector_ejs_web_buttonLink                    10
+#define ES_ejs_web_HtmlConnector_ejs_web_chart                         11
+#define ES_ejs_web_HtmlConnector_ejs_web_checkbox                      12
+#define ES_ejs_web_HtmlConnector_ejs_web_endform                       13
+#define ES_ejs_web_HtmlConnector_ejs_web_flash                         14
+#define ES_ejs_web_HtmlConnector_ejs_web_form                          15
+#define ES_ejs_web_HtmlConnector_ejs_web_image                         16
+#define ES_ejs_web_HtmlConnector_ejs_web_label                         17
+#define ES_ejs_web_HtmlConnector_ejs_web_link                          18
+#define ES_ejs_web_HtmlConnector_ejs_web_extlink                       19
+#define ES_ejs_web_HtmlConnector_ejs_web_list                          20
+#define ES_ejs_web_HtmlConnector_ejs_web_mail                          21
+#define ES_ejs_web_HtmlConnector_ejs_web_progress                      22
+#define ES_ejs_web_HtmlConnector_ejs_web_radio                         23
+#define ES_ejs_web_HtmlConnector_ejs_web_script                        24
+#define ES_ejs_web_HtmlConnector_ejs_web_status                        25
+#define ES_ejs_web_HtmlConnector_ejs_web_stylesheet                    26
+#define ES_ejs_web_HtmlConnector_ejs_web_tabs                          27
+#define ES_ejs_web_HtmlConnector_getColumns                            28
+#define ES_ejs_web_HtmlConnector_ejs_web_table                         29
+#define ES_ejs_web_HtmlConnector_ejs_web_text                          30
+#define ES_ejs_web_HtmlConnector_ejs_web_textarea                      31
+#define ES_ejs_web_HtmlConnector_ejs_web_tree                          32
+#define ES_ejs_web_HtmlConnector_getTextKind                           33
+#define ES_ejs_web_HtmlConnector_getOptions                            34
+#define ES_ejs_web_HtmlConnector_write                                 35
+#define ES_ejs_web_HtmlConnector_getDataAttributes                     36
+#define ES_ejs_web_HtmlConnector_NUM_CLASS_PROP                        37
+
+/**
+ * Instance slots for "HtmlConnector" type 
+ */
+#define ES_ejs_web_HtmlConnector_nextId                                0
+#define ES_ejs_web_HtmlConnector_controller                            1
+#define ES_ejs_web_HtmlConnector_NUM_INSTANCE_PROP                     2
+
+/**
+ * 
+ *    Local slots for methods in type HtmlConnector 
+ */
+#define ES_ejs_web_HtmlConnector_HtmlConnector_controller              0
+#define ES_ejs_web_HtmlConnector_ejs_web_aform_record                  0
+#define ES_ejs_web_HtmlConnector_ejs_web_aform_url                     1
+#define ES_ejs_web_HtmlConnector_ejs_web_aform_options                 2
+#define ES_ejs_web_HtmlConnector_ejs_web_alink_text                    0
+#define ES_ejs_web_HtmlConnector_ejs_web_alink_url                     1
+#define ES_ejs_web_HtmlConnector_ejs_web_alink_options                 2
+#define ES_ejs_web_HtmlConnector_ejs_web_button_value                  0
+#define ES_ejs_web_HtmlConnector_ejs_web_button_buttonName             1
+#define ES_ejs_web_HtmlConnector_ejs_web_button_options                2
+#define ES_ejs_web_HtmlConnector_ejs_web_buttonLink_text               0
+#define ES_ejs_web_HtmlConnector_ejs_web_buttonLink_url                1
+#define ES_ejs_web_HtmlConnector_ejs_web_buttonLink_options            2
+#define ES_ejs_web_HtmlConnector_ejs_web_buttonLink__hoisted_3_attributes 3
+#define ES_ejs_web_HtmlConnector_ejs_web_chart_data                    0
+#define ES_ejs_web_HtmlConnector_ejs_web_chart_options                 1
+#define ES_ejs_web_HtmlConnector_ejs_web_checkbox_name                 0
+#define ES_ejs_web_HtmlConnector_ejs_web_checkbox_value                1
+#define ES_ejs_web_HtmlConnector_ejs_web_checkbox_submitValue          2
+#define ES_ejs_web_HtmlConnector_ejs_web_checkbox_options              3
+#define ES_ejs_web_HtmlConnector_ejs_web_checkbox_checked              4
+#define ES_ejs_web_HtmlConnector_ejs_web_flash_kind                    0
+#define ES_ejs_web_HtmlConnector_ejs_web_flash_msg                     1
+#define ES_ejs_web_HtmlConnector_ejs_web_flash_options                 2
+#define ES_ejs_web_HtmlConnector_ejs_web_form_record                   0
+#define ES_ejs_web_HtmlConnector_ejs_web_form_url                      1
+#define ES_ejs_web_HtmlConnector_ejs_web_form_options                  2
+#define ES_ejs_web_HtmlConnector_ejs_web_image_src                     0
+#define ES_ejs_web_HtmlConnector_ejs_web_image_options                 1
+#define ES_ejs_web_HtmlConnector_ejs_web_label_text                    0
+#define ES_ejs_web_HtmlConnector_ejs_web_label_options                 1
+#define ES_ejs_web_HtmlConnector_ejs_web_link_text                     0
+#define ES_ejs_web_HtmlConnector_ejs_web_link_action                   1
+#define ES_ejs_web_HtmlConnector_ejs_web_link_options                  2
+#define ES_ejs_web_HtmlConnector_ejs_web_extlink_text                  0
+#define ES_ejs_web_HtmlConnector_ejs_web_extlink_url                   1
+#define ES_ejs_web_HtmlConnector_ejs_web_extlink_options               2
+#define ES_ejs_web_HtmlConnector_ejs_web_list_field                    0
+#define ES_ejs_web_HtmlConnector_ejs_web_list_choices                  1
+#define ES_ejs_web_HtmlConnector_ejs_web_list_defaultValue             2
+#define ES_ejs_web_HtmlConnector_ejs_web_list_options                  3
+#define ES_ejs_web_HtmlConnector_ejs_web_list_isSelected               4
+#define ES_ejs_web_HtmlConnector_ejs_web_list_i                        5
+#define ES_ejs_web_HtmlConnector_ejs_web_list__hoisted_6_choice        6
+#define ES_ejs_web_HtmlConnector_ejs_web_list__hoisted_7_field         7
+#define ES_ejs_web_HtmlConnector_ejs_web_mail_nameText                 0
+#define ES_ejs_web_HtmlConnector_ejs_web_mail_address                  1
+#define ES_ejs_web_HtmlConnector_ejs_web_mail_options                  2
+#define ES_ejs_web_HtmlConnector_ejs_web_progress_initialData          0
+#define ES_ejs_web_HtmlConnector_ejs_web_progress_options              1
+#define ES_ejs_web_HtmlConnector_ejs_web_radio_name                    0
+#define ES_ejs_web_HtmlConnector_ejs_web_radio_selected                1
+#define ES_ejs_web_HtmlConnector_ejs_web_radio_choices                 2
+#define ES_ejs_web_HtmlConnector_ejs_web_radio_options                 3
+#define ES_ejs_web_HtmlConnector_ejs_web_radio_checked                 4
+#define ES_ejs_web_HtmlConnector_ejs_web_radio__hoisted_5_v            5
+#define ES_ejs_web_HtmlConnector_ejs_web_radio__hoisted_6_item         6
+#define ES_ejs_web_HtmlConnector_ejs_web_script_url                    0
+#define ES_ejs_web_HtmlConnector_ejs_web_script_options                1
+#define ES_ejs_web_HtmlConnector_ejs_web_status_data                   0
+#define ES_ejs_web_HtmlConnector_ejs_web_status_options                1
+#define ES_ejs_web_HtmlConnector_ejs_web_stylesheet_url                0
+#define ES_ejs_web_HtmlConnector_ejs_web_stylesheet_options            1
+#define ES_ejs_web_HtmlConnector_ejs_web_tabs_initialData              0
+#define ES_ejs_web_HtmlConnector_ejs_web_tabs_options                  1
+#define ES_ejs_web_HtmlConnector_ejs_web_tabs__hoisted_2_t             2
+#define ES_ejs_web_HtmlConnector_ejs_web_tabs__hoisted_3_name          3
+#define ES_ejs_web_HtmlConnector_ejs_web_tabs__hoisted_4_url           4
+#define ES_ejs_web_HtmlConnector_getColumns_data                       0
+#define ES_ejs_web_HtmlConnector_getColumns_options                    1
+#define ES_ejs_web_HtmlConnector_getColumns_columns                    2
+#define ES_ejs_web_HtmlConnector_getColumns__hoisted_3_name            3
+#define ES_ejs_web_HtmlConnector_getColumns__hoisted_4_name            4
+#define ES_ejs_web_HtmlConnector_ejs_web_table_data                    0
+#define ES_ejs_web_HtmlConnector_ejs_web_table_options                 1
+#define ES_ejs_web_HtmlConnector_ejs_web_table_originalOptions         2
+#define ES_ejs_web_HtmlConnector_ejs_web_table_tableId                 3
+#define ES_ejs_web_HtmlConnector_ejs_web_table_columns                 4
+#define ES_ejs_web_HtmlConnector_ejs_web_table_refresh                 5
+#define ES_ejs_web_HtmlConnector_ejs_web_table_sortOrder               6
+#define ES_ejs_web_HtmlConnector_ejs_web_table_sort                    7
+#define ES_ejs_web_HtmlConnector_ejs_web_table_attributes              8
+#define ES_ejs_web_HtmlConnector_ejs_web_table_styleBody               9
+#define ES_ejs_web_HtmlConnector_ejs_web_table_row                     10
+#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_11_url         11
+#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_12_name        12
+#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_13_header      13
+#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_14_width       14
+#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_15_r           15
+#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_16_url         16
+#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_17_urlOptions  17
+#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_18_odd         18
+#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_19_even        19
+#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_20_dataId      20
+#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_21_col         21
+#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_22_name        22
+#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_23_column      23
+#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_24_styleCell   24
+#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_25_align       25
+#define ES_ejs_web_HtmlConnector_ejs_web_table__hoisted_26_cellUrl     26
+#define ES_ejs_web_HtmlConnector_ejs_web_text_name                     0
+#define ES_ejs_web_HtmlConnector_ejs_web_text_value                    1
+#define ES_ejs_web_HtmlConnector_ejs_web_text_options                  2
+#define ES_ejs_web_HtmlConnector_ejs_web_textarea_name                 0
+#define ES_ejs_web_HtmlConnector_ejs_web_textarea_value                1
+#define ES_ejs_web_HtmlConnector_ejs_web_textarea_options              2
+#define ES_ejs_web_HtmlConnector_ejs_web_tree_initialData              0
+#define ES_ejs_web_HtmlConnector_ejs_web_tree_options                  1
+#define ES_ejs_web_HtmlConnector_getTextKind_options                   0
+#define ES_ejs_web_HtmlConnector_getTextKind_kind                      1
+#define ES_ejs_web_HtmlConnector_getOptions_options                    0
+#define ES_ejs_web_HtmlConnector_write_str                             0
+#define ES_ejs_web_HtmlConnector_getDataAttributes_options             0
+#define ES_ejs_web_HtmlConnector_getDataAttributes_attributes          1
+
+
+/**
+ *   Class property slots for the "Response" class 
+ */
+#define ES_ejs_web_Response__origin                                    6
+#define ES_ejs_web_Response_Response                                   6
+#define ES_ejs_web_Response_NUM_CLASS_PROP                             7
+
+/**
+ * Instance slots for "Response" type 
+ */
+#define ES_ejs_web_Response_code                                       0
+#define ES_ejs_web_Response_filename                                   1
+#define ES_ejs_web_Response_headers                                    2
+#define ES_ejs_web_Response_mimeType                                   3
+#define ES_ejs_web_Response_NUM_INSTANCE_PROP                          4
+
+
+/**
+ *   Class property slots for the "Request" class 
+ */
+#define ES_ejs_web_Request__origin                                     6
+#define ES_ejs_web_Request_Request                                     6
+#define ES_ejs_web_Request_NUM_CLASS_PROP                              7
+
+/**
+ * Instance slots for "Request" type 
+ */
+#define ES_ejs_web_Request_accept                                      0
+#define ES_ejs_web_Request_acceptCharset                               1
+#define ES_ejs_web_Request_acceptEncoding                              2
+#define ES_ejs_web_Request_authAcl                                     3
+#define ES_ejs_web_Request_authGroup                                   4
+#define ES_ejs_web_Request_authType                                    5
+#define ES_ejs_web_Request_authUser                                    6
+#define ES_ejs_web_Request_body                                        7
+#define ES_ejs_web_Request_connection                                  8
+#define ES_ejs_web_Request_contentLength                               9
+#define ES_ejs_web_Request_cookies                                     10
+#define ES_ejs_web_Request_extension                                   11
+#define ES_ejs_web_Request_files                                       12
+#define ES_ejs_web_Request_headers                                     13
+#define ES_ejs_web_Request_hostName                                    14
+#define ES_ejs_web_Request_method                                      15
+#define ES_ejs_web_Request_mimeType                                    16
+#define ES_ejs_web_Request_pathInfo                                    17
+#define ES_ejs_web_Request_pathTranslated                              18
+#define ES_ejs_web_Request_pragma                                      19
+#define ES_ejs_web_Request_query                                       20
+#define ES_ejs_web_Request_originalUri                                 21
+#define ES_ejs_web_Request_referrer                                    22
+#define ES_ejs_web_Request_remoteAddress                               23
+#define ES_ejs_web_Request_remoteHost                                  24
+#define ES_ejs_web_Request_sessionID                                   25
+#define ES_ejs_web_Request_url                                         26
+#define ES_ejs_web_Request_userAgent                                   27
+#define ES_ejs_web_Request_NUM_INSTANCE_PROP                           28
+
+
+/**
+ *   Class property slots for the "Cookie" class 
+ */
+#define ES_ejs_web_Cookie__origin                                      6
+#define ES_ejs_web_Cookie_Cookie                                       6
+#define ES_ejs_web_Cookie_NUM_CLASS_PROP                               7
+
+/**
+ * Instance slots for "Cookie" type 
+ */
+#define ES_ejs_web_Cookie_name                                         0
+#define ES_ejs_web_Cookie_value                                        1
+#define ES_ejs_web_Cookie_domain                                       2
+#define ES_ejs_web_Cookie_path                                         3
+#define ES_ejs_web_Cookie_NUM_INSTANCE_PROP                            4
+
+
+/**
+ *   Class property slots for the "Host" class 
+ */
+#define ES_ejs_web_Host__origin                                        6
+#define ES_ejs_web_Host_Host                                           6
+#define ES_ejs_web_Host_NUM_CLASS_PROP                                 7
+
+/**
+ * Instance slots for "Host" type 
+ */
+#define ES_ejs_web_Host_documentRoot                                   0
+#define ES_ejs_web_Host_name                                           1
+#define ES_ejs_web_Host_protocol                                       2
+#define ES_ejs_web_Host_isVirtualHost                                  3
+#define ES_ejs_web_Host_isNamedVirtualHost                             4
+#define ES_ejs_web_Host_software                                       5
+#define ES_ejs_web_Host_logErrors                                      6
+#define ES_ejs_web_Host_NUM_INSTANCE_PROP                              7
+
+
+/**
+ *   Class property slots for the "Controller" class 
+ */
+#define ES_ejs_web_Controller__origin                                  6
+#define ES_ejs_web_Controller_Controller                               6
+#define ES_ejs_web_Controller_ejs_web_initialize                       7
+#define ES_ejs_web_Controller_ejs_web_cache                            8
+#define ES_ejs_web_Controller_ejs_web_createSession                    9
+#define ES_ejs_web_Controller_ejs_web_destroySession                   10
+#define ES_ejs_web_Controller_ejs_web_discardOutput                    11
+#define ES_ejs_web_Controller_ejs_web_resetFilters                     12
+#define ES_ejs_web_Controller_ejs_web_beforeFilter                     13
+#define ES_ejs_web_Controller_ejs_web_afterFilter                      14
+#define ES_ejs_web_Controller_ejs_web_wrapFilter                       15
+#define ES_ejs_web_Controller_runFilters                               16
+#define ES_ejs_web_Controller_ejs_web_doAction                         17
+#define ES_ejs_web_Controller_ejs_web_sendError                        18
+#define ES_ejs_web_Controller_ejs_web_renderError                      19
+#define ES_ejs_web_Controller_ejs_web_escapeHtml                       20
+#define ES_ejs_web_Controller_ejs_web_html                             21
+#define ES_ejs_web_Controller_ejs_web_inform                           22
+#define ES_ejs_web_Controller_ejs_web_error                            23
+#define ES_ejs_web_Controller_ejs_web_keepAlive                        24
+#define ES_ejs_web_Controller_ejs_web_loadView                         25
+#define ES_ejs_web_Controller_ejs_web_makeUrl                          26
+#define ES_ejs_web_Controller_ejs_web_redirectUrl                      27
+#define ES_ejs_web_Controller_ejs_web_redirect                         28
+#define ES_ejs_web_Controller_ejs_web_render                           29
+#define ES_ejs_web_Controller_ejs_web_renderFile                       30
+#define ES_ejs_web_Controller_ejs_web_renderRaw                        31
+#define ES_ejs_web_Controller_ejs_web_renderView                       32
+#define ES_ejs_web_Controller_reportError                              33
+#define ES_ejs_web_Controller_ejs_web_setCookie                        34
+#define ES_ejs_web_Controller_ejs_web_setHeader                        35
+#define ES_ejs_web_Controller_ejs_web_setHttpCode                      36
+#define ES_ejs_web_Controller_ejs_web_setMimeType                      37
+#define ES_ejs_web_Controller_ejs_web_unescapeHtml                     38
+#define ES_ejs_web_Controller_ejs_web_warn                             39
+#define ES_ejs_web_Controller_ejs_web_write                            40
+#define ES_ejs_web_Controller_ejs_web_writeHtml                        41
+#define ES_ejs_web_Controller_ejs_web_writeRaw                         42
+#define ES_ejs_web_Controller_action_missing                           43
+#define ES_ejs_web_Controller_NUM_CLASS_PROP                           44
+
+/**
+ * Instance slots for "Controller" type 
+ */
+#define ES_ejs_web_Controller_actionName                               0
+#define ES_ejs_web_Controller_originalActionName                       1
+#define ES_ejs_web_Controller_absUrl                                   2
+#define ES_ejs_web_Controller_appUrl                                   3
+#define ES_ejs_web_Controller_controllerName                           4
+#define ES_ejs_web_Controller_config                                   5
+#define ES_ejs_web_Controller_flash                                    6
+#define ES_ejs_web_Controller_home                                     7
+#define ES_ejs_web_Controller_host                                     8
+#define ES_ejs_web_Controller_params                                   9
+#define ES_ejs_web_Controller_request                                  10
+#define ES_ejs_web_Controller_response                                 11
+#define ES_ejs_web_Controller_session                                  12
+#define ES_ejs_web_Controller_isApp                                    13
+#define ES_ejs_web_Controller_rendered                                 14
+#define ES_ejs_web_Controller_redirected                               15
+#define ES_ejs_web_Controller_events                                   16
+#define ES_ejs_web_Controller__afterFilters                            17
+#define ES_ejs_web_Controller__beforeFilters                           18
+#define ES_ejs_web_Controller__wrapFilters                             19
+#define ES_ejs_web_Controller_NUM_INSTANCE_PROP                        20
+
+/**
+ * 
+ *    Local slots for methods in type Controller 
+ */
+#define ES_ejs_web_Controller_ejs_web_initialize_isApp                 0
+#define ES_ejs_web_Controller_ejs_web_initialize_appDir                1
+#define ES_ejs_web_Controller_ejs_web_initialize_appUrl                2
+#define ES_ejs_web_Controller_ejs_web_initialize_session               3
+#define ES_ejs_web_Controller_ejs_web_initialize_host                  4
+#define ES_ejs_web_Controller_ejs_web_initialize_request               5
+#define ES_ejs_web_Controller_ejs_web_initialize_response              6
+#define ES_ejs_web_Controller_ejs_web_initialize_url                   7
+#define ES_ejs_web_Controller_ejs_web_initialize_parts                 8
+#define ES_ejs_web_Controller_ejs_web_initialize_name                  9
+#define ES_ejs_web_Controller_ejs_web_initialize__hoisted_10_adapter   10
+#define ES_ejs_web_Controller_ejs_web_initialize__hoisted_11_dbname    11
+#define ES_ejs_web_Controller_ejs_web_cache_enable                     0
+#define ES_ejs_web_Controller_ejs_web_createSession_timeout            0
+#define ES_ejs_web_Controller_ejs_web_beforeFilter_fn                  0
+#define ES_ejs_web_Controller_ejs_web_beforeFilter_options             1
+#define ES_ejs_web_Controller_ejs_web_afterFilter_fn                   0
+#define ES_ejs_web_Controller_ejs_web_afterFilter_options              1
+#define ES_ejs_web_Controller_ejs_web_wrapFilter_fn                    0
+#define ES_ejs_web_Controller_ejs_web_wrapFilter_options               1
+#define ES_ejs_web_Controller_runFilters_filters                       0
+#define ES_ejs_web_Controller_runFilters__hoisted_1_filter             1
+#define ES_ejs_web_Controller_runFilters__hoisted_2_fn                 2
+#define ES_ejs_web_Controller_runFilters__hoisted_3_options            3
+#define ES_ejs_web_Controller_ejs_web_doAction_act                     0
+#define ES_ejs_web_Controller_ejs_web_doAction_lastFlash               1
+#define ES_ejs_web_Controller_ejs_web_doAction__hoisted_2_e            2
+#define ES_ejs_web_Controller_ejs_web_doAction__hoisted_3_item         3
+#define ES_ejs_web_Controller_ejs_web_doAction__hoisted_4_old          4
+#define ES_ejs_web_Controller_ejs_web_sendError_code                   0
+#define ES_ejs_web_Controller_ejs_web_sendError_msg                    1
+#define ES_ejs_web_Controller_ejs_web_renderError_code                 0
+#define ES_ejs_web_Controller_ejs_web_renderError_msg                  1
+#define ES_ejs_web_Controller_ejs_web_escapeHtml_s                     0
+#define ES_ejs_web_Controller_ejs_web_html_args                        0
+#define ES_ejs_web_Controller_ejs_web_html__hoisted_1_s                1
+#define ES_ejs_web_Controller_ejs_web_inform_msg                       0
+#define ES_ejs_web_Controller_ejs_web_error_msg                        0
+#define ES_ejs_web_Controller_ejs_web_keepAlive_on                     0
+#define ES_ejs_web_Controller_ejs_web_loadView_path                    0
+#define ES_ejs_web_Controller_ejs_web_makeUrl_action                   0
+#define ES_ejs_web_Controller_ejs_web_makeUrl_id                       1
+#define ES_ejs_web_Controller_ejs_web_makeUrl_options                  2
+#define ES_ejs_web_Controller_ejs_web_makeUrl_query                    3
+#define ES_ejs_web_Controller_ejs_web_makeUrl_url                      4
+#define ES_ejs_web_Controller_ejs_web_makeUrl__hoisted_5_cname         5
+#define ES_ejs_web_Controller_ejs_web_redirectUrl_url                  0
+#define ES_ejs_web_Controller_ejs_web_redirectUrl_code                 1
+#define ES_ejs_web_Controller_ejs_web_redirect_action                  0
+#define ES_ejs_web_Controller_ejs_web_redirect_id                      1
+#define ES_ejs_web_Controller_ejs_web_redirect_options                 2
+#define ES_ejs_web_Controller_ejs_web_render_args                      0
+#define ES_ejs_web_Controller_ejs_web_renderFile_filename              0
+#define ES_ejs_web_Controller_ejs_web_renderFile_file                  1
+#define ES_ejs_web_Controller_ejs_web_renderFile__hoisted_2_e          2
+#define ES_ejs_web_Controller_ejs_web_renderRaw_args                   0
+#define ES_ejs_web_Controller_ejs_web_renderView_viewName              0
+#define ES_ejs_web_Controller_ejs_web_renderView_viewClass             1
+#define ES_ejs_web_Controller_ejs_web_renderView__hoisted_2_name       2
+#define ES_ejs_web_Controller_ejs_web_renderView__hoisted_3_e          3
+#define ES_ejs_web_Controller_ejs_web_renderView__hoisted_4_n          4
+#define ES_ejs_web_Controller_ejs_web_renderView__hoisted_5_e          5
+#define ES_ejs_web_Controller_ejs_web_renderView__hoisted_6_msg        6
+#define ES_ejs_web_Controller_reportError_code                         0
+#define ES_ejs_web_Controller_reportError_msg                          1
+#define ES_ejs_web_Controller_reportError_e                            2
+#define ES_ejs_web_Controller_ejs_web_setCookie_name                   0
+#define ES_ejs_web_Controller_ejs_web_setCookie_value                  1
+#define ES_ejs_web_Controller_ejs_web_setCookie_path                   2
+#define ES_ejs_web_Controller_ejs_web_setCookie_domain                 3
+#define ES_ejs_web_Controller_ejs_web_setCookie_lifetime               4
+#define ES_ejs_web_Controller_ejs_web_setCookie_secure                 5
+#define ES_ejs_web_Controller_ejs_web_setHeader_key                    0
+#define ES_ejs_web_Controller_ejs_web_setHeader_value                  1
+#define ES_ejs_web_Controller_ejs_web_setHeader_allowMultiple          2
+#define ES_ejs_web_Controller_ejs_web_setHttpCode_code                 0
+#define ES_ejs_web_Controller_ejs_web_setMimeType_format               0
+#define ES_ejs_web_Controller_ejs_web_unescapeHtml_s                   0
+#define ES_ejs_web_Controller_ejs_web_warn_msg                         0
+#define ES_ejs_web_Controller_ejs_web_write_args                       0
+#define ES_ejs_web_Controller_ejs_web_writeHtml_args                   0
+#define ES_ejs_web_Controller_ejs_web_writeRaw_args                    0
+
+
+/**
+ *   Class property slots for the "_SoloController" class 
+ */
+#define ES_ejs_web__SoloController__origin                             44
+#define ES_ejs_web__SoloController__SoloController                     44
+#define ES_ejs_web__SoloController_NUM_CLASS_PROP                      45
+
+/**
+ * Instance slots for "_SoloController" type 
+ */
+#define ES_ejs_web__SoloController_NUM_INSTANCE_PROP                   20
+
+
+/**
+ *   Class property slots for the "Session" class 
+ */
+#define ES_ejs_web_Session__origin                                     6
+#define ES_ejs_web_Session_NUM_CLASS_PROP                              6
+
+/**
+ * Instance slots for "Session" type 
+ */
+#define ES_ejs_web_Session_NUM_INSTANCE_PROP                           0
+
+#define _ES_CHECKSUM_ejs_web 459063
 
 #endif
