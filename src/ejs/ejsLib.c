@@ -1655,8 +1655,8 @@ void ejsConfigureArrayType(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -2360,8 +2360,8 @@ void ejsInitializeBlockHelpers(EjsTypeHelpers *helpers)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -2692,8 +2692,8 @@ void ejsConfigureBooleanType(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -4263,8 +4263,8 @@ void ejsConfigureByteArrayType(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -4352,7 +4352,7 @@ static EjsVar *castDate(Ejs *ejs, EjsDate *dp, EjsType *type)
 
     case ES_String:
         /*
-            Format:  Tue Jul 15 2011 10:53:23 GMT-0700 (PDT)
+            Format:  Tue Jul 15 2012 10:53:23 GMT-0700 (PDT)
          */
         mprDecodeLocalTime(ejs, &tm, dp->value);
         return (EjsVar*) ejsCreateStringAndFree(ejs, mprFormatTime(ejs, "%a %b %d %Y %T GMT%z (%Z)", &tm));
@@ -5441,8 +5441,8 @@ void ejsConfigureDateType(Ejs *ejs)
 /*
     @copy   default
 
-    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
-    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+    Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+    Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
 
     This software is distributed under commercial and open source licenses.
     You may use the GPL open source license described below or you may acquire
@@ -5673,8 +5673,8 @@ void ejsConfigureErrorType(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -6296,8 +6296,8 @@ void ejsConfigureFunctionType(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -6832,8 +6832,8 @@ void ejsConfigureGlobalBlock(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -6996,8 +6996,8 @@ void ejsConfigureIteratorType(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -7430,8 +7430,8 @@ void ejsConfigureJSON(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -7762,8 +7762,8 @@ void ejsConfigureMathType(Ejs *ejs)
 /*
     @copy   default
 
-    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
-    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+    Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+    Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
 
     This software is distributed under commercial and open source licenses.
     You may use the GPL open source license described below or you may acquire
@@ -8028,8 +8028,8 @@ void ejsConfigureNamespaceType(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -8296,8 +8296,8 @@ void ejsConfigureNullType(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -8901,8 +8901,8 @@ void ejsConfigureNumberType(Ejs *ejs)
 /*
     @copy   default
 
-    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
-    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+    Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+    Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
 
     This software is distributed under commercial and open source licenses.
     You may use the GPL open source license described below or you may acquire
@@ -10630,8 +10630,8 @@ void ejsInitializeObjectHelpers(EjsTypeHelpers *helpers)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -10921,8 +10921,8 @@ void ejsConfigureReflectType(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -11354,8 +11354,8 @@ void __dummyRegExp() {}
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -13334,8 +13334,8 @@ void ejsConfigureStringType(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -14303,8 +14303,8 @@ void ejsConfigureTypeType(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -14571,8 +14571,8 @@ void ejsConfigureVoidType(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -14803,8 +14803,8 @@ void ejsConfigureTimerType(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -15735,8 +15735,8 @@ void ejsConfigureFileType(Ejs *ejs) {}
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -15998,8 +15998,8 @@ void ejsConfigureFileSystemType(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -17252,8 +17252,8 @@ void __dummyEjsHttp() {}
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -18636,8 +18636,8 @@ void ejsConfigurePathType(Ejs *ejs)
 /*
     @copy   default
 
-    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
-    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+    Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+    Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
 
     This software is distributed under commercial and open source licenses.
     You may use the GPL open source license described below or you may acquire
@@ -18987,8 +18987,8 @@ void ejsConfigureAppType(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -19122,8 +19122,8 @@ void ejsConfigureConfigType(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -19212,8 +19212,8 @@ void __dummyEjsDebug() {}
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -19352,8 +19352,8 @@ void ejsConfigureGCType(Ejs *ejs)
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -19532,8 +19532,8 @@ void __dummyEjsLog() {}
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -19761,8 +19761,8 @@ void ejsConfigureMemoryType(Ejs *ejs)
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -19997,8 +19997,8 @@ void ejsConfigureSystemType(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -20778,8 +20778,8 @@ void __dummyEjsWorker() {}
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -22053,8 +22053,8 @@ void __ejsXMLDummy() {}
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -22856,8 +22856,8 @@ void __ejsXMLListDummy() {}
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -23179,8 +23179,8 @@ void __ejsXMLLoaderDummy() {}
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -23246,8 +23246,8 @@ EjsOptable *ejsGetOptable(MprCtx ctx)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -23676,8 +23676,8 @@ EjsVar *ejsGetException(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -24438,8 +24438,8 @@ void ejsPrintAllocReport(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -28154,8 +28154,8 @@ static EjsOpCode traceCode(Ejs *ejs, EjsOpCode opcode)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -28663,8 +28663,8 @@ int ejsGetListCapacity(EjsList *lp)
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -30573,8 +30573,8 @@ static double swapDoubleWord(Ejs *ejs, double a)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -30719,8 +30719,8 @@ MprList *ejsGetModuleList(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -31006,8 +31006,8 @@ void ejsShowCurrentScope(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -32024,8 +32024,8 @@ void ejsUnlockVm(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -33006,8 +33006,8 @@ int _ejsIs(struct EjsVar *vp, int slot)
 /*
     @copy   default
 
-    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
-    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+    Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+    Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
 
     This software is distributed under commercial and open source licenses.
     You may use the GPL open source license described below or you may acquire
@@ -33577,8 +33577,8 @@ MprModule *ejs_db_sqliteModuleInit(Ejs *ejs, cchar *path)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -33748,8 +33748,8 @@ void ejsConfigureWebCacheType(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -34150,8 +34150,8 @@ void ejsConfigureWebControllerType(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -35039,8 +35039,8 @@ static int caselessmatch(cchar *url, cchar *ext)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -35193,8 +35193,8 @@ void ejsConfigureWebHostType(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -35456,8 +35456,8 @@ int ejsWrite(Ejs *ejs, cchar *fmt, ...)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -35596,8 +35596,8 @@ void ejsConfigureWebRequestType(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -35741,8 +35741,8 @@ void ejsConfigureWebResponseType(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -36147,8 +36147,8 @@ void ejsConfigureWebSessionType(Ejs *ejs)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire

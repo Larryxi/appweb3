@@ -474,8 +474,8 @@ module ejs {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -544,8 +544,8 @@ module ejs {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -620,8 +620,8 @@ module ejs {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -1011,8 +1011,8 @@ module ejs {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -1389,12 +1389,12 @@ module ejs {
             The date parsing logic uses heuristics and attempts to intelligently parse a range of dates. Some of the
             possible formats are:
             <ul>
-                <li>07/28/2011</li>
+                <li>07/28/2012</li>
                 <li>07/28/08</li>
-                <li>Jan/28/2011</li>
-                <li>Jaunuary-28-2011</li>
-                <li>28-jan-2011</li>
-                <li>[29] Jan [15] [2011]</li>
+                <li>Jan/28/2012</li>
+                <li>Jaunuary-28-2012</li>
+                <li>28-jan-2012</li>
+                <li>[29] Jan [15] [2012]</li>
                 <li>dd/mm/yy, dd.mm.yy, dd-mm-yy</li>
                 <li>mm/dd/yy, mm.dd.yy, mm-dd-yy</li>
                 <li>yyyy/mm/dd, yyyy.mm.dd, yyyy-mm-dd</li>
@@ -1561,7 +1561,7 @@ module ejs {
         /**
             Return a string containing the date portion excluding the time portion of the date in local time.
             The format is American English.
-            Sample: "Fri Jan 15 2011"
+            Sample: "Fri Jan 15 2012"
             @return A string representing the date portion.
          */
         function toDateString(): String 
@@ -1588,8 +1588,8 @@ module ejs {
             and locale.
             Sample: "Fri 15 Dec 2006 GMT-0800". (Note: Other platforms render as:
             V8  format: "Fri, 15 Dec 2006 GMT-0800"
-            JS  format: "01/15/2011"
-            JSC format: "January 15, 2011")
+            JS  format: "01/15/2012"
+            JSC format: "January 15, 2012")
             @return A string representing the date portion.
          */
         function toLocaleDateString(): String 
@@ -1600,8 +1600,8 @@ module ejs {
             conventions.
             Sample:  "Fri 15 Dec 2006 23:45:09 GMT-0800 (PST)". (Note: Other JavaScript platforms render as:
             V8 format:  "Fri, 15 Dec 2006 23:45:09 GMT-0800 (PST)"
-            JS format:  "Fri Jan 15 13:09:02 2011"
-            JSC format: "January 15, 2011 1:09:06 PM PST"
+            JS format:  "Fri Jan 15 13:09:02 2012"
+            JSC format: "January 15, 2012 1:09:06 PM PST"
             @return A string representing the date.
          */
         function toLocaleString(): String
@@ -1684,8 +1684,8 @@ module ejs {
 /*
     @copy   default
     
-    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
-    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+    Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+    Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
     
     This software is distributed under commercial and open source licenses.
     You may use the GPL open source license described below or you may acquire 
@@ -2001,8 +2001,8 @@ module ejs {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2011-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 2011-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2012-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 2012-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -2068,8 +2068,8 @@ module ejs {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -2171,8 +2171,8 @@ module ejs {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -2561,8 +2561,8 @@ module ejs.unix { }
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -2659,8 +2659,8 @@ module ejs {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -2756,8 +2756,8 @@ module ejs {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -3003,8 +3003,8 @@ module ejs {
 /*
     @copy   default
     
-    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
-    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+    Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+    Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
     
     This software is distributed under commercial and open source licenses.
     You may use the GPL open source license described below or you may acquire 
@@ -3077,8 +3077,8 @@ module ejs {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -3149,8 +3149,8 @@ module ejs {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -3229,8 +3229,8 @@ module ejs {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -3498,8 +3498,8 @@ module ejs {
 /*
     @copy   default
     
-    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
-    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+    Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+    Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
     
     This software is distributed under commercial and open source licenses.
     You may use the GPL open source license described below or you may acquire 
@@ -3613,8 +3613,8 @@ module ejs {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -3721,8 +3721,8 @@ module ejs {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -3935,8 +3935,8 @@ module ejs {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -4052,8 +4052,8 @@ module ejs {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -4505,8 +4505,8 @@ module ejs {
 /*
     @copy   default
     
-    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
-    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+    Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+    Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
     
     This software is distributed under commercial and open source licenses.
     You may use the GPL open source license described below or you may acquire 
@@ -4581,8 +4581,8 @@ module ejs {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -4662,8 +4662,8 @@ module ejs {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -5041,8 +5041,8 @@ module ejs.db {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -5183,8 +5183,8 @@ module ejs.db {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -6329,8 +6329,8 @@ module ejs.db.mapper {}
 /*
     @copy   default
     
-    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
-    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+    Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+    Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
     
     This software is distributed under commercial and open source licenses.
     You may use the GPL open source license described below or you may acquire 
@@ -6674,8 +6674,8 @@ module ejs.db.sqlite {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -6837,8 +6837,8 @@ module ejs.events {
 /*
     @copy   default
     
-    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
-    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+    Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+    Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
     
     This software is distributed under commercial and open source licenses.
     You may use the GPL open source license described below or you may acquire 
@@ -7002,8 +7002,8 @@ module ejs.events {
 /*
     @copy   default
     
-    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
-    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+    Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+    Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
     
     This software is distributed under commercial and open source licenses.
     You may use the GPL open source license described below or you may acquire 
@@ -7134,8 +7134,8 @@ module ejs.events {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -7452,8 +7452,8 @@ module ejs.io {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -7670,8 +7670,8 @@ module ejs.io {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -7772,8 +7772,8 @@ module ejs.io {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -8530,8 +8530,8 @@ module ejs.io {
 /*
     @copy   default
     
-    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
-    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+    Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+    Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
     
     This software is distributed under commercial and open source licenses.
     You may use the GPL open source license described below or you may acquire 
@@ -9144,8 +9144,8 @@ module ejs.io {
 /*
     @copy   default
     
-    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
-    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+    Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+    Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
     
     This software is distributed under commercial and open source licenses.
     You may use the GPL open source license described below or you may acquire 
@@ -9462,8 +9462,8 @@ module ejs.io {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -9708,8 +9708,8 @@ module ejs.io {
 /*
     @copy   default
     
-    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
-    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+    Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+    Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
     
     This software is distributed under commercial and open source licenses.
     You may use the GPL open source license described below or you may acquire 
@@ -9906,8 +9906,8 @@ module ejs.sys {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -10060,8 +10060,8 @@ module ejs.sys {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -10128,8 +10128,8 @@ module ejs.sys {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -10177,7 +10177,7 @@ module ejs.sys {
 /*
  *  Config.es - Configuration settings from ./configure
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
  */
 
 module ejs.sys {
@@ -10351,8 +10351,8 @@ module ejs.sys {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -10453,8 +10453,8 @@ module ejs.sys {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -10708,8 +10708,8 @@ module ejs.sys {
 /*
     @copy   default
     
-    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
-    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+    Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+    Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
     
     This software is distributed under commercial and open source licenses.
     You may use the GPL open source license described below or you may acquire 
@@ -10855,8 +10855,8 @@ module ejs.sys {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -10976,8 +10976,8 @@ module ejs.sys {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -11265,8 +11265,8 @@ module ejs.sys {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -11572,8 +11572,8 @@ module ejs.web {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -11808,8 +11808,8 @@ module ejs.web {
 /*
  *	@copy	default
  *	
- *	Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *	Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *	Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *	Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *	
  *	This software is distributed under commercial and open source licenses.
  *	You may use the GPL open source license described below or you may acquire 
@@ -12575,8 +12575,8 @@ module ejs.web {
 /*
  *	@copy	default
  *	
- *	Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *	Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *	Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *	Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *	
  *	This software is distributed under commercial and open source licenses.
  *	You may use the GPL open source license described below or you may acquire 
@@ -13308,8 +13308,8 @@ module ejs.web {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -13396,8 +13396,8 @@ module ejs.web {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -13782,8 +13782,8 @@ module ejs.web {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -14954,8 +14954,8 @@ module ejs.web {
 /*
     @copy   default
     
-    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
-    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+    Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+    Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
     
     This software is distributed under commercial and open source licenses.
     You may use the GPL open source license described below or you may acquire 
@@ -15374,8 +15374,8 @@ module ejs {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -15783,7 +15783,7 @@ module ejs {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 

@@ -3964,8 +3964,8 @@ static EjsName *allocName(Ejs *ejs, EjsName *qname)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -8222,8 +8222,8 @@ void ecStartBreakableStatement(EcCompiler *cp, int kinds)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -8434,8 +8434,8 @@ int ejsEvalScript(cchar *script)
 /*
     @copy   default
 
-    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
-    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+    Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+    Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
 
     This software is distributed under commercial and open source licenses.
     You may use the GPL open source license described below or you may acquire
@@ -9722,8 +9722,8 @@ void ecCloseStream(EcLexer *lp)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -10944,8 +10944,8 @@ static int sum(cchar *name, int value)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -20328,8 +20328,8 @@ static void dummy(int junk) { }
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -20527,8 +20527,8 @@ void ecLeaveState(EcCompiler *cp)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
