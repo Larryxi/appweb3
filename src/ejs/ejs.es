@@ -15,6 +15,1044 @@
 
 /************************************************************************/
 /*
+ *  Start of file "../src/es/core/Array.es"
+ */
+/************************************************************************/
+
+/**
+ *  Array.es - Array class
+ *
+ *  Copyright (c) All Rights Reserved. See details at the end of the file.
+ */
+
+module ejs {
+
+    use default namespace intrinsic
+
+    /**
+     *  Arrays provide a growable, integer indexed, in-memory store for objects. An array can be treated as a 
+     *  stack (FIFO or LIFO) or a list (ordered). Insertions can be done at the beginning or end of the stack or at an 
+     *  indexed location within a list.
+     *  @stability evolving
+     */
+    dynamic native class Array {
+
+        use default namespace public
+
+        /**
+         *  Create a new array.
+         *  @param values Initialization values. The constructor allows three forms:
+         *  <ul>
+         *      <li>Array()</li>
+         *      <li>Array(size: Number)</li>
+         *      <li>Array(elt: Object, ...args)</li>
+         *  </ul>
+         */
+        native function Array(...values)
+
+        /**
+         *  Append an item to the array.
+         *  @param obj Object to add to the array 
+         *  @return The array itself.
+         *  @spec ejs
+         */
+        native function append(obj: Object): Array
+
+        /**
+         *  Clear an array. Remove all elements of the array.
+         *  @spec ejs
+         */
+        native function clear() : Void
+
+        /**
+         *  Clone the array and all its elements.
+         *  @param deep If true, do a deep copy where all object references are also copied, and so on, recursively.
+         *  @spec ejs
+         */
+        override native function clone(deep: Boolean = true) : Array
+
+        /**
+         *  Compact an array. Remove all null elements.
+         *  @spec ejs
+         */
+        native function compact() : Array
+
+        /**
+         *  Concatenate the supplied elements with the array to create a new array. If any arguments specify an 
+         *  array, their elements are concatenated. This is a one level deep copy.
+         *  @param args A variable length set of values of any data type.
+         *  @return A new array of the combined elements.
+         */
+        native function concat(...args): Array 
+
+        /**
+         *  See if the array contains an element using strict equality "===". This call searches from the start of the 
+         *  array for the specified element.  
+         *  @param element The object to search for.
+         *  @return True if the element is found. Otherwise false.
+         *  @spec ejs
+         */
+        function contains(element: Object): Boolean {
+            if (indexOf(element) >= 0) {
+                return true
+            } else {
+                return false
+            }
+        }
+
+        /**
+         *  Determine if all elements match.
+         *  Iterate over every element in the array and determine if the matching function is true for all elements. 
+         *  This method is lazy and will cease iterating when an unsuccessful match is found. The checker is called 
+         *  with the following signature:
+         *      function match(element: Object, elementIndex: Number, arr: Array): Boolean
+         *  @param match Matching function
+         *  @return True if the match function always returns true.
+         */
+        function every(match: Function): Boolean {
+            for (let i: Number in this) {
+                if (!match(this[i], i, this)) {
+                    return false
+                }
+            }
+            return true
+        }
+
+        /**
+         *  Find all matching elements.
+         *  Iterate over all elements in the object and find all elements for which the matching function is true.
+         *  The match is called with the following signature:
+         *      function match(element: Object, elementIndex: Number, arr: Array): Boolean
+         *  This method is identical to the @findAll method.
+         *  @param match Matching function
+         *  @return Returns a new array containing all matching elements.
+         */
+        function filter(match: Function): Array
+            findAll(match)
+
+        /**
+         *  Find the first matching element.
+         *  Iterate over elements in the object and select the first element for which the matching function is true.
+         *  The matching function is called with the following signature:
+         *      function match(element: Object, elementIndex: Number, arr: Array): Boolean
+         *  @param match Matching function
+         *  @return The matched item
+         *  @spec ejs
+         */
+        function find(match: Function): Object {
+            for (let i: Number in this) {
+                if (match(this[i], i, this)) {
+                    return this[i]
+                }
+            }
+            return null
+        }
+
+        /**
+         *  Find all matching elements.
+         *  Iterate over all elements in the object and find all elements for which the matching function is true.
+         *  The matching function is called with the following signature:
+         *      function match(element: Object, elementIndex: Number, arr: Array): Boolean
+         *  @param match Matching function
+         *  @return Returns an array containing all matching elements.
+         *  @spec ejs
+         */
+        function findAll(match: Function): Array {
+            var result: Array = new Array
+            for (let i: Number in this) {
+                if (match(this[i], i, this)) {
+                    result.append(this[i])
+                }
+            }
+            return result
+        }
+
+        /**
+         *  Transform all elements.
+         *  Iterate over the elements in the array and transform all elements by applying the transform function. 
+         *  The matching function is called with the following signature:
+         *      function match(element: Object, elementIndex: Number, arr: Array): Boolean
+         *  This method is identical to the @transform method.
+         *  @param modifier Transforming function
+         *  @return Returns the original (transformed) array.
+         */
+        function forEach(modifier: Function): Array {
+            transform(modifier)
+            return this
+        }
+
+        /**
+         *  Iterator for this array to be used by "for (v in array)"
+         */
+        override iterator native function get(): Iterator
+
+        /**
+         *  Iterator for this array to be used by "for each (v in array)"
+         */
+        override iterator native function getValues(): Iterator
+
+        /**
+         *  Search for an item using strict equality "===". This call searches from the start of the array for 
+         *  the specified element.  
+         *  @param element The object to search for.
+         *  @param startIndex Where in the array to start searching for the object (Defaults to zero). If the index 
+         *      is negative, it is taken as an offset from the end of the array. If the calculated index is less than 
+         *      zero the entire array is searched. If the index is greater than the length of the array, -1 is returned.
+         *  @return The items index into the array if found, otherwise -1.
+         */
+        native function indexOf(element: Object, startIndex: Number = 0): Number
+
+        /**
+         *  Insert elements. Insert elements at the specified position. The insertion occurs before the element at the 
+         *      specified position. Negative indicies will measure from the end so that -1 will specify the last element.  
+         *      Indicies greater than the array length will append to the end. Indicies before the first position will
+         *      insert at the start.
+         *  @param pos Where in the array to insert the objects.
+         *  @param ...args Arguments are aggregated and passed to the method in an array.
+         *  @return The original array.
+         *  @spec ejs
+         */
+        native function insert(pos: Number, ...args): Array
+
+        /**
+         *  Convert the array into a string.
+         *  Joins the elements in the array into a single string by converting each element to a string and then 
+         *  concatenating the strings inserting a separator between each.
+         *  @param sep Element separator.
+         *  @return A string.
+         */
+        native function join(sep: String = undefined): String
+
+        /**
+         *  Find an item searching from the end of the array.
+         *  Search for an item using strict equality "===". This call searches from the end of the array for the given 
+         *  element.
+         *  @param element The object to search for.
+         *  @param startIndex Where in the array to start searching for the object (Defaults to the array's length).
+         *      If the index is negative, it is taken as an offset from the end of the array. If the calculated index 
+         *      is less than zero, -1 is returned. If the index is greater or equal to the length of the array, the
+         *      whole array will be searched.
+         *  @return The items index into the array if found, otherwise -1.
+         */
+        native function lastIndexOf(element: Object, startIndex: Number = 0): Number
+
+        /**
+         *  Length of an array.
+         */
+        override native function get length(): Number
+
+        /**
+         *  Set the length of an array. The array will be truncated if required. If the new length is greater then 
+         *  the old length, new elements will be created as required and set to undefined. If the new length is less
+         *  than 0 the length is set to zero.
+         *  @param value The new length
+         */
+        native function set length(value: Number): Void
+
+        /**
+         *  Call the mapper on each array element in increasing index order and return a new array with the values returned 
+         *  from the mapper. The mapper function is called with the following signature:
+         *      function mapper(element: Object, elementIndex: Number, arr: Array): Object
+         *  @param mapper Transforming function
+         */
+        function map(mapper: Function): Array {
+            var result: Array  = clone()
+            result.transform(mapper)
+            return result
+        }
+
+        /**
+         *  Remove and return the last value in the array.
+         *  @return The last element in the array. Returns undefined if the array is empty
+         */
+        native function pop(): Object 
+
+        /**
+         *  Append items to the end of the array.
+         *  @param items Items to add to the array.
+         *  @return The new length of the array.
+         */
+        native function push(...items): Number 
+
+        /**
+         *  Find non-matching elements. Iterate over all elements in the array and select all elements for which 
+         *  the filter function returns false. The matching function is called with the following signature:
+         *
+         *      function match(element: Object, elementIndex: Number, arr: Array): Boolean
+         *
+         *  @param match Matching function
+         *  @return A new array of non-matching elements.
+         *  @spec ejs
+         */
+        function reject(match: Function): Array {
+            var result: Array = new Array
+            for (let i: Number in this) {
+                if (!match(this[i], i, this)) {
+                    result.append(this[i])
+                }
+            }
+            return result
+        }
+
+        /**
+         *  Remove elements. Remove the elements from $start to $end inclusive. The elements are removed and not just set 
+         *  to undefined as the delete operator will do. Indicies are renumbered. NOTE: this routine delegates to splice.
+         *  @param start Numeric index of the first element to remove. Negative indices measure from the end of the array.
+         *  -1 is the last element.
+         *  @param end Numeric index of the last element to remove
+         *  @spec ejs
+         */
+        function remove(start: Number, end: Number = -1): Void {
+            if (start < 0) {
+                start += length
+            }
+            if (end < 0) {
+                end += length
+            }
+            splice(start, end - start + 1)
+        }
+
+        /**
+         *  Reverse the order of the objects in the array. The elements are reversed in the original array.
+         *  @return A reference to the array.
+         */
+        native function reverse(): Array 
+
+        /**
+         *  Remove and return the first element in the array.
+         *  @returns the previous first element in the array.
+         */
+        native function shift(): Object 
+
+        /**
+            Create a new array subset by taking a slice from an array.
+            @param start The array index at which to begin. Negative indicies will measure from the end so that -1 will 
+                specify the last element. If start is greater than or equal to end, the call returns an empty array.
+            @param end The array index at which to end. This is one beyond the index of the last element to extract. If 
+                end is negative, it is measured from the end of the array, so use -1 to mean up to but not including the 
+                last element of the array.
+            @param step Slice every step (nth) element. If the step value is negative, the copying begins at the start
+                index down to the (and not including) the end index.
+            @return A new array that is a subset of the original array.
+         */
+        native function slice(start: Number, end: Number = -1, step: Number = 1): Array 
+
+        /**
+         *  Determine if some elements match.
+         *  Iterate over all element in the array and determine if the matching function is true for at least one element. 
+         *  This method is lazy and will cease iterating when a successful match is found.
+         *  The match function is called with the following signature:
+         *      function match(element: Object, elementIndex: Number, arr: Array): Boolean
+         *  @param match Matching function
+         *  @return True if the match function ever is true.
+         */
+        function some(match: Function): Boolean {
+            var result: Array = new Array
+            for (let i: Number in this) {
+                if (match(this[i], i, this)) {
+                    return true
+                }
+            }
+            return false
+        }
+
+        /**
+         *  Sort the array. The array is sorted in lexical order. A compare function may be supplied.
+         *  @param compare Function to use to compare. A null comparator will use a text compare
+         *  @param order If order is >= 0, then an ascending lexical order is used. Otherwise descending.
+         *  @return the sorted array reference
+         *      type Comparator = (function (*,*): AnyNumber | undefined)
+         *  @spec ejs Added the order argument.
+         */
+        native function sort(compare: Function = null, order: Number = 1): Array 
+
+        /**
+         *  Insert, remove or replace array elements. Splice modifies an array in place. 
+         *  @param start The array index at which the insertion or deleteion will begin. Negative indicies will measure 
+         *      from the end so that -1 will specify the last element.  
+         *  @param deleteCount Number of elements to delete. If omitted, splice will delete all elements from the 
+         *      start argument to the end.  
+         *  @param values The array elements to add.
+         *  @return Array containing the removed elements.
+         */
+        native function splice(start: Number, deleteCount: Number, ...values): Array 
+
+        /**
+         *  Convert an array to an equivalent JSON encoding.
+         *  @return This function returns an array literal string.
+         *  @throws TypeError If the array could not be converted to a string.
+         *
+         *  NOTE: currently using Object.toJSON for this capability
+         */ 
+        #FUTURE
+        override native function toJSON(): String
+
+        /**
+         *  Convert the array to a single string each member of the array has toString called on it and the resulting 
+         *  strings are concatenated.
+         *  @return A string
+         */
+        override native function toString(): String 
+
+        /**
+         *  Transform all elements.
+         *  Iterate over all elements in the object and transform the elements by applying the transform function. 
+         *  This modifies the object elements in-situ. The transform function is called with the following signature:
+         *      function mapper(element: Object, elementIndex: Number, arr: Array): Object
+         *  @param mapper Transforming function
+         *  @spec ejs
+         */
+        function transform(mapper: Function): Void {
+            for (let i: Number in this) {
+                this[i] = mapper(this[i], i, this);
+            }
+        }
+
+        /**
+         *  Remove duplicate elements and make the array unique. Duplicates are detected by using "==" (ie. content 
+         *      equality, not strict equality).
+         *  @return The original array with unique elements
+         *  @spec ejs
+         */
+        native function unique(): Array
+
+        /**
+         *  Insert the items at the front of the array.
+         *  @param items to insert
+         *  @return Returns the array reference
+         */
+        native function unshift(...items): Array
+
+        /**
+         *  Array intersection. Return the elements that appear in both arrays. 
+         *  @param arr The array to join.
+         *  @return A new array.
+         *  @spec ejs
+         */
+        # DOC_ONLY
+        native function & (arr: Array): Array
+
+        /**
+         *  Append. Appends elements to an array.
+         *  @param elements The array to add append.
+         *  @return The modified original array.
+         *  @spec ejs
+         */
+        # DOC_ONLY
+        native function << (elements: Array): Array
+
+        /**
+         *  Array subtraction. Remove any items that appear in the supplied array.
+         *  @param arr The array to remove.
+         *  @return A new array.
+         *  @spec ejs
+         */
+        # DOC_ONLY
+        native function - (arr: Array): Array
+
+        /**
+         *  Array union. Return the union of two arrays. 
+         *  @param arr The array to join.
+         *  @return A new array
+         *  @spec ejs
+         */
+        # DOC_ONLY
+        native function | (arr: Array): Array
+
+        /**
+         *  Concatenate two arrays. 
+         *  @param arr The array to add.
+         *  @return A new array.
+         *  @spec ejs
+         */
+        # DOC_ONLY
+        native function + (arr: Array): Array
+    }
+}
+
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *  
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/core/Array.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/core/Block.es"
+ */
+/************************************************************************/
+
+/*
+ *  Block.es -- Block scope class used internally by the VM.
+ *
+ *  Copyright (c) All Rights Reserved. See details at the end of the file.
+ */
+
+module ejs {
+
+    use default namespace intrinsic
+
+    /**
+     *  The Block type is used to represent program block scope. It is used internally and should not be 
+     *  instantiated by user programs.
+     *  @spec ejs
+     *  @stability stable
+     *  @hide
+     */
+    native final class Block { }
+}
+
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *  
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/core/Block.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/core/Boolean.es"
+ */
+/************************************************************************/
+
+/*
+ *  Boolean.es -- Boolean class
+ *
+ *  Copyright (c) All Rights Reserved. See details at the end of the file.
+ */
+
+module ejs {
+
+    use default namespace intrinsic
+
+    /**
+     *  Boolean class. The Boolean class is used to create two immutable boolean values: "true" and "false".
+     *  @stability stable
+     */
+    native final class Boolean {
+
+        /**
+            Boolean constructor. Construct a Boolean object and initialize its value. Since Boolean values are 
+            immutable, this constructor will return a reference to either the "true" or "false" values.
+            @param value. Optional value to use in creating the Boolean object. If the value is omitted or 0, -1, NaN,
+                false, null, undefined or the empty string, then the object will be created and set to false.
+         */
+        native function Boolean(value: Boolean = false)
+    }
+}
+
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *  
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/core/Boolean.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/core/ByteArray.es"
+ */
+/************************************************************************/
+
+/*
+ *  ByteArray.es - ByteArray class
+ *
+ *  Copyright (c) All Rights Reserved. See details at the end of the file.
+ */
+
+module ejs {
+
+    use default namespace intrinsic
+
+    /**
+     *  ByteArrays provide a growable, integer indexed, in-memory store for bytes. ByteArrays are a powerful data 
+     *  type that can be used as a simple array to store and encode data as bytes or it can be used as a Stream 
+     *  implementing the Stream interface.
+     *  <br/><br/>
+     *  When used as a simple byte array, the ByteArray class offers a low level set of methods to insert and 
+     *  extract bytes. The index operator [] can be used to access individual bytes and the copyIn and copyOut methods 
+     *  can be used to get and put blocks of data. In this mode, the $readPosition and $writePosition properties are 
+     *  ignored. Accesses to the byte array are from index zero up to the size defined by the length property. When 
+     *  constructed, the ByteArray can be designated as growable, in which case the initial size will grow as required to 
+     *  accomodate data and the length property will be updated accordingly.
+     *  <br/><br/>
+     *  When used as a Stream, the byte array offers various read and write methods which store data at the location 
+     *  specified by the write position property and they read data from the $readPosition. The available method 
+     *  indicates how much data is available between the read and write position pointers. The flush method will 
+     *  reset the pointers to the start of the array. The length property is unchanged in behavior from when used as 
+     *  a simple byte array and it specifies the overall storage capacity of the byte array. As numeric values are 
+     *  read or written, they will be encoded according to the value of the endian property which can be set to 
+     *  either LittleEndian or BigEndian. When used with for/in, ByteArrays will iterate or enumerate over the 
+     *  available data between the read and write pointers.
+     *  <br/><br/>
+     *  In Stream mode ByteArrays can be configured with input and output callbacks to provide or consume data to other 
+     *  streams or components. These callbacks will automatically be invoked as required when the various read/write 
+     *  methods are called.
+     *  @stability evolving
+     *  @spec ejs
+     */
+    native final class ByteArray implements Stream {
+
+        use default namespace public
+
+        /**
+         *  Little endian byte order constants used for the $endian property
+         */
+        static const LittleEndian: Number   = 0
+
+        /**
+         *  Big endian byte order used for the $endian property
+         */
+        static const BigEndian: Number      = 1
+
+        /**
+         *  Create a new array. This will set the default encoding.
+         *  @param size The initial size of the byte array. If not supplied a system default buffer size will be used.
+         *  @param growable Set to true to automatically grow the array as required to fit written data. If growable 
+         *      is false, then some writes may return "short". ie. not be able to accomodate all written data.
+         */
+        native function ByteArray(size: Number = -1, growable: Boolean = false)
+
+        /**
+         *  Number of bytes that are currently available for reading. This consists of the bytes available
+         *  from the current $readPosition up to the current write position.
+         */
+        native function get available(): Number 
+
+        /**
+         *  Close the byte array
+         *  @param graceful If true, then write all pending data
+         */
+        function close(graceful: Boolean = false): Void {
+            if (graceful) {
+                flush(graceful)
+            }
+        }
+
+        /**
+         *  Compact available data down and adjust the read/write positions accordingly. This sets the read pointer 
+         *  to the zero index and adjusts the write pointer by the corresponding amount.
+         */
+        native function compact(): Void
+
+        /**
+         *  Compress the array contents
+         */
+        # FUTURE
+        native function compress(): Void
+
+        /**
+         *  Copy data into the array. Data is written at the $destOffset index. This call does not update the 
+         *      read and write positions.
+         *  @param destOffset Index in the destination byte array to copy the data to
+         *  @param src Source byte array containing the data elements to copy
+         *  @param srcOffset Location in the source buffer from which to copy the data. Defaults to the start.
+         *  @param count Number of bytes to copy. Set to -1 to read to the end of the src buffer.
+         *  @return the number of bytes written into the array
+         */
+        native function copyIn(destOffset: Number, src: ByteArray, srcOffset: Number = 0, count: Number = -1): Number
+
+        /**
+         *  Copy data from the array. Data is copied from the $srcOffset pointer. This call does not update the 
+         *      read and write positions.
+         *  @param srcOffset Location in the source array from which to copy the data.
+         *  @param dest Destination byte array
+         *  @param destOffset Location in the destination array to copy the data. Defaults to the start.
+         *  @param count Number of bytes to read. Set to -1 to read all available data.
+         *  @returns the count of bytes read. Returns 0 on end of file.
+         *  @throws IOError if an I/O error occurs.
+         */
+        native function copyOut(srcOffset: Number, dest: ByteArray, destOffset: Number = 0, count: Number = -1): Number
+
+        /**
+            Current byte ordering for storing and retrieving numbers. Set to either LittleEndian or BigEndian
+         */
+        native function get endian(): Number
+
+        /**
+            Current byte ordering for storing and retrieving numbers. Set to either LittleEndian or BigEndian
+         *  @param value Set to true for little endian encoding or false for big endian.
+         */
+        native function set endian(value: Number): Void
+
+        /** 
+         *  Flush the the byte array and reset the read and write position pointers. This may invoke the output callback
+         *  to send the data if the output callback is defined.
+         */
+        native function flush(graceful: Boolean = true): Void
+
+        /**
+         *  Iterator for this array to be used by "for (v in array)". This will return array indicies for 
+         *  read data in the array.
+         *  @return An iterator object.
+         */
+        override iterator native function get(): Iterator
+
+        /**
+         *  Iterator for this array to be used by "for each (v in array)". This will return read data in the array.
+         */
+        override iterator native function getValues(): Iterator
+
+        /**
+         *  Input callback function when read data is required. The input callback should write to the supplied buffer.
+         *  @param callback Function to call to supply read data. The function is called with the following signature:
+         *      function inputCallback(buffer: ByteArray): Void
+         */
+        native function set input(callback: Function): Void
+
+        /**  
+            @hide
+         */
+        native function get input(): Function
+
+        /**
+         *  Length of an array. This is not the amount of read or write data, but is the size of the total 
+         *      array storage.
+         */
+        override native function get length(): Number
+
+        #FUTURE
+        native function get MD5(): Number
+
+        /** 
+         *  Output function to process (output) data. The output callback should read from the supplied buffer.
+         *  @param callback Function to invoke when the byte array is full or flush() is called.
+         *      function outputCallback(buffer: ByteArray): Number
+         */
+        native function get output(): Function
+
+        /**
+         */
+        native function set output(callback: Function): Void
+
+        /**
+         *  Read data from the array into another byte array. Data is read from the current read $position pointer toward
+         *      the current write position. This byte array's $readPosition is updated. If offset is < 0, then 
+         *       data is copied to the destination buffer's write position and the destination buffer's write position 
+         *       is also updated. If the offset is >= 0, the read and write positions of the destination buffer are updated.
+         *  @param buffer Destination byte array
+         *  @param offset Location in the destination buffer to copy the data. If the offset is < 0, then the write 
+         *      position is used and will be updated with the number of bytes read from the buffer.
+         *  @param count Number of bytes to read. Set to -1 to read all available data that will fit into the 
+         *      destination buffer.
+         *  @returns the count of bytes read. Returns 0 on end of file.
+         *  @throws IOError if an I/O error occurs.
+         */
+        native function read(buffer: ByteArray, offset: Number = 0, count: Number = -1): Number
+
+        /**
+         *  Read a boolean from the array. Data is read from the current read $position pointer.
+         *  @returns a boolean
+         *  @throws IOError if an I/O error occurs or a premature end of file.
+         */
+        native function readBoolean(): Boolean
+
+        /**
+         *  Read a byte from the array. Data is read from the current read $position pointer.
+         *  @returns a byte
+         *  @throws IOError if an I/O error occurs or a premature end of file.
+         */
+        native function readByte(): Number
+
+        /**
+         *  Read a date from the array or a premature end of file. Data is read from the current read $position pointer.
+         *  @returns a date
+         *  @throws IOError if an I/O error occurs.
+         */
+        native function readDate(): Date
+
+        /**
+         *  Read a double from the array. The data will be decoded according to the encoding property.
+         *  Data is read from the current read $position pointer.
+         *  @returns a double
+         *  @throws IOError if an I/O error occurs or a premature end of file.
+         */
+        native function readDouble(): Date
+
+        /**
+         *  Read an 32-bit integer from the array. The data will be decoded according to the encoding property.
+         *  Data is read from the current read $position pointer.
+         *  @returns an integer
+         *  @throws IOError if an I/O error occurs or a premature end of file.
+         */
+        native function readInteger(): Number
+
+        /**
+         *  Read a 64-bit long from the array.The data will be decoded according to the encoding property.
+         *  Data is read from the current read $position pointer.
+         *  @returns a long
+         *  @throws IOError if an I/O error occurs or a premature end of file.
+         */
+        native function readLong(): Number
+
+        /**
+         *  Current read position offset
+         */
+        native function get readPosition(): Number
+
+        /**
+         *  Set the current read position offset
+         *  @param position The new read position
+         */
+        native function set readPosition(position: Number): Void
+
+        /**
+         *  Read a 16-bit short integer from the array.The data will be decoded according to the encoding property.
+         *  Data is read from the current read $position pointer.
+         *  @returns a short int
+         *  @throws IOError if an I/O error occurs or a premature end of file.
+         */
+        native function readShort(): Number
+
+        /**
+         *  Read a data from the array as a string. Read data from the $readPosition to a string up to the $writePosition,
+         *      but not more than count characters.
+         *  @param count of bytes to read. If -1, convert the data up to the $writePosition.
+         *  @returns a string
+         *  @throws IOError if an I/O error occurs or a premature end of file.
+         */
+        native function readString(count: Number = -1): String
+
+        /**
+         *  Read an XML document from the array. Data is read from the current read $position pointer.
+         *  @returns an XML document
+         *  @throws IOError if an I/O error occurs or a premature end of file.
+         */
+        native function readXML(): XML
+
+        /**
+         *  Reset the read and $writePosition pointers if there is no available data.
+         */
+        native function reset(): Void
+
+        /**
+         *  Number of data bytes that the array can store from the $writePosition till the end of the array.
+         */
+        native function get room(): Number 
+
+        /**
+         *  Convert the data in the byte array between the $readPosition and $writePosition offsets.
+         *  @return A string
+         */
+        override native function toString(): String 
+
+        /**
+         *  Uncompress the array
+         */
+        # FUTURE
+        native function uncompress(): Void
+
+        /**
+         *  Write data to the array. Binary data is written in an optimal, platform dependent binary format. If 
+         *      cross-platform portability is required, use the BinaryStream to encode the data. Data is written to 
+         *      the current $writePosition If the data argument is itself a ByteArray, the available data from the 
+         *      byte array will be copied. NOTE: the data byte array will not have its readPosition adjusted.
+         *  @param data Data elements to write
+         *  @return the number of bytes written into the array
+         */
+        native function write(...data): Number
+
+        /**
+         *  Write a byte to the array. Data is written to the current write $position pointer which is then incremented.
+         *  @param data Data to write
+         */
+        native function writeByte(data: Number): Void
+
+        /**
+         *  Write a short to the array. Data is written to the current write $position pointer which is then incremented.
+         *  @param data Data to write
+         */
+        native function writeShort(data: Number): Void
+
+        /**
+         *  Write a double to the array. Data is written to the current write $position pointer which is then incremented.
+         *  @param data Data to write
+         */
+        native function writeDouble(data: Number): Void
+
+        /**
+         *  Write a 32-bit integer to the array. Data is written to the current write $position pointer which is 
+         *      then incremented.
+         *  @param data Data to write
+         */
+        native function writeInteger(data: Number): Void
+
+        /**
+         *  Write a 64 bit long integer to the array. Data is written to the current write $position pointer which is 
+         *  then incremented.
+         *  @param data Data to write
+         */
+        native function writeLong(data: Number): Void
+
+        /**
+         *  Current write position offset.
+         */
+        native function get writePosition(): Number
+
+        /**
+         */
+        native function set writePosition(position: Number): Void
+    }
+}
+
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *  
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/core/ByteArray.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
  *  Start of file "../src/es/core/Date.es"
  */
 /************************************************************************/
@@ -688,14 +1726,14 @@ module ejs {
 
 /************************************************************************/
 /*
- *  Start of file "../src/es/core/Number.es"
+ *  Start of file "../src/es/core/Error.es"
  */
 /************************************************************************/
 
 /*
-    Number.es - Number class
-
-    Copyright (c) All Rights Reserved. See details at the end of the file.
+ *  Error.es -- Error exception classes
+ *
+ *  Copyright (c) All Rights Reserved. See copyright notice at the bottom of the file.
  */
 
 module ejs {
@@ -703,243 +1741,358 @@ module ejs {
     use default namespace intrinsic
 
     /**
-        The Number type is used by all numeric values in Ejscript. Depending on how Ejscript is configured, the underlying
-        number representation may be based on either an int, long, int64 or double data type. If the underlying type is
-        integral (not double) then some of these routines may not be relevant.
+     *  Arguments error exception class. 
+     *  Thrown the arguments cannot be cast to the required type or
+     *  in strict mode if there are too few or too many arguments.
+     *  @spec ejs
         @stability evolving
      */
-    native final class Number {
+    native dynamic class ArgError extends Error {
+        /**
+         *  ArgError constructor.
+         *  @params message Message to use when defining the Error.message property
+         */
+        native function ArgError(message: String = null) 
+    }
+
+    /**
+     *  Arithmetic error exception class. Thrown when the system cannot perform an arithmetic operation, 
+     *  @spec ejs
+     *  @stability evolving
+     */
+    native dynamic class ArithmeticError extends Error {
+        /**
+         *  ArithmeticError constructor.
+         *  @params message Message to use when defining the Error.message property
+         */
+        native function ArithmeticError(message: String = null) 
+    }
+
+    /**
+     *  Assertion error exception class. Thrown when the $assert method is invoked with a false value.
+     *  @spec ejs
+     *  @stability evolving
+     */
+    native dynamic class AssertError extends Error {
+        /**
+         *  AssertError constructor.
+         *  @params message Message to use when defining the Error.message property
+         */
+        native function AssertError(message: String = null) 
+    }
+
+    /**
+     *  Code (instruction) error exception class. Thrown when an illegal or insecure operation code is detected 
+     *  in the instruction stream.
+     *  @spec ejs
+     *  @stability evolving
+     */
+    native dynamic class InstructionError extends Error {
+        /**
+         *  InstructionError constructor.
+         *  @params message Message to use when defining the Error.message property
+         */
+        native function InstructionError(message: String = null) 
+    }
+
+    /**
+     *  Base class for error exception objects. Exception objects are created by the system as part of changing 
+     *  the normal flow of execution when some error condition occurs. 
+     *
+     *  When an exception is created and acted upon ("thrown"), the system transfers the flow of control to a 
+     *  pre-defined instruction stream (the handler or "catch" code). The handler may return processing to the 
+     *  point at which the exception was thrown or not. It may re-throw the exception or pass control up the call stack.
+     */
+    native dynamic class Error {
 
         use default namespace public
 
         /**
-            Number constructor.
-            @param value Value to use in creating the Number object. If the value cannot be converted to a number, 
-                the value will ba NaN (or 0 if using integer numerics).
+         *  Exception error message.
          */
-        native function Number(value: Object = null)
+        native var message: String
 
         /**
-            Return the maximim value this number type can assume. Alias for MaxValue.
-            An object of the appropriate number with its value set to the maximum value allowed.
+         *  Optional error code
          */
-        static const MAX_VALUE: Number = MaxValue
+        native function get code(): Number
 
         /**
-            Return the minimum value this number type can assume. Alias for MinValue.
-            An object of the appropriate number with its value set to the minimum value allowed.
+         *  Set an optional error code
+         *  @param value Error code to set
          */
-        static const MIN_VALUE: Number = MinValue
+        native function set code(value: Number): Void
 
         /**
-            Not a Number. This is the result of an arithmetic expression which has no value.
+         *  Execution stack backtrace. Contains the execution stack backtrace at the time the exception was thrown.  
          */
-        static const NaN : Number = NaN
+        native var stack: String 
 
         /**
-            Return a unique value which is less than or equal then any value which the number can assume. 
-            @return A number with its value set to -Infinity. If the numeric type is integral, then return zero.
+         *  Construct a new Error object.
+         *  @params message Message to use when defining the Error.message property
          */
-        static const NEGATIVE_INFINITY: Number = NegativeInfinity
+        native function Error(message: String = null)
+    }
+
+    /**
+     *  IO error exception class. Thrown when an I/O/ interruption or failure occurs, e.g. a file is not found 
+     *  or there is an error in a communication stack.
+     *  @spec ejs
+     *  @stability evolving
+     */
+    native dynamic class IOError extends Error {
 
         /**
-            Return a unique value which is greater then any value which the number can assume. 
-            @return A number with its value set to Infinity. If the numeric type is integral, then return MaxValue.
+         *  IOError constructor.
+         *  @params message Message to use when defining the Error.message property
          */
-        static const POSITIVE_INFINITY: Number = Infinity
+        native function IOError(message: String = null) 
+    }
+
+    /**
+     *  Internal error exception class. Thrown when some error occurs in the virtual machine.
+     *  @spec ejs
+     *  @stability evolving
+     *  @hide
+     */
+    native dynamic class InternalError extends Error {
+        /**
+         *  InternalError constructor.
+         *  @params message Message to use when defining the Error.message property
+         */
+        native function InternalError(message: String = null) 
+    }
+
+    /**
+     *  Memory error exception class. Thrown when the system attempts to allocate memory and none is available 
+     *  or the stack overflows.
+     *  @spec ejs
+     *  @stability evolving
+     */
+    native dynamic class MemoryError extends Error {
+        /**
+         *  MemoryError constructor.
+         *  @params message Message to use when defining the Error.message property
+         */
+        native function MemoryError(message: String = null) 
+    }
+
+    /**
+     *  OutOfBounds error exception class. Thrown to indicate that an attempt has been made to set or access an 
+     *  object's property outside of the permitted set of values for that property. For example, an array has been 
+     *  accessed with an illegal index or, in a date object, attempting to set the day of the week to greater then 7.
+     *  @spec ejs
+     *  @stability evolving
+     *  @hide
+     */
+    native dynamic class OutOfBoundsError extends Error {
 
         /**
-            Return the maximim value this number type can assume.
-            @return A number with its value set to the maximum value allowed.
-            @spec ejs
+         *  OutOfBoundsError constructor.
+         *  @params message Message to use when defining the Error.message property
          */
-        native static const MaxValue: Number
+        native function OutOfBoundsError(message: String = null) 
+    }
+
+    /**
+     *  Reference error exception class. Thrown when an invalid reference to an object is made, e.g. a method is 
+     *  invoked on an object whose type does not define that method.
+     *  @stability evolving
+     */
+    native dynamic class ReferenceError extends Error {
 
         /**
-            Return the minimum value this number type can assume.
-            @return A number with its value set to the minimum value allowed.
-            @spec ejs
+         *  ReferenceError constructor.
+         *  @params message Message to use when defining the Error.message property
          */
-        native static const MinValue: Number
+        native function ReferenceError(message: String = null)
+    }
+
+    /**
+     *  Resource error exception class. Thrown when the system cannot allocate a resource it needs to continue, 
+     *  e.g. a native thread, process, file handle or the like.
+     *  @spec ejs
+     *  @stability evolving
+     */
+    native dynamic class ResourceError extends Error {
 
         /**
-            The absolute value of a number (which is equal to its magnitude).
-            @spec ejs
+         *  ResourceError constructor.
+         *  @params message Message to use when defining the Error.message property
          */
-        function get abs(): Number
-            Math.abs(this)
+        native function ResourceError(message: String = null) 
+    }
+
+    /**
+     *  Security error exception class. Thrown when an access violation occurs. Access violations include attempting 
+     *  to write a file without having write permission or assigning permissions without being the owner of the 
+     *  securable entity.
+     *  @spec ejs
+     *  @stability evolving
+     *  @hide
+     */
+    # FUTURE
+    native dynamic class SecurityError extends Error {
+        /**
+         *  SecurityError constructor.
+         *  @params message Message to use when defining the Error.message property
+         */
+        native function SecurityError(message: String = null) 
+    }
+
+    /**
+     *  State error exception class. Thrown when an object cannot be transitioned from its current state to the 
+     *  desired state, e.g. calling "sleep" on an interrupted thread.
+     *  @spec ejs
+     *  @stability evolving
+     */
+    native dynamic class StateError extends Error {
+        /**
+         *  StateError constructor.
+         *  @params message Message to use when defining the Error.message property
+         */
+        native function StateError(message: String = null) 
+    }
+
+    /**
+     *  Syntax error exception class. Thrown when the system cannot parse a character sequence for the intended 
+     *  purpose, e.g. a regular expression containing invalid characters.
+     *  @stability evolving
+     */
+    native dynamic class SyntaxError extends Error {
+        /**
+         *  SyntaxError constructor.
+         *  @params message Message to use when defining the Error.message property
+         */
+        native function SyntaxError(message: String = null) 
+    }
+
+    /**
+     *  Type error exception class. Thrown when a type casting or creation operation fails, e.g. when an operand 
+     *  cannot be cast to a type that allows completion of a statement or when a type cannot be found for object 
+     *  creation or when an object cannot be instantiated given the values passed into "new".
+     *  @stability evolving
+     */
+    native dynamic class TypeError extends Error {
 
         /**
-            The smallest integral number that is greater or equal to the number value. 
-            @spec ejs
+         *  TypeError constructor.
+         *  @params message Message to use when defining the Error.message property
          */
-        function get ceil(): Number 
-            Math.ceil(this)
+        native function TypeError(message: String = null) 
+    }
 
+    /**
+     *  URI error exception class. Thrown a URI fails to parse.
+     *  @stability prototype
+     *  @hide
+     */
+    native dynamic class URIError extends Error {
         /**
-            The largest integral number that is smaller than the number value.
-            @spec ejs
+         *  URIError constructor.
+         *  @params message Message to use when defining the Error.message property
          */
-        function get floor(): Number
-            Math.floor(this)
-
-        /**
-            Is the number Infinity or -Infinity. Set to true or false.
-            @spec ejs
-         */
-        native function get isFinite(): Boolean
-
-        /**
-            Is the number is equal to the NaN value. If the numeric type is integral, this will always return false.
-            @spec ejs
-         */
-        native function get isNaN(): Boolean
-
-        /**
-            Compute the integral number that is closest to this number. ie. round up or down to the closest integer.
-            @spec ejs
-         */
-        function get round(): Number
-            Math.round(this)
-
-        /**
-            Returns the number formatted as a string in scientific notation with one digit before the decimal point 
-            and the argument number of digits after it.
-            @param fractionDigits The number of digits in the fraction.
-            @return A string representing the number.
-         */
-        native function toExponential(fractionDigits: Number = 0): String
-
-        /**
-            Returns the number formatted as a string with the specified number of digits after the decimal point.
-            @param fractionDigits The number of digits in the fraction.
-            @return A string representing the number 
-         */
-        native function toFixed(fractionDigits: Number = 0): String
-
-        /**
-            Returns the number formatted as a string in either fixed or exponential notation with argument number of digits.
-            @param numDigits The number of digits in the result. If omitted, the entire number is returned.
-            @return A string
-         */
-        native function toPrecision(numDigits: Number = MAX_VALUE): String
-
-        /**
-            Byte sized integral number. Numbers are rounded and truncated as necessary.
-            @spec ejs
-         */
-        function get byte(): Number
-            integral(8)
-
-        /**
-            Convert this number to an integral value of the specified number of bits. Floating point numbers are 
-                converted to integral values using truncation.
-            @size Size in bits of the value
-            @return An integral number
-            @spec ejs
-         */
-        native function integral(size: Number = 32): Number
-
-        /**
-            Return an iterator that can be used to iterate a given number of times. This is used in for/in statements.
-            @return an iterator
-            @example
-                for (i in 5) 
-                    print(i)
-            @spec ejs
-         */
-        override iterator native function get(): Iterator
-
-        /**
-            Return an iterator that can be used to iterate a given number of times. This is used in for/each statements.
-            @return an iterator
-            @example
-                for each (i in 5) 
-                    print(i)
-            @spec ejs
-         */
-        override iterator native function getValues(): Iterator
-
-        /**
-            Returns the greater of the number and the arguments.
-            @param other Other numbers number to compare with
-            @return A number
-            @spec ejs
-         */
-        function max(...other): Number {
-            let result = this
-            for each (n in other) {
-                n = n cast Number
-                if (n > result) {
-                    result = n
-                }
-            }
-            return result
-        }
-
-        /**
-            Returns the lessor of the number and the arguments.
-            @param other Numbers to compare with
-            @return A number
-            @spec ejs
-         */
-        function min(...other): Number {
-            let result = this
-            for each (n in other) {
-                n = n cast Number
-                if (n < result) {
-                    result = n
-                }
-            }
-            return result
-        }
-
-        /**
-            Returns a number which is equal to this number raised to the power of the argument.
-            @param nth Nth power to be raised to
-            @return A number
-            @spec ejs
-         */
-        function power(nth: Number): Number
-            Math.pow(this, nth)
-
-        /**
-            This function converts the number to a string representation.
-            @param radix Radix to use for the conversion. Defaults to 10. Non-default radixes are currently not supported.
-            @returns a string representation of the number.
-         */ 
-        override native function toString(radix: Number = 10): String
+        native function URIError(message: String = null) 
     }
 }
 
+
 /*
-    @copy   default
-    
-    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
-    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
-    
-    This software is distributed under commercial and open source licenses.
-    You may use the GPL open source license described below or you may acquire 
-    a commercial license from Embedthis Software. You agree to be fully bound 
-    by the terms of either license. Consult the LICENSE.TXT distributed with 
-    this software for full details.
-    
-    This software is open source; you can redistribute it and/or modify it 
-    under the terms of the GNU General Public License as published by the 
-    Free Software Foundation; either version 2 of the License, or (at your 
-    option) any later version. See the GNU General Public License for more 
-    details at: http://www.embedthis.com/downloads/gplLicense.html
-    
-    This program is distributed WITHOUT ANY WARRANTY; without even the 
-    implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
-    
-    This GPL license does NOT permit incorporating this software into 
-    proprietary programs. If you are unable to comply with the GPL, you must
-    acquire a commercial license to use this software. Commercial licenses 
-    for this software and support services are available from Embedthis 
-    Software at http://www.embedthis.com 
-    
-    Local variables:
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2011-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 2011-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *  
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ *
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/core/Error.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/core/Frame.es"
+ */
+/************************************************************************/
+
+/*
+ *  Frame.es -- Frame class
+ *
+ *  Copyright (c) All Rights Reserved. See details at the end of the file.
+ */
+
+module ejs {
+
+    use default namespace intrinsic
+
+    /**
+        Reserved slot marker for Frame activation records. Used by the GC to manage the activation record pool.
+        @hide
+     */
+    var Frame
+}
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *  
+ *  Local variables:
     tab-width: 4
     c-basic-offset: 4
     End:
@@ -949,7 +2102,110 @@ module ejs {
  */
 /************************************************************************/
 /*
- *  End of file "../src/es/core/Number.es"
+ *  End of file "../src/es/core/Frame.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/core/Function.es"
+ */
+/************************************************************************/
+
+/*
+ *  Function.es -- Function class
+ *
+ *  Copyright (c) All Rights Reserved. See details at the end of the file.
+ */
+
+module ejs {
+
+    use default namespace intrinsic
+
+    /**
+        The Function type is used to represent closures, function expressions and class methods. It contains a 
+        reference to the code to execute, the execution scope and possibly a bound "this" reference.
+        @stability evolving
+     */
+    native final class Function {
+
+        use default namespace public
+
+        /**
+         *  Invoke the function on another object.
+         *  @param thisObject The object to set as the "this" object when the function is called.
+         *  @param args Array of actual parameters to the function.
+         *  @return Any object returned as a result of applying the function
+         *  @throws ReferenceError If the function cannot be applied to this object.
+         */
+        native function apply(thisObject: Object, args: Array): Object 
+
+        /**
+         *  Invoke the function on another object. This function takes the "this" parameter and then a variable 
+         *      number of actual parameters to pass to the function.
+         *  @param thisObject The object to set as the "this" object when the function is called.
+         *  @param args Actual parameters to the function.
+         *  @return Any object returned as a result of applying the function
+         *  @throws ReferenceError If the function cannot be applied to this object.
+         */
+        native function call(thisObject: Object, ...args): Object 
+
+        /**
+         *  Return the bound object representing the "this" object. Functions carry both a lexical scoping and 
+         *  the owning "this" object.
+         *  @return An object
+         */
+        # FUTURE
+        native function get boundThis(): Object
+    }
+
+    /** @hide */
+    native function makeGetter(fn: Function): Function
+
+    /** @hide */
+    native function clearBoundThis(fn: Function): Function
+}
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *  
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/core/Function.es"
  */
 /************************************************************************/
 
@@ -1347,12 +2603,110 @@ module ejs.unix { }
 
 /************************************************************************/
 /*
- *  Start of file "../src/es/core/Array.es"
+ *  Start of file "../src/es/core/Iterator.es"
  */
 /************************************************************************/
 
 /**
- *  Array.es - Array class
+ *  Iterator.es -- Iteration support via the Iterable interface and Iterator class. 
+ *
+ *  This provides a high performance native iterator for native classes. 
+ *
+ *  Copyright (c) All Rights Reserved. See details at the end of the file.
+ */
+
+module ejs {
+
+    /**
+     *  Iterable is an internal interface used by native types to provide iterators for use in for/in statements.
+        @hide
+        @stability evolving
+     */
+    iterator interface Iterable {
+        use default namespace iterator
+
+        /**
+         *  Get an Iterator for use with for/in
+         *  @return An Iterator
+         */
+        function get(): Iterator
+
+        /**
+         *  Get an Iterator for use with for each in
+         *  @return An Iterator
+         */
+        function getValues(): Iterator
+    }
+
+    /**
+     *  Iterator is a helper class to implement iterators.
+     *  @hide
+     */
+    iterator native final class Iterator {
+
+        use default namespace public
+
+        /**
+         *  Return the next element in the object.
+         *  @return An object
+         *  @throws StopIteration
+         */
+        native function next(): Object
+    }
+}
+
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *  
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/core/Iterator.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/core/JSON.es"
+ */
+/************************************************************************/
+
+/*
+ *  JSON.es -- JSON class
  *
  *  Copyright (c) All Rights Reserved. See details at the end of the file.
  */
@@ -1362,443 +2716,39 @@ module ejs {
     use default namespace intrinsic
 
     /**
-     *  Arrays provide a growable, integer indexed, in-memory store for objects. An array can be treated as a 
-     *  stack (FIFO or LIFO) or a list (ordered). Insertions can be done at the beginning or end of the stack or at an 
-     *  indexed location within a list.
+     *  JavaScript Object Notation. This class supports the JSON data exchange format as described by:
+     *  RFC 4627 at (http://www.ietf.org/rfc/rfc4627.txt).
      *  @stability evolving
      */
-    dynamic native class Array {
+    final class JSON {
 
         use default namespace public
 
         /**
-         *  Create a new array.
-         *  @param values Initialization values. The constructor allows three forms:
-         *  <ul>
-         *      <li>Array()</li>
-         *      <li>Array(size: Number)</li>
-         *      <li>Array(elt: Object, ...args)</li>
-         *  </ul>
+         *  Parse a string JSON representation and return an object equivalent
+         *  @param data JSON string data to parse
+         *  @param filter The optional filter parameter is a function that can filter and transform the results. It 
+         *      receives each of the keys and values, and its return value is used instead of the original value. If 
+         *      it returns what it received, then the structure is not modified. If it returns undefined then the 
+         *      member is deleted. NOTE: the filter function is not yet implemented.
+         *  @return An object representing the JSON string.
          */
-        native function Array(...values)
+        static function parse(data: String, filter: Function = null): Object
+            deserialize(data)
 
         /**
-         *  Append an item to the array.
-         *  @param obj Object to add to the array 
-         *  @return The array itself.
-         *  @spec ejs
+         *  Convert an object into a string JSON representation
+         *  @param obj Object to stringify
+         *  @param replacer an optional parameter that determines how object values are stringified for objects without a 
+         *      toJSON method. It can be a function or an array. NOTE: Not implemented.
+         *  @param indent an optional parameter that specifies the indentation of nested structures. If it is omitted, 
+         *      the text will be packed without extra whitespace. If it is a number, it will specify the number of spaces 
+         *      to indent at each level. If it is a string (such as '\t' or '&nbsp;'), it contains the characters used to 
+         *      indent at each level. NOTE: Not implemented.
+         *  @return A JSON string representing the object
          */
-        native function append(obj: Object): Array
-
-        /**
-         *  Clear an array. Remove all elements of the array.
-         *  @spec ejs
-         */
-        native function clear() : Void
-
-        /**
-         *  Clone the array and all its elements.
-         *  @param deep If true, do a deep copy where all object references are also copied, and so on, recursively.
-         *  @spec ejs
-         */
-        override native function clone(deep: Boolean = true) : Array
-
-        /**
-         *  Compact an array. Remove all null elements.
-         *  @spec ejs
-         */
-        native function compact() : Array
-
-        /**
-         *  Concatenate the supplied elements with the array to create a new array. If any arguments specify an 
-         *  array, their elements are concatenated. This is a one level deep copy.
-         *  @param args A variable length set of values of any data type.
-         *  @return A new array of the combined elements.
-         */
-        native function concat(...args): Array 
-
-        /**
-         *  See if the array contains an element using strict equality "===". This call searches from the start of the 
-         *  array for the specified element.  
-         *  @param element The object to search for.
-         *  @return True if the element is found. Otherwise false.
-         *  @spec ejs
-         */
-        function contains(element: Object): Boolean {
-            if (indexOf(element) >= 0) {
-                return true
-            } else {
-                return false
-            }
-        }
-
-        /**
-         *  Determine if all elements match.
-         *  Iterate over every element in the array and determine if the matching function is true for all elements. 
-         *  This method is lazy and will cease iterating when an unsuccessful match is found. The checker is called 
-         *  with the following signature:
-         *      function match(element: Object, elementIndex: Number, arr: Array): Boolean
-         *  @param match Matching function
-         *  @return True if the match function always returns true.
-         */
-        function every(match: Function): Boolean {
-            for (let i: Number in this) {
-                if (!match(this[i], i, this)) {
-                    return false
-                }
-            }
-            return true
-        }
-
-        /**
-         *  Find all matching elements.
-         *  Iterate over all elements in the object and find all elements for which the matching function is true.
-         *  The match is called with the following signature:
-         *      function match(element: Object, elementIndex: Number, arr: Array): Boolean
-         *  This method is identical to the @findAll method.
-         *  @param match Matching function
-         *  @return Returns a new array containing all matching elements.
-         */
-        function filter(match: Function): Array
-            findAll(match)
-
-        /**
-         *  Find the first matching element.
-         *  Iterate over elements in the object and select the first element for which the matching function is true.
-         *  The matching function is called with the following signature:
-         *      function match(element: Object, elementIndex: Number, arr: Array): Boolean
-         *  @param match Matching function
-         *  @return The matched item
-         *  @spec ejs
-         */
-        function find(match: Function): Object {
-            for (let i: Number in this) {
-                if (match(this[i], i, this)) {
-                    return this[i]
-                }
-            }
-            return null
-        }
-
-        /**
-         *  Find all matching elements.
-         *  Iterate over all elements in the object and find all elements for which the matching function is true.
-         *  The matching function is called with the following signature:
-         *      function match(element: Object, elementIndex: Number, arr: Array): Boolean
-         *  @param match Matching function
-         *  @return Returns an array containing all matching elements.
-         *  @spec ejs
-         */
-        function findAll(match: Function): Array {
-            var result: Array = new Array
-            for (let i: Number in this) {
-                if (match(this[i], i, this)) {
-                    result.append(this[i])
-                }
-            }
-            return result
-        }
-
-        /**
-         *  Transform all elements.
-         *  Iterate over the elements in the array and transform all elements by applying the transform function. 
-         *  The matching function is called with the following signature:
-         *      function match(element: Object, elementIndex: Number, arr: Array): Boolean
-         *  This method is identical to the @transform method.
-         *  @param modifier Transforming function
-         *  @return Returns the original (transformed) array.
-         */
-        function forEach(modifier: Function): Array {
-            transform(modifier)
-            return this
-        }
-
-        /**
-         *  Iterator for this array to be used by "for (v in array)"
-         */
-        override iterator native function get(): Iterator
-
-        /**
-         *  Iterator for this array to be used by "for each (v in array)"
-         */
-        override iterator native function getValues(): Iterator
-
-        /**
-         *  Search for an item using strict equality "===". This call searches from the start of the array for 
-         *  the specified element.  
-         *  @param element The object to search for.
-         *  @param startIndex Where in the array to start searching for the object (Defaults to zero). If the index 
-         *      is negative, it is taken as an offset from the end of the array. If the calculated index is less than 
-         *      zero the entire array is searched. If the index is greater than the length of the array, -1 is returned.
-         *  @return The items index into the array if found, otherwise -1.
-         */
-        native function indexOf(element: Object, startIndex: Number = 0): Number
-
-        /**
-         *  Insert elements. Insert elements at the specified position. The insertion occurs before the element at the 
-         *      specified position. Negative indicies will measure from the end so that -1 will specify the last element.  
-         *      Indicies greater than the array length will append to the end. Indicies before the first position will
-         *      insert at the start.
-         *  @param pos Where in the array to insert the objects.
-         *  @param ...args Arguments are aggregated and passed to the method in an array.
-         *  @return The original array.
-         *  @spec ejs
-         */
-        native function insert(pos: Number, ...args): Array
-
-        /**
-         *  Convert the array into a string.
-         *  Joins the elements in the array into a single string by converting each element to a string and then 
-         *  concatenating the strings inserting a separator between each.
-         *  @param sep Element separator.
-         *  @return A string.
-         */
-        native function join(sep: String = undefined): String
-
-        /**
-         *  Find an item searching from the end of the array.
-         *  Search for an item using strict equality "===". This call searches from the end of the array for the given 
-         *  element.
-         *  @param element The object to search for.
-         *  @param startIndex Where in the array to start searching for the object (Defaults to the array's length).
-         *      If the index is negative, it is taken as an offset from the end of the array. If the calculated index 
-         *      is less than zero, -1 is returned. If the index is greater or equal to the length of the array, the
-         *      whole array will be searched.
-         *  @return The items index into the array if found, otherwise -1.
-         */
-        native function lastIndexOf(element: Object, startIndex: Number = 0): Number
-
-        /**
-         *  Length of an array.
-         */
-        override native function get length(): Number
-
-        /**
-         *  Set the length of an array. The array will be truncated if required. If the new length is greater then 
-         *  the old length, new elements will be created as required and set to undefined. If the new length is less
-         *  than 0 the length is set to zero.
-         *  @param value The new length
-         */
-        native function set length(value: Number): Void
-
-        /**
-         *  Call the mapper on each array element in increasing index order and return a new array with the values returned 
-         *  from the mapper. The mapper function is called with the following signature:
-         *      function mapper(element: Object, elementIndex: Number, arr: Array): Object
-         *  @param mapper Transforming function
-         */
-        function map(mapper: Function): Array {
-            var result: Array  = clone()
-            result.transform(mapper)
-            return result
-        }
-
-        /**
-         *  Remove and return the last value in the array.
-         *  @return The last element in the array. Returns undefined if the array is empty
-         */
-        native function pop(): Object 
-
-        /**
-         *  Append items to the end of the array.
-         *  @param items Items to add to the array.
-         *  @return The new length of the array.
-         */
-        native function push(...items): Number 
-
-        /**
-         *  Find non-matching elements. Iterate over all elements in the array and select all elements for which 
-         *  the filter function returns false. The matching function is called with the following signature:
-         *
-         *      function match(element: Object, elementIndex: Number, arr: Array): Boolean
-         *
-         *  @param match Matching function
-         *  @return A new array of non-matching elements.
-         *  @spec ejs
-         */
-        function reject(match: Function): Array {
-            var result: Array = new Array
-            for (let i: Number in this) {
-                if (!match(this[i], i, this)) {
-                    result.append(this[i])
-                }
-            }
-            return result
-        }
-
-        /**
-         *  Remove elements. Remove the elements from $start to $end inclusive. The elements are removed and not just set 
-         *  to undefined as the delete operator will do. Indicies are renumbered. NOTE: this routine delegates to splice.
-         *  @param start Numeric index of the first element to remove. Negative indices measure from the end of the array.
-         *  -1 is the last element.
-         *  @param end Numeric index of the last element to remove
-         *  @spec ejs
-         */
-        function remove(start: Number, end: Number = -1): Void {
-            if (start < 0) {
-                start += length
-            }
-            if (end < 0) {
-                end += length
-            }
-            splice(start, end - start + 1)
-        }
-
-        /**
-         *  Reverse the order of the objects in the array. The elements are reversed in the original array.
-         *  @return A reference to the array.
-         */
-        native function reverse(): Array 
-
-        /**
-         *  Remove and return the first element in the array.
-         *  @returns the previous first element in the array.
-         */
-        native function shift(): Object 
-
-        /**
-            Create a new array subset by taking a slice from an array.
-            @param start The array index at which to begin. Negative indicies will measure from the end so that -1 will 
-                specify the last element. If start is greater than or equal to end, the call returns an empty array.
-            @param end The array index at which to end. This is one beyond the index of the last element to extract. If 
-                end is negative, it is measured from the end of the array, so use -1 to mean up to but not including the 
-                last element of the array.
-            @param step Slice every step (nth) element. If the step value is negative, the copying begins at the start
-                index down to the (and not including) the end index.
-            @return A new array that is a subset of the original array.
-         */
-        native function slice(start: Number, end: Number = -1, step: Number = 1): Array 
-
-        /**
-         *  Determine if some elements match.
-         *  Iterate over all element in the array and determine if the matching function is true for at least one element. 
-         *  This method is lazy and will cease iterating when a successful match is found.
-         *  The match function is called with the following signature:
-         *      function match(element: Object, elementIndex: Number, arr: Array): Boolean
-         *  @param match Matching function
-         *  @return True if the match function ever is true.
-         */
-        function some(match: Function): Boolean {
-            var result: Array = new Array
-            for (let i: Number in this) {
-                if (match(this[i], i, this)) {
-                    return true
-                }
-            }
-            return false
-        }
-
-        /**
-         *  Sort the array. The array is sorted in lexical order. A compare function may be supplied.
-         *  @param compare Function to use to compare. A null comparator will use a text compare
-         *  @param order If order is >= 0, then an ascending lexical order is used. Otherwise descending.
-         *  @return the sorted array reference
-         *      type Comparator = (function (*,*): AnyNumber | undefined)
-         *  @spec ejs Added the order argument.
-         */
-        native function sort(compare: Function = null, order: Number = 1): Array 
-
-        /**
-         *  Insert, remove or replace array elements. Splice modifies an array in place. 
-         *  @param start The array index at which the insertion or deleteion will begin. Negative indicies will measure 
-         *      from the end so that -1 will specify the last element.  
-         *  @param deleteCount Number of elements to delete. If omitted, splice will delete all elements from the 
-         *      start argument to the end.  
-         *  @param values The array elements to add.
-         *  @return Array containing the removed elements.
-         */
-        native function splice(start: Number, deleteCount: Number, ...values): Array 
-
-        /**
-         *  Convert an array to an equivalent JSON encoding.
-         *  @return This function returns an array literal string.
-         *  @throws TypeError If the array could not be converted to a string.
-         *
-         *  NOTE: currently using Object.toJSON for this capability
-         */ 
-        #FUTURE
-        override native function toJSON(): String
-
-        /**
-         *  Convert the array to a single string each member of the array has toString called on it and the resulting 
-         *  strings are concatenated.
-         *  @return A string
-         */
-        override native function toString(): String 
-
-        /**
-         *  Transform all elements.
-         *  Iterate over all elements in the object and transform the elements by applying the transform function. 
-         *  This modifies the object elements in-situ. The transform function is called with the following signature:
-         *      function mapper(element: Object, elementIndex: Number, arr: Array): Object
-         *  @param mapper Transforming function
-         *  @spec ejs
-         */
-        function transform(mapper: Function): Void {
-            for (let i: Number in this) {
-                this[i] = mapper(this[i], i, this);
-            }
-        }
-
-        /**
-         *  Remove duplicate elements and make the array unique. Duplicates are detected by using "==" (ie. content 
-         *      equality, not strict equality).
-         *  @return The original array with unique elements
-         *  @spec ejs
-         */
-        native function unique(): Array
-
-        /**
-         *  Insert the items at the front of the array.
-         *  @param items to insert
-         *  @return Returns the array reference
-         */
-        native function unshift(...items): Array
-
-        /**
-         *  Array intersection. Return the elements that appear in both arrays. 
-         *  @param arr The array to join.
-         *  @return A new array.
-         *  @spec ejs
-         */
-        # DOC_ONLY
-        native function & (arr: Array): Array
-
-        /**
-         *  Append. Appends elements to an array.
-         *  @param elements The array to add append.
-         *  @return The modified original array.
-         *  @spec ejs
-         */
-        # DOC_ONLY
-        native function << (elements: Array): Array
-
-        /**
-         *  Array subtraction. Remove any items that appear in the supplied array.
-         *  @param arr The array to remove.
-         *  @return A new array.
-         *  @spec ejs
-         */
-        # DOC_ONLY
-        native function - (arr: Array): Array
-
-        /**
-         *  Array union. Return the union of two arrays. 
-         *  @param arr The array to join.
-         *  @return A new array
-         *  @spec ejs
-         */
-        # DOC_ONLY
-        native function | (arr: Array): Array
-
-        /**
-         *  Concatenate two arrays. 
-         *  @param arr The array to add.
-         *  @return A new array.
-         *  @spec ejs
-         */
-        # DOC_ONLY
-        native function + (arr: Array): Array
+        static function stringify(obj: Object, replacer: Object = null, indent: Number = 0): String
+            serialize(obj)
     }
 }
 
@@ -1840,124 +2790,7 @@ module ejs {
  */
 /************************************************************************/
 /*
- *  End of file "../src/es/core/Array.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/core/Stream.es"
- */
-/************************************************************************/
-
-/*
- *  Stream.es -- Stream class. Base interface implemented by Streams.
- *
- *  Copyright (c) All Rights Reserved. See details at the end of the file.
- */
-
-module ejs {
-
-    use default namespace intrinsic
-
-    /**
-     *  Stream objects represent bi-directional streams of data that pass data elements between an endpoint known 
-     *  as a source or sink and a consumer / producer. In between, intermediate streams may be used as filters. 
-     *  Example endpoints are the File, Socket, String and Http classes. The TextStream is an example of a filter 
-     *  stream. The data elements passed by streams may be any series of objects including: bytes, lines of text, 
-     *  integers or objects. Streams may buffer the incoming data or not. Streams may offer sync and/or async modes 
-     *  of operation.
-     *  @spec ejs
-     *  @spec evolving
-     */
-    interface Stream {
-
-        use default namespace public
-
-        /**
-         *  Close the input stream and free up all associated resources.
-         *  WARNING: This API will have the graceful parameter removed in a future release. Call $flush manually if
-         *  you require graceful closes.
-         *  @param graceful if true, then close the socket gracefully after writing all pending data.
-         *  @prototype
-         */
-        function close(graceful: Boolean = false): Void
-
-        /**
-         *  Flush the stream and all stacked streams and underlying data source/sinks.
-         *  WARNING: This API will have the graceful parameter removed in a future release. All flushes will then
-         *  be graceful.
-         *  @param graceful if true, then write all pending data.
-         *  @prototype
-         */
-        function flush(graceful: Boolean = true): Void 
-
-        /**
-         *  Read a block of data from the stream. Read the required number of bytes from the stream into the 
-         *      supplied byte array at the given offset. 
-         *  @param buffer Destination byte array for read data.
-         *  @param offset Offset in the byte array to place the data. If the offset is -1, then data is
-         *      appended to the buffer write $position which is then updated. 
-         *  @param count Number of bytes to read. If -1, read as much as the buffer will hold up to the entire 
-         *      stream if the buffer is of sufficient size or is growable.
-         *  @returns a count of the bytes actually read.
-         *  @throws IOError if an I/O error occurs.
-         */
-        function read(buffer: ByteArray, offset: Number = 0, count: Number = -1): Number 
-
-        /**
-         *  Write data to the stream. If in sync mode, the write call blocks until the underlying stream or 
-         *  endpoint absorbes all the data. If in async-mode, the call accepts whatever data can be accepted 
-         *  immediately and returns a count of the elements that have been written.
-         *  @param data Data to write. 
-         *  @returns The total number of elements that were written.
-         *  @throws IOError if there is an I/O error.
-         */
-        function write(... data): Number
-    }
-}
-
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *  
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/core/Stream.es"
+ *  End of file "../src/es/core/JSON.es"
  */
 /************************************************************************/
 
@@ -2212,6 +3045,724 @@ module ejs {
 
 /************************************************************************/
 /*
+ *  Start of file "../src/es/core/Name.es"
+ */
+/************************************************************************/
+
+/*
+ *  Name.es -- Name class
+ *
+ *  Copyright (c) All Rights Reserved. See details at the end of the file.
+ */
+
+module ejs {
+
+    use default namespace intrinsic
+
+    /**
+        @hide
+        @stability prototype
+     */
+    # ECMA
+    native final class Name {
+        use default namespace public
+
+        const qualifier: Namespace
+        const identifier: Namespace
+
+        native function Name(qual: String, id: String = undefined)
+    }
+}
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *  
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/core/Name.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/core/Namespace.es"
+ */
+/************************************************************************/
+
+/*
+ *  Namespace.es -- Namespace class
+ *
+ *  Copyright (c) All Rights Reserved. See details at the end of the file.
+ *
+ *  NOTE: this is only partially implemented.
+ */
+
+module ejs {
+
+    use default namespace intrinsic
+
+    /**
+        Namespaces are used to qualify names into discrete spaces
+        @hide
+        @stability prototype
+     */
+    native final class Namespace {
+
+        use default namespace public
+    }
+}
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *  
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/core/Namespace.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/core/Null.es"
+ */
+/************************************************************************/
+
+/*
+ *  Null.es -- Null class used for the null value.
+ *
+ *  Copyright (c) All Rights Reserved. See details at the end of the file.
+ */
+
+module ejs {
+
+    use default namespace intrinsic
+
+    /**
+     *  Base type for the null value. There is only one instance of the Null type and that is the null value.
+     *  @spec ejs
+     *  @stability evolving
+     */
+    native final class Null {
+
+        /**
+            Implementation artifacts
+            @hide
+         */
+        override iterator native function get(): Iterator
+
+        /**
+            Implementation artifacts
+            @hide
+         */
+        override iterator native function getValues(): Iterator
+    }
+}
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *  
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/core/Null.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/core/Number.es"
+ */
+/************************************************************************/
+
+/*
+    Number.es - Number class
+
+    Copyright (c) All Rights Reserved. See details at the end of the file.
+ */
+
+module ejs {
+
+    use default namespace intrinsic
+
+    /**
+        The Number type is used by all numeric values in Ejscript. Depending on how Ejscript is configured, the underlying
+        number representation may be based on either an int, long, int64 or double data type. If the underlying type is
+        integral (not double) then some of these routines may not be relevant.
+        @stability evolving
+     */
+    native final class Number {
+
+        use default namespace public
+
+        /**
+            Number constructor.
+            @param value Value to use in creating the Number object. If the value cannot be converted to a number, 
+                the value will ba NaN (or 0 if using integer numerics).
+         */
+        native function Number(value: Object = null)
+
+        /**
+            Return the maximim value this number type can assume. Alias for MaxValue.
+            An object of the appropriate number with its value set to the maximum value allowed.
+         */
+        static const MAX_VALUE: Number = MaxValue
+
+        /**
+            Return the minimum value this number type can assume. Alias for MinValue.
+            An object of the appropriate number with its value set to the minimum value allowed.
+         */
+        static const MIN_VALUE: Number = MinValue
+
+        /**
+            Not a Number. This is the result of an arithmetic expression which has no value.
+         */
+        static const NaN : Number = NaN
+
+        /**
+            Return a unique value which is less than or equal then any value which the number can assume. 
+            @return A number with its value set to -Infinity. If the numeric type is integral, then return zero.
+         */
+        static const NEGATIVE_INFINITY: Number = NegativeInfinity
+
+        /**
+            Return a unique value which is greater then any value which the number can assume. 
+            @return A number with its value set to Infinity. If the numeric type is integral, then return MaxValue.
+         */
+        static const POSITIVE_INFINITY: Number = Infinity
+
+        /**
+            Return the maximim value this number type can assume.
+            @return A number with its value set to the maximum value allowed.
+            @spec ejs
+         */
+        native static const MaxValue: Number
+
+        /**
+            Return the minimum value this number type can assume.
+            @return A number with its value set to the minimum value allowed.
+            @spec ejs
+         */
+        native static const MinValue: Number
+
+        /**
+            The absolute value of a number (which is equal to its magnitude).
+            @spec ejs
+         */
+        function get abs(): Number
+            Math.abs(this)
+
+        /**
+            The smallest integral number that is greater or equal to the number value. 
+            @spec ejs
+         */
+        function get ceil(): Number 
+            Math.ceil(this)
+
+        /**
+            The largest integral number that is smaller than the number value.
+            @spec ejs
+         */
+        function get floor(): Number
+            Math.floor(this)
+
+        /**
+            Is the number Infinity or -Infinity. Set to true or false.
+            @spec ejs
+         */
+        native function get isFinite(): Boolean
+
+        /**
+            Is the number is equal to the NaN value. If the numeric type is integral, this will always return false.
+            @spec ejs
+         */
+        native function get isNaN(): Boolean
+
+        /**
+            Compute the integral number that is closest to this number. ie. round up or down to the closest integer.
+            @spec ejs
+         */
+        function get round(): Number
+            Math.round(this)
+
+        /**
+            Returns the number formatted as a string in scientific notation with one digit before the decimal point 
+            and the argument number of digits after it.
+            @param fractionDigits The number of digits in the fraction.
+            @return A string representing the number.
+         */
+        native function toExponential(fractionDigits: Number = 0): String
+
+        /**
+            Returns the number formatted as a string with the specified number of digits after the decimal point.
+            @param fractionDigits The number of digits in the fraction.
+            @return A string representing the number 
+         */
+        native function toFixed(fractionDigits: Number = 0): String
+
+        /**
+            Returns the number formatted as a string in either fixed or exponential notation with argument number of digits.
+            @param numDigits The number of digits in the result. If omitted, the entire number is returned.
+            @return A string
+         */
+        native function toPrecision(numDigits: Number = MAX_VALUE): String
+
+        /**
+            Byte sized integral number. Numbers are rounded and truncated as necessary.
+            @spec ejs
+         */
+        function get byte(): Number
+            integral(8)
+
+        /**
+            Convert this number to an integral value of the specified number of bits. Floating point numbers are 
+                converted to integral values using truncation.
+            @size Size in bits of the value
+            @return An integral number
+            @spec ejs
+         */
+        native function integral(size: Number = 32): Number
+
+        /**
+            Return an iterator that can be used to iterate a given number of times. This is used in for/in statements.
+            @return an iterator
+            @example
+                for (i in 5) 
+                    print(i)
+            @spec ejs
+         */
+        override iterator native function get(): Iterator
+
+        /**
+            Return an iterator that can be used to iterate a given number of times. This is used in for/each statements.
+            @return an iterator
+            @example
+                for each (i in 5) 
+                    print(i)
+            @spec ejs
+         */
+        override iterator native function getValues(): Iterator
+
+        /**
+            Returns the greater of the number and the arguments.
+            @param other Other numbers number to compare with
+            @return A number
+            @spec ejs
+         */
+        function max(...other): Number {
+            let result = this
+            for each (n in other) {
+                n = n cast Number
+                if (n > result) {
+                    result = n
+                }
+            }
+            return result
+        }
+
+        /**
+            Returns the lessor of the number and the arguments.
+            @param other Numbers to compare with
+            @return A number
+            @spec ejs
+         */
+        function min(...other): Number {
+            let result = this
+            for each (n in other) {
+                n = n cast Number
+                if (n < result) {
+                    result = n
+                }
+            }
+            return result
+        }
+
+        /**
+            Returns a number which is equal to this number raised to the power of the argument.
+            @param nth Nth power to be raised to
+            @return A number
+            @spec ejs
+         */
+        function power(nth: Number): Number
+            Math.pow(this, nth)
+
+        /**
+            This function converts the number to a string representation.
+            @param radix Radix to use for the conversion. Defaults to 10. Non-default radixes are currently not supported.
+            @returns a string representation of the number.
+         */ 
+        override native function toString(radix: Number = 10): String
+    }
+}
+
+/*
+    @copy   default
+    
+    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+    
+    This software is distributed under commercial and open source licenses.
+    You may use the GPL open source license described below or you may acquire 
+    a commercial license from Embedthis Software. You agree to be fully bound 
+    by the terms of either license. Consult the LICENSE.TXT distributed with 
+    this software for full details.
+    
+    This software is open source; you can redistribute it and/or modify it 
+    under the terms of the GNU General Public License as published by the 
+    Free Software Foundation; either version 2 of the License, or (at your 
+    option) any later version. See the GNU General Public License for more 
+    details at: http://www.embedthis.com/downloads/gplLicense.html
+    
+    This program is distributed WITHOUT ANY WARRANTY; without even the 
+    implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+    
+    This GPL license does NOT permit incorporating this software into 
+    proprietary programs. If you are unable to comply with the GPL, you must
+    acquire a commercial license to use this software. Commercial licenses 
+    for this software and support services are available from Embedthis 
+    Software at http://www.embedthis.com 
+    
+    Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/core/Number.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/core/Object.es"
+ */
+/************************************************************************/
+
+/*
+ *  Object.es -- Object class. Base class for all types.
+ *
+ *  Copyright (c) All Rights Reserved. See details at the end of this file.
+ */
+module ejs {
+
+    use default namespace intrinsic
+
+    /**
+     *  The Object Class is the root class from which all objects are based. It provides a foundation set of functions 
+     *  and properties which are available to all objects. It provides for: copying objects, evaluating equality of 
+     *  objects, providing information about base classes, serialization and deserialization and iteration. 
+        @stability evolving
+     */
+    dynamic native class Object implements Iterable {
+
+        use default namespace public
+
+        /**
+         *  Clone the object and all its elements.
+         *  @param deep If true, do a deep copy where all object references are also copied, and so on, recursively.
+         *  A shallow clone will do 1 level deep. Deep clones are N-level deep.
+         *  @spec ejs
+         */
+        native function clone(deep: Boolean = true): Object
+
+        /**
+         *  Get an iterator for this object to be used by "for (v in obj)"
+         *  @return An iterator object.
+         *  @spec ejs
+         */
+        iterator native function get(): Iterator
+
+        /**
+         *  Get an iterator for this object to be used by "for each (v in obj)"
+         *  @return An iterator object.
+         *  @spec ejs
+         */
+        iterator native function getValues(): Iterator
+
+        /**
+         *  The length of the object. For Objects, length() will be set to the number of properties. For Arrays, it will
+         *  be set to the the number of elements. Other types will set length to the most natural representation of the
+         *  size or length of the object.
+         */
+        native function get length(): Number 
+
+        /**
+         *  Convert an object to an equivalent JSON encoding.
+         *  @return This function returns an object literal string.
+         *  @throws TypeError If the object could not be converted to a string.
+         */ 
+        native function toJSON(): String
+
+        /**
+         *  This function converts an object to a string representation. Types typically override this to provide 
+         *  the best string representation.
+         *  @returns a string representation of the object. For Objects "[object className]" will be returned, 
+         *  where className is set to the name of the class on which the object was based.
+         */ 
+        native function toString(): String
+    }
+}
+
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *  
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/core/Object.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/core/Reflect.es"
+ */
+/************************************************************************/
+
+/*
+ *  Reflect.es - Reflection API and class
+ *
+ *  Copyright (c) All Rights Reserved. See details at the end of the file.
+ */
+
+module ejs {
+
+    use default namespace intrinsic
+
+    /**
+     *  Simple reflection class. This class is prototype and likely to change.
+     *  @spec ejs
+     *  @stability evolving 
+     *  @example
+     *      name      = Reflect(obj).name
+     *      type      = Reflect(obj).type
+     *      typeName  = Reflect(obj).typeName
+     */
+    native final class Reflect {
+        use default namespace public
+
+        native private var obj: Object
+
+        /**
+         *  Create a new reflection object.
+         *  @param obj to reflect upon
+         */
+        native function Reflect(obj: Object)
+
+        /**
+         *  The name of the object
+         */
+        native function get name(): String
+
+        /**
+         *  The type of the object
+         */
+        native function get type(): Type
+
+        /**
+         *  The name of the type of the object
+         */
+        native function get typeName(): String
+    }
+
+    /**
+     *  Return the name of a type. This is a fixed version of the standard "typeof" operator. It returns the real
+     *  Ejscript underlying type. 
+     *  This is implemented as a wrapper around Reflect(o).typeName.
+     *  @param o Object or value to examine. 
+     *  @return A string type name. If the object to examine is a type object, then return the name of the base type.
+     *      If the object is Object, then return null.
+     *  @spec ejs
+     */
+    function typeOf(o): String
+        Reflect(o).typeName
+}
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *  
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/core/Reflect.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
  *  Start of file "../src/es/core/RegExp.es"
  */
 /************************************************************************/
@@ -2426,110 +3977,12 @@ module ejs {
 
 /************************************************************************/
 /*
- *  Start of file "../src/es/core/Iterator.es"
- */
-/************************************************************************/
-
-/**
- *  Iterator.es -- Iteration support via the Iterable interface and Iterator class. 
- *
- *  This provides a high performance native iterator for native classes. 
- *
- *  Copyright (c) All Rights Reserved. See details at the end of the file.
- */
-
-module ejs {
-
-    /**
-     *  Iterable is an internal interface used by native types to provide iterators for use in for/in statements.
-        @hide
-        @stability evolving
-     */
-    iterator interface Iterable {
-        use default namespace iterator
-
-        /**
-         *  Get an Iterator for use with for/in
-         *  @return An Iterator
-         */
-        function get(): Iterator
-
-        /**
-         *  Get an Iterator for use with for each in
-         *  @return An Iterator
-         */
-        function getValues(): Iterator
-    }
-
-    /**
-     *  Iterator is a helper class to implement iterators.
-     *  @hide
-     */
-    iterator native final class Iterator {
-
-        use default namespace public
-
-        /**
-         *  Return the next element in the object.
-         *  @return An object
-         *  @throws StopIteration
-         */
-        native function next(): Object
-    }
-}
-
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *  
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/core/Iterator.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/core/Name.es"
+ *  Start of file "../src/es/core/Stream.es"
  */
 /************************************************************************/
 
 /*
- *  Name.es -- Name class
+ *  Stream.es -- Stream class. Base interface implemented by Streams.
  *
  *  Copyright (c) All Rights Reserved. See details at the end of the file.
  */
@@ -2539,488 +3992,59 @@ module ejs {
     use default namespace intrinsic
 
     /**
-        @hide
-        @stability prototype
-     */
-    # ECMA
-    native final class Name {
-        use default namespace public
-
-        const qualifier: Namespace
-        const identifier: Namespace
-
-        native function Name(qual: String, id: String = undefined)
-    }
-}
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *  
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/core/Name.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/core/Void.es"
- */
-/************************************************************************/
-
-/*
- *  Void.es -- Void class used for undefined value.
- *
- *  Copyright (c) All Rights Reserved. See details at the end of the file.
- */
-
-module ejs {
-
-    use default namespace intrinsic
-
-    /**
-     *  The Void type is the base class for the undefined value. One instance of this type is created for the 
-     *  system's undefined value.
+     *  Stream objects represent bi-directional streams of data that pass data elements between an endpoint known 
+     *  as a source or sink and a consumer / producer. In between, intermediate streams may be used as filters. 
+     *  Example endpoints are the File, Socket, String and Http classes. The TextStream is an example of a filter 
+     *  stream. The data elements passed by streams may be any series of objects including: bytes, lines of text, 
+     *  integers or objects. Streams may buffer the incoming data or not. Streams may offer sync and/or async modes 
+     *  of operation.
      *  @spec ejs
      *  @spec evolving
      */
-    native final class Void {
-        /**
-         *  Implementation artifacts
-         *  @hide
-         */
-        override iterator native function get(): Iterator
-
-        /**
-         *  Implementation artifacts
-         *  @hide
-         */
-        override iterator native function getValues(): Iterator
-    }
-}
-
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *  
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/core/Void.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/core/ByteArray.es"
- */
-/************************************************************************/
-
-/*
- *  ByteArray.es - ByteArray class
- *
- *  Copyright (c) All Rights Reserved. See details at the end of the file.
- */
-
-module ejs {
-
-    use default namespace intrinsic
-
-    /**
-     *  ByteArrays provide a growable, integer indexed, in-memory store for bytes. ByteArrays are a powerful data 
-     *  type that can be used as a simple array to store and encode data as bytes or it can be used as a Stream 
-     *  implementing the Stream interface.
-     *  <br/><br/>
-     *  When used as a simple byte array, the ByteArray class offers a low level set of methods to insert and 
-     *  extract bytes. The index operator [] can be used to access individual bytes and the copyIn and copyOut methods 
-     *  can be used to get and put blocks of data. In this mode, the $readPosition and $writePosition properties are 
-     *  ignored. Accesses to the byte array are from index zero up to the size defined by the length property. When 
-     *  constructed, the ByteArray can be designated as growable, in which case the initial size will grow as required to 
-     *  accomodate data and the length property will be updated accordingly.
-     *  <br/><br/>
-     *  When used as a Stream, the byte array offers various read and write methods which store data at the location 
-     *  specified by the write position property and they read data from the $readPosition. The available method 
-     *  indicates how much data is available between the read and write position pointers. The flush method will 
-     *  reset the pointers to the start of the array. The length property is unchanged in behavior from when used as 
-     *  a simple byte array and it specifies the overall storage capacity of the byte array. As numeric values are 
-     *  read or written, they will be encoded according to the value of the endian property which can be set to 
-     *  either LittleEndian or BigEndian. When used with for/in, ByteArrays will iterate or enumerate over the 
-     *  available data between the read and write pointers.
-     *  <br/><br/>
-     *  In Stream mode ByteArrays can be configured with input and output callbacks to provide or consume data to other 
-     *  streams or components. These callbacks will automatically be invoked as required when the various read/write 
-     *  methods are called.
-     *  @stability evolving
-     *  @spec ejs
-     */
-    native final class ByteArray implements Stream {
+    interface Stream {
 
         use default namespace public
 
         /**
-         *  Little endian byte order constants used for the $endian property
+         *  Close the input stream and free up all associated resources.
+         *  WARNING: This API will have the graceful parameter removed in a future release. Call $flush manually if
+         *  you require graceful closes.
+         *  @param graceful if true, then close the socket gracefully after writing all pending data.
+         *  @prototype
          */
-        static const LittleEndian: Number   = 0
+        function close(graceful: Boolean = false): Void
 
         /**
-         *  Big endian byte order used for the $endian property
+         *  Flush the stream and all stacked streams and underlying data source/sinks.
+         *  WARNING: This API will have the graceful parameter removed in a future release. All flushes will then
+         *  be graceful.
+         *  @param graceful if true, then write all pending data.
+         *  @prototype
          */
-        static const BigEndian: Number      = 1
+        function flush(graceful: Boolean = true): Void 
 
         /**
-         *  Create a new array. This will set the default encoding.
-         *  @param size The initial size of the byte array. If not supplied a system default buffer size will be used.
-         *  @param growable Set to true to automatically grow the array as required to fit written data. If growable 
-         *      is false, then some writes may return "short". ie. not be able to accomodate all written data.
-         */
-        native function ByteArray(size: Number = -1, growable: Boolean = false)
-
-        /**
-         *  Number of bytes that are currently available for reading. This consists of the bytes available
-         *  from the current $readPosition up to the current write position.
-         */
-        native function get available(): Number 
-
-        /**
-         *  Close the byte array
-         *  @param graceful If true, then write all pending data
-         */
-        function close(graceful: Boolean = false): Void {
-            if (graceful) {
-                flush(graceful)
-            }
-        }
-
-        /**
-         *  Compact available data down and adjust the read/write positions accordingly. This sets the read pointer 
-         *  to the zero index and adjusts the write pointer by the corresponding amount.
-         */
-        native function compact(): Void
-
-        /**
-         *  Compress the array contents
-         */
-        # FUTURE
-        native function compress(): Void
-
-        /**
-         *  Copy data into the array. Data is written at the $destOffset index. This call does not update the 
-         *      read and write positions.
-         *  @param destOffset Index in the destination byte array to copy the data to
-         *  @param src Source byte array containing the data elements to copy
-         *  @param srcOffset Location in the source buffer from which to copy the data. Defaults to the start.
-         *  @param count Number of bytes to copy. Set to -1 to read to the end of the src buffer.
-         *  @return the number of bytes written into the array
-         */
-        native function copyIn(destOffset: Number, src: ByteArray, srcOffset: Number = 0, count: Number = -1): Number
-
-        /**
-         *  Copy data from the array. Data is copied from the $srcOffset pointer. This call does not update the 
-         *      read and write positions.
-         *  @param srcOffset Location in the source array from which to copy the data.
-         *  @param dest Destination byte array
-         *  @param destOffset Location in the destination array to copy the data. Defaults to the start.
-         *  @param count Number of bytes to read. Set to -1 to read all available data.
-         *  @returns the count of bytes read. Returns 0 on end of file.
+         *  Read a block of data from the stream. Read the required number of bytes from the stream into the 
+         *      supplied byte array at the given offset. 
+         *  @param buffer Destination byte array for read data.
+         *  @param offset Offset in the byte array to place the data. If the offset is -1, then data is
+         *      appended to the buffer write $position which is then updated. 
+         *  @param count Number of bytes to read. If -1, read as much as the buffer will hold up to the entire 
+         *      stream if the buffer is of sufficient size or is growable.
+         *  @returns a count of the bytes actually read.
          *  @throws IOError if an I/O error occurs.
          */
-        native function copyOut(srcOffset: Number, dest: ByteArray, destOffset: Number = 0, count: Number = -1): Number
+        function read(buffer: ByteArray, offset: Number = 0, count: Number = -1): Number 
 
         /**
-            Current byte ordering for storing and retrieving numbers. Set to either LittleEndian or BigEndian
+         *  Write data to the stream. If in sync mode, the write call blocks until the underlying stream or 
+         *  endpoint absorbes all the data. If in async-mode, the call accepts whatever data can be accepted 
+         *  immediately and returns a count of the elements that have been written.
+         *  @param data Data to write. 
+         *  @returns The total number of elements that were written.
+         *  @throws IOError if there is an I/O error.
          */
-        native function get endian(): Number
-
-        /**
-            Current byte ordering for storing and retrieving numbers. Set to either LittleEndian or BigEndian
-         *  @param value Set to true for little endian encoding or false for big endian.
-         */
-        native function set endian(value: Number): Void
-
-        /** 
-         *  Flush the the byte array and reset the read and write position pointers. This may invoke the output callback
-         *  to send the data if the output callback is defined.
-         */
-        native function flush(graceful: Boolean = true): Void
-
-        /**
-         *  Iterator for this array to be used by "for (v in array)". This will return array indicies for 
-         *  read data in the array.
-         *  @return An iterator object.
-         */
-        override iterator native function get(): Iterator
-
-        /**
-         *  Iterator for this array to be used by "for each (v in array)". This will return read data in the array.
-         */
-        override iterator native function getValues(): Iterator
-
-        /**
-         *  Input callback function when read data is required. The input callback should write to the supplied buffer.
-         *  @param callback Function to call to supply read data. The function is called with the following signature:
-         *      function inputCallback(buffer: ByteArray): Void
-         */
-        native function set input(callback: Function): Void
-
-        /**  
-            @hide
-         */
-        native function get input(): Function
-
-        /**
-         *  Length of an array. This is not the amount of read or write data, but is the size of the total 
-         *      array storage.
-         */
-        override native function get length(): Number
-
-        #FUTURE
-        native function get MD5(): Number
-
-        /** 
-         *  Output function to process (output) data. The output callback should read from the supplied buffer.
-         *  @param callback Function to invoke when the byte array is full or flush() is called.
-         *      function outputCallback(buffer: ByteArray): Number
-         */
-        native function get output(): Function
-
-        /**
-         */
-        native function set output(callback: Function): Void
-
-        /**
-         *  Read data from the array into another byte array. Data is read from the current read $position pointer toward
-         *      the current write position. This byte array's $readPosition is updated. If offset is < 0, then 
-         *       data is copied to the destination buffer's write position and the destination buffer's write position 
-         *       is also updated. If the offset is >= 0, the read and write positions of the destination buffer are updated.
-         *  @param buffer Destination byte array
-         *  @param offset Location in the destination buffer to copy the data. If the offset is < 0, then the write 
-         *      position is used and will be updated with the number of bytes read from the buffer.
-         *  @param count Number of bytes to read. Set to -1 to read all available data that will fit into the 
-         *      destination buffer.
-         *  @returns the count of bytes read. Returns 0 on end of file.
-         *  @throws IOError if an I/O error occurs.
-         */
-        native function read(buffer: ByteArray, offset: Number = 0, count: Number = -1): Number
-
-        /**
-         *  Read a boolean from the array. Data is read from the current read $position pointer.
-         *  @returns a boolean
-         *  @throws IOError if an I/O error occurs or a premature end of file.
-         */
-        native function readBoolean(): Boolean
-
-        /**
-         *  Read a byte from the array. Data is read from the current read $position pointer.
-         *  @returns a byte
-         *  @throws IOError if an I/O error occurs or a premature end of file.
-         */
-        native function readByte(): Number
-
-        /**
-         *  Read a date from the array or a premature end of file. Data is read from the current read $position pointer.
-         *  @returns a date
-         *  @throws IOError if an I/O error occurs.
-         */
-        native function readDate(): Date
-
-        /**
-         *  Read a double from the array. The data will be decoded according to the encoding property.
-         *  Data is read from the current read $position pointer.
-         *  @returns a double
-         *  @throws IOError if an I/O error occurs or a premature end of file.
-         */
-        native function readDouble(): Date
-
-        /**
-         *  Read an 32-bit integer from the array. The data will be decoded according to the encoding property.
-         *  Data is read from the current read $position pointer.
-         *  @returns an integer
-         *  @throws IOError if an I/O error occurs or a premature end of file.
-         */
-        native function readInteger(): Number
-
-        /**
-         *  Read a 64-bit long from the array.The data will be decoded according to the encoding property.
-         *  Data is read from the current read $position pointer.
-         *  @returns a long
-         *  @throws IOError if an I/O error occurs or a premature end of file.
-         */
-        native function readLong(): Number
-
-        /**
-         *  Current read position offset
-         */
-        native function get readPosition(): Number
-
-        /**
-         *  Set the current read position offset
-         *  @param position The new read position
-         */
-        native function set readPosition(position: Number): Void
-
-        /**
-         *  Read a 16-bit short integer from the array.The data will be decoded according to the encoding property.
-         *  Data is read from the current read $position pointer.
-         *  @returns a short int
-         *  @throws IOError if an I/O error occurs or a premature end of file.
-         */
-        native function readShort(): Number
-
-        /**
-         *  Read a data from the array as a string. Read data from the $readPosition to a string up to the $writePosition,
-         *      but not more than count characters.
-         *  @param count of bytes to read. If -1, convert the data up to the $writePosition.
-         *  @returns a string
-         *  @throws IOError if an I/O error occurs or a premature end of file.
-         */
-        native function readString(count: Number = -1): String
-
-        /**
-         *  Read an XML document from the array. Data is read from the current read $position pointer.
-         *  @returns an XML document
-         *  @throws IOError if an I/O error occurs or a premature end of file.
-         */
-        native function readXML(): XML
-
-        /**
-         *  Reset the read and $writePosition pointers if there is no available data.
-         */
-        native function reset(): Void
-
-        /**
-         *  Number of data bytes that the array can store from the $writePosition till the end of the array.
-         */
-        native function get room(): Number 
-
-        /**
-         *  Convert the data in the byte array between the $readPosition and $writePosition offsets.
-         *  @return A string
-         */
-        override native function toString(): String 
-
-        /**
-         *  Uncompress the array
-         */
-        # FUTURE
-        native function uncompress(): Void
-
-        /**
-         *  Write data to the array. Binary data is written in an optimal, platform dependent binary format. If 
-         *      cross-platform portability is required, use the BinaryStream to encode the data. Data is written to 
-         *      the current $writePosition If the data argument is itself a ByteArray, the available data from the 
-         *      byte array will be copied. NOTE: the data byte array will not have its readPosition adjusted.
-         *  @param data Data elements to write
-         *  @return the number of bytes written into the array
-         */
-        native function write(...data): Number
-
-        /**
-         *  Write a byte to the array. Data is written to the current write $position pointer which is then incremented.
-         *  @param data Data to write
-         */
-        native function writeByte(data: Number): Void
-
-        /**
-         *  Write a short to the array. Data is written to the current write $position pointer which is then incremented.
-         *  @param data Data to write
-         */
-        native function writeShort(data: Number): Void
-
-        /**
-         *  Write a double to the array. Data is written to the current write $position pointer which is then incremented.
-         *  @param data Data to write
-         */
-        native function writeDouble(data: Number): Void
-
-        /**
-         *  Write a 32-bit integer to the array. Data is written to the current write $position pointer which is 
-         *      then incremented.
-         *  @param data Data to write
-         */
-        native function writeInteger(data: Number): Void
-
-        /**
-         *  Write a 64 bit long integer to the array. Data is written to the current write $position pointer which is 
-         *  then incremented.
-         *  @param data Data to write
-         */
-        native function writeLong(data: Number): Void
-
-        /**
-         *  Current write position offset.
-         */
-        native function get writePosition(): Number
-
-        /**
-         */
-        native function set writePosition(position: Number): Void
+        function write(... data): Number
     }
 }
 
@@ -3062,191 +4086,7 @@ module ejs {
  */
 /************************************************************************/
 /*
- *  End of file "../src/es/core/ByteArray.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/core/Reflect.es"
- */
-/************************************************************************/
-
-/*
- *  Reflect.es - Reflection API and class
- *
- *  Copyright (c) All Rights Reserved. See details at the end of the file.
- */
-
-module ejs {
-
-    use default namespace intrinsic
-
-    /**
-     *  Simple reflection class. This class is prototype and likely to change.
-     *  @spec ejs
-     *  @stability evolving 
-     *  @example
-     *      name      = Reflect(obj).name
-     *      type      = Reflect(obj).type
-     *      typeName  = Reflect(obj).typeName
-     */
-    native final class Reflect {
-        use default namespace public
-
-        native private var obj: Object
-
-        /**
-         *  Create a new reflection object.
-         *  @param obj to reflect upon
-         */
-        native function Reflect(obj: Object)
-
-        /**
-         *  The name of the object
-         */
-        native function get name(): String
-
-        /**
-         *  The type of the object
-         */
-        native function get type(): Type
-
-        /**
-         *  The name of the type of the object
-         */
-        native function get typeName(): String
-    }
-
-    /**
-     *  Return the name of a type. This is a fixed version of the standard "typeof" operator. It returns the real
-     *  Ejscript underlying type. 
-     *  This is implemented as a wrapper around Reflect(o).typeName.
-     *  @param o Object or value to examine. 
-     *  @return A string type name. If the object to examine is a type object, then return the name of the base type.
-     *      If the object is Object, then return null.
-     *  @spec ejs
-     */
-    function typeOf(o): String
-        Reflect(o).typeName
-}
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *  
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/core/Reflect.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/core/Boolean.es"
- */
-/************************************************************************/
-
-/*
- *  Boolean.es -- Boolean class
- *
- *  Copyright (c) All Rights Reserved. See details at the end of the file.
- */
-
-module ejs {
-
-    use default namespace intrinsic
-
-    /**
-     *  Boolean class. The Boolean class is used to create two immutable boolean values: "true" and "false".
-     *  @stability stable
-     */
-    native final class Boolean {
-
-        /**
-            Boolean constructor. Construct a Boolean object and initialize its value. Since Boolean values are 
-            immutable, this constructor will return a reference to either the "true" or "false" values.
-            @param value. Optional value to use in creating the Boolean object. If the value is omitted or 0, -1, NaN,
-                false, null, undefined or the empty string, then the object will be created and set to false.
-         */
-        native function Boolean(value: Boolean = false)
-    }
-}
-
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *  
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/core/Boolean.es"
+ *  End of file "../src/es/core/Stream.es"
  */
 /************************************************************************/
 
@@ -3707,812 +4547,6 @@ module ejs {
 
 /************************************************************************/
 /*
- *  Start of file "../src/es/core/Namespace.es"
- */
-/************************************************************************/
-
-/*
- *  Namespace.es -- Namespace class
- *
- *  Copyright (c) All Rights Reserved. See details at the end of the file.
- *
- *  NOTE: this is only partially implemented.
- */
-
-module ejs {
-
-    use default namespace intrinsic
-
-    /**
-        Namespaces are used to qualify names into discrete spaces
-        @hide
-        @stability prototype
-     */
-    native final class Namespace {
-
-        use default namespace public
-    }
-}
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *  
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/core/Namespace.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/core/Function.es"
- */
-/************************************************************************/
-
-/*
- *  Function.es -- Function class
- *
- *  Copyright (c) All Rights Reserved. See details at the end of the file.
- */
-
-module ejs {
-
-    use default namespace intrinsic
-
-    /**
-        The Function type is used to represent closures, function expressions and class methods. It contains a 
-        reference to the code to execute, the execution scope and possibly a bound "this" reference.
-        @stability evolving
-     */
-    native final class Function {
-
-        use default namespace public
-
-        /**
-         *  Invoke the function on another object.
-         *  @param thisObject The object to set as the "this" object when the function is called.
-         *  @param args Array of actual parameters to the function.
-         *  @return Any object returned as a result of applying the function
-         *  @throws ReferenceError If the function cannot be applied to this object.
-         */
-        native function apply(thisObject: Object, args: Array): Object 
-
-        /**
-         *  Invoke the function on another object. This function takes the "this" parameter and then a variable 
-         *      number of actual parameters to pass to the function.
-         *  @param thisObject The object to set as the "this" object when the function is called.
-         *  @param args Actual parameters to the function.
-         *  @return Any object returned as a result of applying the function
-         *  @throws ReferenceError If the function cannot be applied to this object.
-         */
-        native function call(thisObject: Object, ...args): Object 
-
-        /**
-         *  Return the bound object representing the "this" object. Functions carry both a lexical scoping and 
-         *  the owning "this" object.
-         *  @return An object
-         */
-        # FUTURE
-        native function get boundThis(): Object
-    }
-
-    /** @hide */
-    native function makeGetter(fn: Function): Function
-
-    /** @hide */
-    native function clearBoundThis(fn: Function): Function
-}
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *  
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/core/Function.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/core/JSON.es"
- */
-/************************************************************************/
-
-/*
- *  JSON.es -- JSON class
- *
- *  Copyright (c) All Rights Reserved. See details at the end of the file.
- */
-
-module ejs {
-
-    use default namespace intrinsic
-
-    /**
-     *  JavaScript Object Notation. This class supports the JSON data exchange format as described by:
-     *  RFC 4627 at (http://www.ietf.org/rfc/rfc4627.txt).
-     *  @stability evolving
-     */
-    final class JSON {
-
-        use default namespace public
-
-        /**
-         *  Parse a string JSON representation and return an object equivalent
-         *  @param data JSON string data to parse
-         *  @param filter The optional filter parameter is a function that can filter and transform the results. It 
-         *      receives each of the keys and values, and its return value is used instead of the original value. If 
-         *      it returns what it received, then the structure is not modified. If it returns undefined then the 
-         *      member is deleted. NOTE: the filter function is not yet implemented.
-         *  @return An object representing the JSON string.
-         */
-        static function parse(data: String, filter: Function = null): Object
-            deserialize(data)
-
-        /**
-         *  Convert an object into a string JSON representation
-         *  @param obj Object to stringify
-         *  @param replacer an optional parameter that determines how object values are stringified for objects without a 
-         *      toJSON method. It can be a function or an array. NOTE: Not implemented.
-         *  @param indent an optional parameter that specifies the indentation of nested structures. If it is omitted, 
-         *      the text will be packed without extra whitespace. If it is a number, it will specify the number of spaces 
-         *      to indent at each level. If it is a string (such as '\t' or '&nbsp;'), it contains the characters used to 
-         *      indent at each level. NOTE: Not implemented.
-         *  @return A JSON string representing the object
-         */
-        static function stringify(obj: Object, replacer: Object = null, indent: Number = 0): String
-            serialize(obj)
-    }
-}
-
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *  
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/core/JSON.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/core/Null.es"
- */
-/************************************************************************/
-
-/*
- *  Null.es -- Null class used for the null value.
- *
- *  Copyright (c) All Rights Reserved. See details at the end of the file.
- */
-
-module ejs {
-
-    use default namespace intrinsic
-
-    /**
-     *  Base type for the null value. There is only one instance of the Null type and that is the null value.
-     *  @spec ejs
-     *  @stability evolving
-     */
-    native final class Null {
-
-        /**
-            Implementation artifacts
-            @hide
-         */
-        override iterator native function get(): Iterator
-
-        /**
-            Implementation artifacts
-            @hide
-         */
-        override iterator native function getValues(): Iterator
-    }
-}
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *  
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/core/Null.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/core/Error.es"
- */
-/************************************************************************/
-
-/*
- *  Error.es -- Error exception classes
- *
- *  Copyright (c) All Rights Reserved. See copyright notice at the bottom of the file.
- */
-
-module ejs {
-
-    use default namespace intrinsic
-
-    /**
-     *  Arguments error exception class. 
-     *  Thrown the arguments cannot be cast to the required type or
-     *  in strict mode if there are too few or too many arguments.
-     *  @spec ejs
-        @stability evolving
-     */
-    native dynamic class ArgError extends Error {
-        /**
-         *  ArgError constructor.
-         *  @params message Message to use when defining the Error.message property
-         */
-        native function ArgError(message: String = null) 
-    }
-
-    /**
-     *  Arithmetic error exception class. Thrown when the system cannot perform an arithmetic operation, 
-     *  @spec ejs
-     *  @stability evolving
-     */
-    native dynamic class ArithmeticError extends Error {
-        /**
-         *  ArithmeticError constructor.
-         *  @params message Message to use when defining the Error.message property
-         */
-        native function ArithmeticError(message: String = null) 
-    }
-
-    /**
-     *  Assertion error exception class. Thrown when the $assert method is invoked with a false value.
-     *  @spec ejs
-     *  @stability evolving
-     */
-    native dynamic class AssertError extends Error {
-        /**
-         *  AssertError constructor.
-         *  @params message Message to use when defining the Error.message property
-         */
-        native function AssertError(message: String = null) 
-    }
-
-    /**
-     *  Code (instruction) error exception class. Thrown when an illegal or insecure operation code is detected 
-     *  in the instruction stream.
-     *  @spec ejs
-     *  @stability evolving
-     */
-    native dynamic class InstructionError extends Error {
-        /**
-         *  InstructionError constructor.
-         *  @params message Message to use when defining the Error.message property
-         */
-        native function InstructionError(message: String = null) 
-    }
-
-    /**
-     *  Base class for error exception objects. Exception objects are created by the system as part of changing 
-     *  the normal flow of execution when some error condition occurs. 
-     *
-     *  When an exception is created and acted upon ("thrown"), the system transfers the flow of control to a 
-     *  pre-defined instruction stream (the handler or "catch" code). The handler may return processing to the 
-     *  point at which the exception was thrown or not. It may re-throw the exception or pass control up the call stack.
-     */
-    native dynamic class Error {
-
-        use default namespace public
-
-        /**
-         *  Exception error message.
-         */
-        native var message: String
-
-        /**
-         *  Optional error code
-         */
-        native function get code(): Number
-
-        /**
-         *  Set an optional error code
-         *  @param value Error code to set
-         */
-        native function set code(value: Number): Void
-
-        /**
-         *  Execution stack backtrace. Contains the execution stack backtrace at the time the exception was thrown.  
-         */
-        native var stack: String 
-
-        /**
-         *  Construct a new Error object.
-         *  @params message Message to use when defining the Error.message property
-         */
-        native function Error(message: String = null)
-    }
-
-    /**
-     *  IO error exception class. Thrown when an I/O/ interruption or failure occurs, e.g. a file is not found 
-     *  or there is an error in a communication stack.
-     *  @spec ejs
-     *  @stability evolving
-     */
-    native dynamic class IOError extends Error {
-
-        /**
-         *  IOError constructor.
-         *  @params message Message to use when defining the Error.message property
-         */
-        native function IOError(message: String = null) 
-    }
-
-    /**
-     *  Internal error exception class. Thrown when some error occurs in the virtual machine.
-     *  @spec ejs
-     *  @stability evolving
-     *  @hide
-     */
-    native dynamic class InternalError extends Error {
-        /**
-         *  InternalError constructor.
-         *  @params message Message to use when defining the Error.message property
-         */
-        native function InternalError(message: String = null) 
-    }
-
-    /**
-     *  Memory error exception class. Thrown when the system attempts to allocate memory and none is available 
-     *  or the stack overflows.
-     *  @spec ejs
-     *  @stability evolving
-     */
-    native dynamic class MemoryError extends Error {
-        /**
-         *  MemoryError constructor.
-         *  @params message Message to use when defining the Error.message property
-         */
-        native function MemoryError(message: String = null) 
-    }
-
-    /**
-     *  OutOfBounds error exception class. Thrown to indicate that an attempt has been made to set or access an 
-     *  object's property outside of the permitted set of values for that property. For example, an array has been 
-     *  accessed with an illegal index or, in a date object, attempting to set the day of the week to greater then 7.
-     *  @spec ejs
-     *  @stability evolving
-     *  @hide
-     */
-    native dynamic class OutOfBoundsError extends Error {
-
-        /**
-         *  OutOfBoundsError constructor.
-         *  @params message Message to use when defining the Error.message property
-         */
-        native function OutOfBoundsError(message: String = null) 
-    }
-
-    /**
-     *  Reference error exception class. Thrown when an invalid reference to an object is made, e.g. a method is 
-     *  invoked on an object whose type does not define that method.
-     *  @stability evolving
-     */
-    native dynamic class ReferenceError extends Error {
-
-        /**
-         *  ReferenceError constructor.
-         *  @params message Message to use when defining the Error.message property
-         */
-        native function ReferenceError(message: String = null)
-    }
-
-    /**
-     *  Resource error exception class. Thrown when the system cannot allocate a resource it needs to continue, 
-     *  e.g. a native thread, process, file handle or the like.
-     *  @spec ejs
-     *  @stability evolving
-     */
-    native dynamic class ResourceError extends Error {
-
-        /**
-         *  ResourceError constructor.
-         *  @params message Message to use when defining the Error.message property
-         */
-        native function ResourceError(message: String = null) 
-    }
-
-    /**
-     *  Security error exception class. Thrown when an access violation occurs. Access violations include attempting 
-     *  to write a file without having write permission or assigning permissions without being the owner of the 
-     *  securable entity.
-     *  @spec ejs
-     *  @stability evolving
-     *  @hide
-     */
-    # FUTURE
-    native dynamic class SecurityError extends Error {
-        /**
-         *  SecurityError constructor.
-         *  @params message Message to use when defining the Error.message property
-         */
-        native function SecurityError(message: String = null) 
-    }
-
-    /**
-     *  State error exception class. Thrown when an object cannot be transitioned from its current state to the 
-     *  desired state, e.g. calling "sleep" on an interrupted thread.
-     *  @spec ejs
-     *  @stability evolving
-     */
-    native dynamic class StateError extends Error {
-        /**
-         *  StateError constructor.
-         *  @params message Message to use when defining the Error.message property
-         */
-        native function StateError(message: String = null) 
-    }
-
-    /**
-     *  Syntax error exception class. Thrown when the system cannot parse a character sequence for the intended 
-     *  purpose, e.g. a regular expression containing invalid characters.
-     *  @stability evolving
-     */
-    native dynamic class SyntaxError extends Error {
-        /**
-         *  SyntaxError constructor.
-         *  @params message Message to use when defining the Error.message property
-         */
-        native function SyntaxError(message: String = null) 
-    }
-
-    /**
-     *  Type error exception class. Thrown when a type casting or creation operation fails, e.g. when an operand 
-     *  cannot be cast to a type that allows completion of a statement or when a type cannot be found for object 
-     *  creation or when an object cannot be instantiated given the values passed into "new".
-     *  @stability evolving
-     */
-    native dynamic class TypeError extends Error {
-
-        /**
-         *  TypeError constructor.
-         *  @params message Message to use when defining the Error.message property
-         */
-        native function TypeError(message: String = null) 
-    }
-
-    /**
-     *  URI error exception class. Thrown a URI fails to parse.
-     *  @stability prototype
-     *  @hide
-     */
-    native dynamic class URIError extends Error {
-        /**
-         *  URIError constructor.
-         *  @params message Message to use when defining the Error.message property
-         */
-        native function URIError(message: String = null) 
-    }
-}
-
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2011-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 2011-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *  
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- *
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/core/Error.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/core/Frame.es"
- */
-/************************************************************************/
-
-/*
- *  Frame.es -- Frame class
- *
- *  Copyright (c) All Rights Reserved. See details at the end of the file.
- */
-
-module ejs {
-
-    use default namespace intrinsic
-
-    /**
-        Reserved slot marker for Frame activation records. Used by the GC to manage the activation record pool.
-        @hide
-     */
-    var Frame
-}
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *  
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/core/Frame.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/core/Block.es"
- */
-/************************************************************************/
-
-/*
- *  Block.es -- Block scope class used internally by the VM.
- *
- *  Copyright (c) All Rights Reserved. See details at the end of the file.
- */
-
-module ejs {
-
-    use default namespace intrinsic
-
-    /**
-     *  The Block type is used to represent program block scope. It is used internally and should not be 
-     *  instantiated by user programs.
-     *  @spec ejs
-     *  @stability stable
-     *  @hide
-     */
-    native final class Block { }
-}
-
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *  
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/core/Block.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
  *  Start of file "../src/es/core/Type.es"
  */
 /************************************************************************/
@@ -4589,72 +4623,38 @@ module ejs {
 
 /************************************************************************/
 /*
- *  Start of file "../src/es/core/Object.es"
+ *  Start of file "../src/es/core/Void.es"
  */
 /************************************************************************/
 
 /*
- *  Object.es -- Object class. Base class for all types.
+ *  Void.es -- Void class used for undefined value.
  *
- *  Copyright (c) All Rights Reserved. See details at the end of this file.
+ *  Copyright (c) All Rights Reserved. See details at the end of the file.
  */
+
 module ejs {
 
     use default namespace intrinsic
 
     /**
-     *  The Object Class is the root class from which all objects are based. It provides a foundation set of functions 
-     *  and properties which are available to all objects. It provides for: copying objects, evaluating equality of 
-     *  objects, providing information about base classes, serialization and deserialization and iteration. 
-        @stability evolving
+     *  The Void type is the base class for the undefined value. One instance of this type is created for the 
+     *  system's undefined value.
+     *  @spec ejs
+     *  @spec evolving
      */
-    dynamic native class Object implements Iterable {
-
-        use default namespace public
-
+    native final class Void {
         /**
-         *  Clone the object and all its elements.
-         *  @param deep If true, do a deep copy where all object references are also copied, and so on, recursively.
-         *  A shallow clone will do 1 level deep. Deep clones are N-level deep.
-         *  @spec ejs
+         *  Implementation artifacts
+         *  @hide
          */
-        native function clone(deep: Boolean = true): Object
+        override iterator native function get(): Iterator
 
         /**
-         *  Get an iterator for this object to be used by "for (v in obj)"
-         *  @return An iterator object.
-         *  @spec ejs
+         *  Implementation artifacts
+         *  @hide
          */
-        iterator native function get(): Iterator
-
-        /**
-         *  Get an iterator for this object to be used by "for each (v in obj)"
-         *  @return An iterator object.
-         *  @spec ejs
-         */
-        iterator native function getValues(): Iterator
-
-        /**
-         *  The length of the object. For Objects, length() will be set to the number of properties. For Arrays, it will
-         *  be set to the the number of elements. Other types will set length to the most natural representation of the
-         *  size or length of the object.
-         */
-        native function get length(): Number 
-
-        /**
-         *  Convert an object to an equivalent JSON encoding.
-         *  @return This function returns an object literal string.
-         *  @throws TypeError If the object could not be converted to a string.
-         */ 
-        native function toJSON(): String
-
-        /**
-         *  This function converts an object to a string representation. Types typically override this to provide 
-         *  the best string representation.
-         *  @returns a string representation of the object. For Objects "[object className]" will be returned, 
-         *  where className is set to the name of the class on which the object was based.
-         */ 
-        native function toString(): String
+        override iterator native function getValues(): Iterator
     }
 }
 
@@ -4696,7 +4696,528 @@ module ejs {
  */
 /************************************************************************/
 /*
- *  End of file "../src/es/core/Object.es"
+ *  End of file "../src/es/core/Void.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/db/Database.es"
+ */
+/************************************************************************/
+
+/**
+ *  Database.es -- Database class
+ *
+ *  Copyright (c) All Rights Reserved. See details at the end of the file.
+ */
+
+/*
+ *  Design notes:
+ *  - Don't create static vars so this class can be fully stateless and can be placed into the master interpreter.
+ */
+
+module ejs.db {
+
+    /**
+     *  SQL Database support. The Database class provides an interface over other database adapter classes such as 
+     *  SQLite or MySQL. Not all the functionality expressed by this API may be implemented by a specific database adapter.
+     *  @spec ejs
+     *  @stability evolving
+     */
+    class Database {
+
+        private var _adapter: Object
+        private var _connection: String
+        private var _name: String
+        private var _traceAll: Boolean
+
+        use default namespace public
+
+        /**
+         *  Initialize a database connection using the supplied database connection string
+            @param adapter Database adapter to use. E.g. "sqlite"
+         *  @param connectionString Connection string stipulating how to connect to the database. The format is one of the 
+         *  following forms:
+         *      <ul>
+         *          <li>adapter://host/database/username/password</li>
+         *          <li>filename</li>
+         *      </ul>
+         *      Where adapter specifies the kind of database. Sqlite is currently the only supported adapter.
+         *      For sqlite connection strings, the abbreviated form is permitted where a filename is supplied and the 
+         *      connection string is assumed to be: <pre>sqlite://localhost/filename</pre>
+         */
+        function Database(adapter: String, connectionString: String) {
+            if (adapter == "sqlite3") adapter = "sqlite"
+            _name = basename(connectionString)
+            _connection = connectionString
+            let adapterClass = adapter.toPascal()
+            if (global."ejs.db"::[adapterClass] == undefined) {
+                load("ejs.db." + adapter + ".mod")
+            }
+            if (!global."ejs.db"::[adapterClass]) {
+                throw "Can't find database connector for " + adapter
+            }
+            _adapter = new global."ejs.db"::[adapterClass](connectionString)
+        }
+
+        /**
+         *  Add a column to a table.
+         *  @param table Name of the table
+         *  @param column Name of the column to add
+         *  @param datatype Database independant type of the column. Valid types are: binary, boolean, date,
+         *      datetime, decimal, float, integer, number, string, text, time and timestamp.
+         *  @param options Optional parameters
+         */
+        function addColumn(table: String, column: String, datatype: String, options: Object = null): Void
+            _adapter.addColumn(table, column, datatype, options)
+
+        /**
+         *  Add an index on a column
+         *  @param table Name of the table
+         *  @param column Name of the column to add
+         *  @param index Name of the index
+         */
+        function addIndex(table: String, column: String, index: String): Void
+            _adapter.addIndex(table, column, index)
+
+        /**
+         *  Change a column
+         *  @param table Name of the table holding the column
+         *  @param column Name of the column to change
+         *  @param datatype Database independant type of the column. Valid types are: binary, boolean, date,
+         *      datetime, decimal, float, integer, number, string, text, time and timestamp.
+         *  @param options Optional parameters
+         */
+        function changeColumn(table: String, column: String, datatype: String, options: Object = null): Void
+            _adapter.changeColumn(table, column, datatype, options)
+
+        /**
+         *  Close the database connection. Database connections should be closed when no longer needed rather than waiting
+         *  for the garbage collector to automatically close the connection when disposing the database instance.
+         */
+        function close(): Void
+            _adapter.close()
+
+        /**
+         *  Commit a database transaction
+         */
+        function commit(): Void
+            _adapter.commit()
+
+        /**
+         *  Reconnect to the database using a new connection string. Not yet implemented.
+         *  @param connectionString See Database() for information about connection string formats.
+         *  @hide
+         */
+        function connect(connectionString: String): Void
+            _adapter.connect(connectionString)
+
+        /**
+         *  The database connection string
+         */
+        function get connection(): String {
+            return _connection
+        }
+
+        /**
+         *  Create a new database
+         *  @param name Name of the database
+         *  @options Optional parameters
+         */
+        function createDatabase(name: String, options: Object = null): Void
+            _adapter.createDatabase(name, options)
+
+        /**
+         *  Create a new table
+         *  @param table Name of the table
+         *  @param columns Array of column descriptor tuples consisting of name:datatype
+         *  @options Optional parameters
+         */
+        function createTable(table: String, columns: Array = null): Void
+            _adapter.createTable(table, columns)
+
+        /**
+         *  Map the database independant data type to a database dependant SQL data type
+         *  @param dataType Data type to map
+         *  @returns The corresponding SQL database type
+         */
+        function dataTypeToSqlType(dataType:String): String
+            _adapter.dataTypeToSqlType(dataType)
+
+        /**
+         *  The default database for the application.
+         */
+        static function get defaultDatabase(): Database
+            global."ejs.db"::"defaultDb"
+
+        /**
+         *  Set the default database for the application.
+         *  @param db the default database to define
+         */
+        static function set defaultDatabase(db: Database): Void {
+            /*
+             *  Do this rather than using a Database static var so Database can go into the master interpreter
+             */
+            global."ejs.db"::"defaultDb" = db
+        }
+
+        /**
+         *  Destroy a database
+         *  @param name Name of the database to remove
+         */
+        function destroyDatabase(name: String): Void
+            _adapter.destroyDatabase(name)
+
+        /**
+         *  Destroy a table
+         *  @param table Name of the table to destroy
+         */
+        function destroyTable(table: String): Void
+            _adapter.destroyTable(table)
+
+        /**
+         *  End a transaction
+         */
+        function endTransaction(): Void
+            _adapter.endTransaction()
+
+        /**
+         *  Get column information 
+         *  @param table Name of the table to examine
+         *  @return An array of column data. This is database specific content and will vary depending on the
+         *      database connector in use.
+         */
+        function getColumns(table: String): Array
+            _adapter.getColumns(table)
+
+        /**
+         *  Return list of tables in a database
+         *  @returns an array containing list of table names present in the currently opened database.
+         */
+        function getTables(): Array
+            _adapter.getTables()
+
+        /**
+         *  Return the number of rows in a table
+         *  @returns the count of rows in a table in the currently opened database.
+         */
+        function getNumRows(table: String): Number
+            _adapter.getNumRows(table)
+
+        /**
+         *  The database name defined via the connection string or constructor.
+         */
+        function get name(): String
+            _name
+
+        /**
+         *  Execute a SQL command on the database.
+         *  @param cmd SQL command string
+            @param tag Debug tag to use when logging the command
+            @param trace Set to true to eanble logging this command.
+         *  @returns An array of row results where each row is represented by an Object hash containing the 
+         *      column names and values
+         */
+        function query(cmd: String, tag: String = "SQL", trace: Boolean = false): Array {
+            if (_traceAll || trace) {
+                print(tag + ": " + cmd)
+            }
+            return _adapter.sql(cmd)
+        }
+
+        /**
+         *  Remove columns from a table
+         *  @param table Name of the table to modify
+         *  @param columns Array of column names to remove
+         */
+        function removeColumns(table: String, columns: Array): Void
+            _adapter.removeColumns(table, columns)
+
+        /**
+         *  Remove an index
+         *  @param table Name of the table to modify
+         *  @param index Name of the index to remove
+         */
+        function removeIndex(table: String, index: String): Void
+            _adapter.removeIndex(table, index)
+
+        /**
+         *  Rename a column
+         *  @param table Name of the table to modify
+         *  @param oldColumn Old column name
+         *  @param newColumn New column name
+         */
+        function renameColumn(table: String, oldColumn: String, newColumn: String): Void
+            _adapter.renameColumn(table, oldColumn, newColumn)
+
+        /**
+         *  Rename a table
+         *  @param oldTable Old table name
+         *  @param newTable New table name
+         */
+        function renameTable(oldTable: String, newTable: String): Void
+            _adapter.renameTable(oldTable, newTable)
+
+        /**
+         *  Rollback an uncommited database transaction. Not supported.
+         *  @hide
+         */
+        function rollback(): Void
+            _adapter.rollback()
+
+        /**
+         *  Execute a SQL command on the database. This is a low level SQL command interface that bypasses logging.
+         *      Use @query instead.
+            @param cmd SQL command to issue. Note: "SELECT" is automatically prepended and ";" is appended for you.
+         *  @returns An array of row results where each row is represented by an Object hash containing the column 
+         *      names and values
+         */
+        function sql(cmd: String): Array
+            _adapter.sql(cmd)
+
+        /**
+         *  Map the SQL type to a database independant data type
+         *  @param sqlType SQL Data type to map
+         *  @returns The corresponding database independant type
+         */
+        function sqlTypeToDataType(sqlType: String): String
+            _adapter.sqlTypeToDataType(sqlType)
+
+        /**
+         *  Map the SQL type to an Ejscript type class
+         *  @param sqlType SQL Data type to map
+         *  @returns The corresponding type class
+         */
+        function sqlTypeToEjsType(sqlType: String): Type
+            _adapter.sqlTypeToEjsType(sqlType)
+
+        /**
+         *  Start a new database transaction
+         */
+        function startTransaction(): Void
+            _adapter.startTransaction()
+
+        /**
+         *  Trace all SQL statements on this database. Control whether trace is enabled for all SQL statements 
+         *  issued against the database.
+         *  @param on If true, display each SQL statement to the log
+         */
+        function trace(on: Boolean): void
+            _traceAll = on
+
+        /**
+         *  Execute a database transaction
+         *  @param code Function to run inside a database transaction
+         */
+        function transaction(code: Function): Void {
+            startTransaction()
+            try {
+                code()
+            } catch (e: Error) {
+                rollback();
+            } finally {
+                endTransaction()
+            }
+        }
+
+        /**
+            Quote ", ', --, ;
+            @hide
+         */
+        static function quote(str: String): String  {
+            // str.replace(/'/g, "''").replace(/[#;\x00\x1a\r\n",;\\-]/g, "\\$0")
+            // return str.replace(/'/g, "''").replace(/[#;",;\\-]/g, "\\$0")
+            // return str.replace(/'/g, "''").replace(/[#";\\]/g, "\\$0")
+            // return str.replace(/'/g, "''").replace(/[;\\]/g, "\\$0")
+            return str.replace(/'/g, "''")
+        }
+    }
+}
+
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *  
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/db/Database.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/db/DatabaseConnector.es"
+ */
+/************************************************************************/
+
+/*
+ *  DatabaseConnector.es -- Database Connector interface
+ *
+ *  Copyright (c) All Rights Reserved. See details at the end of the file.
+ */
+
+module ejs.db {
+
+    /**
+     *  Database interface connector. This interface is implemented by database connectors such as SQLite.
+     *  @spec ejs
+     *  @stability evolving
+     */
+    interface DatabaseConnector {
+
+        use default namespace public
+
+        // function DatabaseConnector(connectionString: String)
+
+        /** @duplicate ejs.db::Database.addColumn */
+        function addColumn(table: String, column: String, datatype: String, options: Object = null): Void
+
+        /** @duplicate ejs.db::Database.addIndex */
+        function addIndex(table: String, column: String, index: String): Void
+
+        /** @duplicate ejs.db::Database.changeColumn */
+        function changeColumn(table: String, column: String, datatype: String, options: Object = null): Void
+
+        /** @duplicate ejs.db::Database.close */
+        function close(): Void
+
+        /** @duplicate ejs.db::Database.commit */
+        function commit(): Void
+
+        /** @duplicate ejs.db::Database.connect 
+            Not yet implemented
+            @hide
+         */
+        function connect(connectionString: String): Void
+
+        /** @duplicate ejs.db::Database.createDatabase */
+        function createDatabase(name: String, options: Object = null): Void
+
+        /** @duplicate ejs.db::Database.createTable */
+        function createTable(table: String, columns: Array = null): Void
+
+        /** @duplicate ejs.db::Database.dataTypeToSqlType */
+        function dataTypeToSqlType(dataType:String): String
+
+        /** @duplicate ejs.db::Database.destroyDatabase */
+        function destroyDatabase(name: String): Void
+
+        /** @duplicate ejs.db::Database.destroyTable */
+        function destroyTable(table: String): Void
+
+        /** @duplicate ejs.db::Database.getColumns */
+        function getColumns(table: String): Array
+
+        /** @duplicate ejs.db::Database.getTables */
+        function getTables(): Array
+
+        /** @duplicate ejs.db::Database.removeColumns */
+        function removeColumns(table: String, columns: Array): Void 
+
+        /** @duplicate ejs.db::Database.removeIndex */
+        function removeIndex(table: String, index: String): Void
+
+        /** @duplicate ejs.db::Database.renameColumn */
+        function renameColumn(table: String, oldColumn: String, newColumn: String): Void
+
+        /** @duplicate ejs.db::Database.renameTable */
+        function renameTable(oldTable: String, newTable: String): Void
+
+        /** @duplicate ejs.db::Database.rollback 
+            @hide
+         */
+        function rollback(): Void
+
+        /** @duplicate ejs.db::Database.sql */
+        function sql(cmd: String): Array
+
+        /** @duplicate ejs.db::Database.sqlTypeToDataType */
+        function sqlTypeToDataType(sqlType: String): String
+
+        /** @duplicate ejs.db::Database.sqlTypeToEjsType */
+        function sqlTypeToEjsType(sqlType: String): String
+
+        /** @duplicate ejs.db::Database.startTransaction */
+        function startTransaction(): Void
+    }
+}
+
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *  
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/db/DatabaseConnector.es"
  */
 /************************************************************************/
 
@@ -6195,659 +6716,6 @@ module ejs.db.sqlite {
 
 /************************************************************************/
 /*
- *  Start of file "../src/es/db/Database.es"
- */
-/************************************************************************/
-
-/**
- *  Database.es -- Database class
- *
- *  Copyright (c) All Rights Reserved. See details at the end of the file.
- */
-
-/*
- *  Design notes:
- *  - Don't create static vars so this class can be fully stateless and can be placed into the master interpreter.
- */
-
-module ejs.db {
-
-    /**
-     *  SQL Database support. The Database class provides an interface over other database adapter classes such as 
-     *  SQLite or MySQL. Not all the functionality expressed by this API may be implemented by a specific database adapter.
-     *  @spec ejs
-     *  @stability evolving
-     */
-    class Database {
-
-        private var _adapter: Object
-        private var _connection: String
-        private var _name: String
-        private var _traceAll: Boolean
-
-        use default namespace public
-
-        /**
-         *  Initialize a database connection using the supplied database connection string
-            @param adapter Database adapter to use. E.g. "sqlite"
-         *  @param connectionString Connection string stipulating how to connect to the database. The format is one of the 
-         *  following forms:
-         *      <ul>
-         *          <li>adapter://host/database/username/password</li>
-         *          <li>filename</li>
-         *      </ul>
-         *      Where adapter specifies the kind of database. Sqlite is currently the only supported adapter.
-         *      For sqlite connection strings, the abbreviated form is permitted where a filename is supplied and the 
-         *      connection string is assumed to be: <pre>sqlite://localhost/filename</pre>
-         */
-        function Database(adapter: String, connectionString: String) {
-            if (adapter == "sqlite3") adapter = "sqlite"
-            _name = basename(connectionString)
-            _connection = connectionString
-            let adapterClass = adapter.toPascal()
-            if (global."ejs.db"::[adapterClass] == undefined) {
-                load("ejs.db." + adapter + ".mod")
-            }
-            if (!global."ejs.db"::[adapterClass]) {
-                throw "Can't find database connector for " + adapter
-            }
-            _adapter = new global."ejs.db"::[adapterClass](connectionString)
-        }
-
-        /**
-         *  Add a column to a table.
-         *  @param table Name of the table
-         *  @param column Name of the column to add
-         *  @param datatype Database independant type of the column. Valid types are: binary, boolean, date,
-         *      datetime, decimal, float, integer, number, string, text, time and timestamp.
-         *  @param options Optional parameters
-         */
-        function addColumn(table: String, column: String, datatype: String, options: Object = null): Void
-            _adapter.addColumn(table, column, datatype, options)
-
-        /**
-         *  Add an index on a column
-         *  @param table Name of the table
-         *  @param column Name of the column to add
-         *  @param index Name of the index
-         */
-        function addIndex(table: String, column: String, index: String): Void
-            _adapter.addIndex(table, column, index)
-
-        /**
-         *  Change a column
-         *  @param table Name of the table holding the column
-         *  @param column Name of the column to change
-         *  @param datatype Database independant type of the column. Valid types are: binary, boolean, date,
-         *      datetime, decimal, float, integer, number, string, text, time and timestamp.
-         *  @param options Optional parameters
-         */
-        function changeColumn(table: String, column: String, datatype: String, options: Object = null): Void
-            _adapter.changeColumn(table, column, datatype, options)
-
-        /**
-         *  Close the database connection. Database connections should be closed when no longer needed rather than waiting
-         *  for the garbage collector to automatically close the connection when disposing the database instance.
-         */
-        function close(): Void
-            _adapter.close()
-
-        /**
-         *  Commit a database transaction
-         */
-        function commit(): Void
-            _adapter.commit()
-
-        /**
-         *  Reconnect to the database using a new connection string. Not yet implemented.
-         *  @param connectionString See Database() for information about connection string formats.
-         *  @hide
-         */
-        function connect(connectionString: String): Void
-            _adapter.connect(connectionString)
-
-        /**
-         *  The database connection string
-         */
-        function get connection(): String {
-            return _connection
-        }
-
-        /**
-         *  Create a new database
-         *  @param name Name of the database
-         *  @options Optional parameters
-         */
-        function createDatabase(name: String, options: Object = null): Void
-            _adapter.createDatabase(name, options)
-
-        /**
-         *  Create a new table
-         *  @param table Name of the table
-         *  @param columns Array of column descriptor tuples consisting of name:datatype
-         *  @options Optional parameters
-         */
-        function createTable(table: String, columns: Array = null): Void
-            _adapter.createTable(table, columns)
-
-        /**
-         *  Map the database independant data type to a database dependant SQL data type
-         *  @param dataType Data type to map
-         *  @returns The corresponding SQL database type
-         */
-        function dataTypeToSqlType(dataType:String): String
-            _adapter.dataTypeToSqlType(dataType)
-
-        /**
-         *  The default database for the application.
-         */
-        static function get defaultDatabase(): Database
-            global."ejs.db"::"defaultDb"
-
-        /**
-         *  Set the default database for the application.
-         *  @param db the default database to define
-         */
-        static function set defaultDatabase(db: Database): Void {
-            /*
-             *  Do this rather than using a Database static var so Database can go into the master interpreter
-             */
-            global."ejs.db"::"defaultDb" = db
-        }
-
-        /**
-         *  Destroy a database
-         *  @param name Name of the database to remove
-         */
-        function destroyDatabase(name: String): Void
-            _adapter.destroyDatabase(name)
-
-        /**
-         *  Destroy a table
-         *  @param table Name of the table to destroy
-         */
-        function destroyTable(table: String): Void
-            _adapter.destroyTable(table)
-
-        /**
-         *  End a transaction
-         */
-        function endTransaction(): Void
-            _adapter.endTransaction()
-
-        /**
-         *  Get column information 
-         *  @param table Name of the table to examine
-         *  @return An array of column data. This is database specific content and will vary depending on the
-         *      database connector in use.
-         */
-        function getColumns(table: String): Array
-            _adapter.getColumns(table)
-
-        /**
-         *  Return list of tables in a database
-         *  @returns an array containing list of table names present in the currently opened database.
-         */
-        function getTables(): Array
-            _adapter.getTables()
-
-        /**
-         *  Return the number of rows in a table
-         *  @returns the count of rows in a table in the currently opened database.
-         */
-        function getNumRows(table: String): Number
-            _adapter.getNumRows(table)
-
-        /**
-         *  The database name defined via the connection string or constructor.
-         */
-        function get name(): String
-            _name
-
-        /**
-         *  Execute a SQL command on the database.
-         *  @param cmd SQL command string
-            @param tag Debug tag to use when logging the command
-            @param trace Set to true to eanble logging this command.
-         *  @returns An array of row results where each row is represented by an Object hash containing the 
-         *      column names and values
-         */
-        function query(cmd: String, tag: String = "SQL", trace: Boolean = false): Array {
-            if (_traceAll || trace) {
-                print(tag + ": " + cmd)
-            }
-            return _adapter.sql(cmd)
-        }
-
-        /**
-         *  Remove columns from a table
-         *  @param table Name of the table to modify
-         *  @param columns Array of column names to remove
-         */
-        function removeColumns(table: String, columns: Array): Void
-            _adapter.removeColumns(table, columns)
-
-        /**
-         *  Remove an index
-         *  @param table Name of the table to modify
-         *  @param index Name of the index to remove
-         */
-        function removeIndex(table: String, index: String): Void
-            _adapter.removeIndex(table, index)
-
-        /**
-         *  Rename a column
-         *  @param table Name of the table to modify
-         *  @param oldColumn Old column name
-         *  @param newColumn New column name
-         */
-        function renameColumn(table: String, oldColumn: String, newColumn: String): Void
-            _adapter.renameColumn(table, oldColumn, newColumn)
-
-        /**
-         *  Rename a table
-         *  @param oldTable Old table name
-         *  @param newTable New table name
-         */
-        function renameTable(oldTable: String, newTable: String): Void
-            _adapter.renameTable(oldTable, newTable)
-
-        /**
-         *  Rollback an uncommited database transaction. Not supported.
-         *  @hide
-         */
-        function rollback(): Void
-            _adapter.rollback()
-
-        /**
-         *  Execute a SQL command on the database. This is a low level SQL command interface that bypasses logging.
-         *      Use @query instead.
-            @param cmd SQL command to issue. Note: "SELECT" is automatically prepended and ";" is appended for you.
-         *  @returns An array of row results where each row is represented by an Object hash containing the column 
-         *      names and values
-         */
-        function sql(cmd: String): Array
-            _adapter.sql(cmd)
-
-        /**
-         *  Map the SQL type to a database independant data type
-         *  @param sqlType SQL Data type to map
-         *  @returns The corresponding database independant type
-         */
-        function sqlTypeToDataType(sqlType: String): String
-            _adapter.sqlTypeToDataType(sqlType)
-
-        /**
-         *  Map the SQL type to an Ejscript type class
-         *  @param sqlType SQL Data type to map
-         *  @returns The corresponding type class
-         */
-        function sqlTypeToEjsType(sqlType: String): Type
-            _adapter.sqlTypeToEjsType(sqlType)
-
-        /**
-         *  Start a new database transaction
-         */
-        function startTransaction(): Void
-            _adapter.startTransaction()
-
-        /**
-         *  Trace all SQL statements on this database. Control whether trace is enabled for all SQL statements 
-         *  issued against the database.
-         *  @param on If true, display each SQL statement to the log
-         */
-        function trace(on: Boolean): void
-            _traceAll = on
-
-        /**
-         *  Execute a database transaction
-         *  @param code Function to run inside a database transaction
-         */
-        function transaction(code: Function): Void {
-            startTransaction()
-            try {
-                code()
-            } catch (e: Error) {
-                rollback();
-            } finally {
-                endTransaction()
-            }
-        }
-
-        /**
-            Quote ", ', --, ;
-            @hide
-         */
-        static function quote(str: String): String  {
-            // str.replace(/'/g, "''").replace(/[#;\x00\x1a\r\n",;\\-]/g, "\\$0")
-            // return str.replace(/'/g, "''").replace(/[#;",;\\-]/g, "\\$0")
-            // return str.replace(/'/g, "''").replace(/[#";\\]/g, "\\$0")
-            // return str.replace(/'/g, "''").replace(/[;\\]/g, "\\$0")
-            return str.replace(/'/g, "''")
-        }
-    }
-}
-
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *  
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/db/Database.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/db/DatabaseConnector.es"
- */
-/************************************************************************/
-
-/*
- *  DatabaseConnector.es -- Database Connector interface
- *
- *  Copyright (c) All Rights Reserved. See details at the end of the file.
- */
-
-module ejs.db {
-
-    /**
-     *  Database interface connector. This interface is implemented by database connectors such as SQLite.
-     *  @spec ejs
-     *  @stability evolving
-     */
-    interface DatabaseConnector {
-
-        use default namespace public
-
-        // function DatabaseConnector(connectionString: String)
-
-        /** @duplicate ejs.db::Database.addColumn */
-        function addColumn(table: String, column: String, datatype: String, options: Object = null): Void
-
-        /** @duplicate ejs.db::Database.addIndex */
-        function addIndex(table: String, column: String, index: String): Void
-
-        /** @duplicate ejs.db::Database.changeColumn */
-        function changeColumn(table: String, column: String, datatype: String, options: Object = null): Void
-
-        /** @duplicate ejs.db::Database.close */
-        function close(): Void
-
-        /** @duplicate ejs.db::Database.commit */
-        function commit(): Void
-
-        /** @duplicate ejs.db::Database.connect 
-            Not yet implemented
-            @hide
-         */
-        function connect(connectionString: String): Void
-
-        /** @duplicate ejs.db::Database.createDatabase */
-        function createDatabase(name: String, options: Object = null): Void
-
-        /** @duplicate ejs.db::Database.createTable */
-        function createTable(table: String, columns: Array = null): Void
-
-        /** @duplicate ejs.db::Database.dataTypeToSqlType */
-        function dataTypeToSqlType(dataType:String): String
-
-        /** @duplicate ejs.db::Database.destroyDatabase */
-        function destroyDatabase(name: String): Void
-
-        /** @duplicate ejs.db::Database.destroyTable */
-        function destroyTable(table: String): Void
-
-        /** @duplicate ejs.db::Database.getColumns */
-        function getColumns(table: String): Array
-
-        /** @duplicate ejs.db::Database.getTables */
-        function getTables(): Array
-
-        /** @duplicate ejs.db::Database.removeColumns */
-        function removeColumns(table: String, columns: Array): Void 
-
-        /** @duplicate ejs.db::Database.removeIndex */
-        function removeIndex(table: String, index: String): Void
-
-        /** @duplicate ejs.db::Database.renameColumn */
-        function renameColumn(table: String, oldColumn: String, newColumn: String): Void
-
-        /** @duplicate ejs.db::Database.renameTable */
-        function renameTable(oldTable: String, newTable: String): Void
-
-        /** @duplicate ejs.db::Database.rollback 
-            @hide
-         */
-        function rollback(): Void
-
-        /** @duplicate ejs.db::Database.sql */
-        function sql(cmd: String): Array
-
-        /** @duplicate ejs.db::Database.sqlTypeToDataType */
-        function sqlTypeToDataType(sqlType: String): String
-
-        /** @duplicate ejs.db::Database.sqlTypeToEjsType */
-        function sqlTypeToEjsType(sqlType: String): String
-
-        /** @duplicate ejs.db::Database.startTransaction */
-        function startTransaction(): Void
-    }
-}
-
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *  
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/db/DatabaseConnector.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/events/Timer.es"
- */
-/************************************************************************/
-
-/*
- *  Timer.es -- Timer Services
- *
- *  Copyright (c) All Rights Reserved. See details at the end of the file.
- */
-
-module ejs.events {
-
-    /**
-     *  WARNING: This class is prototype and will be changed in the next release
-     *  Timers manage the execution of functions at some point in the future. Timers run repeatedly until stopped by 
-     *  calling the stop() method. Timers are scheduled with a granularity of 1 millisecond. However, many systems are not 
-     *  capable of supporting this granularity and make only best efforts to schedule events at the desired time.
-     *  To use timers, the application must call Dispatcher.serviceEvents.
-     *  @Example
-     *      function callback(e: Event) {
-     *      }
-     *      new Timer(200, callback)
-     *  or
-     *      new Timer(200, function (e) { print(e); })
-     *  @hide
-     */
-    native class Timer {
-
-        use default namespace public
-
-        /**
-         *  Constructor for Timer. The timer is will not be called until @start is called.
-         *  @param callback Function to invoke when the timer is due.
-         *  @param period Time period in milliseconds between invocations of the callback
-         *  @param drift Set the timers drift setting. See @drift.
-         */
-        native function Timer(period: Number, callback: Function, drift: Boolean = true)
-
-        /**
-         *  The timer drift setting.
-         *  If drift is false, reschedule the timer so that the time period between callback start times does not drift 
-         *  and is best-efforts equal to the timer reschedule period. The timer subsystem will delay other low priority
-         *  events or timers, with drift equal to true, if necessary to ensure non-drifting timers are scheduled exactly. 
-         *  Setting drift to true will schedule the timer so that the time between the end of the callback and the 
-         *  start of the next callback invocation is equal to the period. 
-         */
-        native function get drift(): Boolean
-
-        /**
-         *  @duplicate Timer.drift
-         *  @param enable If true, allow the timer to drift
-         */
-        native function set drift(enable: Boolean): Void
-
-        /**
-         *  The timer interval period in milliseconds.
-         */
-        native function get period(): Number
-
-        /**
-         *  Set the timer period and reschedule the timer.
-         *  @param period New time in milliseconds between timer invocations.
-         */
-        native function set period(period: Number): Void
-
-        /**
-         *  Restart a stopped timer. Once running, the callback function will be invoked every @period milliseconds 
-         *  according to the @drift setting. If the timer is already stopped, this function has no effect
-         */
-        native function restart(): Void
-
-        /**
-         *  Stop a timer running. Once stopped a timer can be restarted by calling @start.
-         */
-        native function stop(): Void
-    }
-
-
-    /**
-     *  WARNING: This class is prototype and will be changed in the next release
-     *  Timer event
-     *  @hide
-     */
-    class TimerEvent extends Event { }
-}
-
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *  
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/events/Timer.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
  *  Start of file "../src/es/events/Dispatcher.es"
  */
 /************************************************************************/
@@ -7176,235 +7044,121 @@ module ejs.events {
 
 /************************************************************************/
 /*
- *  Start of file "../src/es/io/XMLHttp.es"
+ *  Start of file "../src/es/events/Timer.es"
  */
 /************************************************************************/
 
-/**
-    XMLHttp.es -- XMLHttp class
+/*
+ *  Timer.es -- Timer Services
  *
-    Copyright (c) All Rights Reserved. See details at the end of the file.
+ *  Copyright (c) All Rights Reserved. See details at the end of the file.
  */
 
-module ejs.io {
+module ejs.events {
 
     /**
-        XMLHttp compatible method to retrieve HTTP data
-        This code is prototype and is not yet supported
-        @hide
-        @stability prototype
+     *  WARNING: This class is prototype and will be changed in the next release
+     *  Timers manage the execution of functions at some point in the future. Timers run repeatedly until stopped by 
+     *  calling the stop() method. Timers are scheduled with a granularity of 1 millisecond. However, many systems are not 
+     *  capable of supporting this granularity and make only best efforts to schedule events at the desired time.
+     *  To use timers, the application must call Dispatcher.serviceEvents.
+     *  @Example
+     *      function callback(e: Event) {
+     *      }
+     *      new Timer(200, callback)
+     *  or
+     *      new Timer(200, function (e) { print(e); })
+     *  @hide
      */
-    class XMLHttp {
+    native class Timer {
 
         use default namespace public
 
-        private var hp: Http = new Http
-        private var state: Number = 0
-        private var response: ByteArray
-
-        /** readyState values */
-        static const Uninitialized = 0              
-
-        /** readyState values */
-        static const Open = 1
-
-        /** readyState values */
-        static const Sent = 2
-
-        /** readyState values */
-        static const Receiving = 3
-
-        /** readyState values */
-        static const Loaded = 4
+        /**
+         *  Constructor for Timer. The timer is will not be called until @start is called.
+         *  @param callback Function to invoke when the timer is due.
+         *  @param period Time period in milliseconds between invocations of the callback
+         *  @param drift Set the timers drift setting. See @drift.
+         */
+        native function Timer(period: Number, callback: Function, drift: Boolean = true)
 
         /**
-            Call back function for when the HTTP state changes.
+         *  The timer drift setting.
+         *  If drift is false, reschedule the timer so that the time period between callback start times does not drift 
+         *  and is best-efforts equal to the timer reschedule period. The timer subsystem will delay other low priority
+         *  events or timers, with drift equal to true, if necessary to ensure non-drifting timers are scheduled exactly. 
+         *  Setting drift to true will schedule the timer so that the time between the end of the callback and the 
+         *  start of the next callback invocation is equal to the period. 
          */
-        public var onreadystatechange: Function
+        native function get drift(): Boolean
 
         /**
-            Abort the connection
+         *  @duplicate Timer.drift
+         *  @param enable If true, allow the timer to drift
          */
-        function abort(): void
-            hp.close
+        native function set drift(enable: Boolean): Void
 
         /**
-            The underlying Http object.
-            @spec ejs
+         *  The timer interval period in milliseconds.
          */
-        function get http() : Http
-            hp
+        native function get period(): Number
 
         /**
-            The readystate value. This value can be compared with the XMLHttp constants: Uninitialized, Open, Sent,
-            Receiving or Loaded Set to: Uninitialized = 0, Open = 1, Sent = 2, Receiving = 3, Loaded = 4
+         *  Set the timer period and reschedule the timer.
+         *  @param period New time in milliseconds between timer invocations.
          */
-        function get readyState() : Number
-            state
+        native function set period(period: Number): Void
 
         /**
-            HTTP response body as a string.
+         *  Restart a stopped timer. Once running, the callback function will be invoked every @period milliseconds 
+         *  according to the @drift setting. If the timer is already stopped, this function has no effect
          */
-        function get responseText(): String
-            hp.response
+        native function restart(): Void
 
         /**
-            HTTP response payload as an XML document. Set to an XML object that is the root of the HTTP request 
-            response data.
+         *  Stop a timer running. Once stopped a timer can be restarted by calling @start.
          */
-        function get responseXML(): XML
-            XML(hp.response)
-
-        /**
-            Not implemented. Only for ActiveX on IE
-            @hide
-         */
-        function get responseBody(): String {
-            throw new Error("Unsupported API")
-            return ""
-        }
-
-        /**
-            The HTTP status code. Set to an integer Http status code between 100 and 600.
-         */
-        function get status(): Number
-            hp.code
-
-        /**
-            HTTP status code message
-         */
-        function get statusText() : String
-            hp.codeString
-
-        /**
-            Return the response headers
-            @returns a string with the headers catenated together.
-         */
-        function getAllResponseHeaders(): String {
-            let result: String = ""
-            for (key in hp.headers) {
-                result = result.concat(key + ": " + hp.headers[key] + '\n')
-            }
-            return result
-        }
-
-        /**
-            Return a response header. Not yet implemented.
-            @param key The name of the response key to be returned.
-            @returns the header value as a string
-         */
-        function getResponseHeader(key: String)
-            header(key)
-
-        /**
-            Open a connection to the web server using the supplied URL and method.
-            @param method HTTP method to use. Valid methods include "GET", "POST", "PUT", "DELETE", "OPTIONS" and "TRACE"
-            @param url URL to invoke
-            @param async If true, don't block after issuing the requeset. By defining an $onreadystatuschange callback 
-                function, the request progress can be monitored. NOTE: async mode is not supported. All calls will block.
-            @param user Optional user name if authentication is required.
-            @param password Optional password if authentication is required.
-         */
-        function open(method: String, url: String, async: Boolean = false, user: String = null, 
-                password: String = null): Void {
-            hp.method = method
-            hp.uri = url
-            if (user && password) {
-                hp.setCredentials(user, password)
-            }
-            hp.callback = callback
-            response = new ByteArray(System.Bufsize, 1)
-
-            hp.connect()
-            state = Open
-            notify()
-
-            if (!async || 1) {
-                let timeout = 5   1000
-                let when: Date = new Date
-                while (state != Loaded && when.elapsed < timeout) {
-                    App.serviceEvents(1, timeout)
-                }
-            }
-        }
-
-        /**
-            Send data with the request.
-            @param content Data to send with the request.
-         */
-        function send(content: String): Void {
-/*
-            if (hp.callback == null) {
-                throw new IOError("Can't call send in sync mode")
-            }
-*/
-            hp.write(content)
-        }
-
-        /**
-            Set an HTTP header with the request
-            @param key Key value for the header
-            @param value Value of the header
-            @example:
-                setRequestHeader("Keep-Alive", "none")
-         */
-        function setRequestHeader(key: String, value: String): Void
-            hp.addHeader(key, value, 1)
-
-        /*
-            Http callback function
-         */
-        private function callback (e: Event) {
-            if (e is HttpError) {
-                notify()
-                return
-            }
-            let hp: Http = e.data
-            let count = hp.read(response)
-            state = (count == 0) ? Loaded : Receiving
-            notify()
-        }
-
-        /*
-            Invoke the user's state change handler
-         */
-        private function notify() {
-            if (onreadystatechange) {
-                onreadystatechange()
-            }
-        }
+        native function stop(): Void
     }
+
+
+    /**
+     *  WARNING: This class is prototype and will be changed in the next release
+     *  Timer event
+     *  @hide
+     */
+    class TimerEvent extends Event { }
 }
 
 
 /*
-    @copy   default
-    
-    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
-    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
-    
-    This software is distributed under commercial and open source licenses.
-    You may use the GPL open source license described below or you may acquire 
-    a commercial license from Embedthis Software. You agree to be fully bound 
-    by the terms of either license. Consult the LICENSE.TXT distributed with 
-    this software for full details.
-    
-    This software is open source; you can redistribute it and/or modify it 
-    under the terms of the GNU General Public License as published by the 
-    Free Software Foundation; either version 2 of the License, or (at your 
-    option) any later version. See the GNU General Public License for more 
-    details at: http://www.embedthis.com/downloads/gplLicense.html
-    
-    This program is distributed WITHOUT ANY WARRANTY; without even the 
-    implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
-    
-    This GPL license does NOT permit incorporating this software into 
-    proprietary programs. If you are unable to comply with the GPL, you must
-    acquire a commercial license to use this software. Commercial licenses 
-    for this software and support services are available from Embedthis 
-    Software at http://www.embedthis.com 
-    
-    Local variables:
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *  
+ *  Local variables:
     tab-width: 4
     c-basic-offset: 4
     End:
@@ -7414,7 +7168,645 @@ module ejs.io {
  */
 /************************************************************************/
 /*
- *  End of file "../src/es/io/XMLHttp.es"
+ *  End of file "../src/es/events/Timer.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/io/BinaryStream.es"
+ */
+/************************************************************************/
+
+/*
+ *  BinaryStream.es -- BinaryStream class. This class is a filter or endpoint stream to encode and decode binary types.
+ *
+ *  Copyright (c) All Rights Reserved. See details at the end of the file.
+ */
+
+module ejs.io {
+
+    /**
+     *  BinaryStreams encode and decode various objects onto streams. A BinaryStream may be stacked atop an underlying stream
+     *  provider such as ByteArray, File or Http.
+     *  @spec ejs
+     *  @stability evolving
+     */
+    class BinaryStream implements Stream {
+
+        use default namespace public
+
+        /**
+         *  Big endian byte order 
+         */
+        static const BigEndian: Number = ByteArray.BigEndian
+
+        /**
+         *  Little endian byte order 
+         */
+        static const LittleEndian: Number = ByteArray.LittleEndian
+
+        /*
+         *  Data input and output buffers. The buffers are used to marshall the data for encoding and decoding. The inbuf 
+         *  also  hold excess input data. The outbuf is only used to encode data -- no buffering occurs.
+         */
+        private var inbuf: ByteArray
+        private var outbuf: ByteArray
+        private var nextStream: Stream
+
+        /**
+         *  Create a new BinaryStream
+         *  @param stream Stream to stack upon.
+         */
+        function BinaryStream(stream: Stream) {
+            if (!stream) {
+                throw new ArgError("Must supply a Stream to connect with")
+            }
+            nextStream = stream
+            inbuf = new ByteArray
+            outbuf = new ByteArray
+
+            /*
+             *  Setup the input and output callbacks. These are invoked to get/put daa.
+             */
+            inbuf.input = function (buffer: ByteArray) {
+                nextStream.read(buffer)
+            }
+
+            outbuf.output = function (buffer: ByteArray) {
+                count = nextStream.write(buffer)
+                buffer.readPosition += count
+                buffer.reset()
+            }
+        }
+
+        /**
+         *  The number of bytes available to read
+         */
+        function get available(): Number
+            inbuf.available
+
+        /**
+         *  Close the input stream and free up all associated resources.
+         *  @param graceful if true, then close the socket gracefully after writing all pending data.
+         */
+        function close(graceful: Boolean = true): void {
+            flush(graceful)
+            nextStream.close(graceful)
+        }
+
+        /**
+         *  Current byte ordering. Set to either LittleEndian or BigEndian
+         */
+        function get endian(): Number
+            inbuf.endian
+
+        /**
+         *  Set the system encoding to little or big endian.
+         *  @param value Set to true for little endian encoding or false for big endian.
+         */
+        function set endian(value: Number): Void {
+            if (value != BigEndian && value != LittleEndian) {
+                throw new ArgError("Bad endian value")
+            }
+            inbuf.endian = value
+            outbuf.endian = value
+        }
+
+        /**
+         *  Flush the stream and all stacked streams and underlying data source/sinks.
+         *  @param graceful If true, then write all pending data.
+         */
+        function flush(graceful: Boolean = true): void {
+            inbuf.flush(graceful)
+            outbuf.flush(graceful)
+            if (!(nextStream is ByteArray)) {
+                nextStream.flush(graceful)
+            }
+        }
+
+        /**
+         *  Read data from the stream. 
+         *  @param buffer Destination byte array for the read data.
+         *  @param offset Offset in the byte array to place the data. If the offset is -1, then data is
+         *      appended to the buffer write $position which is then updated. 
+         *  @param count Number of bytes to read. If -1, read as much as the buffer will hold up.
+         *  @returns a count of the bytes actually read. Returns zero on eof.
+         *  @throws IOError if an I/O error occurs.
+         */
+        function read(buffer: ByteArray, offset: Number = 0, count: Number = -1): Number
+            inbuf.read(buffer, offset, count)
+
+        /**
+         *  Read a boolean from the stream.
+         *  @returns a boolean. Returns null on eof.
+         *  @throws IOError if an I/O error occurs.
+         */
+        function readBoolean(): Boolean
+            inbuf.readBoolean()
+
+        /**
+         *  Read a byte from the stream.
+         *  @returns a byte. Returns -1 on eof.
+         *  @throws IOError if an I/O error occurs.
+         */
+        function readByte(): Number
+            inbuf.readByte()
+
+        /**
+         *  Read data from the stream into a byte array.
+         *  @returns a new byte array with the available data. Returns an empty byte array on eof.
+         *  @throws IOError if an I/O error occurs.
+         *  @hide
+         */
+        # DEPRECATED
+        function readByteArray(count: Number = -1): ByteArray
+            inbuf.readByteArray(count)
+
+        /**
+         *  Read a date from the stream.
+         *  @returns a date
+         *  @throws IOError if an I/O error occurs.
+         */
+        function readDate(): Date
+            inbuf.readDate()
+
+        /**
+         *  Read a double from the stream. The data will be decoded according to the encoding property.
+         *  @returns a double
+         *  @throws IOError if an I/O error occurs.
+         */
+        function readDouble(): Double
+            inbuf.readDouble()
+
+        /**
+         *  Read a 32-bit integer from the stream. The data will be decoded according to the encoding property.
+         *  @returns an 32-bitinteger
+         *  @throws IOError if an I/O error occurs.
+         */
+        function readInteger(): Number
+            inbuf.readInteger()
+
+        /**
+         *  Read a 64-bit long from the stream.The data will be decoded according to the encoding property.
+         *  @returns a 64-bit long number
+         *  @throws IOError if an I/O error occurs.
+         */
+        function readLong(): Number
+            inbuf.readInteger()
+
+        /**
+         *  Read a UTF-8 string from the stream. 
+         *  @param count of bytes to read. Returns the entire stream contents if count is -1.
+         *  @returns a string
+         *  @throws IOError if an I/O error occurs.
+         */
+        function readString(count: Number = -1): String 
+            inbuf.readString(count)
+
+        /**
+         *  Read an XML document from the stream. This assumes the XML document will be the only data until EOF.
+         *  @returns an XML document
+         *  @throws IOError if an I/O error occurs.
+         */
+        function readXML(): XML {
+            var data: String = ""
+            while (1) {
+                var s: String = inbuf.readString()
+                if (s == null && data.length == 0) {
+                    return null
+                }
+                if (s.length == 0) {
+                    break
+                }
+                data += s
+            }
+            return new XML(data)
+        }
+
+        /**
+         *  Write data to the stream. Write intelligently encodes various @data types onto the stream and will encode data 
+         *  in a portable cross-platform manner according to the setting of the endian ByteStream property. If data is an 
+         *  array, each element of the array will be written. The write call blocks until the underlying stream or endpoint 
+         *  absorbes all the data. 
+         *  @param data Data to write. The ByteStream class intelligently encodes various data types according to the
+         *  current setting of the Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @endian BinaryStream property. 
+         *  @returns The total number of elements that were written.
+         *  @throws IOError if there is an I/O error.
+         */
+        function write(...data): Number {
+            let count: Number = 0
+            for each (i in data) {
+                count += outbuf.write(i)
+            }
+            return count
+        }
+
+        /**
+         *  Write a byte to the array. Data is written to the current write $position pointer.
+         *  @param data Data to write
+         */
+        function writeByte(data: Number): Void 
+            outbuf.writeByte(outbuf)
+
+        /**
+         *  Write a short to the array. Data is written to the current write $position pointer.
+         *  @param data Data to write
+         */
+        function writeShort(data: Number): Void
+            outbuf.writeShort(data)
+
+        /**
+         *  Write a double to the array. Data is written to the current write $position pointer.
+         *  @param data Data to write
+         */
+        function writeDouble(data: Number): Void
+            outbuf.writeDouble(data)
+
+        /**
+         *  Write a 32-bit integer to the array. Data is written to the current write $position pointer.
+         *  @param data Data to write
+         */
+        function writeInteger(data: Number): Void {
+            outbuf.writeInteger(data)
+        }
+
+        /**
+         *  Write a 64 bit long integer to the array. Data is written to the current write $position pointer.
+         *  @param data Data to write
+         */
+        function writeLong(data: Number): Void
+            outbuf.writeLong(data)
+    }
+}
+
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *  
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/io/BinaryStream.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/io/File.es"
+ */
+/************************************************************************/
+
+/*
+ *  File.es -- File I/O class. Do file I/O and manage files.
+ *
+ *  Copyright (c) All Rights Reserved. See details at the end of the file.
+ */
+
+module ejs.io {
+
+    /**
+     *  The File class provides a foundation of I/O services to interact with physical files.
+     *  Each File object represents a single file, a named path to data stored in non-volatile memory. A File object 
+     *  provides methods for creating, opening, reading, writing and deleting a file, and for accessing and modifying 
+     *  information about the file. All I/O is unbuffered and synchronous.
+     *  @spec ejs
+     *  @stability evolving
+     */
+    native class File implements Stream {
+
+        use default namespace public
+
+        /**
+         *  Create a File object and open the requested path.
+         *  @param path the name of the file to associate with this file object. Can be either a String or a Path.
+         *  @param options If the options are provided, the file is opened. See $open for the available options.
+         */
+        native function File(path: Object, options: Object = null)
+
+        /**
+         *  Is the file opened for reading
+         */
+        native function get canRead(): Boolean
+
+        /**
+         *  Is the file opened for writing.
+         */
+        native function get canWrite(): Boolean
+
+        /**
+         *  Close the input stream and free up all associated resources.
+         *  @param graceful if true, then close the file gracefully after writing all pending data.
+         */
+        native function close(graceful: Boolean = true): void 
+
+        /**
+         *  Flush any buffered data. This is a noop and is supplied just to comply with the Stream interface.
+         *  @param graceful If true, write all pending data.
+         */  
+        native function flush(graceful: Boolean = true): void
+
+        /**
+         *  Iterate over the positions in a file. This will get an iterator for this file to be used by 
+         *      "for (v in files)"
+         *  @return An iterator object that will return numeric offset positions in the file.
+         */
+        override iterator native function get(): Iterator
+
+        /**
+         *  Get an iterator for this file to be used by "for each (v in obj)". Return each byte of the file in turn.
+         *  @return An iterator object that will return the bytes of the file.
+         */
+        override iterator native function getValues(): Iterator
+
+        /**
+         *  Is the file open
+         */
+        native function get isOpen(): Boolean
+
+        /** 
+         *  Open a file. This opens the file designated when the File constructor was called.
+         *  @params options Optional options. If ommitted, the options default to open the file in read mode.
+         *      Options can be either a mode string or can be an options hash. 
+         *  @options mode optional file access mode string. Use "r" for read, "w" for write, "a" for append to existing
+         *      content, "+" never truncate. Defaults to "r".
+         *  @options permissions Number containing the Posix permissions value. Note: this is a number and not a string
+         *      representation of an octal posix number.
+         *  @return the File object. This permits method chaining.
+         *  @throws IOError if the path or file cannot be created.
+         */
+        native function open(options: Object = null): File
+
+        /**
+         *  Current file options set when opening the file.
+         */ 
+        native function get options(): Object
+
+        /**
+         *  The name of the file associated with this File object or null if there is no associated file.
+         */
+        native function get path(): Path 
+
+        /**
+         *  The current read/write I/O position in the file.
+         */
+        native function get position(): Number
+
+        /**
+         *  Seek to a new location in the file and set the File marker to a new read/write position.
+         *  @param loc Location in the file to seek to. Set the position to zero to reset the position to the beginning 
+         *  of the file. Set the position to a negative number to seek relative to the end of the file (-1 positions 
+         *  at the end of file).
+         *  @throws IOError if the seek failed.
+         */
+        native function set position(loc: Number): void
+
+        /**
+         *  Read a block of data from a file into a byte array. This will advance the read file's position.
+         *  @param buffer Destination byte array for the read data.
+         *  @param offset Offset in the byte array to place the data. If the offset is -1, then data is
+         *      appended to the buffer write $position which is then updated. 
+         *  @param count Number of bytes to read. If -1, read much as the buffer will hold up to the entire file if the 
+         *  buffer is of sufficient size or is growable.
+         *  @return A count of the bytes actually read. Returns 0 on end of file.
+         *  @throws IOError if the file could not be read.
+         */
+        native function read(buffer: ByteArray, offset: Number = 0, count: Number = -1): Number
+
+        /**
+         *  Read data bytes from a file and return a byte array containing the data.
+         *  @param count Number of bytes to read. If null, read the entire file.
+         *  @return A byte array containing the read data. Returns an empty array on end of file.
+         *  @throws IOError if the file could not be read.
+         */
+        native function readBytes(count: Number = -1): ByteArray
+
+        /**
+         *  Read data from a file as a string.
+         *  @param count Number of bytes to read. If -1, read the entire file.
+         *  @return A string containing the read data. Returns an empty string on end of file.
+         *  @throws IOError if the file could not be read.
+         */
+        native function readString(count: Number = -1): String
+
+        /**
+         *  Remove a file
+         *  @throws IOError if the file could not be removed.
+         */
+        function remove(): Void {
+            if (isOpen) {
+                throw new IOError("File is open")
+            }
+            Path(path).remove()
+        }
+
+        /**
+         *  The size of the file in bytes.
+         */
+        native function get size(): Number 
+
+        /**
+         *  Truncate the file. 
+         *  @param value the new length of the file
+         *  @throws IOError if the file's size cannot be changed
+         */
+        native function truncate(value: Number): Void 
+
+        /**
+         *  Write data to the file. If the stream is in sync mode, the write call blocks until the underlying stream or 
+         *  endpoint absorbes all the data. If in async-mode, the call accepts whatever data can be accepted immediately 
+         *  and returns a count of the elements that have been written.
+         *  @param items The data argument can be ByteArrays, strings or Numbers. All other types will call serialize
+         *  first before writing. Note that numbers will not be written in a cross platform manner. If that is required, use
+         *  the BinaryStream class to control the byte ordering when writing numbers.
+         *  @returns the number of bytes written.  
+         *  @throws IOError if the file could not be written.
+         */
+        native function write(...items): Number
+    }
+}
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *  
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/io/File.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/io/FileSystem.es"
+ */
+/************************************************************************/
+
+/*
+ *  FileSystem.es -- FileSystem class
+ *
+ *  Copyright (c) All Rights Reserved. See details at the end of the file.
+ */
+
+module ejs.io {
+
+    /**
+     *  The FileSystem class provides access to information about file systems hosting files.
+     *  @spec ejs
+     *  @stability prototype
+     */
+    native class FileSystem {
+
+        use default namespace public
+
+        /**
+         *  Create a new FileSystem object based on the given path.
+         *  @param path String or Path of the file system
+         */
+        native function FileSystem(path: Object)
+
+        /**
+         *  Do path names on this file system support drive specifications.
+         */
+        native function get hasDrives(): Boolean 
+
+        /**
+         *  The new line characters for this file system. Usually "\n" or "\r\n".
+         */
+        native function get newline(): String 
+
+        /**
+         */
+        native function set newline(terminator: String): Void
+
+        /**
+         *  Path to the root directory of the file system
+         */
+        native function get root(): Path
+
+        /**
+            Path directory separators. The first character is the default separator. Usually "/" or "\\".
+         */
+        native function get separators(): String 
+
+        /**
+         */
+        native function set separators(sep: String): Void 
+    }
+}
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *  
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/io/FileSystem.es"
  */
 /************************************************************************/
 
@@ -9112,307 +9504,235 @@ module ejs.io {
 
 /************************************************************************/
 /*
- *  Start of file "../src/es/io/BinaryStream.es"
+ *  Start of file "../src/es/io/XMLHttp.es"
  */
 /************************************************************************/
 
-/*
- *  BinaryStream.es -- BinaryStream class. This class is a filter or endpoint stream to encode and decode binary types.
+/**
+    XMLHttp.es -- XMLHttp class
  *
- *  Copyright (c) All Rights Reserved. See details at the end of the file.
+    Copyright (c) All Rights Reserved. See details at the end of the file.
  */
 
 module ejs.io {
 
     /**
-     *  BinaryStreams encode and decode various objects onto streams. A BinaryStream may be stacked atop an underlying stream
-     *  provider such as ByteArray, File or Http.
-     *  @spec ejs
-     *  @stability evolving
+        XMLHttp compatible method to retrieve HTTP data
+        This code is prototype and is not yet supported
+        @hide
+        @stability prototype
      */
-    class BinaryStream implements Stream {
+    class XMLHttp {
 
         use default namespace public
 
-        /**
-         *  Big endian byte order 
-         */
-        static const BigEndian: Number = ByteArray.BigEndian
+        private var hp: Http = new Http
+        private var state: Number = 0
+        private var response: ByteArray
+
+        /** readyState values */
+        static const Uninitialized = 0              
+
+        /** readyState values */
+        static const Open = 1
+
+        /** readyState values */
+        static const Sent = 2
+
+        /** readyState values */
+        static const Receiving = 3
+
+        /** readyState values */
+        static const Loaded = 4
 
         /**
-         *  Little endian byte order 
+            Call back function for when the HTTP state changes.
          */
-        static const LittleEndian: Number = ByteArray.LittleEndian
+        public var onreadystatechange: Function
+
+        /**
+            Abort the connection
+         */
+        function abort(): void
+            hp.close
+
+        /**
+            The underlying Http object.
+            @spec ejs
+         */
+        function get http() : Http
+            hp
+
+        /**
+            The readystate value. This value can be compared with the XMLHttp constants: Uninitialized, Open, Sent,
+            Receiving or Loaded Set to: Uninitialized = 0, Open = 1, Sent = 2, Receiving = 3, Loaded = 4
+         */
+        function get readyState() : Number
+            state
+
+        /**
+            HTTP response body as a string.
+         */
+        function get responseText(): String
+            hp.response
+
+        /**
+            HTTP response payload as an XML document. Set to an XML object that is the root of the HTTP request 
+            response data.
+         */
+        function get responseXML(): XML
+            XML(hp.response)
+
+        /**
+            Not implemented. Only for ActiveX on IE
+            @hide
+         */
+        function get responseBody(): String {
+            throw new Error("Unsupported API")
+            return ""
+        }
+
+        /**
+            The HTTP status code. Set to an integer Http status code between 100 and 600.
+         */
+        function get status(): Number
+            hp.code
+
+        /**
+            HTTP status code message
+         */
+        function get statusText() : String
+            hp.codeString
+
+        /**
+            Return the response headers
+            @returns a string with the headers catenated together.
+         */
+        function getAllResponseHeaders(): String {
+            let result: String = ""
+            for (key in hp.headers) {
+                result = result.concat(key + ": " + hp.headers[key] + '\n')
+            }
+            return result
+        }
+
+        /**
+            Return a response header. Not yet implemented.
+            @param key The name of the response key to be returned.
+            @returns the header value as a string
+         */
+        function getResponseHeader(key: String)
+            header(key)
+
+        /**
+            Open a connection to the web server using the supplied URL and method.
+            @param method HTTP method to use. Valid methods include "GET", "POST", "PUT", "DELETE", "OPTIONS" and "TRACE"
+            @param url URL to invoke
+            @param async If true, don't block after issuing the requeset. By defining an $onreadystatuschange callback 
+                function, the request progress can be monitored. NOTE: async mode is not supported. All calls will block.
+            @param user Optional user name if authentication is required.
+            @param password Optional password if authentication is required.
+         */
+        function open(method: String, url: String, async: Boolean = false, user: String = null, 
+                password: String = null): Void {
+            hp.method = method
+            hp.uri = url
+            if (user && password) {
+                hp.setCredentials(user, password)
+            }
+            hp.callback = callback
+            response = new ByteArray(System.Bufsize, 1)
+
+            hp.connect()
+            state = Open
+            notify()
+
+            if (!async || 1) {
+                let timeout = 5   1000
+                let when: Date = new Date
+                while (state != Loaded && when.elapsed < timeout) {
+                    App.serviceEvents(1, timeout)
+                }
+            }
+        }
+
+        /**
+            Send data with the request.
+            @param content Data to send with the request.
+         */
+        function send(content: String): Void {
+/*
+            if (hp.callback == null) {
+                throw new IOError("Can't call send in sync mode")
+            }
+*/
+            hp.write(content)
+        }
+
+        /**
+            Set an HTTP header with the request
+            @param key Key value for the header
+            @param value Value of the header
+            @example:
+                setRequestHeader("Keep-Alive", "none")
+         */
+        function setRequestHeader(key: String, value: String): Void
+            hp.addHeader(key, value, 1)
 
         /*
-         *  Data input and output buffers. The buffers are used to marshall the data for encoding and decoding. The inbuf 
-         *  also  hold excess input data. The outbuf is only used to encode data -- no buffering occurs.
+            Http callback function
          */
-        private var inbuf: ByteArray
-        private var outbuf: ByteArray
-        private var nextStream: Stream
-
-        /**
-         *  Create a new BinaryStream
-         *  @param stream Stream to stack upon.
-         */
-        function BinaryStream(stream: Stream) {
-            if (!stream) {
-                throw new ArgError("Must supply a Stream to connect with")
+        private function callback (e: Event) {
+            if (e is HttpError) {
+                notify()
+                return
             }
-            nextStream = stream
-            inbuf = new ByteArray
-            outbuf = new ByteArray
-
-            /*
-             *  Setup the input and output callbacks. These are invoked to get/put daa.
-             */
-            inbuf.input = function (buffer: ByteArray) {
-                nextStream.read(buffer)
-            }
-
-            outbuf.output = function (buffer: ByteArray) {
-                count = nextStream.write(buffer)
-                buffer.readPosition += count
-                buffer.reset()
-            }
+            let hp: Http = e.data
+            let count = hp.read(response)
+            state = (count == 0) ? Loaded : Receiving
+            notify()
         }
 
-        /**
-         *  The number of bytes available to read
+        /*
+            Invoke the user's state change handler
          */
-        function get available(): Number
-            inbuf.available
-
-        /**
-         *  Close the input stream and free up all associated resources.
-         *  @param graceful if true, then close the socket gracefully after writing all pending data.
-         */
-        function close(graceful: Boolean = true): void {
-            flush(graceful)
-            nextStream.close(graceful)
-        }
-
-        /**
-         *  Current byte ordering. Set to either LittleEndian or BigEndian
-         */
-        function get endian(): Number
-            inbuf.endian
-
-        /**
-         *  Set the system encoding to little or big endian.
-         *  @param value Set to true for little endian encoding or false for big endian.
-         */
-        function set endian(value: Number): Void {
-            if (value != BigEndian && value != LittleEndian) {
-                throw new ArgError("Bad endian value")
-            }
-            inbuf.endian = value
-            outbuf.endian = value
-        }
-
-        /**
-         *  Flush the stream and all stacked streams and underlying data source/sinks.
-         *  @param graceful If true, then write all pending data.
-         */
-        function flush(graceful: Boolean = true): void {
-            inbuf.flush(graceful)
-            outbuf.flush(graceful)
-            if (!(nextStream is ByteArray)) {
-                nextStream.flush(graceful)
+        private function notify() {
+            if (onreadystatechange) {
+                onreadystatechange()
             }
         }
-
-        /**
-         *  Read data from the stream. 
-         *  @param buffer Destination byte array for the read data.
-         *  @param offset Offset in the byte array to place the data. If the offset is -1, then data is
-         *      appended to the buffer write $position which is then updated. 
-         *  @param count Number of bytes to read. If -1, read as much as the buffer will hold up.
-         *  @returns a count of the bytes actually read. Returns zero on eof.
-         *  @throws IOError if an I/O error occurs.
-         */
-        function read(buffer: ByteArray, offset: Number = 0, count: Number = -1): Number
-            inbuf.read(buffer, offset, count)
-
-        /**
-         *  Read a boolean from the stream.
-         *  @returns a boolean. Returns null on eof.
-         *  @throws IOError if an I/O error occurs.
-         */
-        function readBoolean(): Boolean
-            inbuf.readBoolean()
-
-        /**
-         *  Read a byte from the stream.
-         *  @returns a byte. Returns -1 on eof.
-         *  @throws IOError if an I/O error occurs.
-         */
-        function readByte(): Number
-            inbuf.readByte()
-
-        /**
-         *  Read data from the stream into a byte array.
-         *  @returns a new byte array with the available data. Returns an empty byte array on eof.
-         *  @throws IOError if an I/O error occurs.
-         *  @hide
-         */
-        # DEPRECATED
-        function readByteArray(count: Number = -1): ByteArray
-            inbuf.readByteArray(count)
-
-        /**
-         *  Read a date from the stream.
-         *  @returns a date
-         *  @throws IOError if an I/O error occurs.
-         */
-        function readDate(): Date
-            inbuf.readDate()
-
-        /**
-         *  Read a double from the stream. The data will be decoded according to the encoding property.
-         *  @returns a double
-         *  @throws IOError if an I/O error occurs.
-         */
-        function readDouble(): Double
-            inbuf.readDouble()
-
-        /**
-         *  Read a 32-bit integer from the stream. The data will be decoded according to the encoding property.
-         *  @returns an 32-bitinteger
-         *  @throws IOError if an I/O error occurs.
-         */
-        function readInteger(): Number
-            inbuf.readInteger()
-
-        /**
-         *  Read a 64-bit long from the stream.The data will be decoded according to the encoding property.
-         *  @returns a 64-bit long number
-         *  @throws IOError if an I/O error occurs.
-         */
-        function readLong(): Number
-            inbuf.readInteger()
-
-        /**
-         *  Read a UTF-8 string from the stream. 
-         *  @param count of bytes to read. Returns the entire stream contents if count is -1.
-         *  @returns a string
-         *  @throws IOError if an I/O error occurs.
-         */
-        function readString(count: Number = -1): String 
-            inbuf.readString(count)
-
-        /**
-         *  Read an XML document from the stream. This assumes the XML document will be the only data until EOF.
-         *  @returns an XML document
-         *  @throws IOError if an I/O error occurs.
-         */
-        function readXML(): XML {
-            var data: String = ""
-            while (1) {
-                var s: String = inbuf.readString()
-                if (s == null && data.length == 0) {
-                    return null
-                }
-                if (s.length == 0) {
-                    break
-                }
-                data += s
-            }
-            return new XML(data)
-        }
-
-        /**
-         *  Write data to the stream. Write intelligently encodes various @data types onto the stream and will encode data 
-         *  in a portable cross-platform manner according to the setting of the endian ByteStream property. If data is an 
-         *  array, each element of the array will be written. The write call blocks until the underlying stream or endpoint 
-         *  absorbes all the data. 
-         *  @param data Data to write. The ByteStream class intelligently encodes various data types according to the
-         *  current setting of the Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @endian BinaryStream property. 
-         *  @returns The total number of elements that were written.
-         *  @throws IOError if there is an I/O error.
-         */
-        function write(...data): Number {
-            let count: Number = 0
-            for each (i in data) {
-                count += outbuf.write(i)
-            }
-            return count
-        }
-
-        /**
-         *  Write a byte to the array. Data is written to the current write $position pointer.
-         *  @param data Data to write
-         */
-        function writeByte(data: Number): Void 
-            outbuf.writeByte(outbuf)
-
-        /**
-         *  Write a short to the array. Data is written to the current write $position pointer.
-         *  @param data Data to write
-         */
-        function writeShort(data: Number): Void
-            outbuf.writeShort(data)
-
-        /**
-         *  Write a double to the array. Data is written to the current write $position pointer.
-         *  @param data Data to write
-         */
-        function writeDouble(data: Number): Void
-            outbuf.writeDouble(data)
-
-        /**
-         *  Write a 32-bit integer to the array. Data is written to the current write $position pointer.
-         *  @param data Data to write
-         */
-        function writeInteger(data: Number): Void {
-            outbuf.writeInteger(data)
-        }
-
-        /**
-         *  Write a 64 bit long integer to the array. Data is written to the current write $position pointer.
-         *  @param data Data to write
-         */
-        function writeLong(data: Number): Void
-            outbuf.writeLong(data)
     }
 }
 
 
 /*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *  
- *  Local variables:
+    @copy   default
+    
+    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+    
+    This software is distributed under commercial and open source licenses.
+    You may use the GPL open source license described below or you may acquire 
+    a commercial license from Embedthis Software. You agree to be fully bound 
+    by the terms of either license. Consult the LICENSE.TXT distributed with 
+    this software for full details.
+    
+    This software is open source; you can redistribute it and/or modify it 
+    under the terms of the GNU General Public License as published by the 
+    Free Software Foundation; either version 2 of the License, or (at your 
+    option) any later version. See the GNU General Public License for more 
+    details at: http://www.embedthis.com/downloads/gplLicense.html
+    
+    This program is distributed WITHOUT ANY WARRANTY; without even the 
+    implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+    
+    This GPL license does NOT permit incorporating this software into 
+    proprietary programs. If you are unable to comply with the GPL, you must
+    acquire a commercial license to use this software. Commercial licenses 
+    for this software and support services are available from Embedthis 
+    Software at http://www.embedthis.com 
+    
+    Local variables:
     tab-width: 4
     c-basic-offset: 4
     End:
@@ -9422,7 +9742,7 @@ module ejs.io {
  */
 /************************************************************************/
 /*
- *  End of file "../src/es/io/BinaryStream.es"
+ *  End of file "../src/es/io/XMLHttp.es"
  */
 /************************************************************************/
 
@@ -9430,332 +9750,12 @@ module ejs.io {
 
 /************************************************************************/
 /*
- *  Start of file "../src/es/io/FileSystem.es"
+ *  Start of file "../src/es/sys/App.es"
  */
 /************************************************************************/
 
 /*
- *  FileSystem.es -- FileSystem class
- *
- *  Copyright (c) All Rights Reserved. See details at the end of the file.
- */
-
-module ejs.io {
-
-    /**
-     *  The FileSystem class provides access to information about file systems hosting files.
-     *  @spec ejs
-     *  @stability prototype
-     */
-    native class FileSystem {
-
-        use default namespace public
-
-        /**
-         *  Create a new FileSystem object based on the given path.
-         *  @param path String or Path of the file system
-         */
-        native function FileSystem(path: Object)
-
-        /**
-         *  Do path names on this file system support drive specifications.
-         */
-        native function get hasDrives(): Boolean 
-
-        /**
-         *  The new line characters for this file system. Usually "\n" or "\r\n".
-         */
-        native function get newline(): String 
-
-        /**
-         */
-        native function set newline(terminator: String): Void
-
-        /**
-         *  Path to the root directory of the file system
-         */
-        native function get root(): Path
-
-        /**
-            Path directory separators. The first character is the default separator. Usually "/" or "\\".
-         */
-        native function get separators(): String 
-
-        /**
-         */
-        native function set separators(sep: String): Void 
-    }
-}
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *  
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/io/FileSystem.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/io/File.es"
- */
-/************************************************************************/
-
-/*
- *  File.es -- File I/O class. Do file I/O and manage files.
- *
- *  Copyright (c) All Rights Reserved. See details at the end of the file.
- */
-
-module ejs.io {
-
-    /**
-     *  The File class provides a foundation of I/O services to interact with physical files.
-     *  Each File object represents a single file, a named path to data stored in non-volatile memory. A File object 
-     *  provides methods for creating, opening, reading, writing and deleting a file, and for accessing and modifying 
-     *  information about the file. All I/O is unbuffered and synchronous.
-     *  @spec ejs
-     *  @stability evolving
-     */
-    native class File implements Stream {
-
-        use default namespace public
-
-        /**
-         *  Create a File object and open the requested path.
-         *  @param path the name of the file to associate with this file object. Can be either a String or a Path.
-         *  @param options If the options are provided, the file is opened. See $open for the available options.
-         */
-        native function File(path: Object, options: Object = null)
-
-        /**
-         *  Is the file opened for reading
-         */
-        native function get canRead(): Boolean
-
-        /**
-         *  Is the file opened for writing.
-         */
-        native function get canWrite(): Boolean
-
-        /**
-         *  Close the input stream and free up all associated resources.
-         *  @param graceful if true, then close the file gracefully after writing all pending data.
-         */
-        native function close(graceful: Boolean = true): void 
-
-        /**
-         *  Flush any buffered data. This is a noop and is supplied just to comply with the Stream interface.
-         *  @param graceful If true, write all pending data.
-         */  
-        native function flush(graceful: Boolean = true): void
-
-        /**
-         *  Iterate over the positions in a file. This will get an iterator for this file to be used by 
-         *      "for (v in files)"
-         *  @return An iterator object that will return numeric offset positions in the file.
-         */
-        override iterator native function get(): Iterator
-
-        /**
-         *  Get an iterator for this file to be used by "for each (v in obj)". Return each byte of the file in turn.
-         *  @return An iterator object that will return the bytes of the file.
-         */
-        override iterator native function getValues(): Iterator
-
-        /**
-         *  Is the file open
-         */
-        native function get isOpen(): Boolean
-
-        /** 
-         *  Open a file. This opens the file designated when the File constructor was called.
-         *  @params options Optional options. If ommitted, the options default to open the file in read mode.
-         *      Options can be either a mode string or can be an options hash. 
-         *  @options mode optional file access mode string. Use "r" for read, "w" for write, "a" for append to existing
-         *      content, "+" never truncate. Defaults to "r".
-         *  @options permissions Number containing the Posix permissions value. Note: this is a number and not a string
-         *      representation of an octal posix number.
-         *  @return the File object. This permits method chaining.
-         *  @throws IOError if the path or file cannot be created.
-         */
-        native function open(options: Object = null): File
-
-        /**
-         *  Current file options set when opening the file.
-         */ 
-        native function get options(): Object
-
-        /**
-         *  The name of the file associated with this File object or null if there is no associated file.
-         */
-        native function get path(): Path 
-
-        /**
-         *  The current read/write I/O position in the file.
-         */
-        native function get position(): Number
-
-        /**
-         *  Seek to a new location in the file and set the File marker to a new read/write position.
-         *  @param loc Location in the file to seek to. Set the position to zero to reset the position to the beginning 
-         *  of the file. Set the position to a negative number to seek relative to the end of the file (-1 positions 
-         *  at the end of file).
-         *  @throws IOError if the seek failed.
-         */
-        native function set position(loc: Number): void
-
-        /**
-         *  Read a block of data from a file into a byte array. This will advance the read file's position.
-         *  @param buffer Destination byte array for the read data.
-         *  @param offset Offset in the byte array to place the data. If the offset is -1, then data is
-         *      appended to the buffer write $position which is then updated. 
-         *  @param count Number of bytes to read. If -1, read much as the buffer will hold up to the entire file if the 
-         *  buffer is of sufficient size or is growable.
-         *  @return A count of the bytes actually read. Returns 0 on end of file.
-         *  @throws IOError if the file could not be read.
-         */
-        native function read(buffer: ByteArray, offset: Number = 0, count: Number = -1): Number
-
-        /**
-         *  Read data bytes from a file and return a byte array containing the data.
-         *  @param count Number of bytes to read. If null, read the entire file.
-         *  @return A byte array containing the read data. Returns an empty array on end of file.
-         *  @throws IOError if the file could not be read.
-         */
-        native function readBytes(count: Number = -1): ByteArray
-
-        /**
-         *  Read data from a file as a string.
-         *  @param count Number of bytes to read. If -1, read the entire file.
-         *  @return A string containing the read data. Returns an empty string on end of file.
-         *  @throws IOError if the file could not be read.
-         */
-        native function readString(count: Number = -1): String
-
-        /**
-         *  Remove a file
-         *  @throws IOError if the file could not be removed.
-         */
-        function remove(): Void {
-            if (isOpen) {
-                throw new IOError("File is open")
-            }
-            Path(path).remove()
-        }
-
-        /**
-         *  The size of the file in bytes.
-         */
-        native function get size(): Number 
-
-        /**
-         *  Truncate the file. 
-         *  @param value the new length of the file
-         *  @throws IOError if the file's size cannot be changed
-         */
-        native function truncate(value: Number): Void 
-
-        /**
-         *  Write data to the file. If the stream is in sync mode, the write call blocks until the underlying stream or 
-         *  endpoint absorbes all the data. If in async-mode, the call accepts whatever data can be accepted immediately 
-         *  and returns a count of the elements that have been written.
-         *  @param items The data argument can be ByteArrays, strings or Numbers. All other types will call serialize
-         *  first before writing. Note that numbers will not be written in a cross platform manner. If that is required, use
-         *  the BinaryStream class to control the byte ordering when writing numbers.
-         *  @returns the number of bytes written.  
-         *  @throws IOError if the file could not be written.
-         */
-        native function write(...items): Number
-    }
-}
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *  
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/io/File.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/sys/GC.es"
- */
-/************************************************************************/
-
-/*
- *  GC.es -- Garbage collector class
+ *  App.es -- Application configuration and control. (Really controlling the interpreter's environment)
  *
  *  Copyright (c) All Rights Reserved. See details at the end of the file.
  */
@@ -9763,49 +9763,145 @@ module ejs.io {
 module ejs.sys {
 
     /**
-     *  Garbage collector control class. Singleton class to control operation of the Ejscript garbage collector.
+     *  Application configuration state. The App class is a singleton class object. The App class is accessed via
+     *  the App global type object. It provides  methods to interrogate and control the applications environment including
+     *  the current working directory, application command line arguments, path to the application's executable and
+     *  input and output streams.
      *  @spec ejs
      *  @stability evolving
      */
-    native class GC {
+    native class App {
 
         use default namespace public
 
         /**
-         *  Is the garbage collector is enabled. Enabled by default.
+         *  Application command line arguments. Set to an array containing each of the arguments. If the ejs command is 
+         *      invoked as "ejs script arg1 arg2", then args[0] will be "script", args[1] will be "arg1" etc.
          */
-        native static function get enabled(): Boolean
+        native static function get args(): Array
 
         /**
-         *  @duplicate GC.enabled
-         *  @param on Set to true to enable the collector.
+         *  The application's current directory
          */
-        native static function set enabled(on: Boolean): Void
+        native static function get dir(): Path
 
         /**
-         *  The quota of work to perform before the GC will be invoked. Set to the number of work units that will 
-         *  trigger the GC to run. This roughly corresponds to the number of allocated objects.
+         *  Change the application's Working directory
+         *  @param value The path to the new working directory
          */
-        native static function get workQuota(): Number
+        native static function chdir(value: Object): Void
 
         /**
-         *  @duplicate GC.workQuota
-         *  @param quota The number of work units that will trigger the GC to run. This roughly corresponds to the number
-         *  of allocated objects.
+         *  The directory containing the application executable
          */
-        native static function set workQuota(quota: Number): Void
+        native static function get exeDir(): Path
 
         /**
-         *  Run the garbage collector and reclaim memory allocated to objects and properties that are no longer reachable. 
-         *  When objects and properties are freed, any registered destructors will be called. The run function will run 
-         *  the garbage collector even if the $enable property is set to false. 
-         *  @param deep If set to true, will collect from all generations. The default is to collect only the youngest
-         *      geneartion of objects.
+         *  The application executable path
          */
-        native static function run(deep: Boolean = false): void
+        native static function get exePath(): Path
 
+        /**
+         *  The application's standard error file stream
+         */
+        native static function get errorStream(): Stream
+
+        /**
+            Stop the program and exit.
+            @param status The optional exit code to provide the environment. If running inside the ejs command program,
+                the status is used as process exit status.
+         */
+        native static function exit(status: Number = 0): void
+
+        /**
+         *  Get an environment variable.
+         *  @param name The name of the environment variable to retrieve.
+         *  @return The value of the environment variable or null if not found.
+         */
+        native static function getenv(name: String): String
+
+        /**
+         *  The application's standard input file stream
+         */
+        native static function get inputStream(): Stream
+
+        /**
+         *  Application name.  Set to a single word, lower case name for the application.
+         */
+        static function get name(): String
+            Config.Product
+
+        /**
+         *  Control whether an application will exit when global scripts have completed. Setting this to true will cause
+         *  the application to continue servicing events until the $exit method is explicitly called. The default 
+         *  application setting of noexit is false.
+         *  @param exit If true, the application will exit when the last script completes.
+         */
+        native static function noexit(exit: Boolean = true): void
+
+        /**
+         *  The application's standard output file stream
+         */
+        native static function get outputStream(): Stream
+
+        /**
+         *  Update an environment variable.
+         *  @param name The name of the environment variable to retrieve.
+         *  @param value The new value to define for the variable.
+         */
+        native static function putenv(name: String, value: String): Void
+
+        /** 
+            The current module search path . Set to a delimited searchPath string. Warning: This will be changed to an
+            array of paths in a future release.
+            @stability prototype.
+         */
+        native static function get searchPath(): String
+
+        /** 
+            @duplicate App.searchPath
+            Setting a search path will preserve certain system dependant paths that must be present.
+            @param path Search path
+         */
+        native static function set searchPath(path: String): Void
+
+        /**
+         *  Service events
+         *  @param count Count of events to service. Defaults to unlimited.
+         *  @param timeout Timeout to block waiting for an event in milliseconds before returning. If an event occurs, the
+         *      call returns immediately.
+         */
+        native static function serviceEvents(count: Number = -1, timeout: Number = -1): Void
+
+        /**
+         *  Set an environment variable.
+         *  @param env The name of the environment variable to set.
+         *  @param value The new value.
+         *  @return True if the environment variable was successfully set.
+         */
+        # FUTURE
+        native static function setEnv(name: String, value: String): Boolean
+
+        /**
+         *  Sleep the application for the given number of milliseconds
+         *  @param delay Time in milliseconds to sleep. Set to -1 to sleep forever.
+         */
+        native static function sleep(delay: Number = -1): Void
+
+        /**
+         *  Application title name. Multi-word, Camel Case name for the application suitable for display.
+         */
+        static static function get title(): String
+            Config.Title
+
+        /**
+         *  Application version string. Set to a version string of the format Major.Minor.Patch-Build. For example: 1.1.2-3.
+         */
+        static static function get version(): String
+            Config.Version
     }
 }
+
 
 /*
  *  @copy   default
@@ -9844,7 +9940,7 @@ module ejs.sys {
  */
 /************************************************************************/
 /*
- *  End of file "../src/es/sys/GC.es"
+ *  End of file "../src/es/sys/App.es"
  */
 /************************************************************************/
 
@@ -9999,6 +10095,922 @@ module ejs.sys {
 /************************************************************************/
 /*
  *  End of file "../src/es/sys/Cmd.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/sys/Compat.es"
+ */
+/************************************************************************/
+
+/*
+ *  Compat.es -- Compatibility with other JS engines
+ *
+ *  Copyright (c) All Rights Reserved. See details at the end of the file.
+ */
+
+module ejs.sys {
+
+    use default namespace public
+
+    /** @hide */
+    function gc(): Void
+        GC.run 
+
+    /** @hide */
+    function readFile(path: String, encoding: String = null): String
+        Path(path).readString()
+}
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *  
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/sys/Compat.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/sys/Config.es"
+ */
+/************************************************************************/
+
+/*
+ *  Config.es - Configuration settings from ./configure
+ *
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ */
+
+module ejs.sys {
+
+    /* NOTE: These values are updated at run-time by src/types/sys/ejsConfig.c */
+
+    /**
+     *  Config class providing settings for various "configure" program settings.
+     *  @spec ejs
+     *  @stability evolving
+     */
+    native class Config extends Object {
+
+        use default namespace public
+
+        /**
+         *  True if a debug build
+         */
+        static const Debug: Boolean
+
+        /**
+         *  CPU type (eg. i386, ppc, arm)
+         */
+        static const CPU: String
+
+        /**
+         *  Build with database (SQLite) support
+            @hide
+         */
+        static const DB: Boolean
+
+        /**
+         *  Build with E4X support
+            @hide
+         */
+        static const E4X: Boolean
+
+        /**
+         *  Build with floating point support
+            @hide
+         */
+        static const Floating: Boolean
+
+        /**
+         *  Build with HTTP client support 
+            @hide
+         */
+        static const Http: Boolean
+
+        /**
+         *  Language specification level. (ecma|plus|fixed)
+            @hide
+         */
+        static const Lang: String
+
+        /**
+         *  Build with legacy API support
+            @hide
+         */
+        static const Legacy: Boolean
+
+        /**
+         *  Build with multithreading support
+         */
+        static const Multithread: Boolean
+
+        /**
+         *  Number type
+            @hide
+         */
+        static const NumberType: String
+
+        /**
+         *  Operating system version. One of: WIN, LINUX, MACOSX, FREEBSD, SOLARIS
+         */
+        static const OS: String
+
+        /**
+         *  Ejscript product name. Single word name.
+         */
+        static const Product: String
+
+        /**
+         *  Regular expression support.
+         *  @hide
+         */
+        static const RegularExpressions: Boolean
+
+        /**
+         *  Ejscript product title. Multiword title.
+         */
+        static const Title: String
+
+        /**
+         *  Ejscript version. Multiword title. Format is Major.Minor.Patch-Build For example: 1.1.2-1
+         */
+        static const Version: String
+
+        /**
+         *  Installation library directory
+         */
+        static const LibDir: Path
+
+        /**
+         *  Binaries directory
+         */
+        static const BinDir: Path
+
+        /**
+         *  Modules directory
+         */
+        static const ModDir: Path
+    }
+}
+
+/************************************************************************/
+/*
+ *  End of file "../src/es/sys/Config.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/sys/Debug.es"
+ */
+/************************************************************************/
+
+/*
+ *  Debug.es -- Debug class
+ *
+ *  Copyright (c) All Rights Reserved. See details at the end of the file.
+ */
+
+module ejs.sys {
+
+    /**
+     *  Debug configuration class. Singleton class containing the application's debug configuration.
+     *  @spec ejs
+     *  @stability prototype
+     */
+    # FUTURE
+    class Debug {
+
+        use default namespace public
+
+        /**
+         *  Break to the debugger. Suspend execution and break to the debugger.
+         */ 
+        native function breakpoint(): void
+
+        /**
+         *  The current debug mode. This property is read-write. Setting mode to true will put the application in debug 
+         *  mode. When debug mode is enabled, the runtime will typically suspend timeouts and will take other actions 
+         *  to make debugging easier.
+         *  @hide
+         */
+        native function get mode(): Boolean
+
+        /**
+         *  @duplicate Debug.mode
+         *  @param value True to turn debug mode on or off.
+         *  @hide
+         */
+        native function set mode(value: Boolean): void
+    }
+}
+
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *  
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/sys/Debug.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/sys/GC.es"
+ */
+/************************************************************************/
+
+/*
+ *  GC.es -- Garbage collector class
+ *
+ *  Copyright (c) All Rights Reserved. See details at the end of the file.
+ */
+
+module ejs.sys {
+
+    /**
+     *  Garbage collector control class. Singleton class to control operation of the Ejscript garbage collector.
+     *  @spec ejs
+     *  @stability evolving
+     */
+    native class GC {
+
+        use default namespace public
+
+        /**
+         *  Is the garbage collector is enabled. Enabled by default.
+         */
+        native static function get enabled(): Boolean
+
+        /**
+         *  @duplicate GC.enabled
+         *  @param on Set to true to enable the collector.
+         */
+        native static function set enabled(on: Boolean): Void
+
+        /**
+         *  The quota of work to perform before the GC will be invoked. Set to the number of work units that will 
+         *  trigger the GC to run. This roughly corresponds to the number of allocated objects.
+         */
+        native static function get workQuota(): Number
+
+        /**
+         *  @duplicate GC.workQuota
+         *  @param quota The number of work units that will trigger the GC to run. This roughly corresponds to the number
+         *  of allocated objects.
+         */
+        native static function set workQuota(quota: Number): Void
+
+        /**
+         *  Run the garbage collector and reclaim memory allocated to objects and properties that are no longer reachable. 
+         *  When objects and properties are freed, any registered destructors will be called. The run function will run 
+         *  the garbage collector even if the $enable property is set to false. 
+         *  @param deep If set to true, will collect from all generations. The default is to collect only the youngest
+         *      geneartion of objects.
+         */
+        native static function run(deep: Boolean = false): void
+
+    }
+}
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *  
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/sys/GC.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/sys/Logger.es"
+ */
+/************************************************************************/
+
+/*
+    Logger.es - Log file control class
+ *
+    Copyright (c) All Rights Reserved. See details at the end of the file.
+ */
+
+module ejs.sys {
+
+    /**
+        Logger objects provide a convenient and consistent method to capture and store logging information from 
+        applications. The verbosity and scope of the logging can be changed at start-up time. Logs can be sent
+        to various output and storage facilities (console, disk files, etc.) 
+      
+        A logger may have a "parent" logger in order to create hierarchies of loggers for better logging control 
+        and granularity. For example, a logger can be created for each class in a package with all such loggers 
+        having a single parent. Loggers can send log messages to their parent and inherit their parent's log level. 
+        This allows for easier control of verbosity and scope of logging.  
+      
+        A logger may have a "filter", an arbitrary function, that returns true or false depending on whether a 
+        specific message should be logged or not. 
+        @spec ejs
+        @stability prototype
+     */
+    # FUTURE
+    namespace BIG_SPACE
+
+    # FUTURE
+    class Logger {
+
+        use default namespace public
+
+        /**
+            Logging level for inherit level from parent.
+         */
+        static const Inherit: Number = -1
+
+        /**
+            Logging level for no logging.
+         */
+        static const Off: Number = 0
+
+        /**
+            Logging level for most serious errors.
+         */
+        static const Error: Number = 1
+
+        /**
+            Logging level for warnings.
+         */
+        static const Warn: Number = 2
+
+        /**
+            Logging level for informational messages.
+         */
+        static const Info: Number = 3
+
+        /**
+            Logging level for configuration output.
+         */
+        static const Config: Number = 4
+
+        /**
+            Logging level to output all messages.
+         */
+        static const All: Number = 5
+
+        /**
+            Do not output messages to any device.
+         */
+        static const None: Number = 0
+
+        /**
+            Output messages to the console.
+         */
+        static const Console: Number = 0x1
+
+        /**
+            Output messages to a file.
+         */
+        static const LogFile: Number = 0x2
+
+        /**
+            Output messages to an O/S event log.
+         */
+        static const EventLog: Number = 0x4
+
+        /**
+            Output messages to a in-memory store.
+         */
+        static const MemLog: Number = 0x8
+
+        /**
+            Logger constructor.
+            The Logger constructor can create different types of loggers based on the three (optional) arguments. 
+            The logging level can be set in the constructor and also changed at run-time. Where the logger output 
+            goes (e.g. console or file) is statically set. A logger may have a parent logger to provide hierarchical 
+            mapping of loggers to the code structure.
+            @param name Loggers are typically named after the namespace package or class they are associated with.
+            @param level Optional enumerated integer specifying the verbosity.
+            @param output Optional output device(s) to send messages to.
+            @param parent Optional parent logger.
+            @example:
+                var log = new Logger("name", 5, LogFile)
+                log(2, "message")
+         */
+        native function Logger(name: String, level: Number = 0, output: Number = LogFile, parent: Logger = null)
+
+        /**
+            Get the filter function for a logger.
+            @return The filter function.
+         */
+        native function get filter(): Function
+
+        /**
+            Set the filter function for this logger. The filter function is called with the following signature:
+         *
+                function filter(log: Logger, level: Number, msg: String): Boolean
+         *
+            @param function The filter function must return true or false.
+         */
+        native function set filter(filter: Function): void
+
+        /**
+            Get the verbosity setting (level) of this logger.
+            @return The level.
+         */
+        native function get level(): Number
+
+        /**
+            Set the output level of this logger. (And all child loggers who have their logging level set to Inherit.)
+            @param level The next logging level (verbosity).
+         */
+        native function set level(level: Number): void
+
+        /**
+            Get the name of this logger.
+            @return The string name.
+         */
+        native function get name(): String
+
+        /**
+            Set the name for this logger.
+            @param name An optional string name.
+         */
+        native function set name(name: String): void
+
+        /**
+            Get the devices this logger sends messages to.
+            @return The different devices OR'd together.
+         */
+        native function get output(): Number
+
+        /**
+            Set the output devices for this logger.
+            @param name Logically OR'd list of devices.
+         */
+        native function set output(ouput: Number): void
+
+        /**
+            Get the parent of this logger.
+            @return The parent logger.
+         */
+        native function get parent(): Logger
+
+        /**
+            Set the parent logger for this logger.
+            @param parent A logger.
+         */
+        native function set parent(parent: Logger): void
+
+        /**
+            Record a message via a logger. The message level will be compared to the logger setting to determine 
+            whether it will be output to the devices or not. Also, if the logger has a filter function set that 
+            may filter the message out before logging.
+            @param level The level of the message.
+            @param msg The string message to log.
+         */
+        native function log(level: Number, msg: String): void
+
+        /**
+            Convenience method to record a configuration change via a logger.
+            @param msg The string message to log.
+         */
+        native function config(msg: String): void
+
+        /**
+            Convenience method to record an error via a logger.
+            @param msg The string message to log.
+         */
+        native function error(msg: String): void
+
+        /**
+            Convenience method to record an informational message via a logger.
+            @param msg The string message to log.
+         */
+        native function info(msg: String): void
+
+        /**
+            Convenience method to record a warning via a logger.
+            @param msg The string message to log.
+         */
+        native function warn(msg: String): void
+    }
+}
+
+
+/*
+    @copy   default
+    
+    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+    
+    This software is distributed under commercial and open source licenses.
+    You may use the GPL open source license described below or you may acquire 
+    a commercial license from Embedthis Software. You agree to be fully bound 
+    by the terms of either license. Consult the LICENSE.TXT distributed with 
+    this software for full details.
+    
+    This software is open source; you can redistribute it and/or modify it 
+    under the terms of the GNU General Public License as published by the 
+    Free Software Foundation; either version 2 of the License, or (at your 
+    option) any later version. See the GNU General Public License for more 
+    details at: http://www.embedthis.com/downloads/gplLicense.html
+    
+    This program is distributed WITHOUT ANY WARRANTY; without even the 
+    implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+    
+    This GPL license does NOT permit incorporating this software into 
+    proprietary programs. If you are unable to comply with the GPL, you must
+    acquire a commercial license to use this software. Commercial licenses 
+    for this software and support services are available from Embedthis 
+    Software at http://www.embedthis.com 
+    
+    Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/sys/Logger.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/sys/Memory.es"
+ */
+/************************************************************************/
+
+/*
+ *  Memory.es -- Memory statistics
+ *
+ *  Copyright (c) All Rights Reserved. See details at the end of the file.
+ */
+
+module ejs.sys {
+
+    /**
+     *  Singleton class to monitor and report on memory allocation and usage.
+     *  @spec ejs
+     *  @stability evolving
+     */
+    native class Memory {
+
+        use default namespace public
+
+        /**
+         *  Total heap memory currently allocated by the application in bytes. This includes memory currently in use and 
+         *  also memory that has been freed but is still retained by the application for future use. It does not include 
+         *  code, static data or stack memory. If you require these, use the $resident call.
+         */
+        native static function get allocated(): Number
+
+        /**
+         *  Memory redline callback. When the memory redline limit is exceeded, the callback will be invoked. 
+         *  If no callback is defined and the redline limit is exceeded, a MemoryError exception is thrown. This callback
+         *  enables the application detect low memory conditions before they become critical and to recover by freeing 
+         *  memory or to gracefully exit. The callback is invoked with the following signature:
+         *      function callback(size: Number, total: Number): Void
+         *  @param fn Callback function to invoke when the redline limit is exceeded. While the callback is active
+         *      subsequent invocations of the callback are suppressed.
+         */
+        native static function set callback(fn: Function): Void
+
+        /** @hide */
+        native static function get callback(): Void
+
+        /**
+            Maximum amount of heap memory the application may use in bytes. 
+            This defines the upper limit for heap memory usage 
+            by the entire hosting application. If this limit is reached, subsequent memory allocations will fail and 
+            a $MemoryError exception will be thrown. Setting it to zero will allow unlimited memory allocations up 
+            to the system imposed maximum. If $redline is defined and non-zero, the redline callback will be invoked 
+            when the $redline is exceeded.
+         */
+        native static function get maximum(): Number
+
+        /**
+            @duplicate Memory.maximum
+         *  @param value New maximum value in bytes
+         */
+        native static function set maximum(value: Number): Void
+
+        /**
+         *  Peak memory ever used by the application in bytes. This statistic is the maximum value ever attained by 
+         *  $allocated. 
+         */
+        native static function get peak(): Number
+        
+        /**
+            Memory redline value in bytes. When the memory redline limit is exceeded, the redline $callback will be invoked. 
+            If no callback is defined, a MemoryError exception is thrown. The redline limit enables the application detect 
+            low memory conditions before they become critical and to recover by freeing memory or to gracefully exit. 
+            Note: the redline applies to the entire hosting application.
+         */
+        native static function get redline(): Number
+
+        /**
+         *  @duplicate Memory.redline
+         *  @param value New memory redline limit in bytes
+         */
+        native static function set redline(value: Number): Void
+
+        /**
+         *  Application's current resident set in bytes. This is the total memory used to host the application and includes 
+         *  all the the application code, data and heap. It is measured by the O/S.
+         */
+        native static function get resident(): Number
+
+        /**
+         *  Peak stack size ever used by the application in bytes. 
+         */
+        native static function get stack(): Number
+        
+        /**
+         *  System RAM. This is the total amount of RAM installed in the system in bytes
+         */
+        native static function get system(): Number
+        
+        /**
+         *  Prints memory statistics to stdout. This is primarily used during development for performance measurement.
+         */
+        native static function stats(): void
+    }
+}
+
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *  
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/sys/Memory.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/sys/System.es"
+ */
+/************************************************************************/
+
+/*
+ *  System.es - System class
+ *
+ *  Copyright (c) All Rights Reserved. See details at the end of the file.
+ */
+
+module ejs.sys {
+    /**
+     *  System is a utility class providing methods to interact with the operating system.
+     *  @spec ejs
+     *  @stability prototype
+     */
+    native class System {
+
+        use default namespace public
+
+        public static const Bufsize: Number = 1024
+
+        /**
+         *  The fully qualified system hostname
+         */
+        native static function get hostname(): String
+
+        /**
+            Kill the specified process.
+            @param pid Process ID of the process to kill
+            @param signal If pid is greater than zero, the signal is sent to the process whoes ID is pid. If pid is
+                zero, the process is tested but no signal is sent. 
+            @return True if successful
+            @throws IOError if the pid is invalid or if the requesting process does not have sufficient privilege to
+                send the signal.
+            @internal
+         */
+        native static function kill(pid: Number, signal: Number = 2): Boolean
+
+        /**
+         *  Execute a command/program.
+         *  @param cmd Command or program to execute
+         *  @return a text stream connected to the programs standard output.
+         *  @throws IOError if the command exits with non-zero status. 
+         */
+        native static function run(cmd: String): String
+
+        /**
+            Run a program without capturing stdout.
+            @hide
+         */
+        native static function runx(cmd: String): Void
+
+        /** @hide */
+        native static function daemon(cmd: String): Number
+
+        /**
+            Run a command using the system command shell. This allows pipelines and also works better cross platform on
+            Windows Cygwin.
+            @hide
+         */
+        static function sh(args): String {
+            let sh = Cmd.locate("sh") 
+            return System.run(sh + " -c \"" + args.replace(/\\/g, "\\\\") + "\"").trim('\n')
+        }
+
+        /**  TEMP deprecated @hide */
+        static function cmd(args): String
+            sh(args)
+
+        /**  TEMP @hide */
+        native static function exec(args): String
+    }
+}
+
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *  
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/sys/System.es"
  */
 /************************************************************************/
 
@@ -10295,950 +11307,6 @@ module ejs.sys {
 
 /************************************************************************/
 /*
- *  Start of file "../src/es/sys/App.es"
- */
-/************************************************************************/
-
-/*
- *  App.es -- Application configuration and control. (Really controlling the interpreter's environment)
- *
- *  Copyright (c) All Rights Reserved. See details at the end of the file.
- */
-
-module ejs.sys {
-
-    /**
-     *  Application configuration state. The App class is a singleton class object. The App class is accessed via
-     *  the App global type object. It provides  methods to interrogate and control the applications environment including
-     *  the current working directory, application command line arguments, path to the application's executable and
-     *  input and output streams.
-     *  @spec ejs
-     *  @stability evolving
-     */
-    native class App {
-
-        use default namespace public
-
-        /**
-         *  Application command line arguments. Set to an array containing each of the arguments. If the ejs command is 
-         *      invoked as "ejs script arg1 arg2", then args[0] will be "script", args[1] will be "arg1" etc.
-         */
-        native static function get args(): Array
-
-        /**
-         *  The application's current directory
-         */
-        native static function get dir(): Path
-
-        /**
-         *  Change the application's Working directory
-         *  @param value The path to the new working directory
-         */
-        native static function chdir(value: Object): Void
-
-        /**
-         *  The directory containing the application executable
-         */
-        native static function get exeDir(): Path
-
-        /**
-         *  The application executable path
-         */
-        native static function get exePath(): Path
-
-        /**
-         *  The application's standard error file stream
-         */
-        native static function get errorStream(): Stream
-
-        /**
-            Stop the program and exit.
-            @param status The optional exit code to provide the environment. If running inside the ejs command program,
-                the status is used as process exit status.
-         */
-        native static function exit(status: Number = 0): void
-
-        /**
-         *  Get an environment variable.
-         *  @param name The name of the environment variable to retrieve.
-         *  @return The value of the environment variable or null if not found.
-         */
-        native static function getenv(name: String): String
-
-        /**
-         *  The application's standard input file stream
-         */
-        native static function get inputStream(): Stream
-
-        /**
-         *  Application name.  Set to a single word, lower case name for the application.
-         */
-        static function get name(): String
-            Config.Product
-
-        /**
-         *  Control whether an application will exit when global scripts have completed. Setting this to true will cause
-         *  the application to continue servicing events until the $exit method is explicitly called. The default 
-         *  application setting of noexit is false.
-         *  @param exit If true, the application will exit when the last script completes.
-         */
-        native static function noexit(exit: Boolean = true): void
-
-        /**
-         *  The application's standard output file stream
-         */
-        native static function get outputStream(): Stream
-
-        /**
-         *  Update an environment variable.
-         *  @param name The name of the environment variable to retrieve.
-         *  @param value The new value to define for the variable.
-         */
-        native static function putenv(name: String, value: String): Void
-
-        /** 
-            The current module search path . Set to a delimited searchPath string. Warning: This will be changed to an
-            array of paths in a future release.
-            @stability prototype.
-         */
-        native static function get searchPath(): String
-
-        /** 
-            @duplicate App.searchPath
-            Setting a search path will preserve certain system dependant paths that must be present.
-            @param path Search path
-         */
-        native static function set searchPath(path: String): Void
-
-        /**
-         *  Service events
-         *  @param count Count of events to service. Defaults to unlimited.
-         *  @param timeout Timeout to block waiting for an event in milliseconds before returning. If an event occurs, the
-         *      call returns immediately.
-         */
-        native static function serviceEvents(count: Number = -1, timeout: Number = -1): Void
-
-        /**
-         *  Set an environment variable.
-         *  @param env The name of the environment variable to set.
-         *  @param value The new value.
-         *  @return True if the environment variable was successfully set.
-         */
-        # FUTURE
-        native static function setEnv(name: String, value: String): Boolean
-
-        /**
-         *  Sleep the application for the given number of milliseconds
-         *  @param delay Time in milliseconds to sleep. Set to -1 to sleep forever.
-         */
-        native static function sleep(delay: Number = -1): Void
-
-        /**
-         *  Application title name. Multi-word, Camel Case name for the application suitable for display.
-         */
-        static static function get title(): String
-            Config.Title
-
-        /**
-         *  Application version string. Set to a version string of the format Major.Minor.Patch-Build. For example: 1.1.2-3.
-         */
-        static static function get version(): String
-            Config.Version
-    }
-}
-
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *  
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/sys/App.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/sys/System.es"
- */
-/************************************************************************/
-
-/*
- *  System.es - System class
- *
- *  Copyright (c) All Rights Reserved. See details at the end of the file.
- */
-
-module ejs.sys {
-    /**
-     *  System is a utility class providing methods to interact with the operating system.
-     *  @spec ejs
-     *  @stability prototype
-     */
-    native class System {
-
-        use default namespace public
-
-        public static const Bufsize: Number = 1024
-
-        /**
-         *  The fully qualified system hostname
-         */
-        native static function get hostname(): String
-
-        /**
-            Kill the specified process.
-            @param pid Process ID of the process to kill
-            @param signal If pid is greater than zero, the signal is sent to the process whoes ID is pid. If pid is
-                zero, the process is tested but no signal is sent. 
-            @return True if successful
-            @throws IOError if the pid is invalid or if the requesting process does not have sufficient privilege to
-                send the signal.
-            @internal
-         */
-        native static function kill(pid: Number, signal: Number = 2): Boolean
-
-        /**
-         *  Execute a command/program.
-         *  @param cmd Command or program to execute
-         *  @return a text stream connected to the programs standard output.
-         *  @throws IOError if the command exits with non-zero status. 
-         */
-        native static function run(cmd: String): String
-
-        /**
-            Run a program without capturing stdout.
-            @hide
-         */
-        native static function runx(cmd: String): Void
-
-        /** @hide */
-        native static function daemon(cmd: String): Number
-
-        /**
-            Run a command using the system command shell. This allows pipelines and also works better cross platform on
-            Windows Cygwin.
-            @hide
-         */
-        static function sh(args): String {
-            let sh = Cmd.locate("sh") 
-            return System.run(sh + " -c \"" + args.replace(/\\/g, "\\\\") + "\"").trim('\n')
-        }
-
-        /**  TEMP deprecated @hide */
-        static function cmd(args): String
-            sh(args)
-
-        /**  TEMP @hide */
-        native static function exec(args): String
-    }
-}
-
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *  
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/sys/System.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/sys/Logger.es"
- */
-/************************************************************************/
-
-/*
-    Logger.es - Log file control class
- *
-    Copyright (c) All Rights Reserved. See details at the end of the file.
- */
-
-module ejs.sys {
-
-    /**
-        Logger objects provide a convenient and consistent method to capture and store logging information from 
-        applications. The verbosity and scope of the logging can be changed at start-up time. Logs can be sent
-        to various output and storage facilities (console, disk files, etc.) 
-      
-        A logger may have a "parent" logger in order to create hierarchies of loggers for better logging control 
-        and granularity. For example, a logger can be created for each class in a package with all such loggers 
-        having a single parent. Loggers can send log messages to their parent and inherit their parent's log level. 
-        This allows for easier control of verbosity and scope of logging.  
-      
-        A logger may have a "filter", an arbitrary function, that returns true or false depending on whether a 
-        specific message should be logged or not. 
-        @spec ejs
-        @stability prototype
-     */
-    # FUTURE
-    namespace BIG_SPACE
-
-    # FUTURE
-    class Logger {
-
-        use default namespace public
-
-        /**
-            Logging level for inherit level from parent.
-         */
-        static const Inherit: Number = -1
-
-        /**
-            Logging level for no logging.
-         */
-        static const Off: Number = 0
-
-        /**
-            Logging level for most serious errors.
-         */
-        static const Error: Number = 1
-
-        /**
-            Logging level for warnings.
-         */
-        static const Warn: Number = 2
-
-        /**
-            Logging level for informational messages.
-         */
-        static const Info: Number = 3
-
-        /**
-            Logging level for configuration output.
-         */
-        static const Config: Number = 4
-
-        /**
-            Logging level to output all messages.
-         */
-        static const All: Number = 5
-
-        /**
-            Do not output messages to any device.
-         */
-        static const None: Number = 0
-
-        /**
-            Output messages to the console.
-         */
-        static const Console: Number = 0x1
-
-        /**
-            Output messages to a file.
-         */
-        static const LogFile: Number = 0x2
-
-        /**
-            Output messages to an O/S event log.
-         */
-        static const EventLog: Number = 0x4
-
-        /**
-            Output messages to a in-memory store.
-         */
-        static const MemLog: Number = 0x8
-
-        /**
-            Logger constructor.
-            The Logger constructor can create different types of loggers based on the three (optional) arguments. 
-            The logging level can be set in the constructor and also changed at run-time. Where the logger output 
-            goes (e.g. console or file) is statically set. A logger may have a parent logger to provide hierarchical 
-            mapping of loggers to the code structure.
-            @param name Loggers are typically named after the namespace package or class they are associated with.
-            @param level Optional enumerated integer specifying the verbosity.
-            @param output Optional output device(s) to send messages to.
-            @param parent Optional parent logger.
-            @example:
-                var log = new Logger("name", 5, LogFile)
-                log(2, "message")
-         */
-        native function Logger(name: String, level: Number = 0, output: Number = LogFile, parent: Logger = null)
-
-        /**
-            Get the filter function for a logger.
-            @return The filter function.
-         */
-        native function get filter(): Function
-
-        /**
-            Set the filter function for this logger. The filter function is called with the following signature:
-         *
-                function filter(log: Logger, level: Number, msg: String): Boolean
-         *
-            @param function The filter function must return true or false.
-         */
-        native function set filter(filter: Function): void
-
-        /**
-            Get the verbosity setting (level) of this logger.
-            @return The level.
-         */
-        native function get level(): Number
-
-        /**
-            Set the output level of this logger. (And all child loggers who have their logging level set to Inherit.)
-            @param level The next logging level (verbosity).
-         */
-        native function set level(level: Number): void
-
-        /**
-            Get the name of this logger.
-            @return The string name.
-         */
-        native function get name(): String
-
-        /**
-            Set the name for this logger.
-            @param name An optional string name.
-         */
-        native function set name(name: String): void
-
-        /**
-            Get the devices this logger sends messages to.
-            @return The different devices OR'd together.
-         */
-        native function get output(): Number
-
-        /**
-            Set the output devices for this logger.
-            @param name Logically OR'd list of devices.
-         */
-        native function set output(ouput: Number): void
-
-        /**
-            Get the parent of this logger.
-            @return The parent logger.
-         */
-        native function get parent(): Logger
-
-        /**
-            Set the parent logger for this logger.
-            @param parent A logger.
-         */
-        native function set parent(parent: Logger): void
-
-        /**
-            Record a message via a logger. The message level will be compared to the logger setting to determine 
-            whether it will be output to the devices or not. Also, if the logger has a filter function set that 
-            may filter the message out before logging.
-            @param level The level of the message.
-            @param msg The string message to log.
-         */
-        native function log(level: Number, msg: String): void
-
-        /**
-            Convenience method to record a configuration change via a logger.
-            @param msg The string message to log.
-         */
-        native function config(msg: String): void
-
-        /**
-            Convenience method to record an error via a logger.
-            @param msg The string message to log.
-         */
-        native function error(msg: String): void
-
-        /**
-            Convenience method to record an informational message via a logger.
-            @param msg The string message to log.
-         */
-        native function info(msg: String): void
-
-        /**
-            Convenience method to record a warning via a logger.
-            @param msg The string message to log.
-         */
-        native function warn(msg: String): void
-    }
-}
-
-
-/*
-    @copy   default
-    
-    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
-    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
-    
-    This software is distributed under commercial and open source licenses.
-    You may use the GPL open source license described below or you may acquire 
-    a commercial license from Embedthis Software. You agree to be fully bound 
-    by the terms of either license. Consult the LICENSE.TXT distributed with 
-    this software for full details.
-    
-    This software is open source; you can redistribute it and/or modify it 
-    under the terms of the GNU General Public License as published by the 
-    Free Software Foundation; either version 2 of the License, or (at your 
-    option) any later version. See the GNU General Public License for more 
-    details at: http://www.embedthis.com/downloads/gplLicense.html
-    
-    This program is distributed WITHOUT ANY WARRANTY; without even the 
-    implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
-    
-    This GPL license does NOT permit incorporating this software into 
-    proprietary programs. If you are unable to comply with the GPL, you must
-    acquire a commercial license to use this software. Commercial licenses 
-    for this software and support services are available from Embedthis 
-    Software at http://www.embedthis.com 
-    
-    Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/sys/Logger.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/sys/Config.es"
- */
-/************************************************************************/
-
-/*
- *  Config.es - Configuration settings from ./configure
- *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- */
-
-module ejs.sys {
-
-    /* NOTE: These values are updated at run-time by src/types/sys/ejsConfig.c */
-
-    /**
-     *  Config class providing settings for various "configure" program settings.
-     *  @spec ejs
-     *  @stability evolving
-     */
-    native class Config extends Object {
-
-        use default namespace public
-
-        /**
-         *  True if a debug build
-         */
-        static const Debug: Boolean
-
-        /**
-         *  CPU type (eg. i386, ppc, arm)
-         */
-        static const CPU: String
-
-        /**
-         *  Build with database (SQLite) support
-            @hide
-         */
-        static const DB: Boolean
-
-        /**
-         *  Build with E4X support
-            @hide
-         */
-        static const E4X: Boolean
-
-        /**
-         *  Build with floating point support
-            @hide
-         */
-        static const Floating: Boolean
-
-        /**
-         *  Build with HTTP client support 
-            @hide
-         */
-        static const Http: Boolean
-
-        /**
-         *  Language specification level. (ecma|plus|fixed)
-            @hide
-         */
-        static const Lang: String
-
-        /**
-         *  Build with legacy API support
-            @hide
-         */
-        static const Legacy: Boolean
-
-        /**
-         *  Build with multithreading support
-         */
-        static const Multithread: Boolean
-
-        /**
-         *  Number type
-            @hide
-         */
-        static const NumberType: String
-
-        /**
-         *  Operating system version. One of: WIN, LINUX, MACOSX, FREEBSD, SOLARIS
-         */
-        static const OS: String
-
-        /**
-         *  Ejscript product name. Single word name.
-         */
-        static const Product: String
-
-        /**
-         *  Regular expression support.
-         *  @hide
-         */
-        static const RegularExpressions: Boolean
-
-        /**
-         *  Ejscript product title. Multiword title.
-         */
-        static const Title: String
-
-        /**
-         *  Ejscript version. Multiword title. Format is Major.Minor.Patch-Build For example: 1.1.2-1
-         */
-        static const Version: String
-
-        /**
-         *  Installation library directory
-         */
-        static const LibDir: Path
-
-        /**
-         *  Binaries directory
-         */
-        static const BinDir: Path
-
-        /**
-         *  Modules directory
-         */
-        static const ModDir: Path
-    }
-}
-
-/************************************************************************/
-/*
- *  End of file "../src/es/sys/Config.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/sys/Memory.es"
- */
-/************************************************************************/
-
-/*
- *  Memory.es -- Memory statistics
- *
- *  Copyright (c) All Rights Reserved. See details at the end of the file.
- */
-
-module ejs.sys {
-
-    /**
-     *  Singleton class to monitor and report on memory allocation and usage.
-     *  @spec ejs
-     *  @stability evolving
-     */
-    native class Memory {
-
-        use default namespace public
-
-        /**
-         *  Total heap memory currently allocated by the application in bytes. This includes memory currently in use and 
-         *  also memory that has been freed but is still retained by the application for future use. It does not include 
-         *  code, static data or stack memory. If you require these, use the $resident call.
-         */
-        native static function get allocated(): Number
-
-        /**
-         *  Memory redline callback. When the memory redline limit is exceeded, the callback will be invoked. 
-         *  If no callback is defined and the redline limit is exceeded, a MemoryError exception is thrown. This callback
-         *  enables the application detect low memory conditions before they become critical and to recover by freeing 
-         *  memory or to gracefully exit. The callback is invoked with the following signature:
-         *      function callback(size: Number, total: Number): Void
-         *  @param fn Callback function to invoke when the redline limit is exceeded. While the callback is active
-         *      subsequent invocations of the callback are suppressed.
-         */
-        native static function set callback(fn: Function): Void
-
-        /** @hide */
-        native static function get callback(): Void
-
-        /**
-            Maximum amount of heap memory the application may use in bytes. 
-            This defines the upper limit for heap memory usage 
-            by the entire hosting application. If this limit is reached, subsequent memory allocations will fail and 
-            a $MemoryError exception will be thrown. Setting it to zero will allow unlimited memory allocations up 
-            to the system imposed maximum. If $redline is defined and non-zero, the redline callback will be invoked 
-            when the $redline is exceeded.
-         */
-        native static function get maximum(): Number
-
-        /**
-            @duplicate Memory.maximum
-         *  @param value New maximum value in bytes
-         */
-        native static function set maximum(value: Number): Void
-
-        /**
-         *  Peak memory ever used by the application in bytes. This statistic is the maximum value ever attained by 
-         *  $allocated. 
-         */
-        native static function get peak(): Number
-        
-        /**
-            Memory redline value in bytes. When the memory redline limit is exceeded, the redline $callback will be invoked. 
-            If no callback is defined, a MemoryError exception is thrown. The redline limit enables the application detect 
-            low memory conditions before they become critical and to recover by freeing memory or to gracefully exit. 
-            Note: the redline applies to the entire hosting application.
-         */
-        native static function get redline(): Number
-
-        /**
-         *  @duplicate Memory.redline
-         *  @param value New memory redline limit in bytes
-         */
-        native static function set redline(value: Number): Void
-
-        /**
-         *  Application's current resident set in bytes. This is the total memory used to host the application and includes 
-         *  all the the application code, data and heap. It is measured by the O/S.
-         */
-        native static function get resident(): Number
-
-        /**
-         *  Peak stack size ever used by the application in bytes. 
-         */
-        native static function get stack(): Number
-        
-        /**
-         *  System RAM. This is the total amount of RAM installed in the system in bytes
-         */
-        native static function get system(): Number
-        
-        /**
-         *  Prints memory statistics to stdout. This is primarily used during development for performance measurement.
-         */
-        native static function stats(): void
-    }
-}
-
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *  
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/sys/Memory.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/sys/Debug.es"
- */
-/************************************************************************/
-
-/*
- *  Debug.es -- Debug class
- *
- *  Copyright (c) All Rights Reserved. See details at the end of the file.
- */
-
-module ejs.sys {
-
-    /**
-     *  Debug configuration class. Singleton class containing the application's debug configuration.
-     *  @spec ejs
-     *  @stability prototype
-     */
-    # FUTURE
-    class Debug {
-
-        use default namespace public
-
-        /**
-         *  Break to the debugger. Suspend execution and break to the debugger.
-         */ 
-        native function breakpoint(): void
-
-        /**
-         *  The current debug mode. This property is read-write. Setting mode to true will put the application in debug 
-         *  mode. When debug mode is enabled, the runtime will typically suspend timeouts and will take other actions 
-         *  to make debugging easier.
-         *  @hide
-         */
-        native function get mode(): Boolean
-
-        /**
-         *  @duplicate Debug.mode
-         *  @param value True to turn debug mode on or off.
-         *  @hide
-         */
-        native function set mode(value: Boolean): void
-    }
-}
-
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *  
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/sys/Debug.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
  *  Start of file "../src/es/sys/Worker.es"
  */
 /************************************************************************/
@@ -11451,74 +11519,6 @@ module ejs.sys {
 
 /************************************************************************/
 /*
- *  Start of file "../src/es/sys/Compat.es"
- */
-/************************************************************************/
-
-/*
- *  Compat.es -- Compatibility with other JS engines
- *
- *  Copyright (c) All Rights Reserved. See details at the end of the file.
- */
-
-module ejs.sys {
-
-    use default namespace public
-
-    /** @hide */
-    function gc(): Void
-        GC.run 
-
-    /** @hide */
-    function readFile(path: String, encoding: String = null): String
-        Path(path).readString()
-}
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *  
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/sys/Compat.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
  *  Start of file "../src/es/web/Cache.es"
  */
 /************************************************************************/
@@ -11607,6 +11607,2216 @@ module ejs.web {
 /************************************************************************/
 /*
  *  End of file "../src/es/web/Cache.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/web/connectors/GoogleConnector.es"
+ */
+/************************************************************************/
+
+/**
+ *	GoogleConnector.es -- View connector for the Google Visualization library
+ */
+
+module ejs.web {
+
+    /**
+        @hide
+     */
+	class GoogleConnector {
+
+        use default namespace "ejs.web"
+
+        function GoogleConnector(controller) {
+            // this.controller = controller
+        }
+
+        private var nextId: Number = 0
+
+        private function scriptHeader(kind: String, id: String): Void {
+            write('<script type="text/javascript" src="http://www.google.com/jsapi"></script>')
+            write('<script type="text/javascript">')
+            write('  google.load("visualization", "1", {packages:["' + kind + '"]});')
+            write('  google.setOnLoadCallback(' + 'draw_' + id + ');')
+        }
+
+        /**
+            @hide
+         *  @duplicate ejs.web::View.table
+         */
+		function table(data, options: Object): Void {
+            var id: String = "GoogleTable_" + nextId++
+
+			if (data == null || data.length == 0) {
+				write("<p>No Data</p>")
+				return
+			}
+            let columns: Array = options["columns"]
+
+            scriptHeader("table", id)
+            
+            write('  function ' + 'draw_' + id + '() {')
+			write('    var data = new google.visualization.DataTable();')
+
+            let firstLine: Object = data[0]
+            if (columns) {
+                if (columns[0] != "id") {
+                    columns.insert(0, "id")
+                }
+                for (let i = 0; i < columns.length; ) {
+                    if (firstLine[columns[i]]) {
+                        i++
+                    } else {
+                        columns.remove(i, i)
+                    }
+                }
+            } else {
+                columns = []
+                for (let name in firstLine) {
+                    columns.append(name)
+                }
+            }
+
+            for each (name in columns) {
+                write('    data.addColumn("string", "' + name.toPascal() + '");')
+			}
+			write('    data.addRows(' + data.length + ');')
+
+			for (let row: Object in data) {
+                let col: Number = 0
+                for each (name in columns) {
+                    write('    data.setValue(' + row + ', ' + col + ', "' + data[row][name] + '");')
+                    col++
+                }
+            }
+
+            write('    var table = new google.visualization.Table(document.getElementById("' + id + '"));')
+
+            let goptions = getOptions(options, { 
+                height: null, 
+                page: null,
+                pageSize: null,
+                showRowNumber: null,
+                sort: null,
+                title: null,
+                width: null, 
+            })
+
+            write('    table.draw(data, ' + serialize(goptions) + ');')
+
+            if (options.click) {
+                write('    google.visualization.events.addListener(table, "select", function() {')
+                write('        var row = table.getSelection()[0].row;')
+                write('        window.location = "' + view.makeUrl(options.click, "", options) + '?id=" + ' + 
+                    'data.getValue(row, 0);')
+                write('    });')
+            }
+
+            write('  }')
+            write('</script>')
+
+            write('<div id="' + id + '"></div>')
+		}
+
+        /**
+            @hide
+            @duplicate ejs.web::View.chart
+         */
+		function chart(grid: Array, options: Object): Void {
+            var id: String = "GoogleChart_" + nextId++
+
+			if (grid == null || grid.length == 0) {
+				write("<p>No Data</p>")
+				return
+			}
+
+            let columns: Array = options["columns"]
+
+            scriptHeader("piechart", id)
+            
+            write('  function ' + 'draw_' + id + '() {')
+			write('    var data = new google.visualization.DataTable();')
+
+			let firstLine: Object = grid[0]
+            let col: Number = 0
+            let dataType: String = "string"
+			for (let name: String in firstLine) {
+                if  (columns && columns.contains(name)) {
+                    write('    data.addColumn("' + dataType + '", "' + name.toPascal() + '");')
+                    col++
+                    if (col >= 2) {
+                        break
+                    }
+                    dataType = "number"
+                }
+			}
+			write('    data.addRows(' + grid.length + ');')
+
+			for (let row: Object in grid) {
+                let col2: Number = 0
+				for (let name2: String in grid[row]) {
+                    if  (columns && columns.contains(name2)) {
+                        if (col2 == 0) {
+                            write('    data.setValue(' + row + ', ' + col2 + ', "' + grid[row][name2] + '");')
+                        } else if (col2 == 1) {
+                            write('    data.setValue(' + row + ', ' + col2 + ', ' + grid[row][name2] + ');')
+                        }
+                        //  else break. 
+                        col2++
+                    }
+                }
+            }
+
+            //  PieChart, Table
+            write('    var chart = new google.visualization.PieChart(document.getElementById("' + id + '"));')
+
+            let goptions = getOptions(options, { width: 400, height: 400, is3D: true, title: null })
+            write('    chart.draw(data, ' + serialize(goptions) + ');')
+
+            write('  }')
+            write('</script>')
+
+            write('<div id="' + id + '"></div>')
+		}
+
+        /**
+         *  Parse an option string
+         */
+        private function getOptions(options: Object, defaults: Object): Object {
+            var result: Object = {}
+            for (let word: String in defaults) {
+                if (options[word]) {
+                    result[word] = options[word]
+                } else if (defaults[word]) {
+                    result[word] = defaults[word]
+                }
+            }
+            return result
+        }
+
+        private function write(str: String): Void {
+            view.write(str)
+        }
+	}
+}
+
+
+/*
+ *	@copy	default
+ *	
+ *	Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *	Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *	
+ *	This software is distributed under commercial and open source licenses.
+ *	You may use the GPL open source license described below or you may acquire 
+ *	a commercial license from Embedthis Software. You agree to be fully bound 
+ *	by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *	this software for full details.
+ *	
+ *	This software is open source; you can redistribute it and/or modify it 
+ *	under the terms of the GNU General Public License as published by the 
+ *	Free Software Foundation; either version 2 of the License, or (at your 
+ *	option) any later version. See the GNU General Public License for more 
+ *	details at: http://www.embedthis.com/downloads/gplLicense.html
+ *	
+ *	This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *	implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *	
+ *	This GPL license does NOT permit incorporating this software into 
+ *	proprietary programs. If you are unable to comply with the GPL, you must
+ *	acquire a commercial license to use this software. Commercial licenses 
+ *	for this software and support services are available from Embedthis 
+ *	Software at http://www.embedthis.com 
+ *	
+ *	Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/web/connectors/GoogleConnector.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/web/connectors/HtmlConnector.es"
+ */
+/************************************************************************/
+
+/**
+ *	HtmlConnector.es -- Basic HTML control connector
+ */
+
+module ejs.web {
+
+    require ejs.db
+
+	/**
+	 *	The Html Connector provides bare HTML encoding of Ejscript controls
+        @hide
+	 */
+	class HtmlConnector {
+
+        use default namespace "ejs.web"
+
+        private var nextId: Number = 0
+        private var controller: Controller
+
+        function HtmlConnector(controller) {
+            this.controller = controller
+        }
+
+        /*
+         *  Options to implement:
+         *      method
+         *      update
+         *      confirm     JS confirm code
+         *      condition   JS expression. True to continue
+         *      success
+         *      failure
+         *      query
+         *
+         *  Not implemented
+         *      submit      FakeFormDiv
+         *      complete
+         *      before
+         *      after
+         *      loading
+         *      loaded
+         *      interactive
+         */
+        /**
+         *  Render an asynchronous (ajax) form.
+         *  @param record Initial data
+         *  @param url Action to invoke when the form is submitted. Defaults to "create" or "update" depending on 
+         *      whether the field has been previously saved.
+         *  @param options Optional extra options. See $getOptions for a list of the standard options.
+         *  @option url String Use a URL rather than action and controller for the target url.
+         */
+		function aform(record: Object, url: String, options: Object): Void {
+            if (options.id == undefined) {
+                options.id = "form"
+            }
+            onsubmit = ""
+            if (options.condition) {
+                onsubmit += options.condition + ' && '
+            }
+            if (options.confirm) {
+                onsubmit += 'confirm("' + options.confirm + '"); && '
+            }
+            onsubmit = '$.ajax({ ' +
+                'url: "' + url + '", ' + 
+                'type: "' + options.method + '", '
+
+            if (options.query) {
+                onsubmit += 'data: ' + options.query + ', '
+            } else {
+                onsubmit += 'data: $("#' + options.id + '").serialize(), '
+            }
+
+            if (options.update) {
+                if (options.success) {
+                    onsubmit += 'success: function(data) { $("#' + options.update + '").html(data).hide("slow"); ' + 
+                        options.success + '; }, '
+                } else {
+                    onsubmit += 'success: function(data) { $("#' + options.update + '").html(data).hide("slow"); }, '
+                }
+            } else if (options.success) {
+                onsubmit += 'success: function(data) { ' + options.success + '; } '
+            }
+            if (options.error) {
+                onsubmit += 'error: function(data) { ' + options.error + '; }, '
+            }
+            onsubmit += '}); return false;'
+
+            write('<form action="' + "/User/list" + '"' + getOptions(options) + "onsubmit='" + onsubmit + "' >")
+        }
+
+        /*
+         *  Extra options:
+         *      method
+         *      update
+         *      confirm     JS confirm code
+         *      condition   JS expression. True to continue
+         *      success
+         *      failure
+         *      query
+         *
+         */
+        /** 
+         *  Emit an asynchronous (ajax) link to an action. The URL is constructed from the given action and the 
+         *      current controller. The controller may be overridden by setting the controller option.
+         *  @param text Link text to display
+         *  @param url Action to invoke when the link is clicked
+         *  @param options Optional extra options. See $getOptions for a list of the standard options.
+         *  @option controller String Name of the target controller for the given action
+         *  @option url String Use a URL rather than action and controller for the target url.
+         */
+		function alink(text: String, url: String, options: Object): Void {
+            if (options.id == undefined) {
+                options.id = "alink"
+            }
+            onclick = ""
+            if (options.condition) {
+                onclick += options.condition + ' && '
+            }
+            if (options.confirm) {
+                onclick += 'confirm("' + options.confirm + '"); && '
+            }
+            onclick = '$.ajax({ ' +
+                'url: "' + url + '", ' + 
+                'type: "' + options.method + '", '
+
+            if (options.query) {
+                'data: ' + options.query + ', '
+            }
+
+            if (options.update) {
+                if (options.success) {
+                    onclick += 'success: function(data) { $("#' + options.update + '").html(data); ' + 
+                        options.success + '; }, '
+                } else {
+                    onclick += 'success: function(data) { $("#' + options.update + '").html(data); }, '
+                }
+            } else if (options.success) {
+                onclick += 'success: function(data) { ' + options.success + '; } '
+            }
+            if (options.error) {
+                onclick += 'error: function(data) { ' + options.error + '; }, '
+            }
+            onclick += '}); return false;'
+            write('<a href="' + options.url + '"' + getOptions(options) + "onclick='" + onclick + "' >" + text + '</a>')
+		}
+
+        /**
+         *  @duplicate ejs.web::View.button
+         */
+		function button(value: String, buttonName: String, options: Object): Void {
+            write('<input name="' + buttonName + '" type="submit" value="' + value + '"' + getOptions(options) + ' />')
+        }
+
+        /**
+         *  @duplicate ejs.web::View.buttonLink
+         */
+		function buttonLink(text: String, url: String, options: Object): Void {
+            if (options["data-remote"]) {
+                let attributes = getDataAttributes(options)
+                write('<button ' + attributes + '>' + text + '</button></a>')
+            } else {
+                write('<button onclick="window.location=\'' + url + '\';">' + text + '</button></a>')
+            }
+        }
+
+        /**
+            @hide
+         */
+		function chart(data: Array, options: Object): Void {
+            throw 'HtmlConnector control "chart" not implemented.'
+		}
+
+        /**
+         *  Render an input checkbox. This creates a checkbox suitable for use within an input form. 
+         *  @param name Name of the field to display. This is used to create a HTML "name" and "id" attribute for the 
+         *      input element. If used inside a model form, it is the field name in the model containing the checkbox
+         *      value to display. If used without a model, the value to display should be passed via options.value. 
+         *  @param value Value to display
+         *  @param submitValue Value to submit if checked. Defaults to "true"
+         *  @param options Optional extra options. See $getOptions for a list of the standard options.
+         */
+		function checkbox(name: String, value: String, submitValue: String, options: Object): Void {
+            let checked = (value == submitValue) ? ' checked="yes" ' : ''
+            write('<input name="' + name + '" type="checkbox" "' + getOptions(options) + checked + 
+                '" value="' + submitValue + '" />')
+            write('<input name="' + name + '" type="hidden" "' + getOptions(options) + '" value="" />')
+        }
+
+        /**
+         *  @duplicate ejs.web::View.endform
+         */
+		function endform(): Void {
+            write('</form>')
+        }
+
+        /** 
+         *  Emit a flash message area. 
+         *  @param kind Kind of flash messages to display. 
+         *  @param msg Flash message to display
+         *  @param options Optional extra options. See $getOptions for a list of the standard options.
+         *  @option retain Number. Number of seconds to retain the message. If <= 0, the message is retained until another
+         *      message is displayed. Default is 0.
+         *  @example
+         *      <% flash("status") %>
+         *      <% flash() %>
+         *      <% flash(["error", "warning"]) %>
+         */
+		function flash(kind: String, msg: String, options: Object): Void {
+            write('<div' + getOptions(options) + '>' + msg + '</div>\r\n')
+            if (kind == "inform") {
+                write('<script>$(document).ready(function() {
+                        $("div.-ejs-flashInform").animate({opacity: 1.0}, 2000).hide("slow");});
+                    </script>')
+            }
+		}
+
+        /**
+         *  Render a form.
+         *  @param record Model record to edit
+         *  @param url Action to invoke when the form is submitted. Defaults to "create" or "update" depending on 
+         *      whether the field has been previously saved.
+         *  @param options Optional extra options. See $getOptions for a list of the standard options.
+         *  @option url String Use a URL rather than action and controller for the target url.
+         */
+		function form(record: Object, url: String, options: Object): Void {
+            write('<form method="post" action="' + url + '"' + getOptions(options) + ' xonsubmit="ejs.fixCheckboxes();">')
+//          write('<input name="id" type="hidden" value="' + record.id + '" />')
+        }
+
+        /**
+         *  @duplicate ejs.web::View.image
+         */
+        function image(src: String, options: Object): Void {
+			write('<img src="' + src + '"' + getOptions(options) + '/>')
+        }
+
+        /**
+         *  @duplicate ejs.web::View.label
+         */
+        function label(text: String, options: Object): Void {
+            write('<span ' + getOptions(options) + ' type="' + getTextKind(options) + '">' +  text + '</span>')
+        }
+
+        /** 
+         *  Emit a link to an action. The URL is constructed from the given action and the current controller. The controller
+         *  may be overridden by setting the controller option.
+         *  @param text Link text to display
+         *  @param action Action to invoke when the link is clicked
+         *  @param options Optional extra options. See $getOptions for a list of the standard options.
+         *  @option controller String Name of the target controller for the given action
+         *  @option url String Use a URL rather than action and controller for the target url.
+         */
+		function link(text: String, action: String, options: Object): Void {
+			write('<a href="' + action + '"' + getOptions(options) + '>' + text + '</a>')
+		}
+
+        /**
+         *  @duplicate ejs.web::View.extlink
+         */
+		function extlink(text: String, url: String, options: Object): Void {
+			write('<a href="' + url + '"' + getOptions(options) + '>' + text + '</a>')
+		}
+
+        /**
+         *  Emit a selection list. 
+         *  @param field Name of the field to display. This is used to create a HTML "name" and "id" attribute for the 
+         *      input element. If used inside a model form, it is the field name in the model containing the list item to
+         *      select. If used without a model, the value to select should be passed via options.value. 
+         *  @param choices Choices to select from. This can be an array list where each element is displayed and the value 
+         *      returned is an element index (origin zero). It can also be an array of array tuples where the first 
+         *      tuple entry is the value to display and the second is the value to send to the app. Or it can be an 
+         *      array of objects such as those returned from a table lookup. If choices is null, the $field value is 
+         *      used to construct a model class name to use to return a data grid containing an array of row objects. 
+         *      The first non-id field is used as the value to display.
+         *  @param defaultValue Current value
+         *  @params options Extra options
+         *  Examples:
+         *      list("stockId", Stock.stockList) 
+         *      list("low", ["low", "med", "high"])
+         *      list("low", [["low", "3"], ["med", "5"], ["high", "9"]])
+         *      list("low", [{low: 3}, {med: 5}, {high: 9}])
+         *      list("Stock Type")                          Will invoke StockType.findAll() to do a table lookup
+         */
+		function list(field: String, choices: Object, defaultValue: String, options: Object): Void {
+            write('<select name="' + field + '" ' + getOptions(options) + '>')
+            let isSelected: Boolean
+            let i = 0
+            for each (choice in choices) {
+                if (choice is Array) {
+                    isSelected = (choice[0] == defaultValue) ? ' selected="yes"' : ''
+                    write('  <option value="' + choice[0] + '"' + isSelected + '>' + choice[1] + '</option>')
+                } else {
+                    if (choice && choice.id) {
+                        for (field in choice) {
+                            isSelected = (choice.id == defaultValue) ? ' selected="yes"' : ''
+                            if (field != "id") {
+                                write('  <option value="' + choice.id + '"' + isSelected + '>' + choice[field] + '</option>')
+                                done = true
+                                break
+                            }
+                        }
+                    } else {
+                        isSelected = (choice == defaultValue) ? ' selected="yes"' : ''
+                        write('  <option value="' + choice + '"' + isSelected + '>' + choice + '</option>')
+                    }
+                }
+                i++
+            }
+            write('</select>')
+        }
+
+        /**
+         *  @duplicate ejs.web::View.mail
+         */
+		function mail(nameText: String, address: String, options: Object): Void  {
+			write('<a href="mailto:' + address + '" ' + getOptions(options) + '>' + nameText + '</a>')
+		}
+
+        /**
+         *  @duplicate ejs.web::View.progress
+            @hide
+         */
+		function progress(initialData: Array, options: Object): Void {
+            write('<p>' + initialData + '%</p>')
+		}
+
+        //  Emit: <input name ="model.name" id="id" class="class" type="radio" value="text"
+        /** 
+         *  Emit a radio autton. The URL is constructed from the given action and the current controller. The controller
+         *      may be overridden by setting the controller option.
+         *  @param name Name of the field to display. This is used to create a HTML "name" and "id" attribute for the 
+         *      input element. If used inside a model form, it is the field name in the model containing the radio data to
+         *      display. If used without a model, the value to display should be passed via options.value. 
+            @param selected Selected option
+         *  @param choices Array or object containing the option values. If array, each element is a radio option. If an 
+         *      object hash, then they property name is the radio text to display and the property value is what is returned.
+         *  @param action Action to invoke when the button is clicked or invoked
+         *  @param options Optional extra options. See $getOptions for a list of the standard options.
+         *  @option controller String Name of the target controller for the given action
+         *  @option value String Name of the option to select by default
+         *  @example
+         *      radio("priority", ["low", "med", "high"])
+         *      radio("priority", {low: 0, med: 1, high: 2})
+         *      radio(priority, Message.priorities)
+         */
+        function radio(name: String, selected: String, choices: Object, options: Object): Void {
+            let checked: String
+            if (choices is Array) {
+                for each (v in choices) {
+                    checked = (v == selected) ? "checked" : ""
+                    write(v + ' <input type="radio" name="' + name + '"' + getOptions(options) + 
+                        ' value="' + v + '" ' + checked + ' />\r\n')
+                }
+            } else {
+                for (item in choices) {
+                    checked = (choices[item] == selected) ? "checked" : ""
+                    write(item + ' <input type="radio" name="' + name + '"' + getOptions(options) + 
+                        ' value="' + choices[item] + '" ' + checked + ' />\r\n')
+                }
+            }
+        }
+
+		/** 
+		 *	@duplicate ejs.web::View.script
+		 */
+		function script(url: String, options: Object): Void {
+            write('<script src="' + url + '" type="text/javascript"></script>\r\n')
+		}
+
+        /**
+         *  @duplicate ejs.web::View.status
+            @hide
+         */
+		function status(data: Array, options: Object): Void {
+            write('<p>' + data + '</p>\r\n')
+        }
+
+		/** 
+		 *	@duplicate ejs.web::View.stylesheet
+		 */
+		function stylesheet(url: String, options: Object): Void {
+            write('<link rel="stylesheet" type="text/css" href="' + url + '" />\r\n')
+		}
+
+        /**
+         *  @duplicate ejs.web::View.tabs
+         */
+		function tabs(initialData: Array, options: Object): Void {
+            write('<div class="-ejs-tabs">\r\n')
+            write('   <ul>\r\n')
+            for each (t in initialData) {
+                for (name in t) {
+                    let url = t[name]
+                    if (options["data-remote"]) {
+                        write('      <li data-remote="' + url + '">' + name + '</li>\r\n')
+                    } else {
+                        write('      <li onclick="window.location=\'' + url + '\'"><a href="' + url + '">' + name + '</a></li>\r\n')
+                    }
+                }
+            }
+            write('    </ul>')
+            write('</div>')
+        }
+
+        private function getColumns(data, options: Object): Object {
+            let columns
+            if (options.columns) {
+                if (options.columns is Array) {
+                    columns = {}
+                    for each (name in options.columns) {
+                        columns[name] = name
+                    }
+                } else {
+                    columns = options.columns
+                }
+            } else {
+                /*
+                 *  No supplied columns. Infer from data
+                 */
+                columns = {}
+                if (data is Array) {
+                    for (let name in data[0]) {
+                        if (name == "id" && !options.showId) continue
+                        columns[name] = name
+                    }
+                }
+            }
+            return columns
+        }
+    
+/*
+        private function getSort(columns: Object, options: Object): Array {
+            let sort = options.sort || true
+            if (!sort) return [-1, 0]
+            let sortCol = -1 
+            let sortOrder = 0
+            if (options.sort) {
+                let col = 0
+                for (name in columns) {
+                    if (name == options.sort) {
+                        sortCol = col
+                        sortOrder = (options.sortOrder.toLower().contains("asc")) ? 0 : 1
+                        break
+                    }
+                    col++
+                }
+            }
+            if (sortCol < 0) {
+                col = 0
+                for each (column in columns) {
+                    if (column.sort) {
+                        sortCol = col
+                        sortOrder = (column.sort.toLower().contains("asc")) ? 0 : 1
+                        break
+                    }
+                }
+            }
+            return [sortCol, sortOrder]
+        }
+*/
+
+        /**
+         *  @duplicate ejs.web::View.table
+         */
+		function table(data, options: Object = null): Void {
+            let originalOptions = options
+            let tableId = view.getNextId()
+
+            if (data is Array) {
+                if (data.length == 0) {
+                    write("<p>No Data</p>")
+                    return
+                }
+            } else if (!(data is Array) && data is Object) {
+                data = [data]
+			}
+
+            options = (originalOptions && originalOptions.clone()) || {}
+            let columns = getColumns(data, options)
+
+            let refresh = options.refresh || 10000
+            let sortOrder = options.sortOrder || ""
+            let sort = options.sort
+            if (sort == undefined) sort = true
+            let attributes = getDataAttributes(options)
+
+            if (!options.ajax) {
+                let url = (data is String) ? data : null
+                url ||= options.data
+                write('  <script type="text/javascript">\r\n' +
+                    '   $(function() { $("#' + tableId + '").eTable({ refresh: ' + refresh + 
+                    ', sort: "' + sort + '", sortOrder: "' + sortOrder + '"' + 
+                    ((url) ? (', url: "' + url + '"'): "") + 
+                    '})});\r\n' + 
+                    '  </script>\r\n')
+                if (data is String) {
+                    /* Data is an action method */
+                    write('<table id="' + tableId + '" class="-ejs-table"' + attributes + '></table>\r\n')
+                    return
+                }
+            } else {
+                write('  <script type="text/javascript">$("#' + tableId + '").eTableSetOptions({ refresh: ' + refresh +
+                    ', sort: "' + sort + '", sortOrder: "' + sortOrder + '"})' + ';</script>\r\n')
+            }
+			write('  <table id="' + tableId + '" class="-ejs-table ' + (options.styleTable || "" ) + '"' + 
+                attributes + '>\r\n')
+
+            /*
+             *  Table title and column headings
+             */
+            if (options.showHeader != false) {
+                write('    <thead class="' + (options.styleHeader || "") + '">\r\n')
+                if (options.title) {
+                    if (columns.length < 2) {
+                        write('  <tr><td>' + options.title + ' ' + '<img src="' + controller.appUrl + 
+                            '/web/images/green.gif" ' + 'class="-ejs-table-download -ejs-clickable" onclick="$(\'#' + 
+                            tableId + '\').eTableToggleRefresh();" />\r\n  </td></tr>\r\n')
+                    } else {
+                        write('  <tr><td colspan="' + (columns.length - 1) + '">' + options.title + 
+                            '</td><td class="right">' + '<img src="' + controller.appUrl + '/web/images/green.gif" ' + 
+                            'class="-ejs-table-download -ejs-clickable" onclick="$(\'#' + tableId + 
+                            '\').eTableToggleRefresh();" />\r\n  </td></tr>\r\n')
+                    }
+                }
+                /*
+                 *  Emit column headings
+                 */
+                if (columns) {
+                    write('    <tr>\r\n')
+                    for (let name in columns) {
+                        if (name == null) continue
+                        let header = (columns[name].header) ? (columns[name].header) : name.toPascal()
+                        let width = (columns[name].width) ? ' width="' + columns[name].width + '"' : ''
+                        write('    <th ' + width + '>' + header + '</th>\r\n')
+                    }
+                }
+                write("     </tr>\r\n    </thead>\r\n")
+            }
+
+            let styleBody = options.styleBody || ""
+            write('    <tbody class="' + styleBody + '">\r\n')
+
+            let row: Number = 0
+
+			for each (let r: Object in data) {
+                let url = null
+                let urlOptions = { controller: options.controller, query: options.query }
+                if (options.click) {
+                    urlOptions.query = (options.query is Array) ? options.query[row] : options.query
+                    if (options.click is Array) {
+                        if (options.click[row] is String) {
+                            url = view.makeUrl(options.click[row], r.id, urlOptions)
+                        }
+                    } else {
+                        url = view.makeUrl(options.click, r.id, urlOptions)
+                    }
+                }
+                let odd = options.styleOddRow || "-ejs-oddRow"
+                let even = options.styleOddRow || "-ejs-evenRow"
+                styleRow = ((row % 2) ? odd : even) || ""
+                if (options.styleRows) {
+                    styleRow += " " + (options.styleRows[row] || "")
+                }
+                if (url) {
+                    write('    <tr class="' + styleRow + 
+                        '" onclick="window.location=\'' + url + '\';">\r\n')
+                } else {
+                let dataId = (options["data-remote"] && r.id) ? (' data-id="' + r.id + '"') : ''
+                    write('    <tr class="' + styleRow + '"' + dataId + '>\r\n')
+                }
+
+                let col = 0
+				for (name in columns) {
+                    if (name == null) {
+                        continue
+                    }
+                    let column = columns[name]
+                    let styleCell: String = ""
+
+                    if (options.styleColumns) {
+                        styleCell = options.styleColumns[col] || ""
+                    }
+                    if (column.style) {
+                        styleCell += " " + column.style
+                    }
+                    if (options.styleCells && options.styleCells[row]) {
+                        styleCell += " " + (options.styleCells[row][col] || "")
+                    }
+                    styleCell = styleCell.trim()
+                    data = view.getValue(r, name, { render: column.render, formatter: column.formatter } )
+
+                    let align = ""
+                    if (column.align) {
+                        align = ' align="' + column.align + '"'
+                    }
+                    let cellUrl
+                    if (options.click is Array && options.click[0] is Array) {
+                        if (options.query is Array) {
+                            if (options.query[0] is Array) {
+                                urlOptions.query = options.query[row][col]
+                            } else {
+                                urlOptions.query = options.query[row]
+                            }
+                        } else {
+                            urlOptions.query = options.query
+                        }
+                        cellUrl = view.makeUrl(options.click[row][col], r.id, urlOptions)
+                    }
+					styleCell = styleCell.trim()
+                    if (cellUrl) {
+                        write('    <td class="' + styleCell + '"' + align + 
+                            ' xonclick="window.location=\'' + cellUrl + '\';"><a href="' + cellUrl + '">' + 
+                            data + '</a></td>\r\n')
+                    } else {
+                        write('    <td class="' + styleCell + '"' + align + '>' + data + '</td>\r\n')
+                    }
+                    col++
+				}
+                row++
+				write('    </tr>\r\n')
+			}
+			write('    </tbody>\r\n  </table>\r\n')
+		}
+
+        //  Emit: <input name ="model.name" id="id" class="class" type="text|hidden|password" value="text"
+        /**
+         *  Render a text input field as part of a form.
+         *  @param name Name of the field to display. This is used to create a HTML "name" and "id" attribute for the 
+         *      input element. If used inside a model form, it is the field name in the model containing the text data to
+         *      display. If used without a model, the value to display should be passed via options.value. 
+            @param value Text to display
+         *  @param options Optional extra options. See $getOptions for a list of the standard options.
+         *  @option escape Boolean Escape the text before rendering. This converts HTML reserved tags and delimiters into
+         *      an encoded form.
+         *  @option style String CSS Style to use for the control
+         *  @option visible Boolean Make the control visible. Defaults to true.
+         *  @examples
+         *      <% text("name") %>
+         */
+        function text(name: String, value: String, options: Object): Void {
+            write('<input name="' + name + '" ' + getOptions(options) + ' type="' + getTextKind(options) + 
+                '" value="' + value + '" />')
+        }
+
+        // Emit: <textarea name ="model.name" id="id" class="class" type="text|hidden|password" value="text"
+        /**
+         *  Render a text area
+         *  @param name Name of the field to display. This is used to create a HTML "name" and "id" attribute for the 
+         *      input element. If used inside a model form, it is the field name in the model containing the text data to
+         *      display. If used without a model, the value to display should be passed via options.value. 
+            @param value Text to display
+         *  @option Boolean escape Escape the text before rendering. This converts HTML reserved tags and delimiters into
+         *      an encoded form.
+         *  @param options Optional extra options. See $getOptions for a list of the standard options.
+         *  @option data String URL or action to get data 
+         *  @option numCols Number number of text columns
+         *  @option numRows Number number of text rows
+         *  @option style String CSS Style to use for the control
+         *  @option visible Boolean Make the control visible. Defaults to true.
+         *  @examples
+         *      <% textarea("name") %>
+         */
+        function textarea(name: String, value: String, options: Object): Void {
+            numCols = options.numCols
+            if (numCols == undefined) {
+                numCols = 60
+            }
+            numRows = options.numRows
+            if (numRows == undefined) {
+                numRows = 10
+            }
+            write('<textarea name="' + name + '" type="' + getTextKind(options) + '" ' + getOptions(options) + 
+                ' cols="' + numCols + '" rows="' + numRows + '">' + value + '</textarea>')
+        }
+
+        /**
+         *  @duplicate ejs.web::View.tree
+            @hide
+         */
+        function tree(initialData: Array, options: Object): Void {
+            throw 'HtmlConnector control "tree" not implemented.'
+        }
+
+        private function getTextKind(options): String {
+            var kind: String
+
+            if (options.password) {
+                kind = "password"
+            } else if (options.hidden) {
+                kind = "hidden"
+            } else {
+                kind = "text"
+            }
+            return kind
+        }
+
+		private function getOptions(options: Object): String
+            view.getOptions(options)
+
+        private function write(str: String): Void
+            view.write(str)
+
+        private function getDataAttributes(options): String {
+            let attributes = ""
+            if (options["data-remote"]) {
+                attributes += ' data-remote="' + options["data-remote"] + '"'
+            }
+            if (options["data-apply"]) {
+                attributes += ' data-apply="' + options["data-apply"] + '"'
+            }
+            if (options["data-id"]) {
+                attributes += ' data-id="' + options["data-id"] + '"'
+            }
+            return attributes
+        }
+	}
+}
+
+
+/*
+ *	@copy	default
+ *	
+ *	Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *	Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *	
+ *	This software is distributed under commercial and open source licenses.
+ *	You may use the GPL open source license described below or you may acquire 
+ *	a commercial license from Embedthis Software. You agree to be fully bound 
+ *	by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *	this software for full details.
+ *	
+ *	This software is open source; you can redistribute it and/or modify it 
+ *	under the terms of the GNU General Public License as published by the 
+ *	Free Software Foundation; either version 2 of the License, or (at your 
+ *	option) any later version. See the GNU General Public License for more 
+ *	details at: http://www.embedthis.com/downloads/gplLicense.html
+ *	
+ *	This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *	implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *	
+ *	This GPL license does NOT permit incorporating this software into 
+ *	proprietary programs. If you are unable to comply with the GPL, you must
+ *	acquire a commercial license to use this software. Commercial licenses 
+ *	for this software and support services are available from Embedthis 
+ *	Software at http://www.embedthis.com 
+ *	
+ *	Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/web/connectors/HtmlConnector.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/web/Controller.es"
+ */
+/************************************************************************/
+
+/**
+ *  Controller.es -- Ejscript Controller class as part of the MVC framework. Also contains control helpers for views.
+ */
+
+module ejs.web {
+
+    require ejs.db
+
+    namespace action = "action"                 /* Namespace for all action methods */
+
+    /**
+     *  Current view in the web framework
+     *  @spec ejs
+     */
+    var view: View
+
+    /**
+     *  Web framework controller. Part of the Ejscript web MVC framework. Controller objects are not instantiated by
+     *  users but are created internally by the web framework.
+     *  @spec ejs
+     *  @stability prototype
+     */
+    class Controller {
+        /*
+         *  Define properties and functions (by default) in the ejs.web namespace so that user controller variables 
+         *  don't clash. Override with "public" the specific properties that must be copied to views.
+         */
+        use default namespace "ejs.web"
+
+        /**
+         *  Name of the action being run
+         */
+        public var actionName:  String 
+        private var originalActionName:  String 
+
+        /**
+         *  Stores application global data. The application array provides a means to store persistent information 
+         *  to be shared across all clients using an application. Objects and variables stored in the application 
+         *  array will live until either explicitly deleted or the web server exits. The application array does not 
+         *  persist over system reboots. The elements are User defined.
+         *  NOTE: Not yet implemented.
+         */
+        // public var application: Object
+
+        public var absUrl:      String
+
+        /**
+         *  Relative URL for the application. Does not include the URL scheme or host name portion.
+         */
+        public var appUrl:      String
+
+        /**
+         *   Lower case controller name 
+         */
+        public var controllerName: String
+
+        /**
+         *  Web application configuration. This is initialized from the config *.ecf files.
+         */
+        public var config:      Object
+
+        /**
+         *  Flash messages to display on the next screen
+         *      "inform"        Informational / postitive feedback (note)
+         *      "message"       Neutral feedback (reminders, suggestions...)
+         *      "warning"       Negative feedback (Warnings and errors)
+         *      "error"         Negative errors (Warnings and errors)
+         */
+        public var flash:       Object
+
+        /**
+         *  Physical home directory of the application
+         */
+        public var home:        String
+
+        /**
+         *  Host object
+         */
+        public var host:        Host
+
+        /**
+         *  Form parameters. 
+         */
+        public var params:      Object
+
+        /**
+         *  The request object stores details of the incoming client's request
+         */
+        public var request:     Request
+
+        /**
+         *  The response object stores details of the response going back to the client.
+         */
+        public var response:    Response
+
+        /**
+         *  Stores session state information. The session array will be created automatically if SessionAutoCreate 
+         *  is defined or if a session is started via the useSession() or createSession() functions. Sessions are 
+         *  shared among requests that come from a single client. This may mean that multiple requests access the 
+         *  same session concurrently. Ejscript ensures that such accesses are serialized. The elements are user defined.
+         */
+        public var session:     Object
+
+        private var isApp:      Boolean
+        private var rendered:   Boolean
+        private var redirected: Boolean
+        private var events:     Dispatcher
+
+        private var _afterFilters: Array
+        private var _beforeFilters: Array
+        private var _wrapFilters: Array
+
+        /**
+         *  Controller initialization. This is specially hand-crafted by the hosting web server so that it runs
+         *  before the sub-classing constructors.
+         *  @param isApp True if the request if for an MVC application
+         *  @param appDir Set to the top level directory containing the application
+         *  @param appUrl URL that points to the application
+         *  @param session Session state object
+         *  @param host Host object
+         *  @param request Request object
+         *  @param response Response object
+         */
+        function initialize(isApp: Boolean, appDir: String, appUrl: String, session: Session, host: Host, request: Request, 
+                response: Response): Void {
+
+            this.isApp = isApp
+            this.home = appDir
+            this.session = session
+            this.host = host
+            this.request = request
+            this.response = response
+            this.absUrl = appUrl
+
+            /*
+             *  this.absUrl = request.url
+             *  this.appUrl = Url("/").relative(request.url)
+             */
+            let url = new Path("")
+            let parts = Path(request.url).components
+            for (i = 2; i < parts.length; i++) {
+                url = url.join("..")
+            }
+            if (request.url.endsWith("/")) {
+                url = url.join("..")
+            }
+            this.appUrl = url.toString()
+            if (this.appUrl == "") {
+                this.appUrl = "."
+            }
+            
+            /*
+             *  Load application configuration. 
+             */
+            if (isApp) {
+                config = deserialize("{ " + Path(appDir).join("config/config.ecf").readString() + " }")
+                config.database = deserialize("{ " + Path(appDir).join("config/database.ecf").readString() + " }")
+                config.view = deserialize("{ " + Path(appDir).join("config/view.ecf").readString() + " }")
+
+                let adapter: String = config.database[config.app.mode].adapter
+                let dbname: String = config.database[config.app.mode].database
+
+                if (adapter != "" && dbname != "") {
+                    db = Database.defaultDatabase = new Database(adapter, Path(appDir).join(dbname))
+
+                    if (config.database[config.app.mode].trace) {
+                        db.trace(true)
+                    }
+                }
+            }
+
+            // events = new Dispatcher
+            rendered = false
+            redirected = false
+            params = new Object
+            let name: String = Reflect(this).name
+            controllerName = name.trim("Controller")
+        }
+
+        /** 
+         *  Add a cache-control header to direct the browser to not cache the response.
+         */
+        native function cache(enable: Boolean = true): Void
+
+        /**
+         *  Enable session control. This enables session state management for this request and other requests 
+         *  from the browser. If a session has not already been created, this call creates a session and sets 
+         *  the @sessionID property in the request object. If a session already exists, this call has no effect. 
+         *  A cookie containing a session ID is automatically created and sent to the client on the first response 
+         *  after creating the session. If SessionAutoCreate is defined in the configuration file, then sessions 
+         *  will automatically be created for every web request and your Ejscript web pages do not need to call 
+         *  createSession. Multiple requests may be sent from a client's browser at the same time. Ejscript will 
+         *  ensure that accesses to the sesssion object are correctly serialized. 
+         *  @param timeout Optional timeout for the session in seconds. If ommitted the default timeout is used.
+         */
+        native function createSession(timeout: Number = 0): Void
+
+        /**
+         *  Destroy a session. This call destroys the session state store that is being used for the current client. 
+         *  If no session exists, this call has no effect.
+         */
+        native function destroySession(): Void
+
+        /**
+         *  Discard all prior output
+         */
+        native function discardOutput(): Void
+
+        /** @hide */
+        function resetFilters(): Void {
+            _beforeFilters = null
+            _afterFilters = null
+            _wrapFilters = null
+        }
+
+        /** @hide */
+        function beforeFilter(fn, options: Object = null): Void {
+            if (_beforeFilters == null) {
+                _beforeFilters = []
+            }
+            _beforeFilters.append([fn, options])
+        }
+
+        /** @hide */
+        function afterFilter(fn, options: Object = null): Void {
+            if (_afterFilters == null) {
+                _afterFilters = []
+            }
+            _afterFilters.append([fn, options])
+        }
+
+        /** @hide */
+        function wrapFilter(fn, options: Object = null): Void {
+            if (_wrapFilters == null) {
+                _wrapFilters = []
+            }
+            _wrapFilters.append([fn, options])
+        }
+
+        private function runFilters(filters: Array): Void {
+            if (!filters) {
+                return
+            }
+            for each (filter in filters) {
+                let fn = filter[0]
+                let options = filter[1]
+                if (options) {
+                    only = options.only
+                    if (only) {
+                        if (only is String && actionName != only) {
+                            continue
+                        }
+                        if (only is Array && !only.contains(actionName)) {
+                            continue
+                        }
+                    } 
+                    except = options.except
+                    if (except) {
+                        if (except is String && actionName == except) {
+                            continue
+                        }
+                        if (except is Array && except.contains(actionName)) {
+                            continue
+                        }
+                    }
+                }
+                fn.call(this)
+            }
+        }
+
+        /**
+         *  Invoke the named action. Internal use only. Called from ejsWeb.c.
+         *  @param act Action name to invoke
+         */
+        function doAction(act: String): Void {
+            global."ejs.web"::["controller"] = this
+            if (act == "") {
+                act = "index"
+            }
+            actionName = act
+
+            use namespace action
+
+            if (this[actionName] == undefined) {
+                originalActionName = actionName
+                actionName = "missing"
+            }
+
+            let lastFlash = null
+            if (session) {
+                flash = session["__flash__"]
+            }
+            if (flash == "" || flash == undefined) {
+                flash = {}
+            } else {
+                if (session) {
+                    session["__flash__"] = undefined
+                }
+                lastFlash = flash.clone()
+            }
+
+            runFilters(_beforeFilters)
+
+            if (!redirected) {
+                try {
+                    this[actionName]()
+                    if (!rendered) {
+                        renderView()
+                    }
+                } catch (e) {
+                    reportError(Http.ServerError, "Error in action: " + escapeHtml(actionName), e)
+                    rendered = true
+                    return
+                }
+                runFilters(_afterFilters)
+            }
+            if (lastFlash) {
+                for (item in flash) {
+                    for each (old in lastFlash) {
+                        if (hashcode(flash[item]) == hashcode(old)) {
+                            delete flash[item]
+                        }
+                    }
+                }
+            }
+            if (flash && flash.length > 0) {
+                if (session) {
+                    session["__flash__"] = flash
+                }
+            }
+            // Memory.stats()
+        }
+
+        /**
+         *  Send an error response back to the client. This calls discard the output.
+         *  @param code Http status code
+         *  @param msg Message to display
+         */
+        native function sendError(code: Number, msg: String): Void
+
+        /** @hide */
+        function renderError(code: Number, msg: String = ""): Void {
+            sendError(code, msg)
+            rendered = true
+        }
+
+        /**
+         *  Transform a string to be safe for output into an HTML web page. It does this by changing the
+         *  "&", ">", "<" and '"' characters into their ampersand HTML equivalents.
+         *  @param s input string
+         *  @returns a transformed HTML escaped string
+         */
+        function escapeHtml(s: String): String
+            s.replace(/&/g,'&amp;').replace(/\>/g,'&gt;').replace(/</g,'&lt;').replace(/"/g,'&quot;')
+
+        /** 
+         *  HTML encode the arguments
+         *  @param args Variable arguments that will be converted to safe html
+         *  @return A string containing the encoded arguments catenated together
+         */
+        function html(...args): String {
+            result = ""
+            for each (let s: String in args) {
+                result += escapeHtml(s)
+            }
+            return result
+        }
+
+        /**
+         *  Send a positive notification to the user. This is just a convenience instead of setting flash["inform"]
+         *  @param msg Message to display
+         */
+        function inform(msg: String): Void
+            flash["inform"] = msg
+
+        /**
+         *  Send an error notification to the user. This is just a convenience instead of setting flash["error"]
+         *  @param msg Message to display
+         */
+        function error(msg: String): Void
+            flash["error"] = msg
+
+        /**
+         *  Control whether the HTTP connection is kept alive after this request
+         *  @parm on Set to true to enable keep alive.
+         */
+        native function keepAlive(on: Boolean): Void
+
+        /**
+         *  Load a view. If path is not supplied, use the default view for the current action.
+         *  @param viewName Name of the view to load. It may be a fully qualified path name or a filename relative to the 
+         *      views directory for the current action, but without the 'ejs' extension.
+         */
+        native function loadView(path: String = null): Void
+
+        /**
+         *  Make a URL suitable for invoking actions. This routine will construct a URL Based on a supplied action name, 
+         *  model id and options that may contain an optional controller name. This is a convenience routine remove from 
+         *  applications the burden of building URLs that correctly use action and controller names.
+         *  @params action The action name to invoke in the URL. If the name starts with "." or "/", it is assumed to be 
+         *      a controller name and it is used by itself.
+         *  @params id The model record ID to select via the URL. Defaults to null.
+         *  @params options The options string
+         *  @params query Query
+         *  @return A string URL.
+         *  @options url An override url to use. All other args are ignored.
+         *  @options query Query string to append to the URL. Overridden by the query arg.
+         *  @options controller The name of the controller to use in the URL.
+         */
+        function makeUrl(action: String, id: String = null, options: Object = {}, query: Object = null): String {
+            if (options["url"]) {
+                return options.url
+            }
+            let url: String
+            if (action.contains("http://") || action.startsWith("/") || action.startsWith(".") || action.startsWith("#")) {
+                url = action
+            } else {
+                url = appUrl.trim("/")
+                let cname = (options && options["controller"]) || controllerName
+/*
+                if (url != "") {
+                    url = "/" + url
+                }
+                url += "/" + cname + "/" + action
+*/
+                if (url != "") {
+                    url += "/" + cname + "/" + action
+                } else {
+                    url = cname + "/" + action
+                }
+            }
+            if (id && id != "undefined" && id != null) {
+                id = "id=" + id
+            } else {
+                id = null
+            }
+            query ||= options.query
+            if (id || query) {
+                if (url.indexOf('?') < 0) {
+                    url += "?"
+                } else {
+                    url += "&"
+                }
+                if (id) {
+                    url += id
+                    if (query) {
+                        url += "&" + query
+                    }
+                } else if (query) {
+                    url += query
+                }
+            }
+            return url
+        }
+
+        /**
+         *  Redirect the client to a new URL. This call redirects the client's browser to a new location specified 
+         *  by the @url.  Optionally, a redirection code may be provided. Normally this code is set to be the HTTP 
+         *  code 302 which means a temporary redirect. A 301, permanent redirect code may be explicitly set.
+         *  @param url Url to redirect the client to
+         *  @param code Optional HTTP redirection code
+         */
+        native function redirectUrl(url: String, code: Number = 302): Void
+
+        /**
+         *  Redirect to the given action
+         *  @param action Action to redirect to
+         *  @param id Request ID
+            @param options Call options
+         *  @option id controller
+         */
+        function redirect(action: String, id: String = null, options: Object = {}): Void {
+            redirectUrl(makeUrl(action, id, options))
+            redirected = true
+        }
+
+        /**
+         *  Render the raw arguments back to the client. The args are converted to strings.
+         */
+        function render(...args): Void { 
+            rendered = true
+            write(args)
+        }
+
+        /**
+         *  Render a file's contents. 
+         */
+        function renderFile(filename: String): Void { 
+            rendered = true
+            let file: File = new File(filename)
+            try {
+                file.open()
+                while (data = file.read(4096)) {
+                    writeRaw(data)
+                }
+                file.close()
+            } catch (e: Error) {
+                reportError(Http.ServerError, "Can't read file: " + filename, e)
+            }
+        }
+
+        # FUTURE
+        function renderPartial(): void { }
+
+        /**
+         *  Render raw data
+         */
+        function renderRaw(...args): Void {
+            rendered = true
+            writeRaw(args)
+        }
+
+        # FUTURE
+        function renderXml(): Void {}
+
+        # FUTURE
+        function renderJSON(): Void {}
+
+        /**
+         *  Render a view template
+         */
+        function renderView(viewName: String = null): Void {
+            if (rendered) {
+                throw new Error("renderView invoked but render has already been called")
+                return
+            }
+            rendered = true
+
+            if (viewName == null) {
+                viewName = actionName
+            }
+            
+            let viewClass: String
+            try {
+                let name = Reflect(this).name
+                viewClass = name.trim("Controller") + "_" + viewName + "View"
+                if (global[viewClass] == undefined) {
+                    loadView(viewName)
+                }
+                view = new global[viewClass](this)
+
+            } catch (e: Error) {
+                if (e.code == undefined) {
+                    e.code = Http.ServerError
+                }
+                if (extension(request.url) == "ejs") {
+                    reportError(e.code, "Can't load page: " + escapeHtml(request.url), e)
+                } else {
+                    reportError(e.code, "Can't load view: " + viewName + ".ejs" + " for " + escapeHtml(request.url), e)
+                }
+                return
+            }
+
+            try {
+                for (let n: String in this) {
+                    view.public::[n] = this[n]
+                }
+                view.render()
+            } catch (e: Error) {
+                reportError(Http.ServerError, 'Error rendering: "' + viewName + '.ejs".', e)
+            } catch (msg) {
+                reportError(Http.ServerError, 'Error rendering: "' + viewName + '.ejs". ' + msg)
+            }
+        }
+
+        /**
+         *  Report errors back to the client
+         *  @param msg Message to send to the client
+         *  @param e Optional Error exception object to include in the message
+         */
+        private function reportError(code: Number, msg: String, e: Object = null): Void {
+            if (code <= 0) {
+                code = Http.ServerError
+            }
+            if (e) {
+                e = e.toString().replace(/.*Error Exception: /, "")
+            }
+            if (host.logErrors) {
+                if (e) {
+                    msg += "\r\n" + e
+                }
+            } else {
+                msg = "<h1>Ejscript error for \"" + escapeHtml(request.url) + "\"</h1>\r\n<h2>" + msg + "</h2>\r\n"
+                if (e) {
+                    msg += "<pre>" + escapeHtml(e) + "</pre>\r\n"
+                }
+                msg += '<p>To prevent errors being displayed in the "browser, ' + 
+                    'use <b>"EjsErrors log"</b> in the config file.</p>\r\n'
+            }
+            sendError(code, msg)
+        }
+
+        /**
+         *  Define a cookie header to include in the reponse. Path, domain and lifetime can be set to null for default
+         *  values.
+         *  @param name Cookie name
+         *  @param value Cookie value
+         *  @param path URI path to which the cookie applies
+         *  @param domain Domain in which the cookie applies. Must have 2-3 dots.
+         *  @param lifetime Duration for the cookie to persist in seconds
+         *  @param secure Set to true if the cookie only applies for SSL based connections
+         */
+        native function setCookie(name: String, value: String, path: String = null, domain: String = null, 
+                lifetime: Number = 0, secure: Boolean = false): Void
+
+        /**
+         *  of the format "keyword: value". If a header has already been defined and \a allowMultiple is false, 
+         *  the header will be overwritten. If \a allowMultiple is true, the new header will be appended to the 
+         *  response headers and the existing header will also be output. NOTE: case does not matter in the header keyword.
+         *  @param key Header key string
+         *  @param value Header value 
+         *  @param allowMultiple If false, overwrite existing headers with the same keyword. If true, all headers are output.
+         */
+        native function setHeader(key: String, value: String, allowMultiple: Boolean = false): Void
+
+        /**
+         *  Set the HTTP response status code
+         *  @param code HTTP status code to define
+         */
+        native function setHttpCode(code: Number): Void
+
+        /**
+         *  Set the response body mime type
+         *  @param format Mime type for the response. For example "text/plain".
+         */
+        native function setMimeType(format: String): Void
+
+        /**
+         *  Transform an escaped string into its original contents. This reverses the transformation done by $escapeHtml.
+         *  It does this by changing &quot, &gt, &lt back into ", < and >.
+         *  @param s input string
+         *  @returns a transformed string
+         */
+        function unescapeHtml(s: String): String
+            s.replace(/&amp;/g,'&').replace(/&gt;/g,'>').replace(/&lt;/g,'<').replace(/&quot;/g,'"')
+
+        /**
+         *  Send a warning message back to the client for display in the flash area. This is just a convenience instead of
+         *  setting flash["warn"]
+         *  @param msg Message to display
+         */
+        function warn(msg: String): Void
+            flash["warning"] = msg
+
+        /**
+         *  Write text to the client. This call writes the arguments back to the client's browser. The arguments 
+         *  are converted to strings before writing back to the client. Text written using write, will be buffered 
+         *  up to a configurable maximum. This allows text to be written prior to setting HTTP headers with setHeader.
+         *  @param args Text or objects to write to the client
+         */
+        native function write(...args): Void
+
+        /**
+         *  Send text back to the client which must first be HTML escaped
+         *  @param args Objects to emit
+         */
+        function writeHtml(...args): Void
+            write(html(args))
+
+        /** @hide */
+        native function writeRaw(...args): Void
+
+        /**
+         *  Missing action method. This method will be called if the requested action routine does not exist.
+         */
+        action function missing(): Void {
+            msg = "<h1>Missing Action</h1>" +
+                "<h3>Action: \"" + originalActionName + "\" could not be found for controller \"" + 
+                controllerName + "\".</h3>"
+            sendError(500, msg)
+            rendered = true
+        }
+    }
+
+    /** 
+     *  Controller for use by stand-alone web pages
+     *  @stability prototype
+     *  @hide 
+     */
+    class _SoloController extends Controller {
+    }
+}
+
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/web/Controller.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/web/Cookie.es"
+ */
+/************************************************************************/
+
+/**
+ *  Cookie.es -- Cookie class
+ */
+
+module ejs.web {
+
+    /**
+     *  Cookie class is used to store parsed cookie strings. The MVC web framework creates Cookie class instances when
+     *  the client provides Http cookie headers.
+     *  @spec ejs
+     *  @stability prototype
+     */
+    class Cookie {
+
+        use default namespace public
+
+        /**
+         *  Name of the cookie
+         */
+        var name: String
+
+        /**
+         *  Value of the cookie
+         */
+        var value: String
+
+        /**
+         *  Domain in which the cookie applies
+         */
+        var domain: String
+
+        /**
+         *  URI path in which the cookie applies
+         */
+        var path: String
+    }
+}
+
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/web/Cookie.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/web/Host.es"
+ */
+/************************************************************************/
+
+/**
+ *  Host.es - Host class for the Ejscript web framework
+ */
+
+module ejs.web {
+
+    /**
+     *  Web server host information. The server array stores information that typically does not vary from 
+     *  request to request. For a given virtual server, these data items will be constant across all requests.
+     *  @spec ejs
+     *  @stability prototype
+     */
+    final class Host {
+
+        use default namespace public
+
+        /**
+         *  Home directory for the web documents
+         */
+        native var documentRoot: String
+
+        /**
+         *  Fully qualified name of the server. Should be of the form (http://name[:port])
+         */
+        native var name: String
+
+        /**
+         *  Host protocol (http or https)
+         */
+        native var protocol: String
+
+        /**
+         *  Set if the host is a virtual host
+         */ 
+        native var isVirtualHost: Boolean
+
+        /**
+         *  Set if the host is a named virtual host
+         */
+        native var isNamedVirtualHost: Boolean
+
+        /**
+         *  Server software description
+         */
+        native var software: String
+
+        /**
+         *  Log errors to the application log
+         */
+        native var logErrors: Boolean
+    }
+}
+/************************************************************************/
+/*
+ *  End of file "../src/es/web/Host.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/web/Request.es"
+ */
+/************************************************************************/
+
+/**
+ *  Request.es - Request class for the Ejscript web framework
+ */
+
+module ejs.web {
+
+    /**
+     *  HTTP request information. The request objects stores parsed information for incoming HTTP requests.
+     *  @spec ejs
+     *  @stability prototype
+     */
+    final class Request {
+
+        use default namespace public
+
+        /**
+         *  Accept header
+         */
+        native var accept: String
+
+        /**
+         *  AcceptCharset header
+         */
+        native var acceptCharset: String
+
+        /**
+         *  AcceptEncoding header
+         */
+        native var acceptEncoding: String
+
+        /**
+         *  Authentication access control list
+         *  @hide
+         */
+        native var authAcl: String
+
+        /**
+         *  Authentication group
+         */
+        native var authGroup: String
+
+        /**
+         *  Authentication method if authorization is being used (basic or digest)
+         */
+        native var authType: String
+
+        /**
+         *  Authentication user name
+         */
+        native var authUser: String
+
+        /**
+         *  Request content body. NOTE: This property will be replaced with a stream based input scheme in a future
+         *  release.
+         *  @prototype.
+         */
+        native var body: String
+
+        /**
+         *  Connection header
+         */
+        native var connection: String
+
+        /**
+         *  Posted content length (header: Content-Length)
+         */
+        native var contentLength: Number
+
+        /**
+         *  Stores Client cookie state information. The cookies object will be created automatically if the Client supplied 
+         *  cookies with the current request. Cookies are used to specify the session state. If sessions are being used, 
+         *  a session cookie will be sent to and from the browser with each request. The elements are user defined.
+         */
+        native var cookies: Object
+            
+        /**
+         *  Extension portion of the URL after aliasing to a filename.
+         */
+        native var extension: String
+
+        /**
+         *  Files uploaded as part of the request. For each uploaded file, an instance of UploadFile is created in files. 
+         *  The property name of the instance is given by the file upload HTML input element ID in the request page form. 
+         *  Set to null if no files have been uploaded.
+         */
+        native var files: Object
+
+        /**
+         *  Store the request headers. The request array stores all the HTTP request headers that were supplied by 
+         *  the client in the current request. 
+         */
+        native var headers: Object
+
+        /**
+         *  The host name header
+         */
+        native var hostName: String
+
+        /**
+         *  Request method: DELETE, GET, POST, PUT, OPTIONS, TRACE
+         */
+        native var method: String
+
+        /**
+         *  Content mime type (header: Content-Type)
+         */
+        native var mimeType: String
+
+        /**
+         *  The portion of the path after the script name if extra path processing is being used.
+         */
+        native var pathInfo: String
+
+        /**
+         *  The physical path corresponding to PATH_INFO.
+         */
+        native var pathTranslated
+
+        /**
+         *  Pragma header
+         */
+        native var pragma: String
+
+        /**
+         *  Decoded Query string (URL query string)
+         */
+        native var query: String
+
+        /**
+         *  Raw request URI before decoding.
+         */
+        native var originalUri: String
+
+        /**
+         *  Name of the referring URL
+         */
+        native var referrer: String
+
+        /**
+         *  The IP address of the Client issuing the request.
+         */
+        native var remoteAddress: String
+
+        /**
+         *  The host address of the Client issuing the request
+         *  This is deprecated due to the security issues with doing reverse DNS lookups. Use remoteAddress instead.
+         *  @hide
+         */
+        native var remoteHost: String
+
+        /**
+         *  Current session ID. Index into the $sessions object
+         */
+        native var sessionID: String
+
+        /**
+         *  The decoded request URL portion after stripping the scheme, host, extra path, query and fragments
+         */
+        native var url: String
+
+        /**
+         *  Name of the Client browser software set in the HTTP_USER_AGENT header
+         */
+        native var userAgent: String
+    }
+}
+/************************************************************************/
+/*
+ *  End of file "../src/es/web/Request.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/web/Response.es"
+ */
+/************************************************************************/
+
+/**
+ *  Response.es - Response object for the Ejscript web framework.
+ */
+
+module ejs.web {
+
+    /**
+     *  HTTP response class. The Http response object stores information about HTTP responses.
+     *  @spec ejs
+     *  @stability prototype
+     */
+    final class Response {
+
+        use default namespace public
+
+        /**
+         *  HTTP response code
+         */
+        native var code: Number
+
+        /**
+         *  Response content length. 
+         */
+        # FUTURE
+        native var contentLength: Number
+
+        /**
+         *  Cookies to send to the client. These are currently stored in headers[]
+         */
+        # FUTURE
+        native var cookies: Object
+
+        /**
+         *  Unique response tag - not generated  yet
+         */
+        # FUTURE
+        native var etag: String
+
+        /**
+         *  Filename for the Script name
+         */
+        native var filename: String
+
+        /**
+         *  Reponse headers
+         */
+        native var headers: Array
+
+        /**
+         *  Response content mime type
+         */
+        native var mimeType: String
+    }
+}
+/************************************************************************/
+/*
+ *  End of file "../src/es/web/Response.es"
+ */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*
+ *  Start of file "../src/es/web/Session.es"
+ */
+/************************************************************************/
+
+/**
+ *  Session.es -- Session state management
+ */
+
+module ejs.web {
+
+    /**
+     *  Hash of all sessions. Held by the master interpreter.
+     *  @spec ejs
+     *  @stability prototype
+     */
+    var sessions = {}
+
+    /**
+     *  Session state storage class. 
+     *  @spec ejs
+     *  @stability prototype
+     *  @hide
+     */
+    dynamic class Session { }
+}
+
+
+/*
+ *  @copy   default
+ *  
+ *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  
+ *  This software is distributed under commercial and open source licenses.
+ *  You may use the GPL open source license described below or you may acquire 
+ *  a commercial license from Embedthis Software. You agree to be fully bound 
+ *  by the terms of either license. Consult the LICENSE.TXT distributed with 
+ *  this software for full details.
+ *  
+ *  This software is open source; you can redistribute it and/or modify it 
+ *  under the terms of the GNU General Public License as published by the 
+ *  Free Software Foundation; either version 2 of the License, or (at your 
+ *  option) any later version. See the GNU General Public License for more 
+ *  details at: http://www.embedthis.com/downloads/gplLicense.html
+ *  
+ *  This program is distributed WITHOUT ANY WARRANTY; without even the 
+ *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  
+ *  This GPL license does NOT permit incorporating this software into 
+ *  proprietary programs. If you are unable to comply with the GPL, you must
+ *  acquire a commercial license to use this software. Commercial licenses 
+ *  for this software and support services are available from Embedthis 
+ *  Software at http://www.embedthis.com 
+ *
+ *  Local variables:
+    tab-width: 4
+    c-basic-offset: 4
+    End:
+    vim: sw=4 ts=4 expandtab
+
+    @end
+ */
+/************************************************************************/
+/*
+ *  End of file "../src/es/web/Session.es"
  */
 /************************************************************************/
 
@@ -12779,2216 +14989,6 @@ module ejs.web {
 /************************************************************************/
 /*
  *  End of file "../src/es/web/View.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/web/connectors/GoogleConnector.es"
- */
-/************************************************************************/
-
-/**
- *	GoogleConnector.es -- View connector for the Google Visualization library
- */
-
-module ejs.web {
-
-    /**
-        @hide
-     */
-	class GoogleConnector {
-
-        use default namespace "ejs.web"
-
-        function GoogleConnector(controller) {
-            // this.controller = controller
-        }
-
-        private var nextId: Number = 0
-
-        private function scriptHeader(kind: String, id: String): Void {
-            write('<script type="text/javascript" src="http://www.google.com/jsapi"></script>')
-            write('<script type="text/javascript">')
-            write('  google.load("visualization", "1", {packages:["' + kind + '"]});')
-            write('  google.setOnLoadCallback(' + 'draw_' + id + ');')
-        }
-
-        /**
-            @hide
-         *  @duplicate ejs.web::View.table
-         */
-		function table(data, options: Object): Void {
-            var id: String = "GoogleTable_" + nextId++
-
-			if (data == null || data.length == 0) {
-				write("<p>No Data</p>")
-				return
-			}
-            let columns: Array = options["columns"]
-
-            scriptHeader("table", id)
-            
-            write('  function ' + 'draw_' + id + '() {')
-			write('    var data = new google.visualization.DataTable();')
-
-            let firstLine: Object = data[0]
-            if (columns) {
-                if (columns[0] != "id") {
-                    columns.insert(0, "id")
-                }
-                for (let i = 0; i < columns.length; ) {
-                    if (firstLine[columns[i]]) {
-                        i++
-                    } else {
-                        columns.remove(i, i)
-                    }
-                }
-            } else {
-                columns = []
-                for (let name in firstLine) {
-                    columns.append(name)
-                }
-            }
-
-            for each (name in columns) {
-                write('    data.addColumn("string", "' + name.toPascal() + '");')
-			}
-			write('    data.addRows(' + data.length + ');')
-
-			for (let row: Object in data) {
-                let col: Number = 0
-                for each (name in columns) {
-                    write('    data.setValue(' + row + ', ' + col + ', "' + data[row][name] + '");')
-                    col++
-                }
-            }
-
-            write('    var table = new google.visualization.Table(document.getElementById("' + id + '"));')
-
-            let goptions = getOptions(options, { 
-                height: null, 
-                page: null,
-                pageSize: null,
-                showRowNumber: null,
-                sort: null,
-                title: null,
-                width: null, 
-            })
-
-            write('    table.draw(data, ' + serialize(goptions) + ');')
-
-            if (options.click) {
-                write('    google.visualization.events.addListener(table, "select", function() {')
-                write('        var row = table.getSelection()[0].row;')
-                write('        window.location = "' + view.makeUrl(options.click, "", options) + '?id=" + ' + 
-                    'data.getValue(row, 0);')
-                write('    });')
-            }
-
-            write('  }')
-            write('</script>')
-
-            write('<div id="' + id + '"></div>')
-		}
-
-        /**
-            @hide
-            @duplicate ejs.web::View.chart
-         */
-		function chart(grid: Array, options: Object): Void {
-            var id: String = "GoogleChart_" + nextId++
-
-			if (grid == null || grid.length == 0) {
-				write("<p>No Data</p>")
-				return
-			}
-
-            let columns: Array = options["columns"]
-
-            scriptHeader("piechart", id)
-            
-            write('  function ' + 'draw_' + id + '() {')
-			write('    var data = new google.visualization.DataTable();')
-
-			let firstLine: Object = grid[0]
-            let col: Number = 0
-            let dataType: String = "string"
-			for (let name: String in firstLine) {
-                if  (columns && columns.contains(name)) {
-                    write('    data.addColumn("' + dataType + '", "' + name.toPascal() + '");')
-                    col++
-                    if (col >= 2) {
-                        break
-                    }
-                    dataType = "number"
-                }
-			}
-			write('    data.addRows(' + grid.length + ');')
-
-			for (let row: Object in grid) {
-                let col2: Number = 0
-				for (let name2: String in grid[row]) {
-                    if  (columns && columns.contains(name2)) {
-                        if (col2 == 0) {
-                            write('    data.setValue(' + row + ', ' + col2 + ', "' + grid[row][name2] + '");')
-                        } else if (col2 == 1) {
-                            write('    data.setValue(' + row + ', ' + col2 + ', ' + grid[row][name2] + ');')
-                        }
-                        //  else break. 
-                        col2++
-                    }
-                }
-            }
-
-            //  PieChart, Table
-            write('    var chart = new google.visualization.PieChart(document.getElementById("' + id + '"));')
-
-            let goptions = getOptions(options, { width: 400, height: 400, is3D: true, title: null })
-            write('    chart.draw(data, ' + serialize(goptions) + ');')
-
-            write('  }')
-            write('</script>')
-
-            write('<div id="' + id + '"></div>')
-		}
-
-        /**
-         *  Parse an option string
-         */
-        private function getOptions(options: Object, defaults: Object): Object {
-            var result: Object = {}
-            for (let word: String in defaults) {
-                if (options[word]) {
-                    result[word] = options[word]
-                } else if (defaults[word]) {
-                    result[word] = defaults[word]
-                }
-            }
-            return result
-        }
-
-        private function write(str: String): Void {
-            view.write(str)
-        }
-	}
-}
-
-
-/*
- *	@copy	default
- *	
- *	Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *	Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *	
- *	This software is distributed under commercial and open source licenses.
- *	You may use the GPL open source license described below or you may acquire 
- *	a commercial license from Embedthis Software. You agree to be fully bound 
- *	by the terms of either license. Consult the LICENSE.TXT distributed with 
- *	this software for full details.
- *	
- *	This software is open source; you can redistribute it and/or modify it 
- *	under the terms of the GNU General Public License as published by the 
- *	Free Software Foundation; either version 2 of the License, or (at your 
- *	option) any later version. See the GNU General Public License for more 
- *	details at: http://www.embedthis.com/downloads/gplLicense.html
- *	
- *	This program is distributed WITHOUT ANY WARRANTY; without even the 
- *	implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *	
- *	This GPL license does NOT permit incorporating this software into 
- *	proprietary programs. If you are unable to comply with the GPL, you must
- *	acquire a commercial license to use this software. Commercial licenses 
- *	for this software and support services are available from Embedthis 
- *	Software at http://www.embedthis.com 
- *	
- *	Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/web/connectors/GoogleConnector.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/web/connectors/HtmlConnector.es"
- */
-/************************************************************************/
-
-/**
- *	HtmlConnector.es -- Basic HTML control connector
- */
-
-module ejs.web {
-
-    require ejs.db
-
-	/**
-	 *	The Html Connector provides bare HTML encoding of Ejscript controls
-        @hide
-	 */
-	class HtmlConnector {
-
-        use default namespace "ejs.web"
-
-        private var nextId: Number = 0
-        private var controller: Controller
-
-        function HtmlConnector(controller) {
-            this.controller = controller
-        }
-
-        /*
-         *  Options to implement:
-         *      method
-         *      update
-         *      confirm     JS confirm code
-         *      condition   JS expression. True to continue
-         *      success
-         *      failure
-         *      query
-         *
-         *  Not implemented
-         *      submit      FakeFormDiv
-         *      complete
-         *      before
-         *      after
-         *      loading
-         *      loaded
-         *      interactive
-         */
-        /**
-         *  Render an asynchronous (ajax) form.
-         *  @param record Initial data
-         *  @param url Action to invoke when the form is submitted. Defaults to "create" or "update" depending on 
-         *      whether the field has been previously saved.
-         *  @param options Optional extra options. See $getOptions for a list of the standard options.
-         *  @option url String Use a URL rather than action and controller for the target url.
-         */
-		function aform(record: Object, url: String, options: Object): Void {
-            if (options.id == undefined) {
-                options.id = "form"
-            }
-            onsubmit = ""
-            if (options.condition) {
-                onsubmit += options.condition + ' && '
-            }
-            if (options.confirm) {
-                onsubmit += 'confirm("' + options.confirm + '"); && '
-            }
-            onsubmit = '$.ajax({ ' +
-                'url: "' + url + '", ' + 
-                'type: "' + options.method + '", '
-
-            if (options.query) {
-                onsubmit += 'data: ' + options.query + ', '
-            } else {
-                onsubmit += 'data: $("#' + options.id + '").serialize(), '
-            }
-
-            if (options.update) {
-                if (options.success) {
-                    onsubmit += 'success: function(data) { $("#' + options.update + '").html(data).hide("slow"); ' + 
-                        options.success + '; }, '
-                } else {
-                    onsubmit += 'success: function(data) { $("#' + options.update + '").html(data).hide("slow"); }, '
-                }
-            } else if (options.success) {
-                onsubmit += 'success: function(data) { ' + options.success + '; } '
-            }
-            if (options.error) {
-                onsubmit += 'error: function(data) { ' + options.error + '; }, '
-            }
-            onsubmit += '}); return false;'
-
-            write('<form action="' + "/User/list" + '"' + getOptions(options) + "onsubmit='" + onsubmit + "' >")
-        }
-
-        /*
-         *  Extra options:
-         *      method
-         *      update
-         *      confirm     JS confirm code
-         *      condition   JS expression. True to continue
-         *      success
-         *      failure
-         *      query
-         *
-         */
-        /** 
-         *  Emit an asynchronous (ajax) link to an action. The URL is constructed from the given action and the 
-         *      current controller. The controller may be overridden by setting the controller option.
-         *  @param text Link text to display
-         *  @param url Action to invoke when the link is clicked
-         *  @param options Optional extra options. See $getOptions for a list of the standard options.
-         *  @option controller String Name of the target controller for the given action
-         *  @option url String Use a URL rather than action and controller for the target url.
-         */
-		function alink(text: String, url: String, options: Object): Void {
-            if (options.id == undefined) {
-                options.id = "alink"
-            }
-            onclick = ""
-            if (options.condition) {
-                onclick += options.condition + ' && '
-            }
-            if (options.confirm) {
-                onclick += 'confirm("' + options.confirm + '"); && '
-            }
-            onclick = '$.ajax({ ' +
-                'url: "' + url + '", ' + 
-                'type: "' + options.method + '", '
-
-            if (options.query) {
-                'data: ' + options.query + ', '
-            }
-
-            if (options.update) {
-                if (options.success) {
-                    onclick += 'success: function(data) { $("#' + options.update + '").html(data); ' + 
-                        options.success + '; }, '
-                } else {
-                    onclick += 'success: function(data) { $("#' + options.update + '").html(data); }, '
-                }
-            } else if (options.success) {
-                onclick += 'success: function(data) { ' + options.success + '; } '
-            }
-            if (options.error) {
-                onclick += 'error: function(data) { ' + options.error + '; }, '
-            }
-            onclick += '}); return false;'
-            write('<a href="' + options.url + '"' + getOptions(options) + "onclick='" + onclick + "' >" + text + '</a>')
-		}
-
-        /**
-         *  @duplicate ejs.web::View.button
-         */
-		function button(value: String, buttonName: String, options: Object): Void {
-            write('<input name="' + buttonName + '" type="submit" value="' + value + '"' + getOptions(options) + ' />')
-        }
-
-        /**
-         *  @duplicate ejs.web::View.buttonLink
-         */
-		function buttonLink(text: String, url: String, options: Object): Void {
-            if (options["data-remote"]) {
-                let attributes = getDataAttributes(options)
-                write('<button ' + attributes + '>' + text + '</button></a>')
-            } else {
-                write('<button onclick="window.location=\'' + url + '\';">' + text + '</button></a>')
-            }
-        }
-
-        /**
-            @hide
-         */
-		function chart(data: Array, options: Object): Void {
-            throw 'HtmlConnector control "chart" not implemented.'
-		}
-
-        /**
-         *  Render an input checkbox. This creates a checkbox suitable for use within an input form. 
-         *  @param name Name of the field to display. This is used to create a HTML "name" and "id" attribute for the 
-         *      input element. If used inside a model form, it is the field name in the model containing the checkbox
-         *      value to display. If used without a model, the value to display should be passed via options.value. 
-         *  @param value Value to display
-         *  @param submitValue Value to submit if checked. Defaults to "true"
-         *  @param options Optional extra options. See $getOptions for a list of the standard options.
-         */
-		function checkbox(name: String, value: String, submitValue: String, options: Object): Void {
-            let checked = (value == submitValue) ? ' checked="yes" ' : ''
-            write('<input name="' + name + '" type="checkbox" "' + getOptions(options) + checked + 
-                '" value="' + submitValue + '" />')
-            write('<input name="' + name + '" type="hidden" "' + getOptions(options) + '" value="" />')
-        }
-
-        /**
-         *  @duplicate ejs.web::View.endform
-         */
-		function endform(): Void {
-            write('</form>')
-        }
-
-        /** 
-         *  Emit a flash message area. 
-         *  @param kind Kind of flash messages to display. 
-         *  @param msg Flash message to display
-         *  @param options Optional extra options. See $getOptions for a list of the standard options.
-         *  @option retain Number. Number of seconds to retain the message. If <= 0, the message is retained until another
-         *      message is displayed. Default is 0.
-         *  @example
-         *      <% flash("status") %>
-         *      <% flash() %>
-         *      <% flash(["error", "warning"]) %>
-         */
-		function flash(kind: String, msg: String, options: Object): Void {
-            write('<div' + getOptions(options) + '>' + msg + '</div>\r\n')
-            if (kind == "inform") {
-                write('<script>$(document).ready(function() {
-                        $("div.-ejs-flashInform").animate({opacity: 1.0}, 2000).hide("slow");});
-                    </script>')
-            }
-		}
-
-        /**
-         *  Render a form.
-         *  @param record Model record to edit
-         *  @param url Action to invoke when the form is submitted. Defaults to "create" or "update" depending on 
-         *      whether the field has been previously saved.
-         *  @param options Optional extra options. See $getOptions for a list of the standard options.
-         *  @option url String Use a URL rather than action and controller for the target url.
-         */
-		function form(record: Object, url: String, options: Object): Void {
-            write('<form method="post" action="' + url + '"' + getOptions(options) + ' xonsubmit="ejs.fixCheckboxes();">')
-//          write('<input name="id" type="hidden" value="' + record.id + '" />')
-        }
-
-        /**
-         *  @duplicate ejs.web::View.image
-         */
-        function image(src: String, options: Object): Void {
-			write('<img src="' + src + '"' + getOptions(options) + '/>')
-        }
-
-        /**
-         *  @duplicate ejs.web::View.label
-         */
-        function label(text: String, options: Object): Void {
-            write('<span ' + getOptions(options) + ' type="' + getTextKind(options) + '">' +  text + '</span>')
-        }
-
-        /** 
-         *  Emit a link to an action. The URL is constructed from the given action and the current controller. The controller
-         *  may be overridden by setting the controller option.
-         *  @param text Link text to display
-         *  @param action Action to invoke when the link is clicked
-         *  @param options Optional extra options. See $getOptions for a list of the standard options.
-         *  @option controller String Name of the target controller for the given action
-         *  @option url String Use a URL rather than action and controller for the target url.
-         */
-		function link(text: String, action: String, options: Object): Void {
-			write('<a href="' + action + '"' + getOptions(options) + '>' + text + '</a>')
-		}
-
-        /**
-         *  @duplicate ejs.web::View.extlink
-         */
-		function extlink(text: String, url: String, options: Object): Void {
-			write('<a href="' + url + '"' + getOptions(options) + '>' + text + '</a>')
-		}
-
-        /**
-         *  Emit a selection list. 
-         *  @param field Name of the field to display. This is used to create a HTML "name" and "id" attribute for the 
-         *      input element. If used inside a model form, it is the field name in the model containing the list item to
-         *      select. If used without a model, the value to select should be passed via options.value. 
-         *  @param choices Choices to select from. This can be an array list where each element is displayed and the value 
-         *      returned is an element index (origin zero). It can also be an array of array tuples where the first 
-         *      tuple entry is the value to display and the second is the value to send to the app. Or it can be an 
-         *      array of objects such as those returned from a table lookup. If choices is null, the $field value is 
-         *      used to construct a model class name to use to return a data grid containing an array of row objects. 
-         *      The first non-id field is used as the value to display.
-         *  @param defaultValue Current value
-         *  @params options Extra options
-         *  Examples:
-         *      list("stockId", Stock.stockList) 
-         *      list("low", ["low", "med", "high"])
-         *      list("low", [["low", "3"], ["med", "5"], ["high", "9"]])
-         *      list("low", [{low: 3}, {med: 5}, {high: 9}])
-         *      list("Stock Type")                          Will invoke StockType.findAll() to do a table lookup
-         */
-		function list(field: String, choices: Object, defaultValue: String, options: Object): Void {
-            write('<select name="' + field + '" ' + getOptions(options) + '>')
-            let isSelected: Boolean
-            let i = 0
-            for each (choice in choices) {
-                if (choice is Array) {
-                    isSelected = (choice[0] == defaultValue) ? ' selected="yes"' : ''
-                    write('  <option value="' + choice[0] + '"' + isSelected + '>' + choice[1] + '</option>')
-                } else {
-                    if (choice && choice.id) {
-                        for (field in choice) {
-                            isSelected = (choice.id == defaultValue) ? ' selected="yes"' : ''
-                            if (field != "id") {
-                                write('  <option value="' + choice.id + '"' + isSelected + '>' + choice[field] + '</option>')
-                                done = true
-                                break
-                            }
-                        }
-                    } else {
-                        isSelected = (choice == defaultValue) ? ' selected="yes"' : ''
-                        write('  <option value="' + choice + '"' + isSelected + '>' + choice + '</option>')
-                    }
-                }
-                i++
-            }
-            write('</select>')
-        }
-
-        /**
-         *  @duplicate ejs.web::View.mail
-         */
-		function mail(nameText: String, address: String, options: Object): Void  {
-			write('<a href="mailto:' + address + '" ' + getOptions(options) + '>' + nameText + '</a>')
-		}
-
-        /**
-         *  @duplicate ejs.web::View.progress
-            @hide
-         */
-		function progress(initialData: Array, options: Object): Void {
-            write('<p>' + initialData + '%</p>')
-		}
-
-        //  Emit: <input name ="model.name" id="id" class="class" type="radio" value="text"
-        /** 
-         *  Emit a radio autton. The URL is constructed from the given action and the current controller. The controller
-         *      may be overridden by setting the controller option.
-         *  @param name Name of the field to display. This is used to create a HTML "name" and "id" attribute for the 
-         *      input element. If used inside a model form, it is the field name in the model containing the radio data to
-         *      display. If used without a model, the value to display should be passed via options.value. 
-            @param selected Selected option
-         *  @param choices Array or object containing the option values. If array, each element is a radio option. If an 
-         *      object hash, then they property name is the radio text to display and the property value is what is returned.
-         *  @param action Action to invoke when the button is clicked or invoked
-         *  @param options Optional extra options. See $getOptions for a list of the standard options.
-         *  @option controller String Name of the target controller for the given action
-         *  @option value String Name of the option to select by default
-         *  @example
-         *      radio("priority", ["low", "med", "high"])
-         *      radio("priority", {low: 0, med: 1, high: 2})
-         *      radio(priority, Message.priorities)
-         */
-        function radio(name: String, selected: String, choices: Object, options: Object): Void {
-            let checked: String
-            if (choices is Array) {
-                for each (v in choices) {
-                    checked = (v == selected) ? "checked" : ""
-                    write(v + ' <input type="radio" name="' + name + '"' + getOptions(options) + 
-                        ' value="' + v + '" ' + checked + ' />\r\n')
-                }
-            } else {
-                for (item in choices) {
-                    checked = (choices[item] == selected) ? "checked" : ""
-                    write(item + ' <input type="radio" name="' + name + '"' + getOptions(options) + 
-                        ' value="' + choices[item] + '" ' + checked + ' />\r\n')
-                }
-            }
-        }
-
-		/** 
-		 *	@duplicate ejs.web::View.script
-		 */
-		function script(url: String, options: Object): Void {
-            write('<script src="' + url + '" type="text/javascript"></script>\r\n')
-		}
-
-        /**
-         *  @duplicate ejs.web::View.status
-            @hide
-         */
-		function status(data: Array, options: Object): Void {
-            write('<p>' + data + '</p>\r\n')
-        }
-
-		/** 
-		 *	@duplicate ejs.web::View.stylesheet
-		 */
-		function stylesheet(url: String, options: Object): Void {
-            write('<link rel="stylesheet" type="text/css" href="' + url + '" />\r\n')
-		}
-
-        /**
-         *  @duplicate ejs.web::View.tabs
-         */
-		function tabs(initialData: Array, options: Object): Void {
-            write('<div class="-ejs-tabs">\r\n')
-            write('   <ul>\r\n')
-            for each (t in initialData) {
-                for (name in t) {
-                    let url = t[name]
-                    if (options["data-remote"]) {
-                        write('      <li data-remote="' + url + '">' + name + '</li>\r\n')
-                    } else {
-                        write('      <li onclick="window.location=\'' + url + '\'"><a href="' + url + '">' + name + '</a></li>\r\n')
-                    }
-                }
-            }
-            write('    </ul>')
-            write('</div>')
-        }
-
-        private function getColumns(data, options: Object): Object {
-            let columns
-            if (options.columns) {
-                if (options.columns is Array) {
-                    columns = {}
-                    for each (name in options.columns) {
-                        columns[name] = name
-                    }
-                } else {
-                    columns = options.columns
-                }
-            } else {
-                /*
-                 *  No supplied columns. Infer from data
-                 */
-                columns = {}
-                if (data is Array) {
-                    for (let name in data[0]) {
-                        if (name == "id" && !options.showId) continue
-                        columns[name] = name
-                    }
-                }
-            }
-            return columns
-        }
-    
-/*
-        private function getSort(columns: Object, options: Object): Array {
-            let sort = options.sort || true
-            if (!sort) return [-1, 0]
-            let sortCol = -1 
-            let sortOrder = 0
-            if (options.sort) {
-                let col = 0
-                for (name in columns) {
-                    if (name == options.sort) {
-                        sortCol = col
-                        sortOrder = (options.sortOrder.toLower().contains("asc")) ? 0 : 1
-                        break
-                    }
-                    col++
-                }
-            }
-            if (sortCol < 0) {
-                col = 0
-                for each (column in columns) {
-                    if (column.sort) {
-                        sortCol = col
-                        sortOrder = (column.sort.toLower().contains("asc")) ? 0 : 1
-                        break
-                    }
-                }
-            }
-            return [sortCol, sortOrder]
-        }
-*/
-
-        /**
-         *  @duplicate ejs.web::View.table
-         */
-		function table(data, options: Object = null): Void {
-            let originalOptions = options
-            let tableId = view.getNextId()
-
-            if (data is Array) {
-                if (data.length == 0) {
-                    write("<p>No Data</p>")
-                    return
-                }
-            } else if (!(data is Array) && data is Object) {
-                data = [data]
-			}
-
-            options = (originalOptions && originalOptions.clone()) || {}
-            let columns = getColumns(data, options)
-
-            let refresh = options.refresh || 10000
-            let sortOrder = options.sortOrder || ""
-            let sort = options.sort
-            if (sort == undefined) sort = true
-            let attributes = getDataAttributes(options)
-
-            if (!options.ajax) {
-                let url = (data is String) ? data : null
-                url ||= options.data
-                write('  <script type="text/javascript">\r\n' +
-                    '   $(function() { $("#' + tableId + '").eTable({ refresh: ' + refresh + 
-                    ', sort: "' + sort + '", sortOrder: "' + sortOrder + '"' + 
-                    ((url) ? (', url: "' + url + '"'): "") + 
-                    '})});\r\n' + 
-                    '  </script>\r\n')
-                if (data is String) {
-                    /* Data is an action method */
-                    write('<table id="' + tableId + '" class="-ejs-table"' + attributes + '></table>\r\n')
-                    return
-                }
-            } else {
-                write('  <script type="text/javascript">$("#' + tableId + '").eTableSetOptions({ refresh: ' + refresh +
-                    ', sort: "' + sort + '", sortOrder: "' + sortOrder + '"})' + ';</script>\r\n')
-            }
-			write('  <table id="' + tableId + '" class="-ejs-table ' + (options.styleTable || "" ) + '"' + 
-                attributes + '>\r\n')
-
-            /*
-             *  Table title and column headings
-             */
-            if (options.showHeader != false) {
-                write('    <thead class="' + (options.styleHeader || "") + '">\r\n')
-                if (options.title) {
-                    if (columns.length < 2) {
-                        write('  <tr><td>' + options.title + ' ' + '<img src="' + controller.appUrl + 
-                            '/web/images/green.gif" ' + 'class="-ejs-table-download -ejs-clickable" onclick="$(\'#' + 
-                            tableId + '\').eTableToggleRefresh();" />\r\n  </td></tr>\r\n')
-                    } else {
-                        write('  <tr><td colspan="' + (columns.length - 1) + '">' + options.title + 
-                            '</td><td class="right">' + '<img src="' + controller.appUrl + '/web/images/green.gif" ' + 
-                            'class="-ejs-table-download -ejs-clickable" onclick="$(\'#' + tableId + 
-                            '\').eTableToggleRefresh();" />\r\n  </td></tr>\r\n')
-                    }
-                }
-                /*
-                 *  Emit column headings
-                 */
-                if (columns) {
-                    write('    <tr>\r\n')
-                    for (let name in columns) {
-                        if (name == null) continue
-                        let header = (columns[name].header) ? (columns[name].header) : name.toPascal()
-                        let width = (columns[name].width) ? ' width="' + columns[name].width + '"' : ''
-                        write('    <th ' + width + '>' + header + '</th>\r\n')
-                    }
-                }
-                write("     </tr>\r\n    </thead>\r\n")
-            }
-
-            let styleBody = options.styleBody || ""
-            write('    <tbody class="' + styleBody + '">\r\n')
-
-            let row: Number = 0
-
-			for each (let r: Object in data) {
-                let url = null
-                let urlOptions = { controller: options.controller, query: options.query }
-                if (options.click) {
-                    urlOptions.query = (options.query is Array) ? options.query[row] : options.query
-                    if (options.click is Array) {
-                        if (options.click[row] is String) {
-                            url = view.makeUrl(options.click[row], r.id, urlOptions)
-                        }
-                    } else {
-                        url = view.makeUrl(options.click, r.id, urlOptions)
-                    }
-                }
-                let odd = options.styleOddRow || "-ejs-oddRow"
-                let even = options.styleOddRow || "-ejs-evenRow"
-                styleRow = ((row % 2) ? odd : even) || ""
-                if (options.styleRows) {
-                    styleRow += " " + (options.styleRows[row] || "")
-                }
-                if (url) {
-                    write('    <tr class="' + styleRow + 
-                        '" onclick="window.location=\'' + url + '\';">\r\n')
-                } else {
-                let dataId = (options["data-remote"] && r.id) ? (' data-id="' + r.id + '"') : ''
-                    write('    <tr class="' + styleRow + '"' + dataId + '>\r\n')
-                }
-
-                let col = 0
-				for (name in columns) {
-                    if (name == null) {
-                        continue
-                    }
-                    let column = columns[name]
-                    let styleCell: String = ""
-
-                    if (options.styleColumns) {
-                        styleCell = options.styleColumns[col] || ""
-                    }
-                    if (column.style) {
-                        styleCell += " " + column.style
-                    }
-                    if (options.styleCells && options.styleCells[row]) {
-                        styleCell += " " + (options.styleCells[row][col] || "")
-                    }
-                    styleCell = styleCell.trim()
-                    data = view.getValue(r, name, { render: column.render, formatter: column.formatter } )
-
-                    let align = ""
-                    if (column.align) {
-                        align = ' align="' + column.align + '"'
-                    }
-                    let cellUrl
-                    if (options.click is Array && options.click[0] is Array) {
-                        if (options.query is Array) {
-                            if (options.query[0] is Array) {
-                                urlOptions.query = options.query[row][col]
-                            } else {
-                                urlOptions.query = options.query[row]
-                            }
-                        } else {
-                            urlOptions.query = options.query
-                        }
-                        cellUrl = view.makeUrl(options.click[row][col], r.id, urlOptions)
-                    }
-					styleCell = styleCell.trim()
-                    if (cellUrl) {
-                        write('    <td class="' + styleCell + '"' + align + 
-                            ' xonclick="window.location=\'' + cellUrl + '\';"><a href="' + cellUrl + '">' + 
-                            data + '</a></td>\r\n')
-                    } else {
-                        write('    <td class="' + styleCell + '"' + align + '>' + data + '</td>\r\n')
-                    }
-                    col++
-				}
-                row++
-				write('    </tr>\r\n')
-			}
-			write('    </tbody>\r\n  </table>\r\n')
-		}
-
-        //  Emit: <input name ="model.name" id="id" class="class" type="text|hidden|password" value="text"
-        /**
-         *  Render a text input field as part of a form.
-         *  @param name Name of the field to display. This is used to create a HTML "name" and "id" attribute for the 
-         *      input element. If used inside a model form, it is the field name in the model containing the text data to
-         *      display. If used without a model, the value to display should be passed via options.value. 
-            @param value Text to display
-         *  @param options Optional extra options. See $getOptions for a list of the standard options.
-         *  @option escape Boolean Escape the text before rendering. This converts HTML reserved tags and delimiters into
-         *      an encoded form.
-         *  @option style String CSS Style to use for the control
-         *  @option visible Boolean Make the control visible. Defaults to true.
-         *  @examples
-         *      <% text("name") %>
-         */
-        function text(name: String, value: String, options: Object): Void {
-            write('<input name="' + name + '" ' + getOptions(options) + ' type="' + getTextKind(options) + 
-                '" value="' + value + '" />')
-        }
-
-        // Emit: <textarea name ="model.name" id="id" class="class" type="text|hidden|password" value="text"
-        /**
-         *  Render a text area
-         *  @param name Name of the field to display. This is used to create a HTML "name" and "id" attribute for the 
-         *      input element. If used inside a model form, it is the field name in the model containing the text data to
-         *      display. If used without a model, the value to display should be passed via options.value. 
-            @param value Text to display
-         *  @option Boolean escape Escape the text before rendering. This converts HTML reserved tags and delimiters into
-         *      an encoded form.
-         *  @param options Optional extra options. See $getOptions for a list of the standard options.
-         *  @option data String URL or action to get data 
-         *  @option numCols Number number of text columns
-         *  @option numRows Number number of text rows
-         *  @option style String CSS Style to use for the control
-         *  @option visible Boolean Make the control visible. Defaults to true.
-         *  @examples
-         *      <% textarea("name") %>
-         */
-        function textarea(name: String, value: String, options: Object): Void {
-            numCols = options.numCols
-            if (numCols == undefined) {
-                numCols = 60
-            }
-            numRows = options.numRows
-            if (numRows == undefined) {
-                numRows = 10
-            }
-            write('<textarea name="' + name + '" type="' + getTextKind(options) + '" ' + getOptions(options) + 
-                ' cols="' + numCols + '" rows="' + numRows + '">' + value + '</textarea>')
-        }
-
-        /**
-         *  @duplicate ejs.web::View.tree
-            @hide
-         */
-        function tree(initialData: Array, options: Object): Void {
-            throw 'HtmlConnector control "tree" not implemented.'
-        }
-
-        private function getTextKind(options): String {
-            var kind: String
-
-            if (options.password) {
-                kind = "password"
-            } else if (options.hidden) {
-                kind = "hidden"
-            } else {
-                kind = "text"
-            }
-            return kind
-        }
-
-		private function getOptions(options: Object): String
-            view.getOptions(options)
-
-        private function write(str: String): Void
-            view.write(str)
-
-        private function getDataAttributes(options): String {
-            let attributes = ""
-            if (options["data-remote"]) {
-                attributes += ' data-remote="' + options["data-remote"] + '"'
-            }
-            if (options["data-apply"]) {
-                attributes += ' data-apply="' + options["data-apply"] + '"'
-            }
-            if (options["data-id"]) {
-                attributes += ' data-id="' + options["data-id"] + '"'
-            }
-            return attributes
-        }
-	}
-}
-
-
-/*
- *	@copy	default
- *	
- *	Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *	Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *	
- *	This software is distributed under commercial and open source licenses.
- *	You may use the GPL open source license described below or you may acquire 
- *	a commercial license from Embedthis Software. You agree to be fully bound 
- *	by the terms of either license. Consult the LICENSE.TXT distributed with 
- *	this software for full details.
- *	
- *	This software is open source; you can redistribute it and/or modify it 
- *	under the terms of the GNU General Public License as published by the 
- *	Free Software Foundation; either version 2 of the License, or (at your 
- *	option) any later version. See the GNU General Public License for more 
- *	details at: http://www.embedthis.com/downloads/gplLicense.html
- *	
- *	This program is distributed WITHOUT ANY WARRANTY; without even the 
- *	implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *	
- *	This GPL license does NOT permit incorporating this software into 
- *	proprietary programs. If you are unable to comply with the GPL, you must
- *	acquire a commercial license to use this software. Commercial licenses 
- *	for this software and support services are available from Embedthis 
- *	Software at http://www.embedthis.com 
- *	
- *	Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/web/connectors/HtmlConnector.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/web/Response.es"
- */
-/************************************************************************/
-
-/**
- *  Response.es - Response object for the Ejscript web framework.
- */
-
-module ejs.web {
-
-    /**
-     *  HTTP response class. The Http response object stores information about HTTP responses.
-     *  @spec ejs
-     *  @stability prototype
-     */
-    final class Response {
-
-        use default namespace public
-
-        /**
-         *  HTTP response code
-         */
-        native var code: Number
-
-        /**
-         *  Response content length. 
-         */
-        # FUTURE
-        native var contentLength: Number
-
-        /**
-         *  Cookies to send to the client. These are currently stored in headers[]
-         */
-        # FUTURE
-        native var cookies: Object
-
-        /**
-         *  Unique response tag - not generated  yet
-         */
-        # FUTURE
-        native var etag: String
-
-        /**
-         *  Filename for the Script name
-         */
-        native var filename: String
-
-        /**
-         *  Reponse headers
-         */
-        native var headers: Array
-
-        /**
-         *  Response content mime type
-         */
-        native var mimeType: String
-    }
-}
-/************************************************************************/
-/*
- *  End of file "../src/es/web/Response.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/web/Request.es"
- */
-/************************************************************************/
-
-/**
- *  Request.es - Request class for the Ejscript web framework
- */
-
-module ejs.web {
-
-    /**
-     *  HTTP request information. The request objects stores parsed information for incoming HTTP requests.
-     *  @spec ejs
-     *  @stability prototype
-     */
-    final class Request {
-
-        use default namespace public
-
-        /**
-         *  Accept header
-         */
-        native var accept: String
-
-        /**
-         *  AcceptCharset header
-         */
-        native var acceptCharset: String
-
-        /**
-         *  AcceptEncoding header
-         */
-        native var acceptEncoding: String
-
-        /**
-         *  Authentication access control list
-         *  @hide
-         */
-        native var authAcl: String
-
-        /**
-         *  Authentication group
-         */
-        native var authGroup: String
-
-        /**
-         *  Authentication method if authorization is being used (basic or digest)
-         */
-        native var authType: String
-
-        /**
-         *  Authentication user name
-         */
-        native var authUser: String
-
-        /**
-         *  Request content body. NOTE: This property will be replaced with a stream based input scheme in a future
-         *  release.
-         *  @prototype.
-         */
-        native var body: String
-
-        /**
-         *  Connection header
-         */
-        native var connection: String
-
-        /**
-         *  Posted content length (header: Content-Length)
-         */
-        native var contentLength: Number
-
-        /**
-         *  Stores Client cookie state information. The cookies object will be created automatically if the Client supplied 
-         *  cookies with the current request. Cookies are used to specify the session state. If sessions are being used, 
-         *  a session cookie will be sent to and from the browser with each request. The elements are user defined.
-         */
-        native var cookies: Object
-            
-        /**
-         *  Extension portion of the URL after aliasing to a filename.
-         */
-        native var extension: String
-
-        /**
-         *  Files uploaded as part of the request. For each uploaded file, an instance of UploadFile is created in files. 
-         *  The property name of the instance is given by the file upload HTML input element ID in the request page form. 
-         *  Set to null if no files have been uploaded.
-         */
-        native var files: Object
-
-        /**
-         *  Store the request headers. The request array stores all the HTTP request headers that were supplied by 
-         *  the client in the current request. 
-         */
-        native var headers: Object
-
-        /**
-         *  The host name header
-         */
-        native var hostName: String
-
-        /**
-         *  Request method: DELETE, GET, POST, PUT, OPTIONS, TRACE
-         */
-        native var method: String
-
-        /**
-         *  Content mime type (header: Content-Type)
-         */
-        native var mimeType: String
-
-        /**
-         *  The portion of the path after the script name if extra path processing is being used.
-         */
-        native var pathInfo: String
-
-        /**
-         *  The physical path corresponding to PATH_INFO.
-         */
-        native var pathTranslated
-
-        /**
-         *  Pragma header
-         */
-        native var pragma: String
-
-        /**
-         *  Decoded Query string (URL query string)
-         */
-        native var query: String
-
-        /**
-         *  Raw request URI before decoding.
-         */
-        native var originalUri: String
-
-        /**
-         *  Name of the referring URL
-         */
-        native var referrer: String
-
-        /**
-         *  The IP address of the Client issuing the request.
-         */
-        native var remoteAddress: String
-
-        /**
-         *  The host address of the Client issuing the request
-         *  This is deprecated due to the security issues with doing reverse DNS lookups. Use remoteAddress instead.
-         *  @hide
-         */
-        native var remoteHost: String
-
-        /**
-         *  Current session ID. Index into the $sessions object
-         */
-        native var sessionID: String
-
-        /**
-         *  The decoded request URL portion after stripping the scheme, host, extra path, query and fragments
-         */
-        native var url: String
-
-        /**
-         *  Name of the Client browser software set in the HTTP_USER_AGENT header
-         */
-        native var userAgent: String
-    }
-}
-/************************************************************************/
-/*
- *  End of file "../src/es/web/Request.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/web/Cookie.es"
- */
-/************************************************************************/
-
-/**
- *  Cookie.es -- Cookie class
- */
-
-module ejs.web {
-
-    /**
-     *  Cookie class is used to store parsed cookie strings. The MVC web framework creates Cookie class instances when
-     *  the client provides Http cookie headers.
-     *  @spec ejs
-     *  @stability prototype
-     */
-    class Cookie {
-
-        use default namespace public
-
-        /**
-         *  Name of the cookie
-         */
-        var name: String
-
-        /**
-         *  Value of the cookie
-         */
-        var value: String
-
-        /**
-         *  Domain in which the cookie applies
-         */
-        var domain: String
-
-        /**
-         *  URI path in which the cookie applies
-         */
-        var path: String
-    }
-}
-
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/web/Cookie.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/web/Host.es"
- */
-/************************************************************************/
-
-/**
- *  Host.es - Host class for the Ejscript web framework
- */
-
-module ejs.web {
-
-    /**
-     *  Web server host information. The server array stores information that typically does not vary from 
-     *  request to request. For a given virtual server, these data items will be constant across all requests.
-     *  @spec ejs
-     *  @stability prototype
-     */
-    final class Host {
-
-        use default namespace public
-
-        /**
-         *  Home directory for the web documents
-         */
-        native var documentRoot: String
-
-        /**
-         *  Fully qualified name of the server. Should be of the form (http://name[:port])
-         */
-        native var name: String
-
-        /**
-         *  Host protocol (http or https)
-         */
-        native var protocol: String
-
-        /**
-         *  Set if the host is a virtual host
-         */ 
-        native var isVirtualHost: Boolean
-
-        /**
-         *  Set if the host is a named virtual host
-         */
-        native var isNamedVirtualHost: Boolean
-
-        /**
-         *  Server software description
-         */
-        native var software: String
-
-        /**
-         *  Log errors to the application log
-         */
-        native var logErrors: Boolean
-    }
-}
-/************************************************************************/
-/*
- *  End of file "../src/es/web/Host.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/web/Controller.es"
- */
-/************************************************************************/
-
-/**
- *  Controller.es -- Ejscript Controller class as part of the MVC framework. Also contains control helpers for views.
- */
-
-module ejs.web {
-
-    require ejs.db
-
-    namespace action = "action"                 /* Namespace for all action methods */
-
-    /**
-     *  Current view in the web framework
-     *  @spec ejs
-     */
-    var view: View
-
-    /**
-     *  Web framework controller. Part of the Ejscript web MVC framework. Controller objects are not instantiated by
-     *  users but are created internally by the web framework.
-     *  @spec ejs
-     *  @stability prototype
-     */
-    class Controller {
-        /*
-         *  Define properties and functions (by default) in the ejs.web namespace so that user controller variables 
-         *  don't clash. Override with "public" the specific properties that must be copied to views.
-         */
-        use default namespace "ejs.web"
-
-        /**
-         *  Name of the action being run
-         */
-        public var actionName:  String 
-        private var originalActionName:  String 
-
-        /**
-         *  Stores application global data. The application array provides a means to store persistent information 
-         *  to be shared across all clients using an application. Objects and variables stored in the application 
-         *  array will live until either explicitly deleted or the web server exits. The application array does not 
-         *  persist over system reboots. The elements are User defined.
-         *  NOTE: Not yet implemented.
-         */
-        // public var application: Object
-
-        public var absUrl:      String
-
-        /**
-         *  Relative URL for the application. Does not include the URL scheme or host name portion.
-         */
-        public var appUrl:      String
-
-        /**
-         *   Lower case controller name 
-         */
-        public var controllerName: String
-
-        /**
-         *  Web application configuration. This is initialized from the config *.ecf files.
-         */
-        public var config:      Object
-
-        /**
-         *  Flash messages to display on the next screen
-         *      "inform"        Informational / postitive feedback (note)
-         *      "message"       Neutral feedback (reminders, suggestions...)
-         *      "warning"       Negative feedback (Warnings and errors)
-         *      "error"         Negative errors (Warnings and errors)
-         */
-        public var flash:       Object
-
-        /**
-         *  Physical home directory of the application
-         */
-        public var home:        String
-
-        /**
-         *  Host object
-         */
-        public var host:        Host
-
-        /**
-         *  Form parameters. 
-         */
-        public var params:      Object
-
-        /**
-         *  The request object stores details of the incoming client's request
-         */
-        public var request:     Request
-
-        /**
-         *  The response object stores details of the response going back to the client.
-         */
-        public var response:    Response
-
-        /**
-         *  Stores session state information. The session array will be created automatically if SessionAutoCreate 
-         *  is defined or if a session is started via the useSession() or createSession() functions. Sessions are 
-         *  shared among requests that come from a single client. This may mean that multiple requests access the 
-         *  same session concurrently. Ejscript ensures that such accesses are serialized. The elements are user defined.
-         */
-        public var session:     Object
-
-        private var isApp:      Boolean
-        private var rendered:   Boolean
-        private var redirected: Boolean
-        private var events:     Dispatcher
-
-        private var _afterFilters: Array
-        private var _beforeFilters: Array
-        private var _wrapFilters: Array
-
-        /**
-         *  Controller initialization. This is specially hand-crafted by the hosting web server so that it runs
-         *  before the sub-classing constructors.
-         *  @param isApp True if the request if for an MVC application
-         *  @param appDir Set to the top level directory containing the application
-         *  @param appUrl URL that points to the application
-         *  @param session Session state object
-         *  @param host Host object
-         *  @param request Request object
-         *  @param response Response object
-         */
-        function initialize(isApp: Boolean, appDir: String, appUrl: String, session: Session, host: Host, request: Request, 
-                response: Response): Void {
-
-            this.isApp = isApp
-            this.home = appDir
-            this.session = session
-            this.host = host
-            this.request = request
-            this.response = response
-            this.absUrl = appUrl
-
-            /*
-             *  this.absUrl = request.url
-             *  this.appUrl = Url("/").relative(request.url)
-             */
-            let url = new Path("")
-            let parts = Path(request.url).components
-            for (i = 2; i < parts.length; i++) {
-                url = url.join("..")
-            }
-            if (request.url.endsWith("/")) {
-                url = url.join("..")
-            }
-            this.appUrl = url.toString()
-            if (this.appUrl == "") {
-                this.appUrl = "."
-            }
-            
-            /*
-             *  Load application configuration. 
-             */
-            if (isApp) {
-                config = deserialize("{ " + Path(appDir).join("config/config.ecf").readString() + " }")
-                config.database = deserialize("{ " + Path(appDir).join("config/database.ecf").readString() + " }")
-                config.view = deserialize("{ " + Path(appDir).join("config/view.ecf").readString() + " }")
-
-                let adapter: String = config.database[config.app.mode].adapter
-                let dbname: String = config.database[config.app.mode].database
-
-                if (adapter != "" && dbname != "") {
-                    db = Database.defaultDatabase = new Database(adapter, Path(appDir).join(dbname))
-
-                    if (config.database[config.app.mode].trace) {
-                        db.trace(true)
-                    }
-                }
-            }
-
-            // events = new Dispatcher
-            rendered = false
-            redirected = false
-            params = new Object
-            let name: String = Reflect(this).name
-            controllerName = name.trim("Controller")
-        }
-
-        /** 
-         *  Add a cache-control header to direct the browser to not cache the response.
-         */
-        native function cache(enable: Boolean = true): Void
-
-        /**
-         *  Enable session control. This enables session state management for this request and other requests 
-         *  from the browser. If a session has not already been created, this call creates a session and sets 
-         *  the @sessionID property in the request object. If a session already exists, this call has no effect. 
-         *  A cookie containing a session ID is automatically created and sent to the client on the first response 
-         *  after creating the session. If SessionAutoCreate is defined in the configuration file, then sessions 
-         *  will automatically be created for every web request and your Ejscript web pages do not need to call 
-         *  createSession. Multiple requests may be sent from a client's browser at the same time. Ejscript will 
-         *  ensure that accesses to the sesssion object are correctly serialized. 
-         *  @param timeout Optional timeout for the session in seconds. If ommitted the default timeout is used.
-         */
-        native function createSession(timeout: Number = 0): Void
-
-        /**
-         *  Destroy a session. This call destroys the session state store that is being used for the current client. 
-         *  If no session exists, this call has no effect.
-         */
-        native function destroySession(): Void
-
-        /**
-         *  Discard all prior output
-         */
-        native function discardOutput(): Void
-
-        /** @hide */
-        function resetFilters(): Void {
-            _beforeFilters = null
-            _afterFilters = null
-            _wrapFilters = null
-        }
-
-        /** @hide */
-        function beforeFilter(fn, options: Object = null): Void {
-            if (_beforeFilters == null) {
-                _beforeFilters = []
-            }
-            _beforeFilters.append([fn, options])
-        }
-
-        /** @hide */
-        function afterFilter(fn, options: Object = null): Void {
-            if (_afterFilters == null) {
-                _afterFilters = []
-            }
-            _afterFilters.append([fn, options])
-        }
-
-        /** @hide */
-        function wrapFilter(fn, options: Object = null): Void {
-            if (_wrapFilters == null) {
-                _wrapFilters = []
-            }
-            _wrapFilters.append([fn, options])
-        }
-
-        private function runFilters(filters: Array): Void {
-            if (!filters) {
-                return
-            }
-            for each (filter in filters) {
-                let fn = filter[0]
-                let options = filter[1]
-                if (options) {
-                    only = options.only
-                    if (only) {
-                        if (only is String && actionName != only) {
-                            continue
-                        }
-                        if (only is Array && !only.contains(actionName)) {
-                            continue
-                        }
-                    } 
-                    except = options.except
-                    if (except) {
-                        if (except is String && actionName == except) {
-                            continue
-                        }
-                        if (except is Array && except.contains(actionName)) {
-                            continue
-                        }
-                    }
-                }
-                fn.call(this)
-            }
-        }
-
-        /**
-         *  Invoke the named action. Internal use only. Called from ejsWeb.c.
-         *  @param act Action name to invoke
-         */
-        function doAction(act: String): Void {
-            global."ejs.web"::["controller"] = this
-            if (act == "") {
-                act = "index"
-            }
-            actionName = act
-
-            use namespace action
-
-            if (this[actionName] == undefined) {
-                originalActionName = actionName
-                actionName = "missing"
-            }
-
-            let lastFlash = null
-            if (session) {
-                flash = session["__flash__"]
-            }
-            if (flash == "" || flash == undefined) {
-                flash = {}
-            } else {
-                if (session) {
-                    session["__flash__"] = undefined
-                }
-                lastFlash = flash.clone()
-            }
-
-            runFilters(_beforeFilters)
-
-            if (!redirected) {
-                try {
-                    this[actionName]()
-                    if (!rendered) {
-                        renderView()
-                    }
-                } catch (e) {
-                    reportError(Http.ServerError, "Error in action: " + escapeHtml(actionName), e)
-                    rendered = true
-                    return
-                }
-                runFilters(_afterFilters)
-            }
-            if (lastFlash) {
-                for (item in flash) {
-                    for each (old in lastFlash) {
-                        if (hashcode(flash[item]) == hashcode(old)) {
-                            delete flash[item]
-                        }
-                    }
-                }
-            }
-            if (flash && flash.length > 0) {
-                if (session) {
-                    session["__flash__"] = flash
-                }
-            }
-            // Memory.stats()
-        }
-
-        /**
-         *  Send an error response back to the client. This calls discard the output.
-         *  @param code Http status code
-         *  @param msg Message to display
-         */
-        native function sendError(code: Number, msg: String): Void
-
-        /** @hide */
-        function renderError(code: Number, msg: String = ""): Void {
-            sendError(code, msg)
-            rendered = true
-        }
-
-        /**
-         *  Transform a string to be safe for output into an HTML web page. It does this by changing the
-         *  "&", ">", "<" and '"' characters into their ampersand HTML equivalents.
-         *  @param s input string
-         *  @returns a transformed HTML escaped string
-         */
-        function escapeHtml(s: String): String
-            s.replace(/&/g,'&amp;').replace(/\>/g,'&gt;').replace(/</g,'&lt;').replace(/"/g,'&quot;')
-
-        /** 
-         *  HTML encode the arguments
-         *  @param args Variable arguments that will be converted to safe html
-         *  @return A string containing the encoded arguments catenated together
-         */
-        function html(...args): String {
-            result = ""
-            for each (let s: String in args) {
-                result += escapeHtml(s)
-            }
-            return result
-        }
-
-        /**
-         *  Send a positive notification to the user. This is just a convenience instead of setting flash["inform"]
-         *  @param msg Message to display
-         */
-        function inform(msg: String): Void
-            flash["inform"] = msg
-
-        /**
-         *  Send an error notification to the user. This is just a convenience instead of setting flash["error"]
-         *  @param msg Message to display
-         */
-        function error(msg: String): Void
-            flash["error"] = msg
-
-        /**
-         *  Control whether the HTTP connection is kept alive after this request
-         *  @parm on Set to true to enable keep alive.
-         */
-        native function keepAlive(on: Boolean): Void
-
-        /**
-         *  Load a view. If path is not supplied, use the default view for the current action.
-         *  @param viewName Name of the view to load. It may be a fully qualified path name or a filename relative to the 
-         *      views directory for the current action, but without the 'ejs' extension.
-         */
-        native function loadView(path: String = null): Void
-
-        /**
-         *  Make a URL suitable for invoking actions. This routine will construct a URL Based on a supplied action name, 
-         *  model id and options that may contain an optional controller name. This is a convenience routine remove from 
-         *  applications the burden of building URLs that correctly use action and controller names.
-         *  @params action The action name to invoke in the URL. If the name starts with "." or "/", it is assumed to be 
-         *      a controller name and it is used by itself.
-         *  @params id The model record ID to select via the URL. Defaults to null.
-         *  @params options The options string
-         *  @params query Query
-         *  @return A string URL.
-         *  @options url An override url to use. All other args are ignored.
-         *  @options query Query string to append to the URL. Overridden by the query arg.
-         *  @options controller The name of the controller to use in the URL.
-         */
-        function makeUrl(action: String, id: String = null, options: Object = {}, query: Object = null): String {
-            if (options["url"]) {
-                return options.url
-            }
-            let url: String
-            if (action.contains("http://") || action.startsWith("/") || action.startsWith(".") || action.startsWith("#")) {
-                url = action
-            } else {
-                url = appUrl.trim("/")
-                let cname = (options && options["controller"]) || controllerName
-/*
-                if (url != "") {
-                    url = "/" + url
-                }
-                url += "/" + cname + "/" + action
-*/
-                if (url != "") {
-                    url += "/" + cname + "/" + action
-                } else {
-                    url = cname + "/" + action
-                }
-            }
-            if (id && id != "undefined" && id != null) {
-                id = "id=" + id
-            } else {
-                id = null
-            }
-            query ||= options.query
-            if (id || query) {
-                if (url.indexOf('?') < 0) {
-                    url += "?"
-                } else {
-                    url += "&"
-                }
-                if (id) {
-                    url += id
-                    if (query) {
-                        url += "&" + query
-                    }
-                } else if (query) {
-                    url += query
-                }
-            }
-            return url
-        }
-
-        /**
-         *  Redirect the client to a new URL. This call redirects the client's browser to a new location specified 
-         *  by the @url.  Optionally, a redirection code may be provided. Normally this code is set to be the HTTP 
-         *  code 302 which means a temporary redirect. A 301, permanent redirect code may be explicitly set.
-         *  @param url Url to redirect the client to
-         *  @param code Optional HTTP redirection code
-         */
-        native function redirectUrl(url: String, code: Number = 302): Void
-
-        /**
-         *  Redirect to the given action
-         *  @param action Action to redirect to
-         *  @param id Request ID
-            @param options Call options
-         *  @option id controller
-         */
-        function redirect(action: String, id: String = null, options: Object = {}): Void {
-            redirectUrl(makeUrl(action, id, options))
-            redirected = true
-        }
-
-        /**
-         *  Render the raw arguments back to the client. The args are converted to strings.
-         */
-        function render(...args): Void { 
-            rendered = true
-            write(args)
-        }
-
-        /**
-         *  Render a file's contents. 
-         */
-        function renderFile(filename: String): Void { 
-            rendered = true
-            let file: File = new File(filename)
-            try {
-                file.open()
-                while (data = file.read(4096)) {
-                    writeRaw(data)
-                }
-                file.close()
-            } catch (e: Error) {
-                reportError(Http.ServerError, "Can't read file: " + filename, e)
-            }
-        }
-
-        # FUTURE
-        function renderPartial(): void { }
-
-        /**
-         *  Render raw data
-         */
-        function renderRaw(...args): Void {
-            rendered = true
-            writeRaw(args)
-        }
-
-        # FUTURE
-        function renderXml(): Void {}
-
-        # FUTURE
-        function renderJSON(): Void {}
-
-        /**
-         *  Render a view template
-         */
-        function renderView(viewName: String = null): Void {
-            if (rendered) {
-                throw new Error("renderView invoked but render has already been called")
-                return
-            }
-            rendered = true
-
-            if (viewName == null) {
-                viewName = actionName
-            }
-            
-            let viewClass: String
-            try {
-                let name = Reflect(this).name
-                viewClass = name.trim("Controller") + "_" + viewName + "View"
-                if (global[viewClass] == undefined) {
-                    loadView(viewName)
-                }
-                view = new global[viewClass](this)
-
-            } catch (e: Error) {
-                if (e.code == undefined) {
-                    e.code = Http.ServerError
-                }
-                if (extension(request.url) == "ejs") {
-                    reportError(e.code, "Can't load page: " + escapeHtml(request.url), e)
-                } else {
-                    reportError(e.code, "Can't load view: " + viewName + ".ejs" + " for " + escapeHtml(request.url), e)
-                }
-                return
-            }
-
-            try {
-                for (let n: String in this) {
-                    view.public::[n] = this[n]
-                }
-                view.render()
-            } catch (e: Error) {
-                reportError(Http.ServerError, 'Error rendering: "' + viewName + '.ejs".', e)
-            } catch (msg) {
-                reportError(Http.ServerError, 'Error rendering: "' + viewName + '.ejs". ' + msg)
-            }
-        }
-
-        /**
-         *  Report errors back to the client
-         *  @param msg Message to send to the client
-         *  @param e Optional Error exception object to include in the message
-         */
-        private function reportError(code: Number, msg: String, e: Object = null): Void {
-            if (code <= 0) {
-                code = Http.ServerError
-            }
-            if (e) {
-                e = e.toString().replace(/.*Error Exception: /, "")
-            }
-            if (host.logErrors) {
-                if (e) {
-                    msg += "\r\n" + e
-                }
-            } else {
-                msg = "<h1>Ejscript error for \"" + escapeHtml(request.url) + "\"</h1>\r\n<h2>" + msg + "</h2>\r\n"
-                if (e) {
-                    msg += "<pre>" + escapeHtml(e) + "</pre>\r\n"
-                }
-                msg += '<p>To prevent errors being displayed in the "browser, ' + 
-                    'use <b>"EjsErrors log"</b> in the config file.</p>\r\n'
-            }
-            sendError(code, msg)
-        }
-
-        /**
-         *  Define a cookie header to include in the reponse. Path, domain and lifetime can be set to null for default
-         *  values.
-         *  @param name Cookie name
-         *  @param value Cookie value
-         *  @param path URI path to which the cookie applies
-         *  @param domain Domain in which the cookie applies. Must have 2-3 dots.
-         *  @param lifetime Duration for the cookie to persist in seconds
-         *  @param secure Set to true if the cookie only applies for SSL based connections
-         */
-        native function setCookie(name: String, value: String, path: String = null, domain: String = null, 
-                lifetime: Number = 0, secure: Boolean = false): Void
-
-        /**
-         *  of the format "keyword: value". If a header has already been defined and \a allowMultiple is false, 
-         *  the header will be overwritten. If \a allowMultiple is true, the new header will be appended to the 
-         *  response headers and the existing header will also be output. NOTE: case does not matter in the header keyword.
-         *  @param key Header key string
-         *  @param value Header value 
-         *  @param allowMultiple If false, overwrite existing headers with the same keyword. If true, all headers are output.
-         */
-        native function setHeader(key: String, value: String, allowMultiple: Boolean = false): Void
-
-        /**
-         *  Set the HTTP response status code
-         *  @param code HTTP status code to define
-         */
-        native function setHttpCode(code: Number): Void
-
-        /**
-         *  Set the response body mime type
-         *  @param format Mime type for the response. For example "text/plain".
-         */
-        native function setMimeType(format: String): Void
-
-        /**
-         *  Transform an escaped string into its original contents. This reverses the transformation done by $escapeHtml.
-         *  It does this by changing &quot, &gt, &lt back into ", < and >.
-         *  @param s input string
-         *  @returns a transformed string
-         */
-        function unescapeHtml(s: String): String
-            s.replace(/&amp;/g,'&').replace(/&gt;/g,'>').replace(/&lt;/g,'<').replace(/&quot;/g,'"')
-
-        /**
-         *  Send a warning message back to the client for display in the flash area. This is just a convenience instead of
-         *  setting flash["warn"]
-         *  @param msg Message to display
-         */
-        function warn(msg: String): Void
-            flash["warning"] = msg
-
-        /**
-         *  Write text to the client. This call writes the arguments back to the client's browser. The arguments 
-         *  are converted to strings before writing back to the client. Text written using write, will be buffered 
-         *  up to a configurable maximum. This allows text to be written prior to setting HTTP headers with setHeader.
-         *  @param args Text or objects to write to the client
-         */
-        native function write(...args): Void
-
-        /**
-         *  Send text back to the client which must first be HTML escaped
-         *  @param args Objects to emit
-         */
-        function writeHtml(...args): Void
-            write(html(args))
-
-        /** @hide */
-        native function writeRaw(...args): Void
-
-        /**
-         *  Missing action method. This method will be called if the requested action routine does not exist.
-         */
-        action function missing(): Void {
-            msg = "<h1>Missing Action</h1>" +
-                "<h3>Action: \"" + originalActionName + "\" could not be found for controller \"" + 
-                controllerName + "\".</h3>"
-            sendError(500, msg)
-            rendered = true
-        }
-    }
-
-    /** 
-     *  Controller for use by stand-alone web pages
-     *  @stability prototype
-     *  @hide 
-     */
-    class _SoloController extends Controller {
-    }
-}
-
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/web/Controller.es"
- */
-/************************************************************************/
-
-
-
-/************************************************************************/
-/*
- *  Start of file "../src/es/web/Session.es"
- */
-/************************************************************************/
-
-/**
- *  Session.es -- Session state management
- */
-
-module ejs.web {
-
-    /**
-     *  Hash of all sessions. Held by the master interpreter.
-     *  @spec ejs
-     *  @stability prototype
-     */
-    var sessions = {}
-
-    /**
-     *  Session state storage class. 
-     *  @spec ejs
-     *  @stability prototype
-     *  @hide
-     */
-    dynamic class Session { }
-}
-
-
-/*
- *  @copy   default
- *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
- *  
- *  This software is distributed under commercial and open source licenses.
- *  You may use the GPL open source license described below or you may acquire 
- *  a commercial license from Embedthis Software. You agree to be fully bound 
- *  by the terms of either license. Consult the LICENSE.TXT distributed with 
- *  this software for full details.
- *  
- *  This software is open source; you can redistribute it and/or modify it 
- *  under the terms of the GNU General Public License as published by the 
- *  Free Software Foundation; either version 2 of the License, or (at your 
- *  option) any later version. See the GNU General Public License for more 
- *  details at: http://www.embedthis.com/downloads/gplLicense.html
- *  
- *  This program is distributed WITHOUT ANY WARRANTY; without even the 
- *  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- *  
- *  This GPL license does NOT permit incorporating this software into 
- *  proprietary programs. If you are unable to comply with the GPL, you must
- *  acquire a commercial license to use this software. Commercial licenses 
- *  for this software and support services are available from Embedthis 
- *  Software at http://www.embedthis.com 
- *
- *  Local variables:
-    tab-width: 4
-    c-basic-offset: 4
-    End:
-    vim: sw=4 ts=4 expandtab
-
-    @end
- */
-/************************************************************************/
-/*
- *  End of file "../src/es/web/Session.es"
  */
 /************************************************************************/
 
