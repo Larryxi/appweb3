@@ -2,7 +2,7 @@
 #
 #   configure -- Build configuration script for Embedthis Products
 #
-#   Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+#   Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
 #
 #   This script creates the buildConfig.h, buildConfig.make and buildConfig.sh 
 #   configuration files. buildConfig.h is included in every C/C++ source file, 
@@ -329,8 +329,7 @@ parseSystemConfiguration() {
         # Microsoft Windows XP [Version 5.1.2600]
         # Microsoft Windows [Version 6.0.6000]
 
-        cmd=`cygpath -u "${COMSPEC}"`
-        rel=`$cmd /c ver | tail -1`
+        rel=`cmd /c ver | tail -1`
         version=`echo $rel | sed 's/.*Version //;s/]//' | awk '{ print $1 }'`
         version=${version%%.*}
         #  if [ "$version" = 6 ] ; then

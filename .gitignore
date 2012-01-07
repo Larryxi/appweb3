@@ -129,3 +129,9 @@ test/web/huge.txt
 samples/c/simpleHandler/simpleHandler.def
 test/web/cookie.ejs
 releases/appweb*
+test/web/mob.ejs
+test/web/test.dat
+*.out
+bin/i586*
+lib/i586*
+modules/i586*

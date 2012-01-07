@@ -4,7 +4,7 @@
 /******************************************************************************/
 /* 
  *  This file is an amalgamation of all the individual source code files for
- *  Embedthis Ejscript 1.1.2.
+ *  Embedthis Ejscript 1.1.3.
  *
  *  Catenating all the source into a single file makes embedding simpler and
  *  the resulting application faster, as many compilers can do whole file
@@ -48,7 +48,7 @@ static int preloadModules(EcCompiler *cp, MprList *modules);
     MprList         *useModules;
     char            *argp, *searchPath, *outputFile, *certFile, *name, *tok, *modules, *spec;
     int             nextArg, err, ejsFlags, ecFlags, bind, debug, doc, empty, merge;
-    int             warnLevel, noout, parseOnly, tabWidth, optimizeLevel, compilerMode, strip, lang;
+    int             warnLevel, noout, parseOnly, tabWidth, optimizeLevel, compilerMode, lang;
 
     /*
      *  Create the Embedthis Portable Runtime (MPR) and setup a memory failure handler
@@ -172,9 +172,6 @@ static int preloadModules(EcCompiler *cp, MprList *modules);
                 certFile = argv[++nextArg];
             }
 
-        } else if (strcmp(argp, "--strip") == 0) {
-            strip = 1;
-
         } else if (strcmp(argp, "--tabWidth") == 0) {
             if (nextArg >= argc) {
                 err++;
@@ -253,7 +250,6 @@ static int preloadModules(EcCompiler *cp, MprList *modules);
             "  --strict             # Default compilation mode to strict\n"
 #if FUTURE
             "  --sign certFile      # Sign the module file (not implemented) \n"
-            "  --strip              # Strip all symbolic names (Can't import)\n"
             "  --tabwidth           # Tab width for '^' error reporting\n"
 #endif
             "  --use 'module, ...'  # List of modules to pre-load\n"
@@ -347,8 +343,8 @@ static int preloadModules(EcCompiler *cp, MprList *modules)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire

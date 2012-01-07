@@ -533,14 +533,15 @@ int maReadGroupFile(MaServer *server, MaAuth *auth, char *path)
 
     while (mprGets(file, buf, sizeof(buf))) {
         enabled = mprStrTok(buf, " :\t", &tok);
-
+        if (!enabled) {
+            continue;
+        }
         for (cp = enabled; isspace((int) *cp); cp++) {
             ;
         }
         if (*cp == '\0' || *cp == '#') {
             continue;
         }
-
         aclSpec = mprStrTok(0, " :\t", &tok);
         group = mprStrTok(0, " :\t", &tok);
         users = mprStrTok(0, "\r\n", &tok);
@@ -571,14 +572,15 @@ int maReadUserFile(MaServer *server, MaAuth *auth, char *path)
 
     while (mprGets(file, buf, sizeof(buf))) {
         enabled = mprStrTok(buf, " :\t", &tok);
-
+        if (!enabled) {
+            continue;
+        }
         for (cp = enabled; isspace((int) *cp); cp++) {
             ;
         }
         if (*cp == '\0' || *cp == '#') {
             continue;
         }
-
         user = mprStrTok(0, ":", &tok);
         realm = mprStrTok(0, ":", &tok);
         password = mprStrTok(0, " \t\r\n", &tok);
@@ -693,8 +695,8 @@ void __nativeAuthFile() {}
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 

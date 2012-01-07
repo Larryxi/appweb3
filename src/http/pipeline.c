@@ -120,7 +120,6 @@ static bool rewriteRequest(MaConn *conn)
 void maCreatePipeline(MaConn *conn)
 {
     MaHttp          *http;
-    MaHost          *host;
     MaResponse      *resp;
     MaRequest       *req;
     MaStage         *handler;
@@ -132,7 +131,6 @@ void maCreatePipeline(MaConn *conn)
 
     req = conn->request;
     resp = conn->response;
-    host = req->host;
     location = req->location;
     handler = resp->handler;
     http = conn->http;
@@ -184,7 +182,7 @@ void maCreatePipeline(MaConn *conn)
     }
 #if BLD_FEATURE_SEND
     if (resp->handler == http->fileHandler && connector == http->netConnector && req->method == MA_REQ_GET && 
-            http->sendConnector && !req->ranges && !host->secure && resp->chunkSize <= 0 && !conn->trace) {
+            http->sendConnector && !req->ranges && !req->host->secure && resp->chunkSize <= 0 && !conn->trace) {
         /*
             Switch (transparently) to the send connector if serving whole static file content via the net connector
             and not tracing.
@@ -852,8 +850,8 @@ char *maMapUriToStorage(MaConn *conn, cchar *url)
 /*
     @copy   default
   
-    Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
-    Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+    Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+    Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
   
     This software is distributed under commercial and open source licenses.
     You may use the GPL open source license described below or you may acquire

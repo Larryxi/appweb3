@@ -57,6 +57,12 @@
 #define MPR_CPU_SH4         12
 
 
+#if VXWORKS
+    #ifndef _VSB_CONFIG_FILE
+        #define _VSB_CONFIG_FILE "vsbConfig.h"
+    #endif
+#endif
+
 #if BLD_UNIX_LIKE && !VXWORKS && !MACOSX && !FREEBSD
     #include    <sys/types.h>
     #include    <time.h>
@@ -147,7 +153,7 @@
     #include    <stdio.h>
     #include    <stdlib.h>
     #include    <string.h>
-    #include    <symSyncLib.h>
+    #include    <symSync.h>
     #include    <sysSymTbl.h>
     #include    <sys/fcntlcom.h>
     #include    <sys/ioctl.h>
@@ -551,8 +557,12 @@ extern "C" {
     #endif
     #define __WALL          0
 #else
-    #define O_BINARY        0
-    #define O_TEXT          0
+    #ifndef O_BINARY
+        #define O_BINARY    0
+    #endif
+    #ifndef O_TEXT
+        #define O_TEXT      0
+    #endif
 
     /*
      *  For some reason it is removed from fedora 6 pthreads.h and only comes in for UNIX96
@@ -585,8 +595,12 @@ extern "C" {
 
     #define MPR_BINARY      ""
     #define MPR_TEXT        ""
-    #define O_BINARY        0
-    #define O_TEXT          0
+    #ifndef O_BINARY
+        #define O_BINARY    0
+    #endif
+    #ifndef O_TEXT
+        #define O_TEXT      0
+    #endif
     #define SOCKET_ERROR    -1
     #define MSG_NOSIGNAL    0
     #define __WALL          0
@@ -796,7 +810,7 @@ extern int gettimeofday(struct timeval *tv, struct timezone *tz);
     #define EAGAIN          11
 
     /*
-     *  VS 2011 defines these
+     *  VS 2012 defines these
      */
     #ifndef EWOULDBLOCK
     #define EWOULDBLOCK     EAGAIN
@@ -1045,6 +1059,16 @@ extern int gettimeofday(struct timeval *tv, struct timezone *tz);
 typedef int64 MprOff;
 
 /*
+    Socklen_t
+ */
+#if VXWORKS
+    typedef int MprSocklen;
+#else
+    typedef socklen_t MprSocklen;
+#endif
+
+
+/*
     Backward compatibility aliases
  */
 typedef MprOff MprOffset;
@@ -1054,8 +1078,8 @@ typedef MprOff MprOffset;
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -1314,8 +1338,8 @@ extern "C" {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -4012,7 +4036,9 @@ typedef struct MprEvent {
 typedef struct MprDispatcher {
     MprEvent        eventQ;             /* Event queue */
     MprEvent        timerQ;             /* Queue of future events */
+#if UNUSED
     MprEvent        taskQ;              /* Task queue */
+#endif
     MprTime         lastEventDue;       /* When the last event is due */
     MprTime         lastRan;            /* When last checked queues */
     MprTime         now;                /* Current notion of time */
@@ -7649,8 +7675,8 @@ extern void freedtoa(char* ptr);
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -7841,8 +7867,8 @@ typedef struct MprTestFailure {
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -8562,6 +8588,12 @@ functions whose names all begin with "_pcre_". */
 
 #ifndef PCRE_INTERNAL_H
 #define PCRE_INTERNAL_H
+
+#if VXWORKS
+    #ifndef _VSB_CONFIG_FILE
+        #define _VSB_CONFIG_FILE "vsbConfig.h"
+    #endif
+#endif
 
 #include "buildConfig.h"
 

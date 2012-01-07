@@ -3,7 +3,7 @@
 /******************************************************************************/
 /* 
  *  This file is an amalgamation of all the individual source code files for
- *  Embedthis Ejscript 1.1.2.
+ *  Embedthis Ejscript 1.1.3.
  *
  *  Catenating all the source into a single file makes embedding simpler and
  *  the resulting application faster, as many compilers can do whole file
@@ -122,8 +122,8 @@ extern int  emCreateDoc(EjsMod *mp);
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -819,7 +819,7 @@ static void generateTerms(EjsMod *mp)
         "<div class=\"terms\">\n"
         "   <p class=\"terms\">\n"
         "       <a href=\"http://www.embedthis.com/\">"
-        "       Embedthis Software LLC, 2003-2011. All rights reserved. "
+        "       Embedthis Software LLC, 2003-2012. All rights reserved. "
         "Embedthis is a trademark of Embedthis Software LLC.</a>\n"
         "   </p>\n"
         "</div>");
@@ -2767,8 +2767,8 @@ static EjsDoc *getDuplicateDoc(Ejs *ejs, cchar *duplicate)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -4187,8 +4187,8 @@ MAIN(ejsmodMain, int argc, char **argv)
             
         } else if (strcmp(argp, "--version") == 0 || strcmp(argp, "-V") == 0) {
             mprPrintfError(mpr, "%s %s\n"
-                "Copyright (C) Embedthis Software 2003-2011\n"
-                "Copyright (C) Michael O'Brien 2003-2011\n",
+                "Copyright (C) Embedthis Software 2003-2012\n"
+                "Copyright (C) Michael O'Brien 2003-2012\n",
                BLD_NAME, BLD_VERSION);  
             exit(0);
 
@@ -4418,8 +4418,8 @@ static void logger(MprCtx ctx, int flags, int level, const char *msg)
 /*
  *  @copy   default
  *  
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *  
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire 
@@ -5631,8 +5631,8 @@ static void leadin(EjsMod *mp, EjsModule *module, int classDec, int inFunction)
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire
@@ -6307,8 +6307,8 @@ static int genType(EjsMod *bp, MprFile *file, EjsModule *mp, EjsType *type, int 
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire

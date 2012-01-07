@@ -4,7 +4,7 @@
 /******************************************************************************/
 /* 
  *  This file is an amalgamation of all the individual source code files for
- *  Embedthis Ejscript 1.1.2.
+ *  Embedthis Ejscript 1.1.3.
  *
  *  Catenating all the source into a single file makes embedding simpler and
  *  the resulting application faster, as many compilers can do whole file
@@ -54,7 +54,7 @@ static void setupSignals();
     MprList         *useModules, *files;
     cchar           *cmd, *className, *methodName;
     char            *argp, *searchPath, *modules, *name, *tok, *extraFiles, *spec;
-    int             nextArg, err, ecFlags, stats, run, merge, bind, noout, debug, optimizeLevel, warnLevel;
+    int             nextArg, err, ecFlags, run, merge, bind, noout, debug, optimizeLevel, warnLevel;
     int             compilerMode, lang;
 
     /*
@@ -74,7 +74,6 @@ static void setupSignals();
     cmd = 0;
     methodName = 0;
     searchPath = 0;
-    stats = 0;
     run = 1;
     merge = 0;
     bind = 1;
@@ -181,9 +180,6 @@ static void setupSignals();
         } else if (strcmp(argp, "--standard") == 0) {
             compilerMode = PRAGMA_MODE_STANDARD;
 
-        } else if (strcmp(argp, "--stats") == 0) {
-            stats = 1;
-
         } else if (strcmp(argp, "--strict") == 0) {
             compilerMode = PRAGMA_MODE_STRICT;
 
@@ -240,7 +236,6 @@ static void setupSignals();
             "  --optimize level         # Set the optimization level (0-9 default is 9)\n"
             "  --search ejsPath         # Module search path\n"
             "  --standard               # Default compilation mode to standard (default)\n"
-            "  --stats                  # Print stats on exit\n"
             "  --strict                 # Default compilation mode to strict\n"
             "  --use 'module, ...'      # List of modules to pre-load\n"
             "  --version                # Emit the compiler version information\n"
@@ -299,13 +294,6 @@ static void setupSignals();
             err++;
         }
     }
-
-#if BLD_DEBUG
-    if (stats) {
-        mprSetLogLevel(ejs, 1);
-        ejsPrintAllocReport(ejs);
-    }
-#endif
 #if VXWORKS
     mprFree(cp);
     mprFree(ejs);
@@ -562,8 +550,8 @@ static void setupSignals()
 /*
  *  @copy   default
  *
- *  Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
- *  Copyright (c) Michael O'Brien, 1993-2011. All Rights Reserved.
+ *  Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+ *  Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
  *
  *  This software is distributed under commercial and open source licenses.
  *  You may use the GPL open source license described below or you may acquire

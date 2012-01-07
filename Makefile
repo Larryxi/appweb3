@@ -1,7 +1,7 @@
 #  
 #	Makefile -- Top level Makefile for Appweb
 #
-#	Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+#	Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
 #
 #
 #	Standard Make targets supported are:
@@ -82,16 +82,11 @@ release:
 release32:
 	./configure --defaults=release --host=i686-apple-darwin --build=i686-apple-darwin --without-matrixssl --without-php
 
-vx:
-	unset WIND_HOME WIND_BASE ; \
-	SEARCH_PATH=/tornado ./configure --host=i386-wrs-vxworks --enable-all --without-ssl --without-php \
-		--enable-multithread --enable-complete-cross --static
-
 vx5:
 	unset WIND_HOME WIND_BASE ; \
 	SEARCH_PATH=/tornado ./configure --host=i386-wrs-vxworks --enable-all --without-ssl --without-php
 
-vx6:
+vx vx6:
 	unset WIND_HOME WIND_BASE ; \
 	./configure --host=pentium-wrs-vxworks --enable-all --without-ssl --without-php
 

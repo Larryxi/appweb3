@@ -1,7 +1,7 @@
 #
 # Makefile for the Appweb unit tests
 #
-# Copyright (c) Embedthis Software LLC, 2003-2011. All Rights Reserved.
+# Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
 #
 
 BUILD_CROSS		:= 0
@@ -19,6 +19,7 @@ run:
 	$(BLD_BIN_DIR)/appweb --log stdout:4 --config appweb.conf
 
 testExtra:
+ifneq	($(BLD_CROSS),1)
 ifeq	($(BLD_FEATURE_TEST),1)
 ifeq	($(BLD_FEATURE_MULTITHREAD),1)
 	mkdir -p web/tmp
@@ -34,6 +35,7 @@ ifeq	($(BLD_FEATURE_MULTITHREAD),1)
 	fi
 else
 	$(call log) "[Notice]" "Test requires multithread configuration"
+endif
 endif
 endif
 
