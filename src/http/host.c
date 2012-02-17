@@ -723,9 +723,7 @@ void maAddConn(MaHost *host, MaConn *conn)
     conn->started = mprGetTime(conn);
     conn->seqno = host->connCount++;
 
-    if ((host->now + MPR_TICKS_PER_SEC) < conn->started) {
-        updateCurrentDate(host);
-    }
+    updateCurrentDate(host);
     if (host->timer == 0) {
         startTimer(host);
     }
@@ -737,10 +735,14 @@ static void updateCurrentDate(MaHost *host)
 {
     char        *oldDate;
 
-    oldDate = host->currentDate;
     host->now = mprGetTime(host);
-    host->currentDate = maGetDateString(host, 0);
-    mprFree(oldDate);
+    if (host->now > (host->currentTime + MPR_TICKS_PER_SEC - 1)) {
+        oldDate = host->currentDate;
+        host->currentTime = host->now;
+        host->now = mprGetTime(host);
+        host->currentDate = maGetDateString(host, 0);
+        mprFree(oldDate);
+    }
 }
 
 
