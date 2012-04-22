@@ -47,7 +47,6 @@ MaHost *maCreateHost(MaServer *server, cchar *ipAddrPort, MaLocation *location)
         host->ipAddrPort = 0;
         host->name = 0;
     }
-
     host->server = server;
     host->flags = MA_HOST_NO_TRACE;
     host->httpVersion = MPR_HTTP_1_1;
