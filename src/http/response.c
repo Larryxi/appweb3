@@ -208,7 +208,8 @@ void maTraceOptions(MaConn *conn)
 
         } else {
             flags = resp->handler->flags;
-            maSetHeader(conn, 0, "Allow", "OPTIONS,TRACE%s%s%s%s%s",
+            maSetHeader(conn, 0, "Allow", "OPTIONS%s%s%s%s%s%s",
+                ((req->host->flags & MA_HOST_NO_TRACE) == 0) ? ",TRACE" : "",
                 (flags & MA_STAGE_GET) ? ",GET" : "",
                 (flags & MA_STAGE_HEAD) ? ",HEAD" : "",
                 (flags & MA_STAGE_POST) ? ",POST" : "",
