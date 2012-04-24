@@ -21,7 +21,7 @@ assert(http.code == 200)
 
 //  Options
 http.options(URL)
-assert(http.header("Allow") == "OPTIONS,TRACE,GET,HEAD,POST,PUT,DELETE")
+assert(http.header("Allow") == "OPTIONS,GET,HEAD,POST,PUT,DELETE")
 
 //  Trace - should be disabled
 http.trace(URL)
