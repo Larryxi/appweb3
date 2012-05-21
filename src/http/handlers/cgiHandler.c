@@ -342,6 +342,7 @@ static void cgiEvent(MaQueue *q, MprCmd *cmd, int channel)
     MaConn      *conn;
     MaResponse  *resp;
     MprBuf      *buf;
+    char        *mark;
     int         space, nbytes, err;
 
     mprLog(cmd, 6, "CGI callback channel %d", channel);
@@ -383,6 +384,7 @@ static void cgiEvent(MaQueue *q, MprCmd *cmd, int channel)
                     break;
                 }
             }
+            mark = mprGetBufEnd(buf);
             nbytes = mprReadCmdPipe(cmd, channel, mprGetBufEnd(buf), space);
             mprLog(q, 5, "CGI: read from gateway %d on channel %d. errno %d", nbytes, channel, 
                     nbytes >= 0 ? 0 : mprGetOsError());
@@ -407,7 +409,17 @@ static void cgiEvent(MaQueue *q, MprCmd *cmd, int channel)
             } else {
                 mprLog(cmd, 5, "CGI read %d bytes from %s", nbytes, (channel == MPR_CMD_STDOUT) ? "stdout" : "stderr");
                 mprAdjustBufEnd(buf, nbytes);
-                traceData(cmd, mprGetBufStart(buf), nbytes);
+                traceData(cmd, mark, nbytes);
+                if (channel == MPR_CMD_STDOUT) {
+                    if (!(cmd->userFlags & MA_CGI_SEEN_HEADER) && !parseHeader(conn, cmd)) {
+                        return;
+                    } 
+                    if (cmd->userFlags & MA_CGI_SEEN_HEADER) {
+                        if (writeToClient(q, cmd, buf, channel) < 0) {
+                            return;
+                        }
+                    }
+                }
             }
         } while ((space = mprGetBufSpace(buf)) > 0);
 
