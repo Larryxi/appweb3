@@ -35032,7 +35032,7 @@ static int caselessmatch(cchar *url, cchar *ext)
     cchar   *cp, *ep;
 
     for (cp = url; *cp; cp++) {
-        for (ep = ext; *ep; ep++) {
+        for (ep = ext; *ep; ep++, cp++) {
             if (tolower((int) *cp) != tolower((int) *ep)) {
                 break;
             }
