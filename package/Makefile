@@ -8,7 +8,8 @@ include 		.makedep
 
 PRE_DIRS		= $(BLD_HOST_OS)
 BASE_NAME		:= "$(BLD_PRODUCT)-$(BLD_VERSION)-$(BLD_NUMBER)-$(BLD_HOST_DIST)-$(BLD_HOST_OS)-$(BLD_HOST_CPU)"
-PACKS			:= binary dev source
+# PACKS			:= binary dev source
+PACKS			:= source
 PKG_DIR			:= `pwd`/../staging
 INS_DIR 		:= c:/tmp/testInsAppweb
 
