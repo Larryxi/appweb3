@@ -135,3 +135,5 @@ test/web/test.dat
 bin/i586*
 lib/i586*
 modules/i586*
+
+.DS_Store
