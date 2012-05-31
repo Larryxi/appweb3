@@ -32,21 +32,21 @@ diff import sync:
 	@if [ ! -x $(BLD_TOOLS_DIR)/edep$(BLD_BUILD_EXE) -a "$(BUILDING_CROSS)" != 1 ] ; then \
 		$(MAKE) -S --no-print-directory _RECURSIVE_=1 -C $(BLD_TOP)/build/src compile ; \
 	fi
-	@import.ksh --$@ --src ../tools.stable --dir . ../tools.stable/build/export/export.gen
-	@import.ksh --$@ --src ../tools.stable --dir . ../tools.stable/build/export/export.configure
-	@import.ksh --$@ --src ../mpr.stable --dir . ../mpr.stable/build/export/export.gen
-	@import.ksh --$@ --src ../mpr.stable --dir ./src/include --strip ./all/ ../mpr.stable/build/export/export.h
-	@import.ksh --$@ --src ../mpr.stable --dir ./src/mpr --strip ./all/ ../mpr.stable/build/export/export.c
-	@import.ksh --$@ --src ../ejs.stable --dir . ../ejs.stable/build/export/export.gen
-	@import.ksh --$@ --src ../ejs.stable --dir ./src/include --strip ./all/ ../ejs.stable/build/export/export.h
-	@import.ksh --$@ --src ../ejs.stable --dir ./src/ejs --strip ./all/ ../ejs.stable/build/export/export.c
-	@if [ ../ejs.stable/doc/api/ejscript/index.html -nt doc/ejs/api/ejscript/index.html ] ; then \
+	@import.ksh --$@ --src ../tools.3 --dir . ../tools.3/build/export/export.gen
+	@import.ksh --$@ --src ../tools.3 --dir . ../tools.3/build/export/export.configure
+	@import.ksh --$@ --src ../mpr.3 --dir . ../mpr.3/build/export/export.gen
+	@import.ksh --$@ --src ../mpr.3 --dir ./src/include --strip ./all/ ../mpr.3/build/export/export.h
+	@import.ksh --$@ --src ../mpr.3 --dir ./src/mpr --strip ./all/ ../mpr.3/build/export/export.c
+	@import.ksh --$@ --src ../ejs.1 --dir . ../ejs.1/build/export/export.gen
+	@import.ksh --$@ --src ../ejs.1 --dir ./src/include --strip ./all/ ../ejs.1/build/export/export.h
+	@import.ksh --$@ --src ../ejs.1 --dir ./src/ejs --strip ./all/ ../ejs.1/build/export/export.c
+	@if [ ../ejs.1/doc/api/ejscript/index.html -nt doc/ejs/api/ejscript/index.html ] ; then \
 		echo "#  import ejs doc"  \
 		chmod -R +w doc/ejs doc/man ; \
 		rm -fr doc/ejs ; \
 		mkdir -p doc/ejs ; \
-		( cd ../ejs.stable/doc ; find . -type f | \
-			egrep -v '/xml/|/html/|/dsi/|.makedep|.DS_Store|.pptx|\/Archive' | cpio -pdum ../../appweb.stable/doc/ejs ) ; \
+		( cd ../ejs.1/doc ; find . -type f | \
+			egrep -v '/xml/|/html/|/dsi/|.makedep|.DS_Store|.pptx|\/Archive' | cpio -pdum ../../appweb.3/doc/ejs ) ; \
 		chmod +w doc/man/* ; \
 		cp doc/ejs/man/*.1 doc/man ; \
 		chmod -R +w doc/ejs ; \
