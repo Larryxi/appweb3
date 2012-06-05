@@ -342,8 +342,10 @@ static void cgiEvent(MaQueue *q, MprCmd *cmd, int channel)
     MaConn      *conn;
     MaResponse  *resp;
     MprBuf      *buf;
-    char        *mark;
     int         space, nbytes, err;
+#if BLD_DEBUG
+    char        *mark;
+#endif
 
     mprLog(cmd, 6, "CGI callback channel %d", channel);
     
@@ -384,7 +386,9 @@ static void cgiEvent(MaQueue *q, MprCmd *cmd, int channel)
                     break;
                 }
             }
+#if BLD_DEBUG
             mark = mprGetBufEnd(buf);
+#endif
             nbytes = mprReadCmdPipe(cmd, channel, mprGetBufEnd(buf), space);
             mprLog(q, 5, "CGI: read from gateway %d on channel %d. errno %d", nbytes, channel, 
                     nbytes >= 0 ? 0 : mprGetOsError());
