@@ -2,7 +2,7 @@
 /******************************************************************************/
 /* 
  *  This file is an amalgamation of all the individual source code files for
- *  Embedthis Ejscript 1.1.3.
+ *  Embedthis Ejscript 1.1.4.
  *
  *  Catenating all the source into a single file makes embedding simpler and
  *  the resulting application faster, as many compilers can do whole file
@@ -476,7 +476,8 @@ typedef enum EjsOpCode {
     EJS_OP_TYPE_OF,
     EJS_OP_USHR,
     EJS_OP_XOR,
-    EJS_OP_FINALLY,
+    EJS_OP_CALL_FINALLY,
+    EJS_OP_GOTO_FINALLY,
 } EjsOpCode;
 
 #endif
@@ -768,7 +769,8 @@ EjsOptable ejsOptable[] = {
     {   "TYPE_OF",                  -1,         { EBC_NONE,                               },},
     {   "USHR",                     -1,         { EBC_NONE,                               },},
     {   "XOR",                      -1,         { EBC_NONE,                               },},
-    {   "FINALLY",                   0,         { EBC_NONE,                               },},
+    {   "CALL_FINALLY",              0,         { EBC_NONE,                               },},
+    {   "GOTO_FINALLY",              0,         { EBC_NONE,                               },},
     {   NULL,                        0,         { EBC_NONE,                               },},
 };
 #endif /* EJS_DEFINE_OPTABLE */
@@ -2308,6 +2310,7 @@ typedef struct EjsBlock {
     struct EjsVar   *prevException;                 /**< Previous exception if nested exceptions */
     EjsVar          **stackBase;                    /**< Start of stack in this block */
     EjsTrait        *traits;                        /**< Property trait descriptions */
+    uchar           *restartAddress;                /**< Instruction restart after finally block */
 
     int             numTraits: 16;                  /**< Number of traits */
     int             sizeTraits: 16;                 /**< Size of traits array */
@@ -2315,7 +2318,6 @@ typedef struct EjsBlock {
     uint            dynamicInstance : 1;            /**< Instances may add properties */
     uint            hasScriptFunctions: 1;          /**< Block has non-native functions requiring namespaces */
     uint            referenced: 1;                  /**< Block has a reference to it */
-    uint            breakCatch: 1;                  /**< Return, break or continue in a catch block */
     uint            nobind: 1;                      /**< Don't bind to properties in this block */
 } EjsBlock;
 

@@ -4,7 +4,7 @@
 /******************************************************************************/
 /* 
  *  This file is an amalgamation of all the individual source code files for
- *  Embedthis Ejscript 1.1.3.
+ *  Embedthis Ejscript 1.1.4.
  *
  *  Catenating all the source into a single file makes embedding simpler and
  *  the resulting application faster, as many compilers can do whole file
@@ -1245,12 +1245,11 @@ static int partition(Ejs *ejs, EjsVar **data, int dir, int p, int r)
 
     x = data[r];
     j = p - 1;
-
+    if ((sx = ejsToString(ejs, x)) == 0) {
+        return 0;
+    }
     for (i = p; i < r; i++) {
-
-        sx = ejsToString(ejs, x);
-        so = ejsToString(ejs, data[i]);
-        if (sx == 0 || so == 0) {
+        if ((so = ejsToString(ejs, data[i])) == 0) {
             return 0;
         }
         rc = strcmp(sx->value, so->value) * dir;
@@ -6201,7 +6200,6 @@ EjsFrame *ejsCreateFrame(Ejs *ejs, EjsFunction *src)
     frame->function.block.numInherited = src->block.numInherited;
     frame->function.block.hasScriptFunctions = src->block.hasScriptFunctions;
     frame->function.block.referenced = src->block.referenced;
-    frame->function.block.breakCatch = src->block.breakCatch;
 
     frame->function.numArgs = src->numArgs;
     frame->function.numDefault = src->numDefault;
@@ -24865,7 +24863,8 @@ static void *opcodeJump[] = {
     &&EJS_OP_TYPE_OF,
     &&EJS_OP_USHR,
     &&EJS_OP_XOR,
-    &&EJS_OP_FINALLY,
+    &&EJS_OP_CALL_FINALLY,
+    &&EJS_OP_GOTO_FINALLY,
 };
 #endif
     mprAssert(ejs);
@@ -26102,21 +26101,33 @@ static void *opcodeJump[] = {
 
         /*
          *  Invoke finally blocks before acting on: return, returnValue and break (goto) opcodes.
-         *  Injected by the compiler prior to break, continue and return statements. Also at the end of a try block
-         *  if there is a finally block.
+         *  Injected by the compiler prior to break, continue and return statements.
          *
          *      finally
          */
-        CASE (EJS_OP_FINALLY):
+        CASE (EJS_OP_CALL_FINALLY):
+            if ((ex = findExceptionHandler(ejs, EJS_EX_FINALLY)) != 0) {
+                uchar *savePC;
+                if (FRAME->function.inCatch) {
+                    popExceptionBlock(ejs);
+                }
+                savePC = FRAME->pc;
+                createExceptionBlock(ejs, ex, EJS_EX_FINALLY);
+                BLOCK->restartAddress = savePC;
+            }
+            BREAK;
+
+        /*
+         *  Invoke finally blocks before leaving try block. These are injected by the compiler.
+         *
+         *      finally
+         */
+        CASE (EJS_OP_GOTO_FINALLY):
             if ((ex = findExceptionHandler(ejs, EJS_EX_FINALLY)) != 0) {
                 if (FRAME->function.inCatch) {
                     popExceptionBlock(ejs);
-                    push(FRAME->pc);
-                    createExceptionBlock(ejs, ex, EJS_EX_FINALLY);
-                    BLOCK->breakCatch = 1;
-                } else {
-                    createExceptionBlock(ejs, ex, EJS_EX_FINALLY);
                 }
+                createExceptionBlock(ejs, ex, EJS_EX_FINALLY);
             }
             BREAK;
 
@@ -26128,10 +26139,10 @@ static void *opcodeJump[] = {
             if (FRAME->function.inException) {
                 FRAME->function.inCatch = 0;
                 FRAME->function.inException = 0;
-                if (BLOCK->breakCatch) {
-                    /* Restart the original instruction (return, break, continue) */
+                if (BLOCK->restartAddress) {
+                    uchar *savePC = BLOCK->restartAddress;
                     popExceptionBlock(ejs);
-                    FRAME->pc = (uchar*) pop(ejs);
+                    FRAME->pc = savePC;
                 } else {
                     offset = findEndException(ejs);
                     FRAME->pc = &FRAME->function.body.code.byteCode[offset];

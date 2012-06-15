@@ -21,6 +21,9 @@
 #
 #	To remove, use make uninstall-ITEM, where ITEM is a component above.
 #
+EJS		:= ejs-1.1.4
+MPR		:= mpr-3.3.4
+TOOLS	:= tools
 
 include		build/make/Makefile.top
 
@@ -32,20 +35,20 @@ diff import sync:
 	@if [ ! -x $(BLD_TOOLS_DIR)/edep$(BLD_BUILD_EXE) -a "$(BUILDING_CROSS)" != 1 ] ; then \
 		$(MAKE) -S --no-print-directory _RECURSIVE_=1 -C $(BLD_TOP)/build/src compile ; \
 	fi
-	@import.ksh --$@ --src ../tools.3 --dir . ../tools.3/build/export/export.gen
-	@import.ksh --$@ --src ../tools.3 --dir . ../tools.3/build/export/export.configure
-	@import.ksh --$@ --src ../mpr.3 --dir . ../mpr.3/build/export/export.gen
-	@import.ksh --$@ --src ../mpr.3 --dir ./src/include --strip ./all/ ../mpr.3/build/export/export.h
-	@import.ksh --$@ --src ../mpr.3 --dir ./src/mpr --strip ./all/ ../mpr.3/build/export/export.c
-	@import.ksh --$@ --src ../ejs.1 --dir . ../ejs.1/build/export/export.gen
-	@import.ksh --$@ --src ../ejs.1 --dir ./src/include --strip ./all/ ../ejs.1/build/export/export.h
-	@import.ksh --$@ --src ../ejs.1 --dir ./src/ejs --strip ./all/ ../ejs.1/build/export/export.c
-	@if [ ../ejs.1/doc/api/ejscript/index.html -nt doc/ejs/api/ejscript/index.html ] ; then \
+	@import.ksh --$@ --src ../$(TOOLS) --dir . ../$(TOOLS)/build/export/export.gen
+	@import.ksh --$@ --src ../$(TOOLS) --dir . ../$(TOOLS)/build/export/export.configure
+	@import.ksh --$@ --src ../$(MPR) --dir . ../$(MPR)/build/export/export.gen
+	@import.ksh --$@ --src ../$(MPR) --dir ./src/include --strip ./all/ ../$(MPR)/build/export/export.h
+	@import.ksh --$@ --src ../$(MPR) --dir ./src/mpr --strip ./all/ ../$(MPR)/build/export/export.c
+	@import.ksh --$@ --src ../$(EJS) --dir . ../$(EJS)/build/export/export.gen
+	@import.ksh --$@ --src ../$(EJS) --dir ./src/include --strip ./all/ ../$(EJS)/build/export/export.h
+	@import.ksh --$@ --src ../$(EJS) --dir ./src/ejs --strip ./all/ ../$(EJS)/build/export/export.c
+	@if [ ../$(EJS)/doc/api/ejscript/index.html -nt doc/ejs/api/ejscript/index.html ] ; then \
 		echo "#  import ejs doc"  \
 		chmod -R +w doc/ejs doc/man ; \
 		rm -fr doc/ejs ; \
 		mkdir -p doc/ejs ; \
-		( cd ../ejs.1/doc ; find . -type f | \
+		( cd ../$(EJS)/doc ; find . -type f | \
 			egrep -v '/xml/|/html/|/dsi/|.makedep|.DS_Store|.pptx|\/Archive' | cpio -pdum ../../appweb.3/doc/ejs ) ; \
 		chmod +w doc/man/* ; \
 		cp doc/ejs/man/*.1 doc/man ; \
