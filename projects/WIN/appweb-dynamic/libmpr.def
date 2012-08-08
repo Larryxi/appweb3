@@ -1,13 +1,12 @@
 LIBRARY libmpr.dll
 EXPORTS
 
-  UNUSED_strtod
+  __dummy_romfs
   __dummyBrew
   __dummyMprSelectWait
   __dummyMprUnix
   __dummyMprVxWorks
   __dummyMprWince
-  __dummy_romfs
   __mprDummyPollWait
   __mprDummyUnicode
   _mprAlloc
@@ -84,8 +83,8 @@ EXPORTS
   mprCreateThread
   mprCreateThreadLocal
   mprCreateThreadService
-  mprCreateTimeService
   mprCreateTimerEvent
+  mprCreateTimeService
   mprCreateWaitHandler
   mprCreateWaitService
   mprCreateWorkerService
@@ -140,6 +139,7 @@ EXPORTS
   mprGetBufSize
   mprGetBufSpace
   mprGetBufStart
+  mprGetc
   mprGetCharFromBuf
   mprGetCmdBuf
   mprGetCmdExitStatus
@@ -188,8 +188,8 @@ EXPORTS
   mprGetListCount
   mprGetLogHandler
   mprGetLogLevel
-  mprGetMD5Hash
   mprGetMaxWorkers
+  mprGetMD5Hash
   mprGetModuleSearchPath
   mprGetMpr
   mprGetName
@@ -216,6 +216,7 @@ EXPORTS
   mprGetRandomBytes
   mprGetRelPath
   mprGetRemainingTime
+  mprGets
   mprGetServerName
   mprGetSocketBlockingMode
   mprGetSocketError
@@ -235,8 +236,6 @@ EXPORTS
   mprGetUsedMemory
   mprGetWordTok
   mprGetWorkerServiceStats
-  mprGetc
-  mprGets
   mprGlobalLock
   mprGlobalUnlock
   mprGrowBuf
@@ -315,14 +314,14 @@ EXPORTS
   mprPrintfError
   mprPushItem
   mprPutBlockToBuf
+  mprPutc
   mprPutCharToBuf
   mprPutFmtToBuf
   mprPutIntToBuf
   mprPutPadToBuf
+  mprPuts
   mprPutStringToBuf
   mprPutSubStringToBuf
-  mprPutc
-  mprPuts
   mprRawLog
   mprRead
   mprReadCmdPipe
@@ -362,8 +361,8 @@ EXPORTS
   mprSeek
   mprSendFileToSocket
   mprServiceEvents
-  mprServiceWinIO
   mprServicesAreIdle
+  mprServiceWinIO
   mprSetAllocError
   mprSetAllocLimits
   mprSetAllocNotifier
@@ -466,11 +465,6 @@ EXPORTS
   mprStopSocketService
   mprStopThreadService
   mprStopWorkerService
-  mprStrLower
-  mprStrStartsWith
-  mprStrTok
-  mprStrTrim
-  mprStrUpper
   mprStrcat
   mprStrcatV
   mprStrcmp
@@ -480,7 +474,12 @@ EXPORTS
   mprStrcpy
   mprStrcpyCount
   mprStrlen
+  mprStrLower
   mprStrnstr
+  mprStrStartsWith
+  mprStrTok
+  mprStrTrim
+  mprStrUpper
   mprTerminate
   mprToAsc
   mprToUni
@@ -530,3 +529,4 @@ EXPORTS
   mprXmlSetParserHandler
   print
   universalTime
+  UNUSED_strtod

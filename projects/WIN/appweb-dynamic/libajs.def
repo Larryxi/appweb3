@@ -6,6 +6,8 @@ EXPORTS
   _ejsIs
   addHeader
   deserialize
+  ejs_db_sqliteModuleInit
+  ejs_webModuleInit
   ejsAddException
   ejsAddItem
   ejsAddItemToSharedList
@@ -154,8 +156,8 @@ EXPORTS
   ejsCreateXML
   ejsCreateXMLList
   ejsCreateXMLListType
-  ejsCreateXMLType
   ejsCreateXmlParser
+  ejsCreateXMLType
   ejsDecodeDouble
   ejsDecodeNum
   ejsDecodeWord
@@ -235,12 +237,12 @@ EXPORTS
   ejsHasException
   ejsInheritBaseClassNamespaces
   ejsInheritTraits
-  ejsInitList
-  ejsInitStack
   ejsInitializeBlockHelpers
   ejsInitializeDefaultHelpers
   ejsInitializeFunctionHelpers
   ejsInitializeObjectHelpers
+  ejsInitList
+  ejsInitStack
   ejsInsertGrowBlock
   ejsInsertGrowObject
   ejsInvokeOperator
@@ -338,9 +340,9 @@ EXPORTS
   ejsThrowAssertError
   ejsThrowError
   ejsThrowException
-  ejsThrowIOError
   ejsThrowInstructionError
   ejsThrowInternalError
+  ejsThrowIOError
   ejsThrowMemoryError
   ejsThrowOutOfBoundsError
   ejsThrowReferenceError
@@ -363,8 +365,6 @@ EXPORTS
   ejsXMLDescendants
   ejsXMLToString
   ejsZeroSlots
-  ejs_db_sqliteModuleInit
-  ejs_webModuleInit
   getMimeType
   getNextJsonToken
   httpAvailable

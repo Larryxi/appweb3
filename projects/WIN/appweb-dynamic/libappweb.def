@@ -19,8 +19,8 @@ EXPORTS
   maAddStandardMimeTypes
   maAddUploadFile
   maAddUser
-  maAddUserToGroup
   maAddUsersToGroup
+  maAddUserToGroup
   maAddVars
   maAddVarsFromQueue
   maAdjustPacketEnd
@@ -39,8 +39,8 @@ EXPORTS
   maCreateAuth
   maCreateBareDir
   maCreateBareLocation
-  maCreateConnPacket
   maCreateConnector
+  maCreateConnPacket
   maCreateDataPacket
   maCreateDefaultHost
   maCreateDir
@@ -235,8 +235,8 @@ EXPORTS
   maSetStageData
   maSetTimeout
   maSetTraceMethod
-  maSetVirtualHost
   maSetupTrace
+  maSetVirtualHost
   maSplitConfigValue
   maSplitPacket
   maStartAccessLogging
