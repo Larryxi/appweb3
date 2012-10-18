@@ -441,7 +441,7 @@ static bool parseHeaders(MaConn *conn, MaPacket *packet)
 
                 start = end = size = -1;
                 sp = value;
-                while (*sp && !isdigit((int) *sp)) {
+                while (*sp && !isdigit((uchar) *sp)) {
                     sp++;
                 }
                 if (*sp) {

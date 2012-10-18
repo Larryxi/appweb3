@@ -21,8 +21,8 @@
 #
 #	To remove, use make uninstall-ITEM, where ITEM is a component above.
 #
-EJS		:= ejs-1.1.4
-MPR		:= mpr-3.3.4
+EJS		:= ejs-1
+MPR		:= mpr-3
 TOOLS	:= tools
 
 include		build/make/Makefile.top

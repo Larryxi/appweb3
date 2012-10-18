@@ -836,7 +836,7 @@ static bool isPort(cchar *name)
     cchar   *cp;
 
     for (cp = name; *cp && *cp != '/'; cp++) {
-        if (!isdigit((int) *cp) || *cp == '.') {
+        if (!isdigit((uchar) *cp) || *cp == '.') {
             return 0;
         }
     }

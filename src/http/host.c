@@ -201,7 +201,7 @@ void maSetHostIpAddrPort(MaHost *host, cchar *ipAddrPort)
     if (*ipAddrPort == ':') {
         ++ipAddrPort;
     }
-    if (isdigit((int) *ipAddrPort) && strchr(ipAddrPort, '.') == 0) {
+    if (isdigit((uchar) *ipAddrPort) && strchr(ipAddrPort, '.') == 0) {
         host->ipAddrPort = mprStrcat(host, -1, "127.0.0.1", ":", ipAddrPort, NULL);
     } else {
         host->ipAddrPort = mprStrdup(host, ipAddrPort);

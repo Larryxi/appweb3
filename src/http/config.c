@@ -962,7 +962,7 @@ static int processSetting(MaServer *server, char *key, char *value, MaConfigStat
 
             value = mprStrTrim(value, "\"");
 
-            if (isdigit((int) *value) && strchr(value, '.') == 0 && strchr(value, ':') == 0) {
+            if (isdigit((uchar) *value) && strchr(value, '.') == 0 && strchr(value, ':') == 0) {
                 /*
                  *  Port only, listen on all interfaces (ipv4 + ipv6)
                  */
@@ -1158,7 +1158,7 @@ static int processSetting(MaServer *server, char *key, char *value, MaConfigStat
                 code = 302;
                 url = mprStrTok(value, " \t", &tok);
 
-            } else if (isdigit((int) value[0])) {
+            } else if (isdigit((uchar) value[0])) {
                 cp = mprStrTok(value, " \t", &tok);
                 code = atoi(cp);
                 url = mprStrTok(0, " \t\n", &tok);

@@ -97,7 +97,7 @@ static void incomingChunkData(MaQueue *q, MaPacket *packet)
             return;
         }
         req->chunkSize = (int) mprAtoi(&start[2], 16);
-        if (!isxdigit((int) start[2]) || req->chunkSize < 0) {
+        if (!isxdigit((uchar) start[2]) || req->chunkSize < 0) {
             maFailConnection(conn, MPR_HTTP_CODE_BAD_REQUEST, "Bad chunk specification");
             return;
         }

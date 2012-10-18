@@ -76,7 +76,7 @@ int maStartLogging(MprCtx ctx, cchar *logSpec)
     }
     if (*logSpec && strcmp(logSpec, "none") != 0) {
         spec = mprStrdup(mpr, logSpec);
-        if ((levelSpec = strrchr(spec, ':')) != 0 && isdigit((int) levelSpec[1])) {
+        if ((levelSpec = strrchr(spec, ':')) != 0 && isdigit((uchar) levelSpec[1])) {
             *levelSpec++ = '\0';
             level = atoi(levelSpec);
         }
