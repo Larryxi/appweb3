@@ -9162,7 +9162,7 @@ static int getNumberToken(EcInput *input, EcToken *tp, int c)
             do {
                 addCharToToken(tp, c);
                 c = getNextChar(stream);
-            } while (isxdigit((uchar) c));
+            } while (isxdigit(c));
             putBackChar(stream, c);
             return finishToken(tp, T_NUMBER, -1, 0);
 
@@ -9185,7 +9185,7 @@ static int getNumberToken(EcInput *input, EcToken *tp, int c)
     /*
         Float
      */
-    while (isdigit((uchar) c)) {
+    while (isdigit(c)) {
         addCharToToken(tp, c);
         c = getNextChar(stream);
     }
@@ -9193,7 +9193,7 @@ static int getNumberToken(EcInput *input, EcToken *tp, int c)
         addCharToToken(tp, c);
         c = getNextChar(stream);
     }
-    while (isdigit((uchar) c)) {
+    while (isdigit(c)) {
         addCharToToken(tp, c);
         c = getNextChar(stream);
     }
@@ -9204,7 +9204,7 @@ static int getNumberToken(EcInput *input, EcToken *tp, int c)
             addCharToToken(tp, c);
             c = getNextChar(stream);
         }
-        while (isdigit((uchar) c)) {
+        while (isdigit(c)) {
             addCharToToken(tp, c);
             c = getNextChar(stream);
         }
@@ -9313,12 +9313,12 @@ static int decodeNumber(EcInput *input, int radix, int length)
             break;
         }
         if (radix <= 10) {
-            if (!isdigit((uchar) c)) {
+            if (!isdigit(c)) {
                 break;
             }
         } else if (radix == 16) {
             lowerc = tolower(c);
-            if (!isdigit((uchar) lowerc) && !('a' <= lowerc && lowerc <= 'f')) {
+            if (!isdigit(lowerc) && !('a' <= lowerc && lowerc <= 'f')) {
                 break;
             }
         }
