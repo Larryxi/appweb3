@@ -44,16 +44,6 @@
             <h2>Quick Nav</h2>
             <ul>
                 <li><a href="#r3.3.4">Release 3.3.4</a></li>
-                <li><a href="#r3.3.3">Release 3.3.3</a></li>
-                <li><a href="#r3.3.2">Release 3.3.2</a></li>
-                <li><a href="#r3.3.1">Release 3.3.1</a></li>
-                <li><a href="#r3.3.0">Release 3.3.0</a></li>
-                <li><a href="#r3.2.2">Release 3.2.2</a></li>
-                <li><a href="#r3.2.1">Release 3.2.1</a></li>
-                <li><a href="#r3.2.0">Release 3.2.0</a></li>
-                <li><a href="#r3.1.2">Release 3.1.2</a></li>
-                <li><a href="#r3.1.1">Release 3.1.1</a></li>
-                <li><a href="#r3.1.0">Release 3.1.0</a></li>
                 <li><a href="#r2.4.2">Release 2.4.2</a></li>
             </ul>
 <!-- BeginDsi "dsi/genSeeAlso.html" -->
@@ -81,17 +71,16 @@
                 Ejscript <a href="http://github.com/embedthis/ejs-1/issues">issue database</a>.</p>
             <a name="r3.3.4" id="r3.3.4"></a>
             <h2 class="section">Changes in 3.3.4</h2>
-            <!--
-            <h3>Minor Features</h3>
-            <ul>
-                <li>None</li>
-            </ul>
-            -->
-            <h3>Key Fixes</h3>
+            <h3>Fixes</h3>
             <ul>
                 <li>Ejscript return in try blocks</li>
                 <li>Idle threads consuming CPU after long delay</li>
                 <li>Prune workers not terminating idle threads</li>
+                <li>Sign-extension assertion in ctype on windows</li>
+                <li>MprCond not waiting waking up prematurely</li>
+                <li>CPU load via spinning thread with no work to do</li>
+                <li>PruneWorkers to prune all idle threads and ignore pruneHighWater</li>
+                <li></li>
             </ul>
             <!--
             <h3><strong>API Changes</strong></h3>
