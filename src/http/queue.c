@@ -803,6 +803,9 @@ void maJoinPackets(MaQueue *q)
             next = packet->next;
             maJoinPacket(first, packet);
             maCheckQueueCount(q);
+            if (q->last == packet) {
+                q->last = first;
+            }
             maFreePacket(q, packet);
         }
     }
