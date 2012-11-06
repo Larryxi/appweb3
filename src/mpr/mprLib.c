@@ -18812,7 +18812,7 @@ static void serviceIO(MprWaitService *ws, struct pollfd *fds, int count)
             if (mask == 0) {
                 break;
             }
-            if (mask & wp->desiredMask) {
+            if (mask & wp->desiredMask && !wp->inUse) {
                 wp->presentMask = mask;
 #if BLD_FEATURE_MULTITHREAD
                 /*
