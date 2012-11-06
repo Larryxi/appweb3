@@ -37,10 +37,13 @@ static void findExecutable(MaConn *conn, char **program, char **script, char **b
 static void checkCompletion(MaQueue *q, MprEvent *event);
 #endif
 
+/*
+    Count of CGI active processes
+ */
+static int processCount = 0;
+
 /************************************* Code ***********************************/
 
-static int processMax = -2;
-static int processCount = 0;
 
 static void closeCgi(MaQueue *q)
 {
@@ -51,14 +54,14 @@ static void closeCgi(MaQueue *q)
         if (cmd->pid) {
             mprStopCmd(cmd);
         }
-        if (processMax >= 0) {
+        if (q->conn && q->conn->host->limits->maxProcesses >= 0) {
             mprAssert(q->conn);
             mprAssert(q->conn->host);
             mprAssert(q->conn->host->mutex);
             mprLock(q->conn->host->mutex);
             processCount--;
             mprAssert(processCount >= 0);
-            // printf("PC %d/%d\n", processCount, processMax);
+            // printf("PC %d/%d\n", processCount, conn->host->limits->maxProcesses);
             mprUnlock(q->conn->host->mutex);
         }
     }
@@ -91,11 +94,13 @@ static void startCgi(MaQueue *q)
     mprAssert(conn);
     mprAssert(conn->host);
     mprAssert(conn->host->mutex);
-    if (processMax >= 0) {
+    if (conn->host->limits->maxProcesses >= 0) {
         mprLock(conn->host->mutex);
-        if (processCount >= processMax) {
+        mprLog(q, 5, "CGI: process count %d/%d", processCount, conn->host->limits->maxProcesses);
+        if (processCount >= conn->host->limits->maxProcesses) {
             maFailRequest(conn, MPR_HTTP_CODE_SERVICE_UNAVAILABLE, "Too many concurrent processes %d/%d", 
-                processCount, processMax);
+                processCount, conn->host->limits->maxProcesses);
+            maPutForService(q, maCreateHeaderPacket(q), 0);
             maPutForService(q, maCreateEndPacket(q), 1);
             mprUnlock(conn->host->mutex);
             return;

@@ -870,6 +870,10 @@ static int processSetting(MaServer *server, char *key, char *value, MaConfigStat
             mprSetMaxSocketClients(server, atoi(value));
             return 1;
 
+        } else if (mprStrcmpAnyCase(key, "LimitProcesses") == 0) {
+            limits->maxProcesses = atoi(value);
+            return 1;
+
         } else if (mprStrcmpAnyCase(key, "LimitRequestBody") == 0) {
             limits->maxBody = mprAtoi(value, 10);
             return 1;

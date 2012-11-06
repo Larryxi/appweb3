@@ -1,11 +1,11 @@
 #!/bin/sh
 
+echo "HTTP/1.0 200 OK"
 echo "Content-type: text/plain"
-# echo "Content-Length: 500000"
 echo ""
 
 i=0
-while [ $i -lt 1000 ]
+while [ $i -lt 5000 ]
 do
     cat <<!EOF 
 0123456789012345678901234567890123456789012345678

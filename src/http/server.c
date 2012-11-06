@@ -432,6 +432,7 @@ static void initLimits(MaHttp *http)
 
     limits->maxBody = MA_MAX_BODY;
     limits->maxChunkSize = MA_MAX_CHUNK_SIZE;
+    limits->maxProcesses = MA_MAX_PROCESSES;
     limits->maxResponseBody = MA_MAX_RESPONSE_BODY;
     limits->maxStageBuffer = MA_MAX_STAGE_BUFFER;
     limits->maxNumHeaders = MA_MAX_NUM_HEADERS;

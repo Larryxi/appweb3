@@ -70,6 +70,7 @@
      */
     #define MA_MAX_BODY             (64 * 1024)         /* Maximum incoming request content body size */
     #define MA_MAX_CHUNK_SIZE       (8 * 1024)          /* Max buffer for any stage */
+    #define MA_MAX_PROCESSES        100                 /* Max processes for CGI */
     #define MA_MAX_HEADERS          2048                /* Max size of the headers */
     #define MA_MAX_NUM_HEADERS      20                  /* Max number of header lines */
     #define MA_MAX_RESPONSE_BODY    (128 * 1024 * 1024) /* Max buffer for generated data */
@@ -88,6 +89,7 @@
 
     #define MA_MAX_BODY             (1024 * 1024)
     #define MA_MAX_CHUNK_SIZE       (8 * 1024)
+    #define MA_MAX_PROCESSES        150
     #define MA_MAX_HEADERS          (8 * 1024)
     #define MA_MAX_NUM_HEADERS      40
     #define MA_MAX_RESPONSE_BODY    (256 * 1024 * 1024)
@@ -106,6 +108,7 @@
 
     #define MA_MAX_BODY             (1024 * 1024)
     #define MA_MAX_CHUNK_SIZE       (8 * 1024) 
+    #define MA_MAX_PROCESSES        200
     #define MA_MAX_HEADERS          (8 * 1024)
     #define MA_MAX_NUM_HEADERS      256
     #define MA_MAX_RESPONSE_BODY    0x7fffffff

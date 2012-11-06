@@ -53,6 +53,7 @@ typedef struct MaLimits {
     int             maxChunkSize;           /**< Max chunk size for transfer encoding */
     int             maxHeader;              /**< Max size of the total header */
     int             maxNumHeaders;          /**< Max number of lines of header */
+    int             maxProcesses;           /**< Max number of processes */
     int             maxStageBuffer;         /**< Max buffering by any pipeline stage */
     int             maxThreads;             /**< Max number of pool threads */
     int             minThreads;             /**< Min number of pool threads */
