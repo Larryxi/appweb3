@@ -24957,6 +24957,7 @@ int mprStartWorker(MprCtx ctx, MprWorkerProc proc, void *data, int priority)
     MprWorkerService    *ws;
     MprWorker           *worker;
     int                 next;
+    static int          warnOnceWorkers = 0;
 
     ws = mprGetMpr(ctx)->workerService;
 
@@ -25002,7 +25003,10 @@ int mprStartWorker(MprCtx ctx, MprWorkerProc proc, void *data, int priority)
         /*
          *  No free threads and can't create anymore
          */
-        mprError(ctx, "No free worker threads. Increase ThreadLimit. (currently allocated %d)", ws->numThreads);
+        if (!warnOnceWorkers) {
+            warnOnceWorkers = 1;
+            mprError(ctx, "No free worker threads. Increase ThreadLimit. (currently allocated %d)", ws->numThreads);
+        }
         mprUnlock(ws->mutex);
         return MPR_ERR_BUSY;
     }

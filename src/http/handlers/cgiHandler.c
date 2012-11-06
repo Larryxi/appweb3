@@ -39,14 +39,28 @@ static void checkCompletion(MaQueue *q, MprEvent *event);
 
 /************************************* Code ***********************************/
 
+static int processMax = -2;
+static int processCount = 0;
+
 static void closeCgi(MaQueue *q)
 {
     MprCmd  *cmd;
 
     cmd = (MprCmd*) q->queueData;
-    mprAssert(cmd);
-    if (cmd && cmd->pid) {
-        mprStopCmd(cmd);
+    if (cmd) {
+        if (cmd->pid) {
+            mprStopCmd(cmd);
+        }
+        if (processMax >= 0) {
+            mprAssert(q->conn);
+            mprAssert(q->conn->host);
+            mprAssert(q->conn->host->mutex);
+            mprLock(q->conn->host->mutex);
+            processCount--;
+            mprAssert(processCount >= 0);
+            // printf("PC %d/%d\n", processCount, processMax);
+            mprUnlock(q->conn->host->mutex);
+        }
     }
 }
 
@@ -65,12 +79,29 @@ static void startCgi(MaQueue *q)
     argc = 0;
     conn = q->conn;
     req = conn->request;
+
     if ((req->form || req->flags & MA_REQ_UPLOADING) && conn->state <= MPR_HTTP_STATE_CONTENT) {
         /*
             Delay starting the CGI process if uploading files or a form request. This enables env vars to be defined
             with file upload and form data before starting the CGI gateway.
          */
         return;
+    }
+
+    mprAssert(conn);
+    mprAssert(conn->host);
+    mprAssert(conn->host->mutex);
+    if (processMax >= 0) {
+        mprLock(conn->host->mutex);
+        if (processCount >= processMax) {
+            maFailRequest(conn, MPR_HTTP_CODE_SERVICE_UNAVAILABLE, "Too many concurrent processes %d/%d", 
+                processCount, processMax);
+            maPutForService(q, maCreateEndPacket(q), 1);
+            mprUnlock(conn->host->mutex);
+            return;
+        }
+        processCount++;
+        mprUnlock(conn->host->mutex);
     }
 
     cmd = q->queueData = mprCreateCmd(req);
@@ -153,6 +184,9 @@ static void runCgi(MaQueue *q)
     conn = q->conn;
     cmd = (MprCmd*) q->queueData;
 
+    if (conn->requestFailed) {
+        return;
+    }
     if (cmd == 0) {
         startCgi(q);
         cmd = (MprCmd*) q->queueData;
