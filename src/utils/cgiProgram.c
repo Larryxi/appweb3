@@ -249,22 +249,11 @@ int main(int argc, char *argv[], char *envp[])
     }
 
     if (outputBytes) {
-        j = 0;
-        for (i = 0; i < outputBytes; i++) {
-            putchar('0' + j);
-            j++;
-            if (j > 9) {
-                if (++outputBytes > 0) {
-                    putchar('\r');
-                }
-                if (++outputBytes > 0) {
-                    putchar('\n');
-                }
-                j = 0;
-            }
+        for (j = 0; j < outputBytes; j++) {
+            printf("%010d\n", j);
         }
 
-    } /* else */ {
+    } else {
         mprPrintf(mpr, "<HTML><TITLE>cgiProgram: Output</TITLE><BODY>\r\n");
         if (outputArgs) {
 #if _WIN32
@@ -427,6 +416,7 @@ static void printPost(MprBuf *buf)
             mprPrintf(mpr, "<p>PVAR %s=%s</p>\r\n", postKeys[i], postKeys[i+1]);
         }
     } else if (buf) {
+        printf("<H2>Post Data %d bytes found (data below)</H2>\r\n", mprGetBufLength(buf));
         if (write(1, mprGetBufStart(buf), mprGetBufLength(buf)) != 0) {}
     } else {
         mprPrintf(mpr, "<H2>No Post Data Found</H2>\r\n");
@@ -454,12 +444,14 @@ static int getQueryString(Mpr *mpr, char **buf, int *buflen)
 static int getPostData(MprCtx ctx, MprBuf *buf)
 {
     char    *contentLength;
-    int     bytes, len, space;
+    int     bytes, len, space, expected;
 
     if ((contentLength = getenv("CONTENT_LENGTH")) != 0) {
         len = atoi(contentLength);
+        expected = len;
     } else {
         len = MAXINT;
+        expected = MAXINT;
     }
     while (len > 0) {
         space = mprGetBufSpace(buf);
@@ -477,8 +469,8 @@ static int getPostData(MprCtx ctx, MprBuf *buf)
 
         } else if (bytes == 0) {
             /* EOF */
-            if (len > 0) {
-                error(mpr, "Missing content (length %s)", contentLength);
+            if (contentLength && len != expected) {
+                error(mpr, "Missing content data (Content-Length %s)", contentLength);
             }
             break;
         }
