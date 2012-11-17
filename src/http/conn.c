@@ -180,8 +180,10 @@ int maAcceptConn(MprSocket *sock, MaServer *server, cchar *ip, int port)
         return 1;
     }
     conn->arena = arena;
-    maAddConn(host, conn);
-
+    if (maAddConn(host, conn) < 0) {
+        mprFree(sock);
+        return 1;
+    }
     mprSetSocketCallback(conn->sock, (MprSocketProc) ioEvent, conn, MPR_READABLE, MPR_NORMAL_PRIORITY);
  
 #if BLD_FEATURE_MULTITHREAD

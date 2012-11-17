@@ -715,9 +715,14 @@ static void hostTimer(MaHost *host, MprEvent *event)
 }
 
 
-void maAddConn(MaHost *host, MaConn *conn)
+int maAddConn(MaHost *host, MaConn *conn)
 {
     lock(host);
+    if (host->connections->length >= host->limits->maxRequests) {
+        mprError(host, "Too many concurrent connections %d/%d", host->connections->length, host->limits->maxRequests);
+        unlock(host);
+        return MPR_ERR_TOO_MANY;
+    }
     mprAddItem(host->connections, conn);
     conn->started = mprGetTime(conn);
     conn->seqno = host->connCount++;
@@ -727,6 +732,7 @@ void maAddConn(MaHost *host, MaConn *conn)
         startTimer(host);
     }
     unlock(host);
+    return 0;
 }
 
 

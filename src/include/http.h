@@ -54,6 +54,7 @@ typedef struct MaLimits {
     int             maxHeader;              /**< Max size of the total header */
     int             maxNumHeaders;          /**< Max number of lines of header */
     int             maxProcesses;           /**< Max number of processes */
+    int             maxRequests;            /**< Max number of simultaneous requests */
     int             maxStageBuffer;         /**< Max buffering by any pipeline stage */
     int             maxThreads;             /**< Max number of pool threads */
     int             minThreads;             /**< Min number of pool threads */
@@ -718,7 +719,7 @@ typedef struct MaHost {
 /*
  *  All these APIs are internal
  */
-extern void         maAddConn(MaHost *host, struct MaConn *conn);
+extern int          maAddConn(MaHost *host, struct MaConn *conn);
 extern void         maAddStandardMimeTypes(MaHost *host);
 extern MaHost       *maCreateDefaultHost(MaServer *server, cchar *docRoot, cchar *ipAddr, int port);
 extern int          maCreateRequestPipeline(MaHost *host, struct MaConn *conn, MaAlias *alias);

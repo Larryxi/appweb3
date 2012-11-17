@@ -24960,7 +24960,6 @@ int mprStartWorker(MprCtx ctx, MprWorkerProc proc, void *data, int priority)
     static int          warnOnceWorkers = 0;
 
     ws = mprGetMpr(ctx)->workerService;
-
     mprLock(ws->mutex);
 
     /*
