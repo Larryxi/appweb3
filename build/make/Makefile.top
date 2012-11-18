@@ -153,7 +153,7 @@ binary:
 			do \
 				chmod 664 $$name ; \
 				echo http --upload --form "branch=legacy&server=`hostname`&key=$(BUILD_KEY)" $$name $(BUILD_UPLOAD); \
-				http -q --upload --form "server=`branch=legacy&hostname`&key=$(BUILD_KEY)" $$name $(BUILD_UPLOAD); \
+				http -q --upload --form "branch=legacy&server=`hostname`&key=$(BUILD_KEY)" $$name $(BUILD_UPLOAD); \
 			done ; \
 		fi; \
 	fi
