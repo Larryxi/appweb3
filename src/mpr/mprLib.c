@@ -10642,7 +10642,7 @@ static char *md5(MprCtx ctx, cchar *string)
 int mprCalcDigestNonce(MprCtx ctx, char **nonce, cchar *secret, cchar *etag, cchar *realm)
 {
     MprTime     now;
-    char        nonceBuf[256];
+    char        nonceBuf[4096];
 
     mprAssert(realm && *realm);
 
@@ -10661,7 +10661,7 @@ int mprCalcDigestNonce(MprCtx ctx, char **nonce, cchar *secret, cchar *etag, cch
 int mprCalcDigest(MprCtx ctx, char **digest, cchar *userName, cchar *password, cchar *realm, cchar *uri, 
     cchar *nonce, cchar *qop, cchar *nc, cchar *cnonce, cchar *method)
 {
-    char    a1Buf[256], a2Buf[256], digestBuf[256];
+    char    a1Buf[4096], a2Buf[4096], digestBuf[4096];
     char    *ha1, *ha2;
 
     mprAssert(qop);
