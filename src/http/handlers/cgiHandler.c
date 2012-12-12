@@ -61,7 +61,6 @@ static void closeCgi(MaQueue *q)
             mprLock(q->conn->host->mutex);
             processCount--;
             mprAssert(processCount >= 0);
-            // printf("PC %d/%d\n", processCount, conn->host->limits->maxProcesses);
             mprUnlock(q->conn->host->mutex);
         }
     }
