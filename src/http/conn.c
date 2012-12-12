@@ -249,7 +249,7 @@ void maEnableConnEvents(MaConn *conn, int eventMask)
         }
     }
     mprLog(conn, 7, "Enable conn events mask %x", eventMask);
-    conn->expire = mprGetTime(conn);
+    conn->expire = max(conn->expire, mprGetTime(conn));
     conn->expire += (conn->state == MPR_HTTP_STATE_BEGIN) ? conn->host->keepAliveTimeout : conn->host->timeout;
     eventMask &= conn->eventMask;
     mprSetSocketCallback(conn->sock, (MprSocketProc) ioEvent, conn, eventMask, MPR_NORMAL_PRIORITY);
