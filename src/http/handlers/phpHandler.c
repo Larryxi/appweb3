@@ -29,7 +29,10 @@
     #define ZEND_WIN32 1
     #define ZTS 1
 #endif
+
+    #define ZTS 1
     #undef ulong
+    #undef _res /* Defined by linux /usr/include/resolv.h */
     #undef HAVE_SOCKLEN_T
 
     /*
@@ -65,7 +68,7 @@ typedef struct MaPhp {
 /****************************** Forward Declarations **********************/
 
 static void flushOutput(void *context);
-static void logMessage(char *message);
+static void logMessage(char *message TSRMLS_DC);
 static int  initializePhp(MaHttp *http);
 static char *readCookies(TSRMLS_D);
 static int  readPostData(char *buffer, uint len TSRMLS_DC);
@@ -334,7 +337,7 @@ static void registerServerVars(zval *track_vars_array TSRMLS_DC)
 }
 
 
-static void logMessage(char *message)
+static void logMessage(char *message TSRMLS_DC)
 {
     mprLog(mprGetMpr(0), 0, "phpModule: %s", message);
 }
