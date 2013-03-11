@@ -20352,11 +20352,11 @@ int mprInitSelectWait(MprWaitService *ws)
         fcntl(breakSock, F_SETFD, FD_CLOEXEC);
 #endif
         ws->breakAddress.sin_family = AF_INET;
-#if CYGWIN
+#if CYGWIN || VXWORKS
         /*
-            Cygwin doesn't work with INADDR_ANY
+            Cygwin and VxWorks don't work with INADDR_ANY
          */
-        ws->breakAddress.sin_addr.s_addr = inet_addr("127.0.0.1");;
+        ws->breakAddress.sin_addr.s_addr = inet_addr("127.0.0.1");
 #else
         ws->breakAddress.sin_addr.s_addr = INADDR_ANY;
 #endif
