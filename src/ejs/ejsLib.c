@@ -4,7 +4,7 @@
 /******************************************************************************/
 /* 
  *  This file is an amalgamation of all the individual source code files for
- *  Embedthis Ejscript 1.1.4.
+ *  Embedthis Ejscript 1.1.5.
  *
  *  Catenating all the source into a single file makes embedding simpler and
  *  the resulting application faster, as many compilers can do whole file
@@ -35834,7 +35834,6 @@ static EjsVar *getSessionProperty(Ejs *ejs, EjsWebSession *sp, int slotNum)
     if (web->session != sp) {
         return (EjsVar*) ejs->emptyStringValue;
     }
-
     master = ejs->master ? ejs->master : ejs;
     ejsLockVm(master);
 
@@ -35905,6 +35904,7 @@ static int setSessionProperty(Ejs *ejs, EjsWebSession *sp, int slotNum, EjsVar *
     value = (EjsVar*) ejsSerialize(master, value, 0, 0, 0);
     slotNum = master->objectHelpers->setProperty(master, (EjsVar*) sp, slotNum, value);
     sessionActivity(ejs, sp);
+    master->exception = 0;
     ejsUnlockVm(master);
     return slotNum;
 }
@@ -35962,6 +35962,7 @@ static void sessionTimer(EjsWebControl *control, MprEvent *event)
             control->sessionTimer = 0;
             mprFree(event);
         }
+        master->exception = 0;
         mprUnlock(master->mutex);
     }
 }
@@ -36097,6 +36098,7 @@ EjsWebSession *ejsCreateSession(Ejs *ejs, int timeout, bool secure)
         control->sessionTimer = mprCreateTimerEvent(mprGetDispatcher(ejs), (MprEventProc) sessionTimer, EJS_TIMER_PERIOD, 
             MPR_NORMAL_PRIORITY, control, MPR_EVENT_CONTINUOUS);
     }
+    master->exception = 0;
     ejsUnlockVm(master);
 
     mprLog(ejs, 3, "Created new session %s", id);
@@ -36123,6 +36125,7 @@ bool ejsDestroySession(Ejs *ejs)
         return 0;
     }
     rc = ejsDeletePropertyByName(control->master, (EjsVar*) control->sessions, ejsName(&qname, "", web->session->id));
+    control->master->exception = 0;
     web->session = 0;
     return rc;
 }
