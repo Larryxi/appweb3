@@ -65,6 +65,13 @@ typedef struct MaPhp {
     zval    *var_array;             /* Track var array */
 } MaPhp;
 
+static void                    ***tsrm_ls;
+static php_core_globals        *core_globals;                                                              
+static sapi_globals_struct     *sapi_globals;
+static zend_llist              global_vars;
+static zend_compiler_globals   *compiler_globals;
+static zend_executor_globals   *executor_globals;
+
 /****************************** Forward Declarations **********************/
 
 static void flushOutput(void *context);
@@ -451,13 +458,14 @@ static int startup(sapi_module_struct *sapi_module)
 static int initializePhp(MaHttp *http)
 {
 #if ZTS
+#if UNUSED
     void                    ***tsrm_ls;
     php_core_globals        *core_globals;
     sapi_globals_struct     *sapi_globals;
     zend_llist              global_vars;
     zend_compiler_globals   *compiler_globals;
     zend_executor_globals   *executor_globals;
-
+#endif
     tsrm_startup(128, 1, 0, 0);
     compiler_globals = (zend_compiler_globals*)  ts_resource(compiler_globals_id);
     executor_globals = (zend_executor_globals*)  ts_resource(executor_globals_id);
@@ -481,9 +489,6 @@ static int initializePhp(MaHttp *http)
     zend_llist_init(&global_vars, sizeof(char *), 0, 0);
 #endif
 
-#if UNUSED
-    SG(options) |= SAPI_OPTION_NO_CHDIR;
-#endif
     zend_alter_ini_entry("register_argc_argv", 19, "0", 1, PHP_INI_SYSTEM, PHP_INI_STAGE_ACTIVATE);
     zend_alter_ini_entry("html_errors", 12, "0", 1, PHP_INI_SYSTEM, PHP_INI_STAGE_ACTIVATE);
     zend_alter_ini_entry("implicit_flush", 15, "0", 1, PHP_INI_SYSTEM, PHP_INI_STAGE_ACTIVATE);
