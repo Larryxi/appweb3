@@ -182,6 +182,9 @@ int maAcceptConn(MprSocket *sock, MaServer *server, cchar *ip, int port)
     conn->arena = arena;
     if (maAddConn(host, conn) < 0) {
         mprFree(sock);
+#if BLD_FEATURE_MULTITHREAD
+        mprEnableSocketEvents(listenSock);
+#endif
         return 1;
     }
     mprSetSocketCallback(conn->sock, (MprSocketProc) ioEvent, conn, MPR_READABLE, MPR_NORMAL_PRIORITY);
