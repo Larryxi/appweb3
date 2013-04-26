@@ -172,11 +172,11 @@ int maAcceptConn(MprSocket *sock, MaServer *server, cchar *ip, int port)
         mprFree(sock);
         return 1;
     }
-
     conn = createConn(arena, host, sock, ip, port, address);
     if (conn == 0) {
         mprError(server, "Can't create connect object. Insufficient memory.");
         mprFree(sock);
+        mprFree(arena);
         return 1;
     }
     conn->arena = arena;
@@ -185,6 +185,7 @@ int maAcceptConn(MprSocket *sock, MaServer *server, cchar *ip, int port)
 #if BLD_FEATURE_MULTITHREAD
         mprEnableSocketEvents(listenSock);
 #endif
+        mprFree(arena);
         return 1;
     }
     mprSetSocketCallback(conn->sock, (MprSocketProc) ioEvent, conn, MPR_READABLE, MPR_NORMAL_PRIORITY);
