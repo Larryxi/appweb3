@@ -293,7 +293,7 @@ static bool parseFirstLine(MaConn *conn, MaPacket *packet)
         return 0;
     }
     if ((int) strlen(uri) >= conn->http->limits.maxUrl) {
-        maFailRequest(conn, MPR_HTTP_CODE_REQUEST_URL_TOO_LARGE, "Bad request. URI too long.");
+        maFailConnection(conn, MPR_HTTP_CODE_REQUEST_URL_TOO_LARGE, "Bad request. URI too long.");
         return 0;
     }
     httpProtocol = getToken(conn, "\r\n");
@@ -449,13 +449,13 @@ static bool parseHeaders(MaConn *conn, MaPacket *packet)
 
                     if ((sp = strchr(sp, '-')) != 0) {
                         end = (int) mprAtoi(++sp, 10);
-                    }
-                    if ((sp = strchr(sp, '/')) != 0) {
-                        /*
-                         *  Note this is not the content length transmitted, but the original size of the input of which 
-                         *  the client is transmitting only a portion.
-                         */
-                        size = (int) mprAtoi(++sp, 10);
+                        if ((sp = strchr(sp, '/')) != 0) {
+                            /*
+                             *  Note this is not the content length transmitted, but the original size of the input of which 
+                             *  the client is transmitting only a portion.
+                             */
+                            size = (int) mprAtoi(++sp, 10);
+                        }
                     }
                 }
                 if (start < 0 || end < 0 || size < 0 || end <= start) {
