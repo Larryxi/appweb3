@@ -458,7 +458,7 @@ static bool parseHeaders(MaConn *conn, MaPacket *packet)
                         }
                     }
                 }
-                if (start < 0 || end < 0 || size < 0 || end > start) {
+                if (start < 0 || end < 0 || size < 0 || end < start) {
                     maFailRequest(conn, MPR_HTTP_CODE_RANGE_NOT_SATISFIABLE, "Bad content range");
                     continue;
                 }
