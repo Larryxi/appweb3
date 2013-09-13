@@ -25032,7 +25032,7 @@ static void pruneWorkers(MprWorkerService *ws, MprEvent *timer)
     mprLock(ws->mutex);
 
     for (index = 0; index < ws->idleThreads->length; index++) {
-        if (ws->numThreads <= ws->minThreads) {
+        if ((ws->numThreads - index) <= ws->minThreads) {
             break;
         }
         worker = (MprWorker*) mprGetItem(ws->idleThreads, index);
