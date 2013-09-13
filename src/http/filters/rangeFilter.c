@@ -32,7 +32,7 @@ static void outgoingRangeService(MaQueue *q)
     resp = conn->response;
 
     if (!(q->flags & MA_QUEUE_SERVICED)) {
-        if (resp->code != MPR_HTTP_CODE_OK || !fixRangeLength(conn)) {
+        if (resp->code != MPR_HTTP_CODE_OK || !fixRangeLength(conn) || req->ranges == 0) {
             maRemoveQueue(q);
             return;
         }
