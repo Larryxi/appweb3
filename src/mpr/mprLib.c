@@ -24427,7 +24427,9 @@ static int threadDestructor(MprThread *tp)
     mprLock(tp->mutex);
 
     ts = mprGetMpr(tp)->threadService;
+    mprLock(ts->mutex);
     mprRemoveItem(ts->threads, tp);
+    mprUnlock(ts->mutex);
 
 #if BLD_WIN_LIKE
     if (tp->threadHandle) {
