@@ -16,7 +16,7 @@ ifeq	($(BLD_FEATURE_TEST),1)
 compileExtra: 	appweb.conf cgi-bin/testScript cgi-bin/cgiProgram$(BLD_EXE)
 
 run:
-	$(BLD_BIN_DIR)/appweb --log stdout:1 --config appweb.conf
+	$(BLD_BIN_DIR)/appweb --log stdout:4 --config appweb.conf
 
 testExtra:
 ifneq	($(BLD_CROSS),1)

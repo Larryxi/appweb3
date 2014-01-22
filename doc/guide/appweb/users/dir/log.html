@@ -180,7 +180,7 @@
                             section on <a href="../logFiles.html">Log Files</a>.</p>
                             <p>The logSpec argument has the following format:</p>
                             <pre>
-pathName[:level][.maxSize]
+pathName[:level]
 </pre>
                             <p>The pathName is an absolute or ServerRoot relative path. The level argument defines a
                             logging verbosity level between 0 and 9 with 9 being the most verbose.</p>
@@ -219,9 +219,6 @@ pathName[:level][.maxSize]
                                     </tr>
                                 </tbody>
                             </table>
-                            <p>The maxSize argument defines how large the log may grow in MB before it is rotated. When
-                            rotated, the old log will be renamed with ".old" appended to the pathName. The default size
-                            is 5 MB.</p>
                             <p>If the LogLevel directive is used, it will override the level specified via the ErrorLog
                             directive for general logging.</p>
                             <h3>Examples</h3>
