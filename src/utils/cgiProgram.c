@@ -241,6 +241,10 @@ int main(int argc, char *argv[], char *envp[])
     }
     mprPrintf(mpr, "\r\n");
 
+#if UNUSED
+    mprSleep(mpr, 60000 * 2);
+#endif
+
     if ((outputBytes + outputArgs + outputEnv + outputQuery + outputPost + outputLocation + responseStatus) == 0) {
         outputArgs++;
         outputEnv++;

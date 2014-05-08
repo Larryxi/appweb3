@@ -463,6 +463,11 @@ static void cgiEvent(MaQueue *q, MprCmd *cmd, int channel)
                     }
                 }
             }
+            /* 
+                FIX: only read once incase the main thread is being used to service the request.
+                As the socket is in blocking mode, we cannot consume the main thread.
+             */
+            break;
         } while ((space = mprGetBufSpace(buf)) > 0);
 
         if (mprGetBufLength(buf) == 0) {
@@ -492,6 +497,11 @@ static void cgiEvent(MaQueue *q, MprCmd *cmd, int channel)
                 }
             }
         }
+        /* 
+            FIX: only read once incase the main thread is being used to service the request.
+            As the socket is in blocking mode, we cannot consume the main thread.
+         */
+        break;
     }
 }
 
