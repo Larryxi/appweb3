@@ -551,9 +551,8 @@ typedef struct MaUploadFile {
     int             size;                   /* Uploaded file size */
 } MaUploadFile;
 
-extern void maAddUploadFile(struct MaConn *conn, cchar *id, MaUploadFile *file);
+extern void maAddUploadFile(struct MaConn *conn, MaUploadFile *file);
 extern void maRemoveAllUploadedFiles(struct MaConn *conn);
-extern void maRemoveUploadFile(struct MaConn *conn, cchar *id);
 
 /********************************** MaLocation ********************************/
 /*
@@ -1702,7 +1701,7 @@ typedef struct MaRequest {
     char            *user;                  /**< Remote user (ENV: REMOTE_USER) */
 
     MprHashTable    *formVars;              /**< Query and post data variables */
-    MprHashTable    *files;                 /**< Uploaded files. Managed by the upload filter */
+    MprList         *files;                 /**< Uploaded files. Managed by the upload filter */
     MaHost          *host;                  /**< Owning host for this request */
     MprList         *inputPipeline;         /**< Input processing */
     MprHashTable    *headers;               /**< Header variables */

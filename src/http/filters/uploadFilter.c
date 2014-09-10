@@ -53,8 +53,10 @@ static bool matchUpload(MaConn *conn, MaStage *filter, cchar *uri)
     char        *pat;
     int         len;
     
+printf("MATCH %s\n", uri);
     req = conn->request;
     if (req->method != MA_REQ_POST || req->remainingContent <= 0) {
+printf("RETURN ONE\n");
         return 0;
     }
     pat = "multipart/form-data";
@@ -85,6 +87,7 @@ static void openUpload(MaQueue *q)
     req = conn->request;
     location = req->location;
 
+printf("OPEN UPLOAD\n");
     up = mprAllocObjZeroed(resp, Upload);
     if (up == 0) {
         return;
@@ -123,14 +126,15 @@ static void closeUpload(MaQueue *q)
     MaRequest       *req;
     Upload          *up;
 
+printf("CLOSE UPLOAD\n");
     req = q->conn->request;
     up = q->queueData;
     
-    if (up->currentFile) {
-        mprFree(up->file);
-    }
     if (req->location->autoDelete) {
         maRemoveAllUploadedFiles(q->conn);
+    }
+    if (up->currentFile) {
+        mprFree(up->file);
     }
 }
 
@@ -359,6 +363,7 @@ static int processContentHeader(MaQueue *q, char *line)
                 file = up->currentFile = mprAllocObjZeroed(up, MaUploadFile);
                 file->clientFilename = mprStrdup(file, up->clientFilename);
                 file->filename = mprStrdup(file, up->tmpPath);
+                maAddUploadFile(conn, file);
             }
             key = nextPair;
         }
@@ -504,7 +509,6 @@ static int processContentData(MaQueue *q)
             if (writeToFile(q, data, dataLen) < 0) {
                 return MPR_ERR_CANT_WRITE;
             }
-            maAddUploadFile(conn, up->id, file);
             defineFileFields(q, up);
 
         } else {
@@ -617,6 +621,7 @@ MprModule *maUploadFilterInit(MaHttp *http, cchar *path)
     MprModule       *module;
     MaStage         *filter;
 
+print("@@@@ UPLOAD FILTER INIT\n");
     module = mprCreateModule(http, "uploadFilter", BLD_VERSION, NULL, NULL, NULL);
     if (module == 0) {
         return 0;

@@ -257,46 +257,30 @@ int maCompareFormVar(MaConn *conn, cchar *var, cchar *value)
 }
 
 
-void maAddUploadFile(MaConn *conn, cchar *id, MaUploadFile *upfile)
+void maAddUploadFile(MaConn *conn, MaUploadFile *upfile)
 {
     MaRequest   *req;
 
     req = conn->request;
     if (req->files == 0) {
-        req->files = mprCreateHash(req, -1);
+        req->files = mprCreateList(req);
     }
-    mprAddHash(req->files, id, upfile);
-}
-
-
-void maRemoveUploadFile(MaConn *conn, cchar *id)
-{
-    MaRequest       *req;
-    MaUploadFile    *upfile;
-
-    req = conn->request;
-
-    upfile = (MaUploadFile*) mprLookupHash(req->files, id);
-    if (upfile) {
-        mprDeletePath(conn, upfile->filename);
-        upfile->filename = 0;
-    }
+    mprAddItem(req->files, upfile);
 }
 
 
 void maRemoveAllUploadedFiles(MaConn *conn)
 {
     MaRequest       *req;
-    MaUploadFile   *upfile;
-    MprHash         *hp;
+    MaUploadFile    *file;
+    int             index;
 
     req = conn->request;
 
-    for (hp = 0; req->files && (hp = mprGetNextHash(req->files, hp)) != 0; ) {
-        upfile = (MaUploadFile*) hp->data;
-        if (upfile->filename) {
-            mprDeletePath(conn, upfile->filename);
-            upfile->filename = 0;
+    for (index = 0; (file = mprGetNextItem(req->files, &index)) != 0; ) {
+        if (file->filename) {
+            mprDeletePath(conn, file->filename);
+            file->filename = 0;
         }
     }
 }
