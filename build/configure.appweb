@@ -227,7 +227,7 @@ parseArg()
     ARG="${1#*=}"
     [ "$ARG" = "$1" ] && ARG=
 
-    SW=`echo ${1#--} | tr '[A-Z]' '[a-z]'`
+    SW=`echo ${1#--} | tr '[:upper:]' '[:lower:]'`
     case ${SW} in
     conf=*|config=*)
         if [ "${ARG}" = "${ARG/\/}" ] ; then

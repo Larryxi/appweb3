@@ -584,8 +584,8 @@ relativePath() {
     dir="$1"
 
     if [ "BLD_HOST_OS" = "WIN" -o "$BLD_HOST_OS" = "WINCE" ] ; then
-        dir=`canonPath "$dir" | tr '[A-Z]' '[a-z]'`
-        cwd=`canonPath "$PWD" | tr '[A-Z]' '[a-z]'`
+        dir=`canonPath "$dir" | tr '[:upper:]' '[:lower:]'`
+        cwd=`canonPath "$PWD" | tr '[:upper:]' '[:lower:]'`
     else
         dir=`canonPath "$dir"`
         cwd=`canonPath "$PWD"`
@@ -2170,7 +2170,7 @@ while [ "${1#--}" != "$1" -o "${1#-}" != "$1" ] ; do
     ARG="${1#*=}"
     [ "$ARG" = "$1" ] && ARG=
 
-    SW=`echo ${1#--} | tr '[A-Z]' '[a-z]'`
+    SW=`echo ${1#--} | tr '[:upper:]' '[:lower:]'`
     case ${SW} in
     build=*)
         system=`bash build/bin/config.sub "${ARG}"`
@@ -2278,7 +2278,7 @@ while [ "${1#--}" != "$1" ] ; do
     ARG="${1#*=}"
     [ "$ARG" = "$1" ] && ARG=
 
-    SW=`echo ${1#--} | tr '[A-Z]' '[a-z]'`
+    SW=`echo ${1#--} | tr '[:upper:]' '[:lower:]'`
     case ${SW} in
 #   bindir=*)
 #      BLD_BIN_PREFIX=`canonPath "${ARG}"`
