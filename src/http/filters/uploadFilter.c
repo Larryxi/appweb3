@@ -53,10 +53,8 @@ static bool matchUpload(MaConn *conn, MaStage *filter, cchar *uri)
     char        *pat;
     int         len;
     
-printf("MATCH %s\n", uri);
     req = conn->request;
     if (req->method != MA_REQ_POST || req->remainingContent <= 0) {
-printf("RETURN ONE\n");
         return 0;
     }
     pat = "multipart/form-data";
@@ -87,7 +85,6 @@ static void openUpload(MaQueue *q)
     req = conn->request;
     location = req->location;
 
-printf("OPEN UPLOAD\n");
     up = mprAllocObjZeroed(resp, Upload);
     if (up == 0) {
         return;
@@ -126,7 +123,6 @@ static void closeUpload(MaQueue *q)
     MaRequest       *req;
     Upload          *up;
 
-printf("CLOSE UPLOAD\n");
     req = q->conn->request;
     up = q->queueData;
     
