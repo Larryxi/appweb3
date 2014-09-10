@@ -617,7 +617,6 @@ MprModule *maUploadFilterInit(MaHttp *http, cchar *path)
     MprModule       *module;
     MaStage         *filter;
 
-print("@@@@ UPLOAD FILTER INIT\n");
     module = mprCreateModule(http, "uploadFilter", BLD_VERSION, NULL, NULL, NULL);
     if (module == 0) {
         return 0;
