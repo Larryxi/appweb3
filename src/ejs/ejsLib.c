@@ -33864,7 +33864,7 @@ static EjsVar *createSession(Ejs *ejs, EjsVar *unused, int argc, EjsVar **argv)
     if (web->controller) {
         ejsSetProperty(ejs, web->controller, ES_ejs_web_Controller_session, session);
         view = ejsGetPropertyByName(ejs, ejs->global, ejsName(&qname, "ejs.web", "view"));
-        if (view) {
+        if (view && view != ejs->nullValue) {
             ejsSetPropertyByName(ejs, view, ejsName(&qname, EJS_PUBLIC_NAMESPACE, "session"), session);
         }
     }

@@ -217,7 +217,7 @@
     #endif
     #define Long int32_t
     #define ULong uint32_t
-#if BLD_HOST_CPU_ARCH == MPR_CPU_PPC
+#if BLD_HOST_CPU_ARCH == MPR_CPU_PPC || BLD_HOST_CPU_ARCH == MPR_CPU_SPARC
     #define IEEE_MC68k 1
 #else
     #define IEEE_8087 1
@@ -6426,10 +6426,10 @@ static void sysinit(Mpr *mpr)
 {
     FILE *ptr;
     if  ((ptr = popen("psrinfo -p", "r")) != NULL) {
-        fscanf(ptr, "%d", &alloc.numCpu);
+        fscanf(ptr, "%d", &ap->numCpu);
         (void) pclose(ptr);
     }
-    alloc.pageSize = sysconf(_SC_PAGESIZE);
+    ap->pageSize = sysconf(_SC_PAGESIZE);
 }
 #elif BLD_WIN_LIKE
 {
@@ -18550,7 +18550,7 @@ char *mprGetAppDir(MprCtx ctx)
 
 
 
-#if LINUX || MACOSX || FREEBSD
+#if LINUX || MACOSX || FREEBSD || SOLARIS
 
 static void getWaitFds(MprWaitService *ws);
 static void growFds(MprWaitService *ws);
@@ -19702,6 +19702,33 @@ static void outFloat(MprCtx ctx, Format *fmt, char specChar, double value)
     BPUTNULL(ctx, fmt);
 }
 
+#if SOLARIS
+#include <ieeefp.h>
+
+int fpclassify(double x) 
+{
+    fpclass_t   rv;
+
+    rv = fpclass(x);
+
+    switch(rv) {
+    case FP_SNAN:
+    case FP_QNAN: 
+        return FP_NAN;
+    case FP_NINF:
+    case FP_PINF: 
+        return FP_INFINITE;
+    case FP_NDENORM:
+    case FP_PDENORM: 
+        return FP_SUBNORMAL;
+    case FP_NZERO:
+    case FP_PZERO: 
+        return FP_ZERO;
+    default:
+          return FP_NORMAL;
+    }
+}
+#endif
 
 int mprIsNan(double value) {
 #if WIN
@@ -25748,7 +25775,7 @@ static int getTimeZoneOffsetFromTm(MprCtx ctx, struct tm *tp)
         }
     }
     return offset;
-#elif BLD_UNIX_LIKE && !CYGWIN
+#elif BLD_UNIX_LIKE && !CYGWIN && !SOLARIS
     return (int) tp->tm_gmtoff * MS_PER_SEC;
 #else
     struct timezone     tz;
@@ -25877,7 +25904,7 @@ static void decodeTime(MprCtx ctx, struct tm *tp, MprTime when, bool local)
             offset = getTimeZoneOffsetFromTm(ctx, &t);
             dst = t.tm_isdst;
         }
-#if BLD_UNIX_LIKE && !CYGWIN
+#if BLD_UNIX_LIKE && !CYGWIN && !SOLARIS
         zoneName = (char*) t.tm_zone;
 #endif
         when += offset;
@@ -25892,7 +25919,7 @@ static void decodeTime(MprCtx ctx, struct tm *tp, MprTime when, bool local)
     tp->tm_yday     = (int) (floorDiv(when, MS_PER_DAY) - daysSinceEpoch(year));
     tp->tm_mon      = getMonth(year, tp->tm_yday);
     tp->tm_isdst    = dst != 0;
-#if BLD_UNIX_LIKE && !CYGWIN
+#if BLD_UNIX_LIKE && !CYGWIN && !SOLARIS
     tp->tm_gmtoff   = offset / MS_PER_SEC;
     tp->tm_zone     = zoneName;
 #endif
@@ -26649,7 +26676,7 @@ int mprParseTime(MprCtx ctx, MprTime *time, cchar *dateString, int zoneFlags, st
     tm.tm_year = -MAXINT;
     tm.tm_mon = tm.tm_mday = tm.tm_hour = tm.tm_sec = tm.tm_min = tm.tm_wday = -1;
     tm.tm_min = tm.tm_sec = tm.tm_yday = -1;
-#if BLD_UNIX_LIKE && !CYGWIN
+#if BLD_UNIX_LIKE && !CYGWIN && !SOLARIS
     tm.tm_gmtoff = 0;
     tm.tm_zone = 0;
 #endif

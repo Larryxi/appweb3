@@ -163,15 +163,6 @@ else
 	endif
 
 	ifeq ($(BLD_CPU_ARCH),MPR_CPU_SPARC)
-		ifeq  ($(BLD_CPU),sparclite)
-			_CFLAGS += -msparclite 
-		else
-			ifneq ($(BLD_CPU_MODEL),)
-				_CFLAGS	+= -msparc$(BLD_CPU_MODEL)
-			else
-				_CFLAGS	+= -msparc
-			endif
-		endif
         _DFLAGS += -DCPU=SPARC
 	endif
 endif

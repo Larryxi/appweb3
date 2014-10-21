@@ -61,6 +61,7 @@ _DPATH_			?= .
 BUILD_DEPTH     ?= 2
 BUILDING_CROSS 	:= 0
 MAKE			:= $(BLD_MAKE)
+MAKE			?= make
 TEMP            ?= /tmp
 ifeq ($(TRACE),)
     MAKEFLAGS   += -s TRACE=0

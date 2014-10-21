@@ -5356,7 +5356,7 @@ typedef struct MprWaitService {
     int             lastMaskGeneration;     /* Last generation number for mask changes */
     int             rebuildMasks;           /* IO mask rebuild required */
 
-#if LINUX || MACOSX || FREEBSD
+#if LINUX || MACOSX || FREEBSD || SOLARIS
     struct pollfd   *fds;                   /* File descriptors to poll on */
     int             fdsCount;               /* Count of fds */
     int             fdsSize;                /* Size of fds array */

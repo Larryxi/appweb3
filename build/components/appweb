@@ -2,7 +2,7 @@
 #   Appweb
 #
 defineComponent() {
-	local iflags builtin path name search optional libs
+	local iflags builtin path name search optional libs withlibs
 
     path=$1
     name="appweb"
@@ -39,10 +39,13 @@ defineComponent() {
 	fi
 
     deps="mpr"
+    if [ "$BLD_FEATURE_AUTH_PAM" = 1 ] ; then
+        withlibs="pam"
+    fi
     if [ -d src/deps ] ; then
         deps="$deps http"
     fi
 
-    configureComponent --libs "$libs" --path "$path" --iflags "$iflags" $builtin \
+    configureComponent --libs "$libs" --withlibs "$withlibs" --path "$path" --iflags "$iflags" $builtin \
         --dependencies "$deps" --optional-dependencies "$optional" $name
 }
