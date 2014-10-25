@@ -18657,7 +18657,7 @@ int mprWaitForIO(MprWaitService *ws, int timeout)
         mprUnlock(ws->mutex);
         serviceRecall(ws);
         return 1;
-    } else
+    }
 #if BLD_DEBUG
     if (mprGetDebugMode(ws) && timeout > 30000) {
         timeout = 30000;
