@@ -90,6 +90,9 @@ appweb.conf: ../../buildConfig.make
 run:
 	$(call setlibpath) ; $(BLD_BIN_DIR)/$(BLD_PRODUCT) --log stdout:2 --config appweb.conf
 
+trun:
+	$(call setlibpath) ; $(BLD_BIN_DIR)/$(BLD_PRODUCT) --log stdout:0 --config appweb.conf
+
 cleanExtra:
 	rm -f $(TARGETS) $(BLD_PRODUCT)$(BLD_EXE)
 	rm -f trace.txt access.log error.log leak.log

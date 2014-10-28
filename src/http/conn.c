@@ -75,7 +75,6 @@ static int connectionDestructor(MaConn *conn)
 {
     mprAssert(conn);
     mprAssert(conn->host);
-    mprAssert(conn->sock);
 
     /*
      *  Must remove from the connection list first. This ensures that the host timer will not find the connection 

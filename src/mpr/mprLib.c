@@ -9379,7 +9379,7 @@ static int sanitizeArgs(MprCmd *cmd, int argc, char **argv, char **env)
         if (!hasLibPath && (cp = getenv(LD_LIBRARY_PATH)) != 0) {
             cmd->env[index++] = mprAsprintf(cmd, -1, "%s=%s", LD_LIBRARY_PATH, cp);
         }
-        cmd->env[index++] = '\0';
+        cmd->env[index++] = 0;
         for (i = 0; i < argc; i++) {
             mprLog(cmd, 4, "cmd: arg[%d]: %s", i, argv[i]);
         }
@@ -16997,6 +16997,7 @@ static MPR_INLINE bool isSep(MprFileSystem *fs, int c)
 }
 
 
+#if VXWORKS
 static MPR_INLINE bool hasDrive(MprFileSystem *fs, cchar *path) 
 {
     char    *cp, *endDrive;
@@ -17013,6 +17014,7 @@ static MPR_INLINE bool hasDrive(MprFileSystem *fs, cchar *path)
     }
     return 0;
 }
+#endif
 
 
 static MPR_INLINE bool isAbsPath(MprFileSystem *fs, cchar *path) 
