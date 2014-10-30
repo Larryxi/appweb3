@@ -63,8 +63,7 @@ void maMatchHandler(MaConn *conn)
             if (req->rewrites >= MA_MAX_REWRITE) {
                 maFailRequest(conn, MPR_HTTP_CODE_INTERNAL_SERVER_ERROR, "Too many request rewrites");
             } else if (!(req->method & (MA_REQ_OPTIONS | MA_REQ_TRACE))) {
-                maFailRequest(conn, MPR_HTTP_CODE_BAD_METHOD, "Requested method %s not supported for URL: %s", 
-                    req->methodName, req->url);
+                maFailRequest(conn, MPR_HTTP_CODE_BAD_METHOD, "Requested method not supported");
             }
         }
 
@@ -192,8 +191,7 @@ void maCreatePipeline(MaConn *conn)
 #endif
     resp->connector = connector;
     if ((connector->flags & MA_STAGE_ALL & req->method) == 0) {
-        maFailRequest(conn, MPR_HTTP_CODE_BAD_REQUEST, "Connector \"%s\" does not support the \"%s\" method \"%s\"", 
-            connector->name, req->methodName);
+        maFailRequest(conn, MPR_HTTP_CODE_BAD_REQUEST, "Connector does not support method");
     }
     mprAddItem(resp->outputPipeline, connector);
 
@@ -556,7 +554,7 @@ static MaStage *mapToFile(MaConn *conn, MaStage *handler)
         return handler;
     }
     if ((req->dir = maLookupBestDir(req->host, resp->filename)) == 0) {
-        maFailRequest(conn, MPR_HTTP_CODE_NOT_FOUND, "Missing directory block for %s", resp->filename);
+        maFailRequest(conn, MPR_HTTP_CODE_NOT_FOUND, "Missing directory block");
     } else {
         if (req->dir->auth) {
             req->auth = req->dir->auth;
@@ -583,7 +581,7 @@ static MaStage *mapToFile(MaConn *conn, MaStage *handler)
             if (req->method != MA_REQ_PUT && handler->flags & MA_STAGE_VERIFY_ENTITY && 
                     (req->auth == 0 || req->auth->type == 0)) {
                 /* If doing Authentication, must let authFilter generate the response */
-                maFailRequest(conn, MPR_HTTP_CODE_NOT_FOUND, "Can't open document: %s", resp->filename);
+                maFailRequest(conn, MPR_HTTP_CODE_NOT_FOUND, "Can't open document");
             }
         }
     }

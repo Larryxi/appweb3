@@ -500,7 +500,7 @@ static bool parseHeaders(MaConn *conn, MaPacket *packet)
                 if (maIsNamedVirtualHostAddress(address)) {
                     hp = maLookupVirtualHost(address, value);
                     if (hp == 0) {
-                        maFailRequest(conn, 404, "No host to serve request. Searching for %s", value);
+                        maFailRequest(conn, 404, "No host to serve request");
                         mprLog(conn, 1, "Can't find virtual host %s", value);
                         continue;
                     }

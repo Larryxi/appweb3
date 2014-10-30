@@ -43,7 +43,7 @@ static bool matchEjs(MaConn *conn, MaStage *handler, cchar *url)
 
     if (ext && strcmp(ext, "mod") == 0) {
         maFormatBody(conn, "Bad Request", "Can't serve *.mod files");
-        maFailRequest(conn, MPR_HTTP_CODE_BAD_REQUEST, "Can't server *.mod files");
+        maFailRequest(conn, MPR_HTTP_CODE_BAD_REQUEST, "Can't serve *.mod files");
     }
     if (req->location->handler != conn->http->ejsHandler && mprStrcmpAnyCase(ext, "ejs") != 0) {
         return 0;
@@ -64,7 +64,7 @@ static bool matchEjs(MaConn *conn, MaStage *handler, cchar *url)
     } else {
         if (req->location->flags & (MA_LOC_APP | MA_LOC_APP_DIR) && ext && mprStrcmpAnyCase(ext, "ejs") == 0) {
             maFormatBody(conn, "Bad Request", "Can't serve *.ejs files outside web directory");
-            maFailRequest(conn, MPR_HTTP_CODE_BAD_REQUEST, "Can't server *.ejs files outside web directory");
+            maFailRequest(conn, MPR_HTTP_CODE_BAD_REQUEST, "Can't serve *.ejs files outside web directory");
             return 1;
         }
     }
@@ -170,7 +170,7 @@ static void openEjs(MaQueue *q)
     ctx = mprAllocHeap(req, "Ejs Interpreter", 1, 0, NULL);
     web = ejsCreateWebRequest(ctx, control, conn, baseUrl, url, baseDir, searchPath, flags);
     if (web == 0) {
-        maFailRequest(conn, MPR_HTTP_CODE_INTERNAL_SERVER_ERROR, "Can't create Ejs web object for %s", url);
+        maFailRequest(conn, MPR_HTTP_CODE_INTERNAL_SERVER_ERROR, "Can't create Ejs web object");
         return;
     }
     if ((web->sessionTimeout = loc->sessionTimeout) <= 0) {

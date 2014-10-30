@@ -99,7 +99,7 @@ static int run(request_rec *r)
         } else {
             if (ext && strcmp(ext, "ejs") == 0) {
                 maFormatBody(conn, "Bad Request", "Can't serve *.ejs files outside web directory");
-                maFailRequest(conn, MPR_HTTP_CODE_BAD_REQUEST, "Can't server *.ejs files outside web directory");
+                maFailRequest(conn, MPR_HTTP_CODE_BAD_REQUEST, "Cannot serve *.ejs files outside web directory");
                 return HTTP_XXX;
             }
         }
@@ -159,7 +159,7 @@ static int run(request_rec *r)
      */
     web = ejsCreateWebRequest(req, q->stage->stageData, conn, app, dir, urlBase, url, req->cookie, flags);
     if (web == 0) {
-        maFailRequest(conn, MPR_HTTP_CODE_INTERNAL_SERVER_ERROR, "Can't create Ejs web object for %s", req->url);
+        maFailRequest(conn, MPR_HTTP_CODE_INTERNAL_SERVER_ERROR, "Can't create Ejs web object");
         return;
     }
     q->queueData = web;
