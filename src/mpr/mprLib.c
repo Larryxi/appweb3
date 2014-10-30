@@ -9756,7 +9756,6 @@ static int startProcess(MprCmd *cmd)
             rc = execv(cmd->program, cmd->argv);
         }
         err = errno;
-        mprPrintfError(cmd, "Can't exec %s, err %d, cwd %s\n", cmd->program, err, mprGetCurrentPath(cmd));
 
         /*
          *  Use _exit to avoid flushing I/O any other I/O.
