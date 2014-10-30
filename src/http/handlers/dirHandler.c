@@ -121,7 +121,7 @@ static void parseQuery(MaConn *conn)
     MaRequest   *req;
     MaResponse  *resp;
     Dir         *dir;
-    char        *value, *query, *next, *tok;
+    char        *value, *query, *next, *tok, *field;
 
     req = conn->request;
     resp = conn->response;
@@ -133,19 +133,24 @@ static void parseQuery(MaConn *conn)
     }
 
     tok = mprStrTok(query, ";&", &next);
+    lock(conn->host);
     while (tok) {
         if ((value = strchr(tok, '=')) != 0) {
             *value++ = '\0';
             if (*tok == 'C') {                  /* Sort column */
                 mprFree(dir->sortField);
+                dir->sortField = 0;
+                field = 0;
                 if (*value == 'N') {
-                    dir->sortField = "Name";
+                    field = "Name";
                 } else if (*value == 'M') {
-                    dir->sortField = "Date";
+                    field = "Date";
                 } else if (*value == 'S') {
-                    dir->sortField = "Size";
+                    field = "Size";
                 }
-                dir->sortField = mprStrdup(dir, dir->sortField);
+                if (field) {
+                    field = mprStrdup(dir, field);
+                }
 
             } else if (*tok == 'O') {           /* Sort order */
                 if (*value == 'A') {
@@ -169,7 +174,7 @@ static void parseQuery(MaConn *conn)
         }
         tok = mprStrTok(next, ";&", &next);
     }
-    
+    unlock(conn->host);
     mprFree(query);
 }
 
