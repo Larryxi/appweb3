@@ -749,7 +749,6 @@ MaPacket *maSplitPacket(MprCtx ctx, MaPacket *orig, int offset)
 
     } else {
         if (offset >= maGetPacketLength(orig)) {
-            mprAssert(offset < maGetPacketLength(orig));
             return 0;
         }
         count = maGetPacketLength(orig) - offset;
