@@ -167,7 +167,8 @@ static void startCgi(MaQueue *q)
     maPutForService(q, maCreateHeaderPacket(q), 0);
 
     if (mprStartCmd(cmd, argc, argv, envv, MPR_CMD_IN | MPR_CMD_OUT | MPR_CMD_ERR) < 0) {
-        maFailRequest(conn, MPR_HTTP_CODE_SERVICE_UNAVAILABLE, "Can't run CGI process: %s, URI %s", fileName, req->url);
+        maFailRequest(conn, MPR_HTTP_CODE_SERVICE_UNAVAILABLE, "Can't run CGI process");
+        maPutForService(q, maCreateEndPacket(q), 1);
         return;
     }
     /*
