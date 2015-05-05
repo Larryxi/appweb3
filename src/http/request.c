@@ -495,6 +495,11 @@ static bool parseHeaders(MaConn *conn, MaPacket *packet)
 
         case 'H':
             if (strcmp(key, "HOST") == 0) {
+                size_t pos = strspn(value, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~:/?#[]@!$&'()*+,;=%");
+                if (pos < strlen(value)) {
+                    maFailRequest(conn, 404, "Invalid host header");
+                    continue;
+                }
                 req->hostName = value;
                 address = conn->address;
                 if (maIsNamedVirtualHostAddress(address)) {
@@ -512,6 +517,11 @@ static bool parseHeaders(MaConn *conn, MaPacket *packet)
                     host = hp;
                     conn->host = hp;
                     maAddConn(hp, conn);
+                } else {
+                    if (maLookupHost(conn->host->server, value) == 0) {
+                        maFailRequest(conn, 404, "No host to serve request");
+                        continue;
+                    }
                 }
             }
             break;
