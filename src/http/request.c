@@ -495,8 +495,7 @@ static bool parseHeaders(MaConn *conn, MaPacket *packet)
 
         case 'H':
             if (strcmp(key, "HOST") == 0) {
-                size_t pos = strspn(value, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~:/?#[]@!$&'()*+,;=%");
-                if (pos < strlen(value)) {
+                if (strspn(value, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-.[]:") < strlen(value)) {
                     maFailRequest(conn, 404, "Invalid host header");
                     continue;
                 }
