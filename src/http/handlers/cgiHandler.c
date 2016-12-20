@@ -195,7 +195,7 @@ static void runCgi(MaQueue *q)
     if (cmd == 0) {
         startCgi(q);
         cmd = (MprCmd*) q->queueData;
-        if (q->pair->count > 0) {
+        if (q->pair && q->pair->count > 0) {
             writeToCGI(q->pair);
         }
     }
