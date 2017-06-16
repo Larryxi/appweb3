@@ -1,6 +1,6 @@
 /*
     phpHandler.c - Appweb PHP handler
-  
+
     Copyright (c) All Rights Reserved. See details at the end of the file.
  */
 
@@ -66,7 +66,7 @@ typedef struct MaPhp {
 } MaPhp;
 
 static void                    ***tsrm_ls;
-static php_core_globals        *core_globals;                                                              
+static php_core_globals        *core_globals;
 static sapi_globals_struct     *sapi_globals;
 static zend_llist              global_vars;
 static zend_compiler_globals   *compiler_globals;
@@ -146,7 +146,7 @@ static void openPhp(MaQueue *q)
         maDontCacheResponse(conn);
         maSetHeader(conn, 0, "Last-Modified", req->host->currentDate);
         break;
-                
+
     case MA_REQ_DELETE:
     default:
         maFailRequest(q->conn, MPR_HTTP_CODE_BAD_METHOD, "Method not supported by file handler: %s", req->methodName);
@@ -189,7 +189,6 @@ static void runPhp(MaQueue *q)
         if (req->authType && req->authDetails) {
             SG(request_info).auth_digest = estrdup(mprAsprintf(req, -1, "%s %s", req->authType, req->authDetails));
         }
-        SG(request_info).auth_password = req->password;
         SG(request_info).content_type = req->mimeType;
         SG(request_info).content_length = req->length;
         SG(sapi_headers).http_response_code = MPR_HTTP_CODE_OK;
@@ -301,8 +300,8 @@ static void registerServerVars(zval *track_vars_array TSRMLS_DC)
 {
     MaConn      *conn;
     MaPhp       *php;
-    MaRequest    *req;
-    MprHash      *hp;
+    MaRequest   *req;
+    MprHash     *hp;
 
     conn = (MaConn*) SG(server_context);
     if (conn == 0) {
@@ -458,14 +457,6 @@ static int startup(sapi_module_struct *sapi_module)
 static int initializePhp(MaHttp *http)
 {
 #if ZTS
-#if UNUSED
-    void                    ***tsrm_ls;
-    php_core_globals        *core_globals;
-    sapi_globals_struct     *sapi_globals;
-    zend_llist              global_vars;
-    zend_compiler_globals   *compiler_globals;
-    zend_executor_globals   *executor_globals;
-#endif
     tsrm_startup(128, 1, 0, 0);
     compiler_globals = (zend_compiler_globals*)  ts_resource(compiler_globals_id);
     executor_globals = (zend_executor_globals*)  ts_resource(executor_globals_id);
@@ -488,7 +479,6 @@ static int initializePhp(MaHttp *http)
 #if ZTS
     zend_llist_init(&global_vars, sizeof(char *), 0, 0);
 #endif
-
     zend_alter_ini_entry("register_argc_argv", 19, "0", 1, PHP_INI_SYSTEM, PHP_INI_STAGE_ACTIVATE);
     zend_alter_ini_entry("html_errors", 12, "0", 1, PHP_INI_SYSTEM, PHP_INI_STAGE_ACTIVATE);
     zend_alter_ini_entry("implicit_flush", 15, "0", 1, PHP_INI_SYSTEM, PHP_INI_STAGE_ACTIVATE);
@@ -532,8 +522,8 @@ MprModule *maPhpHandlerInit(MaHttp *http, cchar *path)
     module->path = mprStrdup(module, path);
 
     if ((handler = maLookupStage(http, "phpHandler")) == 0) {
-        handler = maCreateHandler(http, "phpHandler", 
-            MA_STAGE_ALL | MA_STAGE_VARS | MA_STAGE_ENV_VARS | MA_STAGE_PATH_INFO | MA_STAGE_VERIFY_ENTITY | 
+        handler = maCreateHandler(http, "phpHandler",
+            MA_STAGE_ALL | MA_STAGE_VARS | MA_STAGE_ENV_VARS | MA_STAGE_PATH_INFO | MA_STAGE_VERIFY_ENTITY |
             MA_STAGE_MISSING_EXT);
         if (handler == 0) {
             mprFree(module);
@@ -560,31 +550,31 @@ MprModule *maPhpHandlerInit(MaHttp *http, cchar *path)
 
 /*
     @copy   default
-  
+
     Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
     Copyright (c) Michael O'Brien, 1993-2012. All Rights Reserved.
-  
+
     This software is distributed under commercial and open source licenses.
     You may use the GPL open source license described below or you may acquire
     a commercial license from Embedthis Software. You agree to be fully bound
     by the terms of either license. Consult the LICENSE.TXT distributed with
     this software for full details.
-  
+
     This software is open source; you can redistribute it and/or modify it
     under the terms of the GNU General Public License as published by the
     Free Software Foundation; either version 2 of the License, or (at your
     option) any later version. See the GNU General Public License for more
     details at: http://www.embedthis.com/downloads/gplLicense.html
-  
+
     This program is distributed WITHOUT ANY WARRANTY; without even the
     implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-  
+
     This GPL license does NOT permit incorporating this software into
     proprietary programs. If you are unable to comply with the GPL, you must
     acquire a commercial license to use this software. Commercial licenses
     for this software and support services are available from Embedthis
     Software at http://www.embedthis.com
-  
+
     Local variables:
     tab-width: 4
     c-basic-offset: 4
